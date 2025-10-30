@@ -35,7 +35,7 @@ export default function Header() {
               <span className="text-[9px] uppercase tracking-wider text-[var(--color-subtext)] font-semibold">
                 Partner
               </span>
-              <OSMBadge variant="small" />
+              <OSMBadge variant="small" useImage={true} />
             </div>
           </Link>
 

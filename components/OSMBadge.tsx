@@ -1,9 +1,38 @@
+import Image from 'next/image';
+
 interface OSMBadgeProps {
   variant?: 'small' | 'medium' | 'footer';
   className?: string;
+  useImage?: boolean; // Usa logo PNG invece di SVG
 }
 
-export default function OSMBadge({ variant = 'small', className = '' }: OSMBadgeProps) {
+export default function OSMBadge({ 
+  variant = 'small', 
+  className = '', 
+  useImage = false 
+}: OSMBadgeProps) {
+  // Se richiesto, usa logo PNG OSM
+  if (useImage) {
+    const sizeMap = {
+      small: { width: 35, height: 12 },
+      medium: { width: 50, height: 18 },
+      footer: { width: 40, height: 12 },
+    };
+    const size = sizeMap[variant];
+    
+    return (
+      <Image
+        src="/logo-osm-partner.png"
+        alt="Open Source Management Partner"
+        width={size.width}
+        height={size.height}
+        className={`object-contain ${className}`}
+        style={{ opacity: 0.6 }}
+      />
+    );
+  }
+
+  // SVG fallback
   const variants = {
     small: {
       width: 35,

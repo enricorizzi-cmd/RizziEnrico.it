@@ -23,7 +23,7 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-2 pt-3 border-t border-gray-700">
               <span className="text-xs text-gray-400">Partner</span>
-              <OSMBadge variant="footer" className="opacity-50" />
+              <OSMBadge variant="footer" useImage={true} className="opacity-50" />
             </div>
           </div>
 

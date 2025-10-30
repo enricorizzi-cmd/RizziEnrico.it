@@ -20,13 +20,13 @@ export default function ChiSonoPage() {
           <div className="text-center mb-16">
             {/* Foto professionale */}
             <div className="relative inline-block mb-8">
-              <ProfilePhoto size="md" />
+              <ProfilePhoto src="/enrico-rizzi.jpg" size="md" />
               {/* Badge OSM discreto */}
               <div className="absolute bottom-0 right-0 md:right-auto md:left-full md:ml-4 md:top-1/2 md:-translate-y-1/2">
                 <div className="bg-white rounded-lg px-3 py-2 shadow-md border border-[var(--color-line)]">
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] text-[var(--color-subtext)] font-medium">Partner</span>
-                    <OSMBadge variant="small" />
+                    <OSMBadge variant="small" useImage={true} />
                   </div>
                 </div>
               </div>

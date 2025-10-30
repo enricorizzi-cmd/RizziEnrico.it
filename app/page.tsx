@@ -243,12 +243,12 @@ export default function HomePage() {
               {/* Foto */}
               <div className="md:col-span-1">
                 <div className="relative inline-block mx-auto md:mx-0">
-                  <ProfilePhoto size="md" />
+                  <ProfilePhoto src="/enrico-rizzi.jpg" size="md" />
                   {/* Badge OSM discreto */}
                   <div className="absolute -bottom-2 -right-2 bg-white rounded-lg px-2 py-1 shadow-sm border border-[var(--color-line)]">
                     <div className="flex items-center gap-1.5">
                       <span className="text-[9px] text-[var(--color-subtext)] font-medium">Partner</span>
-                      <OSMBadge variant="small" />
+                      <OSMBadge variant="small" useImage={true} />
                     </div>
                   </div>
                 </div>
@@ -273,7 +273,7 @@ export default function HomePage() {
                   </CTA>
                   <div className="flex items-center gap-2 text-sm text-[var(--color-subtext)]">
                     <span>Partner</span>
-                    <OSMBadge variant="footer" />
+                    <OSMBadge variant="footer" useImage={true} />
                   </div>
                 </div>
               </div>
