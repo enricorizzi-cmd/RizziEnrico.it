@@ -84,3 +84,4 @@ Dopo aver aggiunto la Service Role Key:
 
 **Status**: ✅ **TUTTO CONFIGURATO!** Manca solo aggiungere la Service Role Key manualmente su Render.
 
+
