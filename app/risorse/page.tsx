@@ -1,6 +1,8 @@
 import { generateMetadata } from '@/lib/seo';
 import SectionTitle from '@/components/SectionTitle';
 import KPITool from '@/components/KPITool';
+import KPIAnalysisAI from '@/components/KPIAnalysisAI';
+import MansionariGeneratorAI from '@/components/MansionariGeneratorAI';
 import CTA from '@/components/CTA';
 import DownloadForm from '@/components/DownloadForm';
 
@@ -59,6 +61,19 @@ export default function RisorsePage() {
             <KPITool toolType="margin" />
             <KPITool toolType="inventory-days" />
             <KPITool toolType="turnover" />
+          </div>
+        </section>
+
+        {/* AI Tools */}
+        <section className="mb-16">
+          <SectionTitle
+            title="Tool AI Avanzati"
+            description="Analisi automatica e generazione con intelligenza artificiale"
+            centered
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            <KPIAnalysisAI />
+            <MansionariGeneratorAI />
           </div>
         </section>
 

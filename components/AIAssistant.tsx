@@ -105,23 +105,50 @@ export default function AIAssistant() {
     setInput('');
     setIsTyping(true);
 
-    // Simula risposta (in produzione: API call)
-    setTimeout(() => {
-      const answer = findRelevantAnswer(input);
+    try {
+      // Chiamata API OpenAI
+      const response = await fetch('/api/ai/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [...messages, userMessage].map(m => ({
+            role: m.role,
+            content: m.content,
+          })),
+          sessionId: 'ai-assistant-session', // TODO: generare sessionId univoco
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Errore nella chiamata API');
+      }
+
+      const data = await response.json();
       const assistantMessage: Message = {
         role: 'assistant',
-        content: answer || 'Scusa, non ho capito. Puoi riformulare?',
+        content: data.response || 'Mi dispiace, non sono riuscito a generare una risposta.',
         timestamp: new Date(),
       };
 
       setMessages(prev => [...prev, assistantMessage]);
-      setIsTyping(false);
-
+      
       // Se non abbiamo ancora catturato il lead e ci sono 3+ messaggi, chiediamo dati
       if (!leadCaptured && messages.length >= 3 && messages.length % 3 === 0) {
         // In produzione: mostriamo form per lead
       }
-    }, 1000);
+    } catch (error) {
+      console.error('Error:', error);
+      // Fallback alla knowledge base locale
+      const answer = findRelevantAnswer(input);
+      const assistantMessage: Message = {
+        role: 'assistant',
+        content: answer || 'Scusa, non sono riuscito a elaborare la risposta. Puoi riformulare?',
+        timestamp: new Date(),
+      };
+      setMessages(prev => [...prev, assistantMessage]);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   if (!isOpen) {
