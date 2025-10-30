@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { downloadSchema } from '@/lib/validators';
 import { createServerClient } from '@/lib/supabase';
 
+const CONTACT_EMAIL = 'e.rizzi@osmpartnervenezia.it';
+const CONTACT_PHONE = '3475290564';
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -10,22 +13,41 @@ export async function POST(request: NextRequest) {
     const supabase = createServerClient();
     
     // Crea lead per tracking
-    await supabase.from('leads').insert({
+    const { data: lead } = await supabase.from('leads').insert({
       name: validatedData.name,
       email: validatedData.email,
       source: 'download',
       score: 10, // Download indica interesse base
-    });
+    }).select().single();
 
-    // TODO: Invia email con link download (usando Resend/SendGrid)
-    // Per ora restituiamo un link mock
-    const downloadUrl = '/resources/kpi-pack.xlsx'; // In produzione: URL reale
+    // Email notification a Enrico (fallback semplice via mailto link)
+    // In produzione: integrare Resend/SendGrid
+    const emailSubject = encodeURIComponent(`Nuovo download KPI Pack - ${validatedData.name}`);
+    const emailBody = encodeURIComponent(
+      `Nuovo download richiesto:\n\n` +
+      `Nome: ${validatedData.name}\n` +
+      `Email: ${validatedData.email}\n` +
+      `Timestamp: ${new Date().toISOString()}\n\n` +
+      `Link download: ${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/resources/kpi-pack.xlsx`
+    );
+    
+    // Salva info email per invio futuro (o usa webhook)
+    await supabase.from('leads').update({
+      metadata: {
+        downloadRequested: true,
+        emailNotification: `${CONTACT_EMAIL}?subject=${emailSubject}&body=${emailBody}`,
+      },
+    }).eq('id', lead?.id);
+
+    // Link download diretto (per ora mock, in produzione: URL reale da storage)
+    const downloadUrl = '/resources/kpi-pack.xlsx';
     
     return NextResponse.json({
       success: true,
-      emailSent: true, // o false se download diretto
+      emailSent: false, // Verrà inviata manualmente o via webhook
       downloadUrl,
-      message: 'Email inviata con link di download',
+      contactEmail: CONTACT_EMAIL,
+      message: 'Download disponibile. Controlla email o contatta direttamente.',
     });
   } catch (error) {
     if (error instanceof Error && error.name === 'ZodError') {
@@ -41,4 +63,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-

@@ -4,6 +4,7 @@ import SectionTitle from '@/components/SectionTitle';
 import Card from '@/components/Card';
 import Accordion from '@/components/Accordion';
 import CTA from '@/components/CTA';
+import IPBadge from '@/components/IPBadge';
 import JSONLD from '@/components/JSONLD';
 
 const services = {
@@ -353,6 +354,60 @@ export default async function ServizioPage({ params }: PageProps) {
         </div>
       </section>
 
+      {/* i-Profile Integration Block - Solo per servizi rilevanti */}
+      {(slug === 'organizzazione-mansionari' || slug === 'sviluppo-persone') && (
+        <section className="py-16 bg-gradient-to-br from-[var(--color-primary)]/5 to-[var(--color-primary)]/10">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="max-w-4xl mx-auto">
+              <div className="bg-white rounded-[var(--radius-card)] p-8 border border-[var(--color-line)]">
+                <div className="flex items-center gap-3 mb-4">
+                  <IPBadge variant="default" />
+                  <span className="text-sm text-[var(--color-subtext)]">Powered by</span>
+                </div>
+                <h3 className="font-heading text-2xl font-bold text-[var(--color-text)] mb-4">
+                  Come uso i-Profile in questo servizio
+                </h3>
+                {slug === 'organizzazione-mansionari' && (
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex items-start gap-2 text-[var(--color-text)]">
+                      <span className="text-[var(--color-primary)] mt-1">→</span>
+                      <span><strong>Mappatura attitudini:</strong> i-Profile su ogni ruolo per identificare attitudini ideali e gap rispetto al mansionario.</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-[var(--color-text)]">
+                      <span className="text-[var(--color-primary)] mt-1">→</span>
+                      <span><strong>Persona giusta al posto giusto:</strong> confronto attitudini vs responsabilità per suggerire spostamenti ottimali.</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-[var(--color-text)]">
+                      <span className="text-[var(--color-primary)] mt-1">→</span>
+                      <span><strong>Piani sviluppo:</strong> evidenze attitudinali per personalizzare percorsi formativi e crescita.</span>
+                    </li>
+                  </ul>
+                )}
+                {slug === 'sviluppo-persone' && (
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex items-start gap-2 text-[var(--color-text)]">
+                      <span className="text-[var(--color-primary)] mt-1">→</span>
+                      <span><strong>Analisi gap attitudinali:</strong> i-Profile per identificare punti di forza e aree di miglioramento individuali.</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-[var(--color-text)]">
+                      <span className="text-[var(--color-primary)] mt-1">→</span>
+                      <span><strong>Coaching mirato:</strong> debrief i-Profile per guidare sessioni di coaching focalizzate su evidenze concrete.</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-[var(--color-text)]">
+                      <span className="text-[var(--color-primary)] mt-1">→</span>
+                      <span><strong>Piani crescita personalizzati:</strong> roadmap sviluppo basata su attitudini reali, non su supposizioni.</span>
+                    </li>
+                  </ul>
+                )}
+                <CTA href="/i-profile" variant="primary" size="base">
+                  Scopri i-Profile →
+                </CTA>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* FAQ */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 lg:px-8">
@@ -370,10 +425,10 @@ export default async function ServizioPage({ params }: PageProps) {
             Pronto a iniziare?
           </h2>
           <p className="text-xl opacity-90 mb-8">
-            Prenota una diagnosi gratuita: analizziamo insieme se questo servizio fa per te.
+            Prenota un check-up aziendale gratuito: analizziamo insieme se questo servizio fa per te.
           </p>
           <CTA href="/contatti" variant="secondary" size="large" className="bg-white text-[var(--color-primary)] hover:bg-gray-100">
-            Prenota diagnosi 30' →
+            Check-up Aziendale Gratuito →
           </CTA>
         </div>
       </section>

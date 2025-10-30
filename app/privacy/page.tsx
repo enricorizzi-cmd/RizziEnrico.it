@@ -47,7 +47,7 @@ export default function PrivacyPage() {
             <h2>Diritti dell'Interessato</h2>
             <p>
               Hai diritto a: accesso, rettifica, cancellazione, limitazione, opposizione, portabilità
-              dei dati. Per esercitare i tuoi diritti, scrivi a enrico@rizzienrico.it
+              dei dati. Per esercitare i tuoi diritti, scrivi a e.rizzi@osmpartnervenezia.it
             </p>
             <p className="text-sm text-[var(--color-subtext)] mt-8">
               Ultima modifica: {new Date().toLocaleDateString('it-IT')}

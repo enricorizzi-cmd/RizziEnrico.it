@@ -3,6 +3,8 @@ import SectionTitle from '@/components/SectionTitle';
 import Steps from '@/components/Steps';
 import Accordion from '@/components/Accordion';
 import CTA from '@/components/CTA';
+import IPBadge from '@/components/IPBadge';
+import Card from '@/components/Card';
 import JSONLD from '@/components/JSONLD';
 
 export const metadata = generateMetadata({
@@ -54,6 +56,20 @@ const steps = [
       'Leadership più efficace e coinvolgente',
       'Riduzione turnover',
     ],
+    iprofile: {
+      title: 'i-Profile: dal potenziale al ruolo',
+      description: 'Utilizzo i-Profile per mappare attitudini, individuare potenziale e prendere decisioni basate sui dati su collocazione nel ruolo, sviluppo e selezione.',
+      benefits: [
+        'Mappatura attitudinale del team',
+        'Persona giusta al posto giusto',
+        'Piani sviluppo personalizzati',
+        'Screening selezione mirato',
+      ],
+      cta: {
+        text: 'Scopri i-Profile',
+        href: '/i-profile',
+      },
+    },
   },
   {
     number: 5,
@@ -201,7 +217,7 @@ export default function MetodoPage() {
             Pronto a iniziare?
           </h3>
           <p className="text-sm text-[var(--color-subtext)] mb-4">
-            Prenota una diagnosi gratuita di 30 minuti
+            Prenota un check-up aziendale gratuito di 60 minuti (via Zoom) o 90 minuti (in presenza)
           </p>
           <CTA href="/contatti" variant="primary" size="base" className="w-full">
             Prenota ora →

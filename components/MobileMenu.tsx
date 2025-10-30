@@ -11,6 +11,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const navItems = [
     { href: '/metodo', label: 'Metodo' },
     { href: '/servizi', label: 'Servizi' },
+    { href: '/i-profile', label: 'i-Profile' },
     { href: '/case-study', label: 'Case Study' },
     { href: '/risorse', label: 'Risorse' },
     { href: '/blog', label: 'Blog' },

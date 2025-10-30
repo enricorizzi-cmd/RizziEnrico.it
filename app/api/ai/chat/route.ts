@@ -17,6 +17,7 @@ Conosci:
 - Metodo OSM in 5 step (Chi, Numeri, Processi, Persone, Espansione)
 - KPI essenziali per PMI (fatturato, marginalità, DSO, tempi consegna)
 - Servizi: Consulenza PMI (€2.500/mese), Organizzazione (€1.800), KPI (€1.500 setup + €800/mese)
+- i-Profile: strumento attitudinale OSM per selezione, sviluppo team e crescita manageriale (10 tratti misurati)
 - Area servita: Venezia-Rovigo, Veneto
 
 Se l'utente chiede qualcosa che non sai, invitalo a prenotare una diagnosi gratuita di 30 minuti.
@@ -34,7 +35,26 @@ export async function POST(request: NextRequest) {
     }
 
     // Rate limiting basato su sessionId
-    // TODO: Implementare rate limiting più sofisticato
+    const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+    const rateLimitKey = `ai-chat-${sessionId || ip}`;
+    
+    // Simple rate limiting: max 20 requests per 5 minutes
+    // In produzione: usare @upstash/ratelimit o Redis
+    const rateLimitCache = new Map<string, { count: number; resetAt: number }>();
+    const now = Date.now();
+    const limit = rateLimitCache.get(rateLimitKey);
+    
+    if (limit && limit.resetAt > now) {
+      if (limit.count >= 20) {
+        return NextResponse.json(
+          { error: 'Troppe richieste. Riprova tra qualche minuto.' },
+          { status: 429 }
+        );
+      }
+      limit.count++;
+    } else {
+      rateLimitCache.set(rateLimitKey, { count: 1, resetAt: now + 5 * 60 * 1000 });
+    }
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4-turbo-preview',

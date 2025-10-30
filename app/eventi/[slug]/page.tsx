@@ -92,7 +92,7 @@ export default async function EventDetailPage({ params }: PageProps) {
     'VERSION:2.0',
     'PRODID:-//Enrico Rizzi//Event//IT',
     'BEGIN:VEVENT',
-    `UID:${slug}@rizzienrico.it`,
+    `UID:${slug}@osmpartnervenezia.it`,
     `DTSTART:${format(event.dateStart, "yyyyMMdd'T'HHmmss")}`,
     `DTEND:${format(event.dateEnd, "yyyyMMdd'T'HHmmss")}`,
     `SUMMARY:${event.title}`,

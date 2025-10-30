@@ -2,8 +2,8 @@ import { generateMetadata } from '@/lib/seo';
 import ContactForm from '@/components/ContactForm';
 
 export const metadata = generateMetadata({
-  title: 'Contatti - Prenota una diagnosi gratuita | Enrico Rizzi',
-  description: 'Prenota 30 minuti gratuiti per una diagnosi della tua PMI. Porta numeri e criticità, ti mostro dove recuperare margini.',
+  title: 'Check-up Aziendale Gratuito - Prenota 60/90 minuti | Enrico Rizzi',
+  description: 'Prenota un check-up aziendale gratuito di 60 minuti (via Zoom) o 90 minuti (in presenza). Analizziamo insieme numeri e criticità, ti mostro dove recuperare margini.',
   path: '/contatti',
 });
 
@@ -14,11 +14,13 @@ export default function ContattiPage() {
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="font-heading text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-4">
-              Prenota una diagnosi gratuita
+              Check-up Aziendale Gratuito
             </h1>
-            <p className="text-xl text-[var(--color-subtext)]">
-              In 30 minuti analizziamo insieme numeri e criticità della tua PMI.
-              Ti mostro dove recuperare margini.
+            <p className="text-xl text-[var(--color-subtext)] mb-2">
+              In 60 minuti (via Zoom) o 90 minuti (in presenza) analizziamo insieme numeri e criticità della tua PMI.
+            </p>
+            <p className="text-lg text-[var(--color-subtext)]">
+              Ti mostro dove recuperare margini e come organizzarti meglio.
             </p>
           </div>
 

@@ -5,6 +5,7 @@ import CTA from '@/components/CTA';
 import Testimonial from '@/components/Testimonial';
 import ProfilePhoto from '@/components/ProfilePhoto';
 import OSMBadge from '@/components/OSMBadge';
+import IPBadge from '@/components/IPBadge';
 import JSONLD from '@/components/JSONLD';
 import { generateMetadata } from '@/lib/seo';
 
@@ -62,7 +63,7 @@ export default function HomePage() {
         h1="Organizzo la tua PMI per crescere: persone, KPI, processi."
         subtitle="In 90 giorni mettiamo ordine. In 6 mesi vedi i numeri."
         primaryCTA={{
-          text: 'Prenota diagnosi 30\'',
+          text: 'Check-up Aziendale Gratuito',
           href: '/contatti',
         }}
         secondaryCTA={{
@@ -154,6 +155,28 @@ export default function HomePage() {
           <div className="text-center mt-12">
             <CTA href="/case-study" variant="secondary" size="large">
               Vedi tutti i Case Study →
+            </CTA>
+          </div>
+        </div>
+      </section>
+
+      {/* i-Profile Strip */}
+      <section className="py-12 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary)]/90 text-white">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <IPBadge variant="inline" className="text-white" />
+              <span className="text-sm opacity-90">Prodotto di punta</span>
+            </div>
+            <h2 className="font-heading text-2xl md:text-3xl font-bold mb-3">
+              Scopri il tuo profilo attitudinale
+            </h2>
+            <p className="text-lg mb-6 opacity-90">
+              Prendi decisioni sulle persone con più dati e meno rischi. 
+              La persona giusta nel posto giusto non è fortuna: è metodo.
+            </p>
+            <CTA href="/i-profile" variant="secondary" size="large" className="bg-white text-[var(--color-primary)] hover:bg-gray-100">
+              Scopri i-Profile →
             </CTA>
           </div>
         </div>

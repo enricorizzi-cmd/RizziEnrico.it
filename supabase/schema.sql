@@ -137,6 +137,51 @@ CREATE TABLE IF NOT EXISTS ai_sessions (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- i-Profile Orders (ordini i-Profile)
+CREATE TABLE IF NOT EXISTS ip_orders (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  org_name TEXT NOT NULL,
+  contact_name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  phone TEXT,
+  use_case TEXT NOT NULL CHECK (use_case IN ('self', 'team', 'hiring')),
+  seats INTEGER DEFAULT 1,
+  status TEXT DEFAULT 'requested' CHECK (status IN ('requested', 'in_progress', 'completed')),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- i-Profile Reports (report generati)
+CREATE TABLE IF NOT EXISTS ip_reports (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  order_id UUID REFERENCES ip_orders(id) ON DELETE CASCADE,
+  person_name TEXT NOT NULL,
+  role TEXT,
+  email TEXT,
+  report_url TEXT,
+  debrief_scheduled_at TIMESTAMPTZ,
+  debrief_done BOOLEAN DEFAULT false,
+  notes TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- i-Profile Team Maps (mappe team per ordini team)
+CREATE TABLE IF NOT EXISTS ip_team_map (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  order_id UUID REFERENCES ip_orders(id) ON DELETE CASCADE,
+  matrix JSONB,
+  recommendations TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- i-Profile Hiring Comparison (confronto candidati per hiring)
+CREATE TABLE IF NOT EXISTS ip_hiring_comparison (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  order_id UUID REFERENCES ip_orders(id) ON DELETE CASCADE,
+  candidates JSONB,
+  decision TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- Consents (consensi GDPR)
 CREATE TABLE IF NOT EXISTS consents (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -145,6 +190,10 @@ CREATE TABLE IF NOT EXISTS consents (
   granted BOOLEAN DEFAULT false,
   timestamp TIMESTAMPTZ DEFAULT NOW()
 );
+
+CREATE INDEX IF NOT EXISTS idx_ip_orders_email ON ip_orders(email);
+CREATE INDEX IF NOT EXISTS idx_ip_orders_created_at ON ip_orders(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_ip_reports_order_id ON ip_reports(order_id);
 
 -- Indici per performance
 CREATE INDEX IF NOT EXISTS idx_leads_email ON leads(email);

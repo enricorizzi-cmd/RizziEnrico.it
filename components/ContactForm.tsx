@@ -45,11 +45,11 @@ export default function ContactForm() {
         source: data.source || 'form',
       });
       
-      // Redirect to calendar if score is high
-      if (result.score >= 50) {
-        // Could redirect to Calendly/TidyCal here
+      // Redirect to Calendly if score is high
+      if (result.score >= 40) {
+        // Redirect to Check-up Aziendale Gratuito
         setTimeout(() => {
-          window.location.href = process.env.NEXT_PUBLIC_CALENDLY_LINK || '#';
+          window.location.href = process.env.NEXT_PUBLIC_CALENDLY_CHECKUP_URL || result.calendlyLink || '#';
         }, 2000);
       }
     } catch (error) {
@@ -128,7 +128,7 @@ export default function ContactForm() {
               type="tel"
               {...register('phone')}
               className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
-              placeholder="+39 123 456 7890"
+              placeholder="+39 347 529 0564"
             />
           </div>
 

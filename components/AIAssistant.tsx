@@ -32,8 +32,12 @@ export default function AIAssistant() {
       response: 'Servizi productized con prezzi chiari: Consulenza PMI da €2.500/mese, Organizzazione da €1.800, KPI da €1.500 setup + €800/mese. Ogni servizio ha deliverable definiti. [Vedi tutti i servizi](/servizi)',
     },
     prenota: {
-      keywords: ['prenota', 'appuntamento', 'incontro', 'diagnosi'],
-      response: 'Prenota una diagnosi gratuita di 30 minuti. Analizziamo insieme numeri e criticità, ti mostro dove recuperare margini. [Prenota ora](/contatti)',
+      keywords: ['prenota', 'appuntamento', 'incontro', 'check-up', 'checkup', 'diagnosi'],
+      response: 'Prenota un check-up aziendale gratuito di 60 minuti (via Zoom) o 90 minuti (in presenza). Analizziamo insieme numeri e criticità, ti mostro dove recuperare margini. [Prenota ora](/contatti)',
+    },
+    iprofile: {
+      keywords: ['iprofile', 'i-profile', 'attitudinale', 'profilo', 'selezione', 'mappatura team', 'colloquio', 'tratti'],
+      response: 'i-Profile è uno strumento attitudinale professionale OSM che misura 10 tratti chiave per individuare potenziale e prendere decisioni su collocazione, sviluppo e selezione. Utilizzabile per imprenditori/manager (self-assessment), gestione team (mappatura) e selezione candidati (screening). Compilazione online 20-30 minuti, debrief 60-90 minuti. [Scopri i-Profile](/i-profile)',
     },
   };
 
@@ -71,25 +75,43 @@ export default function AIAssistant() {
 
   const captureLead = async (name: string, email: string, company: string, problem: string) => {
     try {
-      await supabase.from('leads').insert({
-        name,
-        email,
-        company,
-        main_problem: problem,
-        source: 'ai',
-        score: 30,
+      const response = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          company,
+          main_problem: problem,
+          source: 'ai',
+          size_employees: null,
+          revenue_range: null,
+        }),
       });
 
-      // Log conversazione
-      await supabase.from('ai_sessions').insert({
-        transcript: messages,
-        outcome: 'info',
-      });
+      if (response.ok) {
+        const data = await response.json();
+        
+        // Log conversazione su Supabase (se tabella esiste)
+        try {
+          await supabase.from('ai_sessions').insert({
+            lead_id: data.id,
+            transcript: messages,
+            outcome: 'lead_captured',
+            score: data.score || 30,
+          });
+        } catch (e) {
+          // Ignora se tabella non esiste ancora
+          console.log('AI sessions table not available');
+        }
 
-      setLeadCaptured(true);
+        setLeadCaptured(true);
+        return data;
+      }
     } catch (error) {
       console.error('Error capturing lead:', error);
     }
+    return null;
   };
 
   const handleSend = async () => {
@@ -115,7 +137,7 @@ export default function AIAssistant() {
             role: m.role,
             content: m.content,
           })),
-          sessionId: 'ai-assistant-session', // TODO: generare sessionId univoco
+          sessionId: `ai-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
         }),
       });
 
@@ -133,8 +155,14 @@ export default function AIAssistant() {
       setMessages(prev => [...prev, assistantMessage]);
       
       // Se non abbiamo ancora catturato il lead e ci sono 3+ messaggi, chiediamo dati
-      if (!leadCaptured && messages.length >= 3 && messages.length % 3 === 0) {
-        // In produzione: mostriamo form per lead
+      if (!leadCaptured && messages.length >= 2) {
+        // Dopo 3 scambi, chiediamo contatti per continuare
+        const leadPromptMessage: Message = {
+          role: 'assistant',
+          content: 'Per darti consigli più personalizzati, puoi lasciarmi nome, email e azienda? Così posso aiutarti meglio!',
+          timestamp: new Date(),
+        };
+        setMessages(prev => [...prev, leadPromptMessage]);
       }
     } catch (error) {
       console.error('Error:', error);
