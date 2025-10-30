@@ -47,3 +47,4 @@ Una volta ottimizzata, sostituisci `public\enrico-rizzi.jpg` con la versione com
 
 **Copiali manualmente e il sito le userà automaticamente! 🎨**
 
+

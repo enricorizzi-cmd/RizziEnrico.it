@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { useState } from 'react';
 
 interface ProfilePhotoProps {
   src?: string;
@@ -21,12 +24,28 @@ export default function ProfilePhoto({
 
   // Default: usa foto Enrico se disponibile
   const photoSrc = src || '/enrico-rizzi.jpg';
+  const [imageError, setImageError] = useState(false);
   
   const dimensions = {
     sm: 96,
     md: 256,
     lg: 288,
   };
+
+  // Se errore caricamento, mostra placeholder
+  if (imageError) {
+    return (
+      <div className={`${sizeClasses[size]} rounded-full overflow-hidden bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-primary)]/5 p-2 ${className}`}>
+        <div className="w-full h-full rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
+          <span className={`font-bold text-[var(--color-primary)] font-heading ${
+            size === 'lg' ? 'text-6xl' : size === 'md' ? 'text-5xl' : 'text-3xl'
+          }`}>
+            ER
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`${sizeClasses[size]} rounded-full overflow-hidden bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-primary)]/5 p-2 ${className}`}>
@@ -39,20 +58,7 @@ export default function ProfilePhoto({
           className="w-full h-full object-cover"
           priority
           unoptimized={photoSrc === '/enrico-rizzi.jpg'} // Temporaneo: skip optimization per foto grande (15MB)
-          onError={(e) => {
-            // Fallback a placeholder se immagine non carica
-            const target = e.target as HTMLImageElement;
-            if (target?.parentElement) {
-              target.style.display = 'none';
-              target.parentElement.innerHTML = `
-                <div class="w-full h-full bg-gray-200 flex items-center justify-center rounded-full">
-                  <span class="font-bold text-[var(--color-primary)] font-heading ${
-                    size === 'lg' ? 'text-6xl' : size === 'md' ? 'text-5xl' : 'text-3xl'
-                  }">ER</span>
-                </div>
-              `;
-            }
-          }}
+          onError={() => setImageError(true)}
         />
       </div>
     </div>

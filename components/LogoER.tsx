@@ -34,3 +34,4 @@ export default function LogoER({ className = '', variant = 'default' }: LogoERPr
   );
 }
 
+

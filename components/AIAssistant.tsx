@@ -128,7 +128,7 @@ export default function AIAssistant() {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 w-16 h-16 bg-[var(--color-primary)] text-white rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center z-50"
+        className="fixed bottom-4 right-4 md:bottom-6 md:right-6 w-14 h-14 md:w-16 md:h-16 bg-[var(--color-primary)] text-white rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center z-50"
         aria-label="Apri assistente AI"
       >
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -139,7 +139,7 @@ export default function AIAssistant() {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 w-96 h-[600px] bg-white rounded-[var(--radius-card)] shadow-2xl flex flex-col z-50 border border-[var(--color-line)]">
+    <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 w-[calc(100vw-2rem)] md:w-96 h-[600px] max-h-[90vh] bg-white rounded-[var(--radius-card)] shadow-2xl flex flex-col z-50 border border-[var(--color-line)]">
       {/* Header */}
       <div className="bg-[var(--color-primary)] text-white p-4 rounded-t-[var(--radius-card)] flex items-center justify-between">
         <div>

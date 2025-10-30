@@ -69,3 +69,4 @@ Il componente usa già Next/Image che ottimizza, ma il file iniziale è troppo p
 
 **Le immagini sono integrate! Testa in locale per vedere come appaiono! 🎨**
 
+
