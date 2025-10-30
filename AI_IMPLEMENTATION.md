@@ -34,18 +34,19 @@
 
 **Su Render** (Environment Variables):
 ```
-OPENAI_API_KEY=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
+OPENAI_API_KEY=sk-proj-your-key-here
 ```
 
 ⚠️ **IMPORTANTE**: 
 - La chiave API è SERVER-SIDE ONLY
 - Non esporre mai nel codice client
 - Tutte le chiamate OpenAI avvengono tramite API routes server-side
+- **NON committare mai la chiave nel repository!**
 
 ### Setup Render
 
 1. Vai su Render Dashboard → Environment Variables
-2. Aggiungi `OPENAI_API_KEY` con il valore fornito
+2. Aggiungi `OPENAI_API_KEY` con la tua chiave OpenAI
 3. Riavvia il servizio
 
 ## 📊 Features AI
@@ -99,4 +100,3 @@ OPENAI_API_KEY=sk-proj-zeRNDPFVwaYKhe5RuhhzRL2Ec-eaOEY1S3AGYeM3pIZiu9oDSrNnPe_7w
 ---
 
 **Status**: ✅ Tutte le funzionalità AI implementate e pronte per il deploy!
-
