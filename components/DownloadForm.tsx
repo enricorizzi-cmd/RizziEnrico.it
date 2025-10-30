@@ -51,7 +51,7 @@ export default function DownloadForm({ resourceSlug }: DownloadFormProps) {
         }
       }
     } catch (error) {
-      setSubmitError('Qualcosa è andato storto. Riprova o scrivi a enrico@rizzienrico.it');
+      setSubmitError('Qualcosa è andato storto. Riprova o scrivi a e.rizzi@osmpartnervenezia.it');
     } finally {
       setIsSubmitting(false);
     }

@@ -31,7 +31,7 @@ export default function ContattiPage() {
               Preferisci contattarmi direttamente?
             </p>
             <a
-              href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '39YOURPHONENUMBER'}`}
+              href="https://wa.me/393475290564"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#25D366] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"

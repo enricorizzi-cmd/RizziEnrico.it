@@ -53,7 +53,7 @@ export default function ContactForm() {
         }, 2000);
       }
     } catch (error) {
-      setSubmitError('Qualcosa è andato storto. Riprova o scrivi a enrico@rizzienrico.it');
+      setSubmitError('Qualcosa è andato storto. Riprova o scrivi a e.rizzi@osmpartnervenezia.it');
     } finally {
       setIsSubmitting(false);
     }

@@ -26,7 +26,7 @@ export default function PrivacyPage() {
             <h2>Titolare del Trattamento</h2>
             <p>
               Enrico Rizzi<br />
-              Email: enrico@rizzienrico.it<br />
+              Email: e.rizzi@osmpartnervenezia.it<br />
               Area servita: Venezia - Rovigo, Veneto
             </p>
             <h2>Finalità del Trattamento</h2>

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import OSMBadge from './OSMBadge';
+import LogoER from './LogoER';
 
 export default function Footer() {
   return (
@@ -9,10 +10,11 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div>
-                <h3 className="font-heading font-bold text-xl text-white">Enrico Rizzi</h3>
-                <p className="text-xs text-gray-400 mt-1">Consulente Organizzazione PMI</p>
-              </div>
+              <LogoER variant="footer" className="text-white" />
+            </div>
+            <div className="mb-4">
+              <h3 className="font-heading font-bold text-xl text-white">Enrico Rizzi</h3>
+              <p className="text-xs text-gray-400 mt-1">Consulente Organizzazione PMI</p>
             </div>
             <p className="text-sm text-gray-300 mb-3">
               Consulenza per PMI che vogliono crescere con metodo:

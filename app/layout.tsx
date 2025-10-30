@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import CookieBanner from "@/components/CookieBanner";
 import AIAssistant from "@/components/AIAssistant";
 import Analytics from "@/components/Analytics";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -51,6 +52,7 @@ export default function RootLayout({
         <Footer />
         <CookieBanner />
         <AIAssistant />
+        <WhatsAppWidget />
         <Analytics />
       </body>
     </html>

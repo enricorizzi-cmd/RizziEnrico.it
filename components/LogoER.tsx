@@ -19,17 +19,15 @@ export default function LogoER({ className = '', variant = 'default' }: LogoERPr
           Enrico Rizzi
         </span>
       </div>
-      {/* Logo personalizzato se disponibile - nascosto per ora, attiva se hai logo ER */}
-      {false && (
-        <Image
-          src="/logo-enrico-rizzi.png"
-          alt="Enrico Rizzi"
-          width={120}
-          height={40}
-          className="h-8 w-auto"
-          priority
-        />
-      )}
+      {/* Logo personalizzato */}
+      <Image
+        src="/logo-enrico-rizzi.png"
+        alt="Enrico Rizzi"
+        width={120}
+        height={40}
+        className="h-8 w-auto"
+        priority
+      />
     </div>
   );
 }
