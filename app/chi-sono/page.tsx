@@ -1,6 +1,8 @@
 import { generateMetadata } from '@/lib/seo';
 import SectionTitle from '@/components/SectionTitle';
 import Testimonial from '@/components/Testimonial';
+import ProfilePhoto from '@/components/ProfilePhoto';
+import OSMBadge from '@/components/OSMBadge';
 import CTA from '@/components/CTA';
 
 export const metadata = generateMetadata({
@@ -16,16 +18,27 @@ export default function ChiSonoPage() {
         <div className="max-w-4xl mx-auto">
           {/* Hero */}
           <div className="text-center mb-16">
-            <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-6 flex items-center justify-center">
-              <span className="text-4xl font-bold text-[var(--color-primary)]">ER</span>
+            {/* Foto professionale */}
+            <div className="relative inline-block mb-8">
+              <ProfilePhoto size="md" />
+              {/* Badge OSM discreto */}
+              <div className="absolute bottom-0 right-0 md:right-auto md:left-full md:ml-4 md:top-1/2 md:-translate-y-1/2">
+                <div className="bg-white rounded-lg px-3 py-2 shadow-md border border-[var(--color-line)]">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] text-[var(--color-subtext)] font-medium">Partner</span>
+                    <OSMBadge variant="small" />
+                  </div>
+                </div>
+              </div>
             </div>
+            
             <h1 className="font-heading text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-4">
               Enrico Rizzi
             </h1>
-            <p className="text-xl text-[var(--color-subtext)]">
-              Consulente OSM per PMI che vogliono crescere con metodo: persone, KPI e processi.
+            <p className="text-xl text-[var(--color-subtext)] mb-2">
+              Consulente Organizzazione PMI
             </p>
-            <p className="text-lg text-[var(--color-subtext)] mt-2">
+            <p className="text-lg text-[var(--color-subtext)]">
               Area servita: Venezia - Rovigo, Veneto
             </p>
           </div>

@@ -23,9 +23,9 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Enrico Rizzi - Consulente OSM per PMI | Venezia-Rovigo",
-  description: "Organizziamo la tua PMI per crescere: persone, KPI e processi. In 90 giorni mettiamo ordine, in 6 mesi vedi i numeri.",
-  keywords: "consulenza PMI, organizzazione aziendale, KPI, controllo di gestione, consulente Venezia, consulente Rovigo, OSM",
+  title: "Enrico Rizzi - Consulente Organizzazione PMI | Venezia-Rovigo",
+  description: "Organizziamo la tua PMI per crescere: persone, KPI e processi. In 90 giorni mettiamo ordine, in 6 mesi vedi i numeri. Consulente PMI Veneto.",
+  keywords: "consulenza PMI, organizzazione aziendale, KPI, controllo di gestione, consulente Venezia, consulente Rovigo, Enrico Rizzi",
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'),
 };
 

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import MobileMenu from './MobileMenu';
+import OSMBadge from './OSMBadge';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -21,13 +22,21 @@ export default function Header() {
       <nav className="container mx-auto px-4 lg:px-8" aria-label="Navigazione principale">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-[var(--color-primary)] font-heading">
-              ER
-            </span>
-            <span className="text-sm text-[var(--color-text)] hidden sm:inline">
-              Enrico Rizzi
-            </span>
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="flex flex-col">
+              <span className="text-2xl font-bold text-[var(--color-primary)] font-heading leading-none">
+                ER
+              </span>
+              <span className="text-xs text-[var(--color-text)] font-medium hidden sm:block">
+                Enrico Rizzi
+              </span>
+            </div>
+            <div className="hidden md:flex items-center gap-2 pl-3 border-l border-[var(--color-line)]">
+              <span className="text-[9px] uppercase tracking-wider text-[var(--color-subtext)] font-semibold">
+                Partner
+              </span>
+              <OSMBadge variant="small" />
+            </div>
           </Link>
 
           {/* Desktop Navigation */}

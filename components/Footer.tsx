@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import OSMBadge from './OSMBadge';
 
 export default function Footer() {
   return (
@@ -7,14 +8,23 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-            <h3 className="font-heading font-bold text-xl mb-4">Enrico Rizzi</h3>
-            <p className="text-sm text-gray-300 mb-4">
-              Consulente OSM per PMI che vogliono crescere con metodo:
+            <div className="flex items-center gap-3 mb-4">
+              <div>
+                <h3 className="font-heading font-bold text-xl text-white">Enrico Rizzi</h3>
+                <p className="text-xs text-gray-400 mt-1">Consulente Organizzazione PMI</p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-300 mb-3">
+              Consulenza per PMI che vogliono crescere con metodo:
               persone, KPI e processi.
             </p>
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-gray-300 mb-4">
               Area servita: Venezia - Rovigo
             </p>
+            <div className="flex items-center gap-2 pt-3 border-t border-gray-700">
+              <span className="text-xs text-gray-400">Partner</span>
+              <OSMBadge variant="footer" className="opacity-50" />
+            </div>
           </div>
 
           {/* Servizi */}

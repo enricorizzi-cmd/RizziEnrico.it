@@ -1,0 +1,10 @@
+<svg width="120" height="40" viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+  <!-- Logo ER Text -->
+  <text x="5" y="28" font-family="Montserrat, sans-serif" font-size="28" font-weight="700" fill="#A72868">
+    ER
+  </text>
+  <text x="5" y="38" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#6B7280">
+    Enrico Rizzi
+  </text>
+</svg>
+

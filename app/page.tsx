@@ -3,6 +3,8 @@ import SectionTitle from '@/components/SectionTitle';
 import Card from '@/components/Card';
 import CTA from '@/components/CTA';
 import Testimonial from '@/components/Testimonial';
+import ProfilePhoto from '@/components/ProfilePhoto';
+import OSMBadge from '@/components/OSMBadge';
 import JSONLD from '@/components/JSONLD';
 import { generateMetadata } from '@/lib/seo';
 
@@ -229,6 +231,53 @@ export default function HomePage() {
             ].map((testimonial, index) => (
               <Testimonial key={index} {...testimonial} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Sezione Enrico - Foto e Presentazione */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+              {/* Foto */}
+              <div className="md:col-span-1">
+                <div className="relative inline-block mx-auto md:mx-0">
+                  <ProfilePhoto size="md" />
+                  {/* Badge OSM discreto */}
+                  <div className="absolute -bottom-2 -right-2 bg-white rounded-lg px-2 py-1 shadow-sm border border-[var(--color-line)]">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[9px] text-[var(--color-subtext)] font-medium">Partner</span>
+                      <OSMBadge variant="small" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Testo */}
+              <div className="md:col-span-2 text-center md:text-left">
+                <h2 className="font-heading text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-4">
+                  Enrico Rizzi
+                </h2>
+                <p className="text-lg md:text-xl text-[var(--color-subtext)] mb-4">
+                  Consulente OSM per PMI del Veneto
+                </p>
+                <p className="text-[var(--color-text)] mb-6 leading-relaxed">
+                  Da oltre 10 anni aiuto PMI a passare da organizzazione caotica
+                  a sistema strutturato orientato ai risultati. Metodo pratico,
+                  numeri misurabili, zero fuffa.
+                </p>
+                <div className="flex items-center justify-center md:justify-start gap-4">
+                  <CTA href="/chi-sono" variant="primary">
+                    La mia storia →
+                  </CTA>
+                  <div className="flex items-center gap-2 text-sm text-[var(--color-subtext)]">
+                    <span>Partner</span>
+                    <OSMBadge variant="footer" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
