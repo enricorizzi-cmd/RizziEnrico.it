@@ -54,7 +54,7 @@ export default function AIAssistant() {
     if (isOpen && messages.length === 0) {
       setMessages([{
         role: 'assistant',
-        content: 'Ciao! Sono l\'assistente di Enrico. Dimmi in due righe la tua azienda e il problema principale, poi ti propongo la soluzione giusta.',
+        content: 'Ciao! Sono l\'assistente AI di Enrico Rizzi, consulente OSM per PMI del Veneto. Sono qui per aiutarti a organizzare la tua azienda con metodo: persone, KPI (Indicatori Chiave di Prestazione) e processi.\n\nPosso rispondere a domande su:\n- Il metodo OSM in 5 step\n- KPI e controllo di gestione\n- Servizi di consulenza\n- i-Profile (strumento attitudinale)\n- Risorse gratuite disponibili\n\nDimmi qual è la criticità principale della tua PMI e ti propongo la soluzione più adatta!',
         timestamp: new Date(),
       }]);
     }
