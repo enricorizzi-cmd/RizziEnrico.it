@@ -61,12 +61,14 @@ Consulente OSM per PMI`,
     });
     
     // Salva info email
-    await supabase.from('leads').update({
-      metadata: {
-        downloadRequested: true,
-        emailSent: emailSentToUser,
-      },
-    }).eq('id', lead?.id);
+    if (lead?.id) {
+      await supabase.from('leads').update({
+        metadata: {
+          downloadRequested: true,
+          emailSent: emailSentToUser,
+        },
+      }).eq('id', lead.id);
+    }
     
     return NextResponse.json({
       success: true,

@@ -19,9 +19,9 @@ export default function ContactForm() {
     watch,
   } = useForm<LeadInput>({
     resolver: zodResolver(leadSchema),
-    defaultValues: {
-      meeting_type: 'presence', // Default: solo in presenza disponibile
-    },
+        defaultValues: {
+          meeting_type: undefined,
+        },
   });
 
   const onSubmit = async (data: LeadInput) => {
@@ -139,19 +139,24 @@ export default function ContactForm() {
               Preferenza incontro *
             </label>
             <div className="grid grid-cols-2 gap-3">
-              {/* Zoom - Presto disponibile */}
-              <div className="relative flex flex-col items-center justify-center p-4 border-2 rounded-lg border-[var(--color-line)] bg-gray-50 opacity-60 cursor-not-allowed">
+              {/* Via Zoom - Selezionabile */}
+              <label className={`relative flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                watch('meeting_type') === 'zoom'
+                  ? 'border-[var(--color-primary)] bg-[var(--color-primary)]/5'
+                  : 'border-[var(--color-line)] hover:border-[var(--color-primary)]/50'
+              }`}>
+                <input
+                  type="radio"
+                  value="zoom"
+                  {...register('meeting_type', { required: 'Seleziona una preferenza' })}
+                  className="sr-only"
+                />
                 <div className="text-2xl mb-2">💻</div>
                 <div className="font-semibold text-[var(--color-text)]">Via Zoom</div>
                 <div className="text-xs text-[var(--color-subtext)] mt-1">60 minuti</div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="bg-white px-2 py-1 rounded text-xs font-semibold text-[var(--color-primary)] border border-[var(--color-primary)]">
-                    Presto disponibile
-                  </span>
-                </div>
-              </div>
+              </label>
               
-              {/* In presenza - Disponibile */}
+              {/* In presenza - Selezionabile */}
               <label className={`relative flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
                 watch('meeting_type') === 'presence'
                   ? 'border-[var(--color-primary)] bg-[var(--color-primary)]/5'
@@ -162,7 +167,6 @@ export default function ContactForm() {
                   value="presence"
                   {...register('meeting_type', { required: 'Seleziona una preferenza' })}
                   className="sr-only"
-                  defaultChecked
                 />
                 <div className="text-2xl mb-2">🤝</div>
                 <div className="font-semibold text-[var(--color-text)]">In presenza</div>
@@ -172,13 +176,31 @@ export default function ContactForm() {
                 </div>
               </label>
             </div>
-            <p className="mt-2 text-xs text-[var(--color-subtext)] text-center">
-              ⚠️ Al momento disponibile solo in presenza nell'area Venezia-Padova-Rovigo
-            </p>
             {errors.meeting_type && (
               <p className="mt-2 text-sm text-[var(--color-error)]">{errors.meeting_type.message}</p>
             )}
           </div>
+
+          {/* Campo indirizzo - mostrato solo se "presence" è selezionato */}
+          {watch('meeting_type') === 'presence' && (
+            <div>
+              <label htmlFor="address" className="block text-sm font-medium text-[var(--color-text)] mb-2">
+                Indirizzo della tua sede * {watch('meeting_type') === 'presence' && '(per l\'incontro in presenza)'}
+              </label>
+              <input
+                id="address"
+                type="text"
+                {...register('address', { 
+                  required: watch('meeting_type') === 'presence' ? 'Indirizzo richiesto per incontro in presenza' : false 
+                })}
+                className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
+                placeholder="Via, numero civico, città (es: Via Roma 123, Padova)"
+              />
+              {errors.address && (
+                <p className="mt-1 text-sm text-[var(--color-error)]">{errors.address.message}</p>
+              )}
+            </div>
+          )}
 
           <button
             type="button"
@@ -248,6 +270,10 @@ export default function ContactForm() {
               className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
               placeholder="Descrivi brevemente la criticità principale della tua PMI..."
             />
+          </div>
+
+          <div className="mt-4 p-3 bg-[var(--color-card)] rounded-lg text-xs text-[var(--color-subtext)]">
+            <strong>Perché chiediamo questi dati:</strong> per preparare il Check-up su misura.
           </div>
 
           <div className="flex gap-3">

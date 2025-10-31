@@ -23,25 +23,32 @@ export default async function CaseStudyPage() {
   // Per ora: dati mock
   const cases: CaseStudy[] = [
     {
-      slug: 'pmi-manifatturiera-45',
-      title: 'Da attività reattiva a processi stabili',
-      sector: 'Manifatturiero',
-      size: '45 addetti',
-      context: 'PMI manifatturiera che ha implementato organizzazione e KPI dashboard',
+      slug: 'distribuzione-ricambi-filtri',
+      title: 'Distribuzione ricambi e filtrazione: da urgenze a processi stabili',
+      sector: 'Commercio B2B',
+      size: '45+ addetti',
+      context: 'Ruoli sovrapposti, riunioni inutili, KPI assenti in logistica. Soluzione: organigramma, mansionari, cruscotto logistica. Risultati: processo stabile, puntualità alta e meno "fuoco da spegnere".',
     },
     {
-      slug: 'passaggio-generazionale',
-      title: 'Passaggio generazionale riuscito',
-      sector: 'Servizi',
-      size: '28 addetti',
-      context: 'Transizione leadership con metodo strutturato',
+      slug: 'produzione-alimentare-polenta',
+      title: 'Produzione alimentare: pianificazione e qualità con KPI',
+      sector: 'Alimentare',
+      size: 'Linee produzione',
+      context: 'Programmazione reattiva, dati sparsi, assenza indicatori qualità. Soluzione: piano settimanale per linee, KPI efficienza/resa/scarti. Risultati: pianificazione stabile, decisioni basate su numeri, meno scarti.',
     },
     {
-      slug: 'crescita-vendite',
-      title: '+35% fatturato in 12 mesi',
-      sector: 'Commercio',
-      size: '15 addetti',
-      context: 'Organizzazione vendite e marketing con KPI chiari',
+      slug: 'lattoneria-coperture-cantiere',
+      title: 'Lattoneria & Coperture: passaggio generazionale riuscito',
+      sector: 'Edile/Impiantistico',
+      size: 'Cantiere',
+      context: 'Know-how nelle persone, poco tracciamento avanzamento. Soluzione: mansionari per ruoli cantiere/ufficio, KPI avanzamento e marginalità commessa. Risultati: continuità direzionale, controllo commesse, più ordine.',
+    },
+    {
+      slug: 'impianti-clima-refrigerazione-service',
+      title: 'Impianti clima/refrigerazione: service con qualità misurabile',
+      sector: 'Service tecnico',
+      size: 'Team service',
+      context: 'Priorità confuse, reportistica carente. Soluzione: agenda interventi con priorità, feedback post-servizio, KPI tempi/first-time-fix/ticket aperti. Risultati: tempi ridotti, qualità percepita in crescita, meno rientri.',
     },
   ];
 

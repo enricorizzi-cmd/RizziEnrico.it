@@ -33,7 +33,7 @@ export default function RisorsePage() {
             <div className="text-center mb-8">
               <div className="text-5xl mb-4">📊</div>
               <h2 className="font-heading text-3xl font-bold text-[var(--color-text)] mb-4">
-                KPI Pack Gratuito
+                Kit KPI (Indicatori Chiave di Prestazione) Gratuito
               </h2>
               <p className="text-lg text-[var(--color-subtext)] mb-2">
                 Template Excel/Sheets con 12 KPI chiave preconfigurati
@@ -118,10 +118,13 @@ export default function RisorsePage() {
         {/* AI Tools */}
         <section className="mb-16">
           <SectionTitle
-            title="Tool AI Avanzati"
-            description="Analisi automatica e generazione con intelligenza artificiale"
+            title="Tool Intelligenza Artificiale Avanzati"
+            description="Analisi automatica e generazione con Intelligenza Artificiale (AI)"
             centered
           />
+          <p className="text-center text-sm text-[var(--color-subtext)] mb-6 max-w-2xl mx-auto">
+            Le analisi sono indicative e non sostituiscono la consulenza.
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             <KPIAnalysisAI />
             <MansionariGeneratorAI />

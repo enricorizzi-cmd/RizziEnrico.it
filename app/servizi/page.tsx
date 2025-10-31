@@ -51,7 +51,7 @@ export default function ServiziPage() {
           </h1>
           <p className="text-xl text-[var(--color-subtext)] max-w-3xl mx-auto">
             Consulenza productized con output concreti, tempistiche chiare e investimento trasparente.
-            Ogni servizio ha deliverable definiti, tempi certi e prezzo "da".
+            Ogni servizio ha deliverable definiti, tempi certi e possibilità di richiedere informazioni personalizzate.
           </p>
         </div>
 
@@ -76,9 +76,9 @@ export default function ServiziPage() {
                   ))}
                 </ul>
               </div>
-              <div className="text-xl font-bold text-[var(--color-primary)] mt-4">
-                {service.price}
-              </div>
+              <CTA href="/contatti" variant="primary" size="base" className="w-full mt-4">
+                Richiedi informazioni →
+              </CTA>
             </Card>
           ))}
         </div>
@@ -93,7 +93,7 @@ export default function ServiziPage() {
             ti mostro dove recuperare margini.
           </p>
           <CTA href="/contatti" variant="primary" size="large">
-            Prenota diagnosi 30' →
+            Prenota il Check-up gratuito →
           </CTA>
         </div>
       </div>

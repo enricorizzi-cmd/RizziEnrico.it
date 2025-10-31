@@ -1,5 +1,6 @@
 import { generateMetadata } from '@/lib/seo';
 import ContactForm from '@/components/ContactForm';
+import Accordion from '@/components/Accordion';
 
 export const metadata = generateMetadata({
   title: 'Check-up Aziendale Gratuito - Prenota 60/90 minuti | Enrico Rizzi',
@@ -17,14 +18,47 @@ export default function ContattiPage() {
               Check-up Aziendale Gratuito
             </h1>
             <p className="text-xl text-[var(--color-subtext)] mb-2">
-              In 90 minuti (in presenza) analizziamo insieme numeri e criticità della tua PMI nell'area Venezia-Padova-Rovigo.
-            </p>
-            <p className="text-sm text-[var(--color-subtext)] italic">
-              ⚠️ Appuntamento via Zoom disponibile presto
+              Disponibile via Zoom o in presenza (90 minuti). Analizziamo insieme numeri e criticità della tua PMI nell'area Venezia-Padova-Rovigo.
             </p>
             <p className="text-lg text-[var(--color-subtext)]">
               Ti mostro dove recuperare margini e come organizzarti meglio.
             </p>
+          </div>
+
+          {/* Local SEO */}
+          <div className="bg-white rounded-[var(--radius-card)] p-6 md:p-8 border border-[var(--color-line)] mb-8">
+            <h2 className="font-heading text-2xl font-bold text-[var(--color-text)] mb-4 text-center">
+              Consulenza PMI in Veneto
+            </h2>
+            <p className="text-[var(--color-subtext)] mb-4 text-center">
+              Opero in Veneto con focus su Venezia, Padova e Rovigo. Conosco le dinamiche locali delle PMI del territorio e integro metodo e numeri per risultati concreti.
+            </p>
+            <ul className="space-y-2 mb-4 max-w-2xl mx-auto">
+              <li className="flex items-start gap-2 text-sm text-[var(--color-text)]">
+                <span className="text-[var(--color-primary)]">•</span>
+                <span>Incontri in presenza (Venezia-Padova-Rovigo)</span>
+              </li>
+              <li className="flex items-start gap-2 text-sm text-[var(--color-text)]">
+                <span className="text-[var(--color-primary)]">•</span>
+                <span>Check-up gratuito: 60' Zoom o 90' in presenza</span>
+              </li>
+              <li className="flex items-start gap-2 text-sm text-[var(--color-text)]">
+                <span className="text-[var(--color-primary)]">•</span>
+                <span>Esperienza su manifatturiero, servizi, commercio</span>
+              </li>
+            </ul>
+            <div className="max-w-xl mx-auto">
+              <Accordion items={[
+                {
+                  question: 'Fate interventi anche fuori regione?',
+                  answer: 'Sì, su valutazione.',
+                },
+                {
+                  question: 'Quanto tempo serve per iniziare?',
+                  answer: 'Dopo il check-up, calendario e piano.',
+                },
+              ]} />
+            </div>
           </div>
 
           <div className="bg-white rounded-[var(--radius-card)] p-8 md:p-12 shadow-md">

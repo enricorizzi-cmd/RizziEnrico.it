@@ -6,6 +6,7 @@ import Testimonial from '@/components/Testimonial';
 import ProfilePhoto from '@/components/ProfilePhoto';
 import OSMBadge from '@/components/OSMBadge';
 import IPBadge from '@/components/IPBadge';
+import Accordion from '@/components/Accordion';
 import JSONLD from '@/components/JSONLD';
 import { generateMetadata } from '@/lib/seo';
 
@@ -67,7 +68,7 @@ export default function HomePage() {
           href: '/contatti',
         }}
         secondaryCTA={{
-          text: 'Scarica KPI Pack',
+          text: 'Scarica Kit KPI',
           href: '/risorse',
         }}
         proofStrip={{
@@ -95,7 +96,7 @@ export default function HomePage() {
               },
               {
                 title: '2. Numeri',
-                description: 'KPI pratici e dashboard che guidano le scelte.',
+                description: 'KPI (Indicatori Chiave di Prestazione) pratici e cruscotto che guidano le scelte.',
               },
               {
                 title: '3. Processi',
@@ -146,7 +147,7 @@ export default function HomePage() {
               >
                 <div className="space-y-2 text-sm">
                   <p><strong>Contesto:</strong> PMI manifatturiera 45 addetti</p>
-                  <p><strong>Intervento:</strong> Organizzazione + KPI dashboard</p>
+                  <p><strong>Intervento:</strong> Organizzazione + cruscotto KPI</p>
                   <p><strong>Risultati:</strong> +X% fatturato, -Y% tempi consegna</p>
                 </div>
               </Card>
@@ -209,7 +210,7 @@ export default function HomePage() {
               },
               {
                 title: 'KPI & Controllo di Gestione',
-                description: 'Dashboard mensili, alert scostamenti, piano azione.',
+                description: 'Cruscotto mensile, alert scostamenti, piano azione.',
                 price: 'Da €W',
               },
             ].map((service, index) => (
@@ -237,23 +238,77 @@ export default function HomePage() {
             description="Cosa dicono i clienti che hanno implementato il metodo"
             centered
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {[
               {
-                quote: 'Prima gestivamo tutto "a sensazione". Ora abbiamo numeri chiari, processi definiti. In 6 mesi abbiamo recuperato margini che non sapevamo di avere.',
-                authorName: 'Mario Rossi',
-                role: 'Amministratore Delegato',
-                company: 'PMI Manifatturiera',
+                quote: 'Prima rincorrevamo le urgenze. Con ruoli chiari, riunioni a KPI (Indicatori Chiave di Prestazione) e un cruscotto semplice, le consegne sono puntuali e il team sa cosa contare e quando.',
+                authorName: 'Direttore Commerciale',
+                role: 'Distribuzione ricambi',
               },
               {
-                quote: 'Il passaggio generazionale era critico. Grazie al metodo, abbiamo mantenuto continuità operativa e migliorato anche l\'organizzazione.',
-                authorName: 'Luigi Bianchi',
-                role: 'Nuovo AD',
-                company: 'Azienda Familiare',
+                quote: 'La pianificazione settimanale e i KPI di efficienza ci hanno tolto il caos. Oggi sappiamo dove intervenire ogni lunedì mattina.',
+                authorName: 'Responsabile Produzione',
+                role: 'Alimentare',
+              },
+              {
+                quote: 'Il passaggio generazionale non è più un tabù: mansionari, obiettivi e riunioni brevi ci hanno dato continuità e risultati.',
+                authorName: 'Amministratore',
+                role: 'Lattoneria & Coperture',
+              },
+              {
+                quote: 'Agenda interventi, priorità e feedback post-servizio: tempi morti giù e più soddisfazione clienti. Finalmente misuriamo la qualità.',
+                authorName: 'Service Manager',
+                role: 'Impianti clima/refrigerazione',
               },
             ].map((testimonial, index) => (
               <Testimonial key={index} {...testimonial} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Local SEO */}
+      <section className="py-16 bg-[var(--color-card)]">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-4 text-center">
+              Consulenza PMI in Veneto
+            </h2>
+            <p className="text-lg text-[var(--color-subtext)] mb-6 text-center">
+              Opero in Veneto con focus su Venezia, Padova e Rovigo. Conosco le dinamiche locali delle PMI del territorio e integro metodo e numeri per risultati concreti.
+            </p>
+            <ul className="space-y-3 mb-8 max-w-2xl mx-auto">
+              <li className="flex items-start gap-3 text-[var(--color-text)]">
+                <svg className="w-5 h-5 text-[var(--color-primary)] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>Incontri in presenza (Venezia-Padova-Rovigo)</span>
+              </li>
+              <li className="flex items-start gap-3 text-[var(--color-text)]">
+                <svg className="w-5 h-5 text-[var(--color-primary)] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>Check-up gratuito: 60' Zoom o 90' in presenza</span>
+              </li>
+              <li className="flex items-start gap-3 text-[var(--color-text)]">
+                <svg className="w-5 h-5 text-[var(--color-primary)] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>Esperienza su manifatturiero, servizi, commercio</span>
+              </li>
+            </ul>
+            <div className="bg-white rounded-[var(--radius-card)] p-6 border border-[var(--color-line)] max-w-2xl mx-auto">
+              <Accordion items={[
+                {
+                  question: 'Fate interventi anche fuori regione?',
+                  answer: 'Sì, su valutazione.',
+                },
+                {
+                  question: 'Quanto tempo serve per iniziare?',
+                  answer: 'Dopo il check-up, calendario e piano.',
+                },
+              ]} />
+            </div>
           </div>
         </div>
       </section>
@@ -312,7 +367,7 @@ export default function HomePage() {
             Pronto a mettere ordine nella tua PMI?
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            Prenota 30 minuti gratuiti: porta numeri e criticità, ti mostro dove recuperare margini.
+            Prenota il Check-up gratuito: porta numeri e criticità, ti mostro dove recuperare margini.
           </p>
           <CTA href="/contatti" variant="secondary" size="large" className="bg-white text-[var(--color-primary)] hover:bg-gray-100">
             Prenota ora →

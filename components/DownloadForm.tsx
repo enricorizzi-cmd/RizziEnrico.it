@@ -7,9 +7,17 @@ import { downloadSchema, type DownloadInput } from '@/lib/validators';
 
 interface DownloadFormProps {
   resourceSlug: string;
+  buttonText?: string;
 }
 
-export default function DownloadForm({ resourceSlug }: DownloadFormProps) {
+export default function DownloadForm({ resourceSlug, buttonText }: DownloadFormProps) {
+  // Determina il testo del bottone in base al resourceSlug se non fornito
+  const getButtonText = () => {
+    if (buttonText) return buttonText;
+    if (resourceSlug === 'iprofile-guida') return 'Scarica Anteprima i-Profile';
+    if (resourceSlug === 'iprofile-checklist') return 'Scarica Check-list Colloquio';
+    return 'Scarica KPI Pack';
+  };
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -131,7 +139,7 @@ export default function DownloadForm({ resourceSlug }: DownloadFormProps) {
         disabled={isSubmitting}
         className="w-full px-6 py-3 bg-[var(--color-primary)] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
       >
-        {isSubmitting ? 'Invio in corso...' : 'Scarica KPI Pack'}
+        {isSubmitting ? 'Invio in corso...' : getButtonText()}
       </button>
 
       {submitError && (

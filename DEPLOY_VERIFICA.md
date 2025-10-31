@@ -26,7 +26,7 @@ NEXT_PUBLIC_CALENDLY_PRESENCE_URL=https://calendly.com/enricorizzi/check-up-grat
 NEXT_PUBLIC_CALENDLY_ZOOM_URL=
 
 # Resend Email
-RESEND_API_KEY=re_xxxxxxxxxxxxx
+RESEND_API_KEY=re_xxxxxxxxxxxxx  # ⚠️ Aggiungi la tua API Key da Resend
 FROM_EMAIL=Enrico Rizzi <noreply@rizzienrico.it>
 ```
 

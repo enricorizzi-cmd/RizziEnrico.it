@@ -144,8 +144,6 @@ export default function IProfilePage() {
       id: 'solo',
       name: 'Solo Titolare',
       subtitle: 'i-Profile + Debrief individuale',
-      price: 'Da €X',
-      priceNote: 'una tantum',
       includes: [
         'Report i-Profile completo',
         'Debrief 60-90 minuti',
@@ -153,7 +151,7 @@ export default function IProfilePage() {
         'Check-list comportamenti da monitorare',
       ],
       cta: {
-        text: 'Prenota i-Profile + Debrief',
+        text: 'Richiedi informazioni',
         href: '/contatti',
       },
     },
@@ -161,8 +159,6 @@ export default function IProfilePage() {
       id: 'team',
       name: 'Team Start',
       subtitle: 'Fino a 5 persone',
-      price: 'Da €Y',
-      priceNote: 'una tantum',
       includes: [
         'i-Profile per 5 persone',
         'Mappa Team completa',
@@ -172,7 +168,7 @@ export default function IProfilePage() {
       ],
       popular: true,
       cta: {
-        text: 'Mappa il tuo team',
+        text: 'Richiedi informazioni',
         href: '/contatti',
       },
     },
@@ -180,8 +176,6 @@ export default function IProfilePage() {
       id: 'hiring',
       name: 'Hiring Kit',
       subtitle: 'Selezione supportata',
-      price: 'Da €Z',
-      priceNote: 'per posizione',
       includes: [
         'i-Profile candidati short-list',
         'Griglia colloquio guidata',
@@ -190,7 +184,7 @@ export default function IProfilePage() {
         'Follow-up primo trimestre',
       ],
       cta: {
-        text: 'Migliora le selezioni',
+        text: 'Richiedi informazioni',
         href: '/contatti',
       },
     },
@@ -220,6 +214,30 @@ export default function IProfilePage() {
     {
       question: 'Cosa misura esattamente?',
       answer: 'Un set di 10 ingredienti/tratti chiave che influenzano la produttività e i comportamenti al lavoro. Questionario esteso OSM (242 domande nella fase di sviluppo) con validazione scientifica.',
+    },
+    {
+      question: 'È adatto al mio settore?',
+      answer: 'Sì. Le attitudini misurate sono trasversali; in debrief le contestualizziamo al ruolo e al settore.',
+    },
+    {
+      question: 'Come lo uso in selezione?',
+      answer: 'Lo applichiamo alla short-list: guida i colloqui su evidenze attitudinali e ci aiuta a confrontare candidati in modo oggettivo.',
+    },
+    {
+      question: 'Serve per forza farlo a tutto il team?',
+      answer: 'No. Puoi partire da una singola figura chiave (titolare/manager) e poi estenderlo ai ruoli strategici.',
+    },
+    {
+      question: 'Come gestite la privacy?',
+      answer: 'Con consenso informato, finalità chiare e tempi di conservazione limitati. Nessuna decisione è automatica: lo strumento non sostituisce il giudizio umano.',
+    },
+    {
+      question: 'Quanto dura e cosa ricevo?',
+      answer: 'Compilazione online (circa 20–30 minuti) e debrief 60–90 minuti con report e piano d\'azione dei prossimi 90 giorni.',
+    },
+    {
+      question: 'Quanto costa?',
+      answer: 'I prezzi variano in base a singolo, team o selezione. Richiedi informazioni per avere la proposta più adatta.',
     },
   ];
 

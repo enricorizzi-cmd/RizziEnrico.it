@@ -38,10 +38,10 @@ export default function KPIAnalysisAI() {
   return (
     <div className="bg-white rounded-[var(--radius-card)] p-6 border border-[var(--color-line)]">
       <h3 className="font-heading text-xl font-bold text-[var(--color-text)] mb-4">
-        🤖 Analisi KPI Automatica AI
+        🤖 Analisi KPI Automatica con Intelligenza Artificiale (AI)
       </h3>
       <p className="text-sm text-[var(--color-subtext)] mb-6">
-        Inserisci i tuoi KPI principali e ricevi un'analisi automatica con criticità e suggerimenti.
+        Inserisci i tuoi KPI (Indicatori Chiave di Prestazione) principali e ricevi un'analisi automatica con criticità e suggerimenti.
       </p>
 
       <div className="space-y-4 mb-6">
@@ -72,7 +72,7 @@ export default function KPIAnalysisAI() {
         </div>
         <div>
           <label className="block text-sm font-medium text-[var(--color-text)] mb-2">
-            DSO - Giorni medi incasso (giorni)
+            DSO (giorni medi di incasso) - Giorni medi incasso (giorni)
           </label>
           <input
             type="number"

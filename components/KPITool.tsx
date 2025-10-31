@@ -131,7 +131,7 @@ function BreakevenTool() {
   return (
     <div className="bg-white rounded-[var(--radius-card)] p-6 border border-[var(--color-line)]">
       <h3 className="font-heading text-xl font-bold text-[var(--color-text)] mb-4">
-        Calcola il Break-Even
+        Calcola il punto di pareggio (break-even)
       </h3>
       <p className="text-sm text-[var(--color-subtext)] mb-6">
         Quante unità devi vendere per coprire i costi fissi?
@@ -389,10 +389,10 @@ function WorkingCapitalCycleTool() {
   return (
     <div className="bg-white rounded-[var(--radius-card)] p-6 border border-[var(--color-line)]">
       <h3 className="font-heading text-xl font-bold text-[var(--color-text)] mb-4">
-        🤖 Ciclo del Capitale Circolante (con AI)
+        🤖 Ciclo del Capitale Circolante (con Intelligenza Artificiale)
       </h3>
       <p className="text-sm text-[var(--color-subtext)] mb-6">
-        Calcola quanto tempo impiega il capitale a tornare liquidità: giorni magazzino + giorni incasso - giorni pagamento.
+        Calcola quanto tempo impiega il capitale a tornare liquidità: giorni magazzino + giorni incasso (DSO - giorni medi di incasso) - giorni pagamento (DPO - giorni medi di pagamento).
       </p>
 
       <div className="space-y-4 mb-6">

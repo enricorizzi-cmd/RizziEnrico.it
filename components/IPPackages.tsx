@@ -7,7 +7,7 @@ interface IPPackage {
   id: string;
   name: string;
   subtitle: string;
-  price: string;
+  price?: string;
   priceNote?: string;
   includes: string[];
   cta: {
@@ -48,16 +48,18 @@ export default function IPPackages({ packages }: IPPackagesProps) {
             <p className="text-sm text-[var(--color-subtext)] mb-4">
               {pkg.subtitle}
             </p>
-            <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold text-[var(--color-primary)]">
-                {pkg.price}
-              </span>
-              {pkg.priceNote && (
-                <span className="text-sm text-[var(--color-subtext)]">
-                  {pkg.priceNote}
+            {pkg.price && (
+              <div className="flex items-baseline gap-2">
+                <span className="text-3xl font-bold text-[var(--color-primary)]">
+                  {pkg.price}
                 </span>
-              )}
-            </div>
+                {pkg.priceNote && (
+                  <span className="text-sm text-[var(--color-subtext)]">
+                    {pkg.priceNote}
+                  </span>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="flex-1 mb-6">

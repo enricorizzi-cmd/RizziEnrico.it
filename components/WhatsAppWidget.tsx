@@ -6,7 +6,7 @@ export default function WhatsAppWidget() {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="fixed bottom-4 left-4 z-50">
       {/* Expanded Card */}
       {isExpanded && (
         <div className="bg-white rounded-lg shadow-2xl mb-4 w-80 p-4 border border-[var(--color-line)]">

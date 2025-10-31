@@ -59,6 +59,14 @@ export async function POST(request: NextRequest) {
       })
       .select()
       .single();
+    
+    // Salva indirizzo in metadata se presente
+    const metadataToSave: any = {
+      meetingType: validatedData.meeting_type,
+    };
+    if (validatedData.address) {
+      metadataToSave.address = validatedData.address;
+    }
 
     if (error) {
       console.error('Supabase error:', error);
@@ -93,6 +101,7 @@ Dipendenti: ${validatedData.size_employees || 'Non specificato'}
 Fatturato: ${validatedData.revenue_range || 'Non specificato'}
 Problema principale: ${validatedData.main_problem || 'Non specificato'}
 Preferenza incontro: ${meetingTypeLabel}
+${validatedData.address ? `Indirizzo sede: ${validatedData.address}` : ''}
 Score: ${score}
 Fonte: ${validatedData.source}
 
@@ -134,8 +143,8 @@ Consulente OSM per PMI`,
     // Salva metadata per notifica
     await supabase.from('leads').update({
       metadata: {
+        ...metadataToSave,
         emailSent,
-        meetingType,
         whatsappLink: `https://wa.me/39${CONTACT_PHONE}?text=${encodeURIComponent(`Ciao Enrico, ho inviato una richiesta dal sito.`)}`,
         calendlyLink: calendlyUrl,
       },

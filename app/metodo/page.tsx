@@ -27,10 +27,10 @@ const steps = [
   {
     number: 2,
     title: 'Numeri',
-    description: 'Impostiamo KPI pratici e dashboard che guidano le decisioni quotidiane e strategiche.',
+    description: 'Impostiamo KPI (Indicatori Chiave di Prestazione) pratici e cruscotto che guidano le decisioni quotidiane e strategiche.',
     benefits: [
       '12-15 KPI chiave monitorati mensilmente',
-      'Dashboard visiva accessibile a tutto il management',
+      'Cruscotto visivo accessibile a tutto il management',
       'Alert automatici su scostamenti critici',
       'Riunioni mensili basate sui numeri, non su opinioni',
     ],
@@ -217,7 +217,7 @@ export default function MetodoPage() {
             Pronto a iniziare?
           </h3>
           <p className="text-sm text-[var(--color-subtext)] mb-4">
-            Prenota un check-up aziendale gratuito di 60 minuti (via Zoom) o 90 minuti (in presenza)
+            Prenota il Check-up gratuito: 60' via Zoom oppure 90' in presenza (Venezia-Padova-Rovigo)
           </p>
           <CTA href="/contatti" variant="primary" size="base" className="w-full">
             Prenota ora →

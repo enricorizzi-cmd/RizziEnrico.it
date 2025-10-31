@@ -8,42 +8,51 @@ interface EmailOptions {
 }
 
 export async function sendEmail(options: EmailOptions): Promise<boolean> {
-  // Se Resend è configurato, usalo
-  if (process.env.RESEND_API_KEY) {
-    try {
-      const { Resend } = await import('resend');
-      const resend = new Resend(process.env.RESEND_API_KEY);
-
-      const fromEmail = process.env.FROM_EMAIL || `Enrico Rizzi <noreply@${process.env.NEXT_PUBLIC_BASE_URL?.replace(/https?:\/\//, '').replace(/\/$/, '') || 'rizzienrico.it'}>`;
-      
-      await resend.emails.send({
-        from: fromEmail,
-        to: options.to,
-        subject: options.subject,
-        html: options.html || options.text.replace(/\n/g, '<br>'),
-        text: options.text,
-      });
-
-      return true;
-    } catch (error) {
-      console.error('Resend email error:', error);
-      // Fallback: log per debugging
-      console.log('Email would be sent (Resend failed):', {
-        to: options.to,
-        subject: options.subject,
-      });
-    }
-  } else {
-    // Fallback: log per debugging (in produzione potrebbe essere webhook o altro)
-    console.log('Email would be sent (RESEND_API_KEY not configured):', {
+  const RESEND_API_KEY = process.env.RESEND_API_KEY;
+  
+  if (!RESEND_API_KEY) {
+    console.error('[EMAIL] RESEND_API_KEY non configurato. Impossibile inviare email.');
+    console.log('[EMAIL] Email che sarebbe stata inviata:', {
       to: options.to,
       subject: options.subject,
       text: options.text.substring(0, 100) + '...',
     });
+    return false;
   }
 
-  // Se RESEND_API_KEY non è configurato o se c'è un errore, restituiamo false
-  // ma salviamo comunque i dati nel DB per invio successivo
-  return false;
+  try {
+    // Import ES6 standard
+    const { Resend } = await import('resend');
+    const resend = new Resend(RESEND_API_KEY);
+
+    // Determina FROM email
+    const fromEmail = process.env.FROM_EMAIL || `Enrico Rizzi <noreply@rizzienrico.it>`;
+    
+    console.log('[EMAIL] Invio email:', { to: options.to, subject: options.subject, from: fromEmail });
+    
+    const result = await resend.emails.send({
+      from: fromEmail,
+      to: options.to,
+      subject: options.subject,
+      html: options.html || options.text.replace(/\n/g, '<br>'),
+      text: options.text,
+    });
+
+    if (result.error) {
+      console.error('[EMAIL] Errore Resend:', result.error);
+      return false;
+    }
+
+    console.log('[EMAIL] Email inviata con successo:', { id: result.data?.id, to: options.to });
+    return true;
+  } catch (error: any) {
+    console.error('[EMAIL] Errore durante invio email:', error);
+    console.error('[EMAIL] Dettagli errore:', {
+      message: error?.message,
+      name: error?.name,
+      stack: error?.stack?.substring(0, 500),
+    });
+    return false;
+  }
 }
 

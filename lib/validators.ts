@@ -9,10 +9,8 @@ export const leadSchema = z.object({
   revenue_range: z.string().optional(),
   main_problem: z.string().optional(),
   source: z.string().optional(),
-  meeting_type: z.enum(['zoom', 'presence']).optional().refine(
-    (val) => val === 'presence' || val === undefined,
-    { message: 'Al momento disponibile solo in presenza. Zoom sarà disponibile presto.' }
-  ),
+  meeting_type: z.enum(['zoom', 'presence']).optional(),
+  address: z.string().optional(),
 });
 
 export const bookingSchema = z.object({
