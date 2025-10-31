@@ -19,6 +19,9 @@ export default function ContactForm() {
     watch,
   } = useForm<LeadInput>({
     resolver: zodResolver(leadSchema),
+    defaultValues: {
+      meeting_type: 'presence', // Default: solo in presenza disponibile
+    },
   });
 
   const onSubmit = async (data: LeadInput) => {
@@ -45,11 +48,10 @@ export default function ContactForm() {
         source: data.source || 'form',
       });
       
-      // Redirect to Calendly if score is high
-      if (result.score >= 40) {
-        // Redirect to Check-up Aziendale Gratuito
+      // Redirect to Calendly (usando l'URL corretto in base alla scelta meeting_type)
+      if (result.calendlyLink) {
         setTimeout(() => {
-          window.location.href = process.env.NEXT_PUBLIC_CALENDLY_CHECKUP_URL || result.calendlyLink || '#';
+          window.location.href = result.calendlyLink;
         }, 2000);
       }
     } catch (error) {
@@ -70,13 +72,13 @@ export default function ContactForm() {
           </svg>
         </div>
         <h2 className="text-2xl font-bold text-[var(--color-text)] mb-2">
-          Grazie!
+          Richiesta ricevuta!
         </h2>
         <p className="text-[var(--color-subtext)] mb-4">
-          Ti ho scritto via email. Controlla anche la posta indesiderata.
+          Ti sto reindirizzando a Calendly per prenotare il tuo Check-up Aziendale...
         </p>
         <p className="text-sm text-[var(--color-subtext)]">
-          Ti contatterò entro 24 ore per concordare l'appuntamento.
+          Se il redirect non funziona, controlla la tua email per il link diretto.
         </p>
       </div>
     );
@@ -130,6 +132,52 @@ export default function ContactForm() {
               className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
               placeholder="+39 347 529 0564"
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-[var(--color-text)] mb-3">
+              Preferenza incontro *
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              {/* Zoom - Presto disponibile */}
+              <div className="relative flex flex-col items-center justify-center p-4 border-2 rounded-lg border-[var(--color-line)] bg-gray-50 opacity-60 cursor-not-allowed">
+                <div className="text-2xl mb-2">💻</div>
+                <div className="font-semibold text-[var(--color-text)]">Via Zoom</div>
+                <div className="text-xs text-[var(--color-subtext)] mt-1">60 minuti</div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="bg-white px-2 py-1 rounded text-xs font-semibold text-[var(--color-primary)] border border-[var(--color-primary)]">
+                    Presto disponibile
+                  </span>
+                </div>
+              </div>
+              
+              {/* In presenza - Disponibile */}
+              <label className={`relative flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                watch('meeting_type') === 'presence'
+                  ? 'border-[var(--color-primary)] bg-[var(--color-primary)]/5'
+                  : 'border-[var(--color-line)] hover:border-[var(--color-primary)]/50'
+              }`}>
+                <input
+                  type="radio"
+                  value="presence"
+                  {...register('meeting_type', { required: 'Seleziona una preferenza' })}
+                  className="sr-only"
+                  defaultChecked
+                />
+                <div className="text-2xl mb-2">🤝</div>
+                <div className="font-semibold text-[var(--color-text)]">In presenza</div>
+                <div className="text-xs text-[var(--color-subtext)] mt-1">90 minuti</div>
+                <div className="text-xs text-[var(--color-primary)] font-medium mt-1">
+                  Venezia-Padova-Rovigo
+                </div>
+              </label>
+            </div>
+            <p className="mt-2 text-xs text-[var(--color-subtext)] text-center">
+              ⚠️ Al momento disponibile solo in presenza nell'area Venezia-Padova-Rovigo
+            </p>
+            {errors.meeting_type && (
+              <p className="mt-2 text-sm text-[var(--color-error)]">{errors.meeting_type.message}</p>
+            )}
           </div>
 
           <button

@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { eventRegistrationSchema } from '@/lib/validators';
 import { createServerClient } from '@/lib/supabase';
 import QRCode from 'qrcode';
+import { sendEmail } from '@/lib/email';
+
+const CONTACT_EMAIL = 'e.rizzi@osmpartnervenezia.it';
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,14 +34,47 @@ export async function POST(request: NextRequest) {
 
     const qrCodeUrl = await QRCode.toDataURL(qrData);
 
-    // TODO: Salva QR code su storage (Supabase Storage o S3) e restituisci URL pubblico
-    // Per ora restituiamo base64 (non ideale in produzione)
+    // Invia email di conferma a Enrico
+    const emailSubject = `Nuova registrazione evento - ${validatedData.event_slug}`;
+    const emailText = `Nuova registrazione evento:
+
+Nome: ${validatedData.name}
+Email: ${validatedData.email}
+Azienda: ${validatedData.company || 'Non specificato'}
+Telefono: ${validatedData.phone || 'Non specificato'}
+Evento: ${validatedData.event_slug}
+ID Registrazione: ${registrationId}`;
+
+    await sendEmail({
+      to: CONTACT_EMAIL,
+      subject: emailSubject,
+      text: emailText,
+    });
+
+    // Invia email di conferma all'utente
+    if (validatedData.email) {
+      await sendEmail({
+        to: validatedData.email,
+        subject: `Conferma registrazione evento - ${validatedData.event_slug}`,
+        text: `Gentile ${validatedData.name},
+
+La tua registrazione all'evento "${validatedData.event_slug}" è stata confermata!
+
+ID Registrazione: ${registrationId}
+
+Riceverai ulteriori dettagli via email a breve.
+
+A presto,
+Enrico Rizzi
+Consulente OSM per PMI`,
+      });
+    }
 
     return NextResponse.json({
       success: true,
       registrationId,
       qrCodeUrl,
-      message: 'Registrazione completata',
+      message: 'Registrazione completata. Email di conferma inviata.',
     });
   } catch (error) {
     if (error instanceof Error && error.name === 'ZodError') {

@@ -1,84 +1,50 @@
-# ✅ Configurazione Completata - 31 Ottobre 2025
+# ✅ Configurazione Completata
 
-## 🎯 Obiettivo Raggiunto
-La `SUPABASE_SERVICE_ROLE_KEY` è stata configurata con successo su Render e il sito è completamente funzionante.
+## 📅 Calendly
 
-## 📋 Dettagli Configurazione
+**Link configurato:**
+- ✅ In presenza: https://calendly.com/enricorizzi/check-up-gratuito-in-azienda
+- ⏳ Zoom: Presto disponibile (attualmente disabilitato nel form)
 
-### 1. Variabile d'Ambiente Aggiunta
-- **Key**: `SUPABASE_SERVICE_ROLE_KEY`
-- **Service**: RizziEnrico.it (srv-d41prqp5pdvs73fahp4g)
-- **Status**: ✅ Configurata
-- **Deploy ID**: dep-d4201fh5pdvs73erfuag
+**Area servita:** Venezia-Padova-Rovigo
 
-### 2. Deploy
-- **Status**: ✅ LIVE
-- **Completato**: 2025-10-31 00:22:16 UTC
-- **URL**: https://rizzienrico-it.onrender.com
+## 📧 Resend Email
 
-### 3. Test Funzionalità
+**API Key configurata:**
+- ✅ `re_xxxxxxxxxxxxx`
+- ✅ Email sender: `Enrico Rizzi <noreply@rizzienrico.it>`
 
-#### ✅ Test Form Inserimento Lead
-- **Endpoint**: `/api/lead`
-- **Status**: ✅ SUCCESSO
-- **Response**:
-  ```json
-  {
-    "success": true,
-    "id": "b30aaf59-0028-4e9d-8d28-fb73752d9a07",
-    "score": 0,
-    "contactEmail": "e.rizzi@osmpartnervenezia.it",
-    "contactPhone": "3475290564",
-    "whatsappLink": "https://wa.me/393475290564",
-    "calendlyLink": "https://calendly.com/enrico-rizzi/check-up-aziendale-gratuito",
-    "shouldRedirectToCalendly": false
-  }
-  ```
+## 🔧 Variabili Ambiente da Configurare
 
-#### ✅ Verifica Database
-- **Query**: SELECT ultimi 3 leads
-- **Risultato**: ✅ Dati salvati correttamente
-- **Lead di test verificato**:
-  - ID: `b30aaf59-0028-4e9d-8d28-fb73752d9a07`
-  - Nome: Test Configurazione
-  - Email: test@example.com
-  - Telefono: +39123456789
-  - Azienda: Test Company
-  - Score: 0
-  - Created: 2025-10-31 00:22:46 UTC
+Aggiungi queste variabili al tuo file `.env.local` (sviluppo) o nelle variabili ambiente di Render (produzione):
 
-## 🚀 Funzionalità Ora Attive
+```env
+# Calendly
+NEXT_PUBLIC_CALENDLY_PRESENCE_URL=https://calendly.com/enricorizzi/check-up-gratuito-in-azienda
+NEXT_PUBLIC_CALENDLY_ZOOM_URL=
 
-1. ✅ **Form Contatto**: Salvataggio dati in Supabase
-2. ✅ **Lead Scoring**: Calcolo automatico score
-3. ✅ **Metadati**: Salvataggio link email/WhatsApp/Calendly
-4. ✅ **Rate Limiting**: Protezione API attiva
-5. ✅ **Validazione Dati**: Schema Zod funzionante
+# Resend
+RESEND_API_KEY=re_xxxxxxxxxxxxx
+FROM_EMAIL=Enrico Rizzi <noreply@rizzienrico.it>
+```
 
-## 📊 Variabili d'Ambiente Render
+## 🚀 Configurazione Render (Produzione)
 
-Tutte le variabili sono ora configurate:
-- ✅ `OPENAI_API_KEY`
-- ✅ `NEXT_PUBLIC_SUPABASE_URL`
-- ✅ `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- ✅ `SUPABASE_SERVICE_ROLE_KEY` ← **NUOVO**
-- ✅ `NEXT_PUBLIC_BASE_URL`
-- ✅ `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`
+1. Vai su **Render Dashboard** → Il tuo servizio web
+2. Vai su **Environment**
+3. Aggiungi tutte le variabili sopra
+4. Riavvia il servizio
 
-## ✨ Prossimi Passi Consigliati
+## ✨ Funzionalità Attive
 
-1. **Test End-to-End**: Testare il form completo dal frontend
-2. **Monitoraggio**: Verificare i lead in arrivo su Supabase
-3. **Notifiche Email**: Implementare integrazione Resend/SendGrid (opzionale)
-4. **Analytics**: Verificare tracking Plausible
+- ✅ Form contatti con scelta Zoom/In presenza
+- ✅ Zoom mostrato come "Presto disponibile" (non selezionabile)
+- ✅ Solo "In presenza" disponibile per ora
+- ✅ Redirect automatico a Calendly dopo invio form
+- ✅ Invio email con Resend configurato
+- ✅ Email di conferma al lead con link Calendly
 
 ## 📝 Note
 
-- Il lead di test può essere eliminato dal database se necessario
-- Tutti i form del sito ora salvano correttamente i dati
-- La configurazione è completa e il sito è production-ready
-
----
-**Data configurazione**: 31 Ottobre 2025, 00:22 UTC
-**Status**: ✅ COMPLETATO E VERIFICATO
-
+- Quando vorrai abilitare Zoom, aggiungi `NEXT_PUBLIC_CALENDLY_ZOOM_URL` con il link dell'evento Zoom su Calendly
+- Il form si aggiornerà automaticamente per mostrare entrambe le opzioni

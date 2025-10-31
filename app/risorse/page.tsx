@@ -57,8 +57,8 @@ export default function RisorsePage() {
             <KPITool toolType="waste-cost" />
             <KPITool toolType="breakeven" />
             <KPITool toolType="pricing" />
-            <KPITool toolType="roi" />
-            <KPITool toolType="productivity" />
+            <KPITool toolType="inventory-turnover" />
+            <KPITool toolType="working-capital-cycle" />
             <KPITool toolType="margin" />
             <KPITool toolType="inventory-days" />
             <KPITool toolType="turnover" />

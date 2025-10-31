@@ -17,7 +17,10 @@ export default function ContattiPage() {
               Check-up Aziendale Gratuito
             </h1>
             <p className="text-xl text-[var(--color-subtext)] mb-2">
-              In 60 minuti (via Zoom) o 90 minuti (in presenza) analizziamo insieme numeri e criticità della tua PMI.
+              In 90 minuti (in presenza) analizziamo insieme numeri e criticità della tua PMI nell'area Venezia-Padova-Rovigo.
+            </p>
+            <p className="text-sm text-[var(--color-subtext)] italic">
+              ⚠️ Appuntamento via Zoom disponibile presto
             </p>
             <p className="text-lg text-[var(--color-subtext)]">
               Ti mostro dove recuperare margini e come organizzarti meglio.

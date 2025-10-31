@@ -29,28 +29,28 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Servizi */}
+          {/* Navigazione Principale */}
           <div>
-            <h4 className="font-heading font-semibold mb-4">Servizi</h4>
+            <h4 className="font-heading font-semibold mb-4">Navigazione</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/servizi/consulenza-pmi" className="text-gray-300 hover:text-white transition-colors">
-                  Consulenza PMI
+                <Link href="/metodo" className="text-gray-300 hover:text-white transition-colors">
+                  Metodo
                 </Link>
               </li>
               <li>
-                <Link href="/servizi/organizzazione-mansionari" className="text-gray-300 hover:text-white transition-colors">
-                  Organizzazione & Mansionari
+                <Link href="/servizi" className="text-gray-300 hover:text-white transition-colors">
+                  Servizi
                 </Link>
               </li>
               <li>
-                <Link href="/servizi/sviluppo-persone" className="text-gray-300 hover:text-white transition-colors">
-                  Sviluppo Persone
+                <Link href="/i-profile" className="text-gray-300 hover:text-white transition-colors">
+                  i-Profile
                 </Link>
               </li>
               <li>
-                <Link href="/servizi/kpi-controllo-gestione" className="text-gray-300 hover:text-white transition-colors">
-                  KPI & Controllo
+                <Link href="/chi-sono" className="text-gray-300 hover:text-white transition-colors">
+                  Chi sono
                 </Link>
               </li>
             </ul>
@@ -90,11 +90,6 @@ export default function Footer() {
               <li>
                 <Link href="/contatti" className="hover:text-white transition-colors">
                   Prenota un incontro
-                </Link>
-              </li>
-              <li>
-                <Link href="/chi-sono" className="hover:text-white transition-colors">
-                  Chi sono
                 </Link>
               </li>
             </ul>

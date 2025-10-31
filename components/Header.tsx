@@ -17,6 +17,8 @@ export default function Header() {
     { href: '/risorse', label: 'Risorse' },
     { href: '/blog', label: 'Blog' },
     { href: '/eventi', label: 'Eventi' },
+    { href: '/chi-sono', label: 'Chi sono' },
+    { href: '/contatti', label: 'Contatti' },
   ];
 
   return (
@@ -42,14 +44,17 @@ export default function Header() {
       <nav className="container mx-auto px-4 lg:px-8" aria-label="Navigazione principale">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3">
+          <Link 
+            href="/" 
+            className="flex items-center space-x-3"
+            onClick={(e) => {
+              if (window.location.pathname === '/') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }}
+          >
             <LogoER variant="default" />
-            <div className="hidden md:flex items-center gap-2 pl-3 border-l border-[var(--color-line)]">
-              <span className="text-[9px] uppercase tracking-wider text-[var(--color-subtext)] font-semibold">
-                Partner
-              </span>
-              <OSMBadge variant="small" useImage={true} />
-            </div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -58,17 +63,13 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-4 py-2 text-sm font-medium text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors rounded-md hover:bg-[var(--color-card)]"
+                className={`px-4 py-2 text-sm font-medium text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors rounded-md hover:bg-[var(--color-card)] ${
+                  item.href === '/contatti' ? 'ml-4 px-6 bg-[var(--color-primary)] text-white font-semibold hover:opacity-90' : ''
+                }`}
               >
-                {item.label}
+                {item.href === '/contatti' ? 'Prenota' : item.label}
               </Link>
             ))}
-            <Link
-              href="/contatti"
-              className="ml-4 px-6 py-2 bg-[var(--color-primary)] text-white text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity"
-            >
-              Prenota
-            </Link>
           </div>
 
           {/* Mobile Menu Button */}

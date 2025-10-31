@@ -16,6 +16,8 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     { href: '/risorse', label: 'Risorse' },
     { href: '/blog', label: 'Blog' },
     { href: '/eventi', label: 'Eventi' },
+    { href: '/chi-sono', label: 'Chi sono' },
+    { href: '/contatti', label: 'Contatti' },
   ];
 
   if (!isOpen) return null;
@@ -31,22 +33,15 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className="block px-4 py-3 text-lg font-medium text-[var(--color-text)] hover:bg-[var(--color-card)] rounded-md transition-colors"
+                className={`block px-4 py-3 text-lg font-medium text-[var(--color-text)] hover:bg-[var(--color-card)] rounded-md transition-colors ${
+                  item.href === '/contatti' ? 'font-semibold bg-[var(--color-primary)] text-white text-center hover:opacity-90' : ''
+                }`}
                 onClick={onClose}
               >
-                {item.label}
+                {item.href === '/contatti' ? 'Prenota' : item.label}
               </Link>
             </li>
           ))}
-          <li>
-            <Link
-              href="/contatti"
-              className="block px-4 py-3 text-lg font-semibold bg-[var(--color-primary)] text-white rounded-md text-center hover:opacity-90 transition-opacity"
-              onClick={onClose}
-            >
-              Prenota
-            </Link>
-          </li>
         </ul>
       </nav>
     </div>

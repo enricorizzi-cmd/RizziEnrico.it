@@ -3,13 +3,15 @@ import { leadSchema } from '@/lib/validators';
 import { calculateLeadScore } from '@/lib/scoring';
 import { createServerClient } from '@/lib/supabase';
 import { rateLimit } from '@/lib/rateLimit';
+import { sendEmail } from '@/lib/email';
 
 const CONTACT_EMAIL = 'e.rizzi@osmpartnervenezia.it';
 const CONTACT_PHONE = '3475290564';
-// Calendly: Check-up Aziendale Gratuito
-// - 60 minuti via Zoom
-// - 90 minuti in presenza
-const CALENDLY_CHECKUP_URL = process.env.NEXT_PUBLIC_CALENDLY_CHECKUP_URL || 'https://calendly.com/enrico-rizzi/check-up-aziendale-gratuito';
+
+// Calendly URLs - Configura questi valori nelle variabili ambiente
+const CALENDLY_ZOOM_URL = process.env.NEXT_PUBLIC_CALENDLY_ZOOM_URL || ''; // Non ancora disponibile
+const CALENDLY_PRESENCE_URL = process.env.NEXT_PUBLIC_CALENDLY_PRESENCE_URL || 'https://calendly.com/enricorizzi/check-up-gratuito-in-azienda';
+const CALENDLY_DEFAULT_URL = process.env.NEXT_PUBLIC_CALENDLY_CHECKUP_URL || CALENDLY_PRESENCE_URL;
 
 export async function POST(request: NextRequest) {
   try {
@@ -66,30 +68,76 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Email notification preparata (in produzione: integrare Resend/SendGrid)
-    const emailSubject = encodeURIComponent(`Nuovo Lead - ${validatedData.name} - Score: ${score}`);
-    const emailBody = encodeURIComponent(
-      `Nuovo lead ricevuto:\n\n` +
-      `Nome: ${validatedData.name}\n` +
-      `Email: ${validatedData.email}\n` +
-      `Telefono: ${validatedData.phone || 'Non fornito'}\n` +
-      `Azienda: ${validatedData.company || 'Non fornito'}\n` +
-      `Dipendenti: ${validatedData.size_employees || 'Non specificato'}\n` +
-      `Fatturato: ${validatedData.revenue_range || 'Non specificato'}\n` +
-      `Problema principale: ${validatedData.main_problem || 'Non specificato'}\n` +
-      `Score: ${score}\n` +
-      `Fonte: ${validatedData.source}\n\n` +
-      `Contatta: ${validatedData.phone ? `tel:${CONTACT_PHONE}` : CONTACT_EMAIL}\n` +
-      `WhatsApp: https://wa.me/39${CONTACT_PHONE}\n` +
-      `Prenota Check-up: ${CALENDLY_CHECKUP_URL}`
-    );
+    // Determina URL Calendly in base alla scelta
+    // Al momento solo "presence" è disponibile, "zoom" sarà disponibile presto
+    const meetingType = validatedData.meeting_type || 'presence';
+    let calendlyUrl = CALENDLY_PRESENCE_URL;
+    
+    if (meetingType === 'zoom' && CALENDLY_ZOOM_URL) {
+      calendlyUrl = CALENDLY_ZOOM_URL;
+    } else if (meetingType === 'zoom' && !CALENDLY_ZOOM_URL) {
+      // Se Zoom è selezionato ma non ancora configurato, usa presence come fallback
+      calendlyUrl = CALENDLY_PRESENCE_URL;
+    }
+
+    // Invia email a Enrico
+    const meetingTypeLabel = meetingType === 'presence' ? 'In presenza (90 min)' : 'Via Zoom (60 min)';
+    const emailSubject = `Nuovo Lead - ${validatedData.name} - Score: ${score}`;
+    const emailText = `Nuovo lead ricevuto dal sito:
+
+Nome: ${validatedData.name}
+Email: ${validatedData.email}
+Telefono: ${validatedData.phone || 'Non fornito'}
+Azienda: ${validatedData.company || 'Non fornito'}
+Dipendenti: ${validatedData.size_employees || 'Non specificato'}
+Fatturato: ${validatedData.revenue_range || 'Non specificato'}
+Problema principale: ${validatedData.main_problem || 'Non specificato'}
+Preferenza incontro: ${meetingTypeLabel}
+Score: ${score}
+Fonte: ${validatedData.source}
+
+Contatta: ${validatedData.phone ? `tel:${CONTACT_PHONE}` : CONTACT_EMAIL}
+WhatsApp: https://wa.me/39${CONTACT_PHONE}
+Prenota Check-up: ${calendlyUrl}`;
+
+    const emailSent = await sendEmail({
+      to: CONTACT_EMAIL,
+      subject: emailSubject,
+      text: emailText,
+    });
+
+    // Invia email di conferma al lead (opzionale)
+    if (validatedData.email) {
+      await sendEmail({
+        to: validatedData.email,
+        subject: 'Richiesta ricevuta - Enrico Rizzi',
+        text: `Gentile ${validatedData.name},
+
+Grazie per averci contattato! 
+
+La tua richiesta è stata ricevuta. Hai scelto un Check-up Aziendale ${meetingType === 'presence' ? 'in presenza (90 minuti)' : 'via Zoom (60 minuti)'}.
+
+Prenota direttamente il tuo appuntamento qui:
+${calendlyUrl}
+
+Nel frattempo, se hai urgenza, puoi contattarmi:
+- Email: ${CONTACT_EMAIL}
+- Telefono: ${CONTACT_PHONE}
+- WhatsApp: https://wa.me/39${CONTACT_PHONE}
+
+A presto,
+Enrico Rizzi
+Consulente OSM per PMI`,
+      });
+    }
 
     // Salva metadata per notifica
     await supabase.from('leads').update({
       metadata: {
-        emailNotification: `${CONTACT_EMAIL}?subject=${emailSubject}&body=${emailBody}`,
+        emailSent,
+        meetingType,
         whatsappLink: `https://wa.me/39${CONTACT_PHONE}?text=${encodeURIComponent(`Ciao Enrico, ho inviato una richiesta dal sito.`)}`,
-        calendlyLink: CALENDLY_CHECKUP_URL,
+        calendlyLink: calendlyUrl,
       },
     }).eq('id', data.id);
 
@@ -103,8 +151,9 @@ export async function POST(request: NextRequest) {
       contactEmail: CONTACT_EMAIL,
       contactPhone: CONTACT_PHONE,
       whatsappLink: `https://wa.me/39${CONTACT_PHONE}`,
-      calendlyLink: CALENDLY_CHECKUP_URL,
-      shouldRedirectToCalendly,
+      calendlyLink: calendlyUrl,
+      meetingType,
+      shouldRedirectToCalendly: true, // Ora redirigiamo sempre a Calendly
     }, {
       headers: {
         'X-RateLimit-Remaining': limit.remaining.toString(),

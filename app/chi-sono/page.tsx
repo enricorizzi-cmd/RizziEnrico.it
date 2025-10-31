@@ -13,7 +13,7 @@ export const metadata = generateMetadata({
 
 export default function ChiSonoPage() {
   return (
-    <div className="py-16 bg-white min-h-screen">
+    <div className="pt-8 pb-16 bg-white min-h-screen">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="max-w-4xl mx-auto">
           {/* Hero */}
