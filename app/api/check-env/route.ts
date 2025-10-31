@@ -69,8 +69,11 @@ export async function GET() {
   };
 
   // Calcola statistiche
-  const criticalVars = ['RESEND_API_KEY', 'OPENAI_API_KEY', 'NEXT_PUBLIC_SUPABASE_URL', 'NEXT_PUBLIC_SUPABASE_ANON_KEY'];
-  const missingCritical = criticalVars.filter(v => !envCheck[v as keyof typeof envCheck]?.exists);
+  const criticalVars = ['RESEND_API_KEY', 'OPENAI_API_KEY', 'NEXT_PUBLIC_SUPABASE_URL', 'NEXT_PUBLIC_SUPABASE_ANON_KEY'] as const;
+  const missingCritical = criticalVars.filter(v => {
+    const envVar = envCheck[v];
+    return envVar && typeof envVar === 'object' && 'exists' in envVar ? !envVar.exists : false;
+  });
   const issues = [];
 
   if (!envCheck.RESEND_API_KEY.exists) issues.push('❌ RESEND_API_KEY mancante - email non funzionerà');

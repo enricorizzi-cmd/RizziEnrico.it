@@ -1,10 +1,12 @@
 # Render Blueprint per deploy automatico
-# Usa questo file per deploy con un click da Render Dashboard
+# NOTA: Il buildCommand qui è documentato, ma va configurato anche su Dashboard
+# Dashboard: https://dashboard.render.com/web/srv-d41prqp5pdvs73fahp4g/settings
 
 services:
   - type: web
     name: rizzienrico-it
     env: node
+    # Build command ottimizzato: npm ci è più veloce e consistente di npm install
     buildCommand: npm ci && npm run build
     startCommand: npm start
     envVars:
@@ -12,11 +14,13 @@ services:
         value: production
       - key: NEXT_PUBLIC_BASE_URL
         generateValue: true  # Render genera automaticamente l'URL
-      # Aggiungi queste dopo aver configurato Supabase:
-      # - key: NEXT_PUBLIC_SUPABASE_URL
-      #   sync: false
-      # - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
-      #   sync: false
-      # - key: SUPABASE_SERVICE_ROLE_KEY
-      #   sync: false
+      # Variabili già configurate su Render:
+      # - NEXT_PUBLIC_SUPABASE_URL
+      # - NEXT_PUBLIC_SUPABASE_ANON_KEY
+      # - SUPABASE_SERVICE_ROLE_KEY
+      # - RESEND_API_KEY
+      # - OPENAI_API_KEY
+      # - FROM_EMAIL
+      # - NEXT_PUBLIC_CALENDLY_CHECKUP_URL
+      # - NEXT_PUBLIC_WHATSAPP_NUMBER
 
