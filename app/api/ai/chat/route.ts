@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
         ...messages.map((msg: { role: string; content: string }) => ({
-          role: msg.role,
+          role: msg.role as 'user' | 'assistant' | 'system',
           content: msg.content,
         })),
       ],
