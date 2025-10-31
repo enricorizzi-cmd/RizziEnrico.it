@@ -49,25 +49,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/chi-sono" className="text-gray-300 hover:text-white transition-colors">
-                  Chi sono
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Risorse */}
-          <div>
-            <h4 className="font-heading font-semibold mb-4">Risorse</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
                 <Link href="/case-study" className="text-gray-300 hover:text-white transition-colors">
                   Case Study
                 </Link>
               </li>
               <li>
                 <Link href="/risorse" className="text-gray-300 hover:text-white transition-colors">
-                  KPI Pack
+                  Risorse
                 </Link>
               </li>
               <li>
@@ -78,6 +66,33 @@ export default function Footer() {
               <li>
                 <Link href="/eventi" className="text-gray-300 hover:text-white transition-colors">
                   Eventi
+                </Link>
+              </li>
+              <li>
+                <Link href="/chi-sono" className="text-gray-300 hover:text-white transition-colors">
+                  Chi sono
+                </Link>
+              </li>
+              <li>
+                <Link href="/contatti" className="text-gray-300 hover:text-white transition-colors">
+                  Contatti
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Risorse */}
+          <div>
+            <h4 className="font-heading font-semibold mb-4">Risorse</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/risorse" className="text-gray-300 hover:text-white transition-colors">
+                  KPI Pack
+                </Link>
+              </li>
+              <li>
+                <Link href="/calcolatore-investimento" className="text-gray-300 hover:text-white transition-colors">
+                  Calcolatore Investimento
                 </Link>
               </li>
             </ul>

@@ -14,6 +14,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     { href: '/i-profile', label: 'i-Profile' },
     { href: '/case-study', label: 'Case Study' },
     { href: '/risorse', label: 'Risorse' },
+    { href: '/calcolatore-investimento', label: 'Calcolatore' },
     { href: '/blog', label: 'Blog' },
     { href: '/eventi', label: 'Eventi' },
     { href: '/chi-sono', label: 'Chi sono' },
