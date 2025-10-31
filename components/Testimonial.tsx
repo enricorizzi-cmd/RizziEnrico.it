@@ -47,6 +47,9 @@ export default function Testimonial({
               width={48}
               height={48}
               className="w-full h-full object-cover"
+              loading="lazy"
+              quality={85}
+              sizes="48px"
             />
           </div>
         )}

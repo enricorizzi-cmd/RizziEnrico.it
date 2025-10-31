@@ -1,6 +1,4 @@
-/* Google Fonts - must be before tailwindcss */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
-
+/* Google Fonts sono caricati tramite next/font/google in layout.tsx - non serve @import qui */
 @import "tailwindcss";
 
 :root {

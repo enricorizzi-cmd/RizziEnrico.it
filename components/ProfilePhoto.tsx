@@ -56,8 +56,10 @@ export default function ProfilePhoto({
           width={dimensions[size]}
           height={dimensions[size]}
           className="w-full h-full object-cover"
-          priority
-          unoptimized={photoSrc === '/enrico-rizzi.jpg'} // Temporaneo: skip optimization per foto grande (15MB)
+          priority={size === 'lg' || size === 'md'} // Solo per foto principali
+          loading={size === 'sm' ? 'lazy' : undefined}
+          quality={85}
+          sizes={size === 'sm' ? '96px' : size === 'md' ? '(max-width: 768px) 192px, 256px' : '288px'}
           onError={() => setImageError(true)}
         />
       </div>

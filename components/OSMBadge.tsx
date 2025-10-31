@@ -28,6 +28,9 @@ export default function OSMBadge({
         height={size.height}
         className={`object-contain ${className}`}
         style={{ opacity: 0.6 }}
+        loading="lazy"
+        quality={90}
+        sizes={`${size.width}px`}
       />
     );
   }

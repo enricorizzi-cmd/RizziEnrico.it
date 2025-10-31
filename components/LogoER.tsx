@@ -16,6 +16,8 @@ export default function LogoER({ className = '', variant = 'default' }: LogoERPr
         height={variant === 'footer' ? 40 : 40}
         className={variant === 'footer' ? 'h-8 w-auto' : 'h-8 w-auto'}
         priority
+        quality={90}
+        sizes="120px"
       />
     </div>
   );
