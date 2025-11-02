@@ -267,3 +267,4 @@ export default function InvestorQuestionnaire() {
     </div>
   );
 }
+
