@@ -228,9 +228,9 @@ export default function AIAssistant() {
               }`}
             >
               {msg.role === 'assistant' ? (
-                <ReactMarkdown
-                  className="prose prose-sm max-w-none"
-                  components={{
+                <div className="prose prose-sm max-w-none">
+                  <ReactMarkdown
+                    components={{
                     a: ({ node, ...props }) => (
                       <a
                         {...props}
@@ -246,10 +246,11 @@ export default function AIAssistant() {
                     h1: ({ node, ...props }) => <h1 {...props} className="text-xl font-bold mb-2 mt-4 first:mt-0" />,
                     h2: ({ node, ...props }) => <h2 {...props} className="text-lg font-bold mb-2 mt-4 first:mt-0" />,
                     h3: ({ node, ...props }) => <h3 {...props} className="text-base font-bold mb-2 mt-3 first:mt-0" />,
-                  }}
-                >
-                  {msg.content}
-                </ReactMarkdown>
+                    }}
+                  >
+                    {msg.content}
+                  </ReactMarkdown>
+                </div>
               ) : (
                 <div className="whitespace-pre-wrap">{msg.content}</div>
               )}
