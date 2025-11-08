@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { leadSchema, type LeadInput } from '@/lib/validators';
@@ -23,6 +23,18 @@ export default function ContactForm() {
           meeting_type: undefined,
         },
   });
+
+  // Track form start
+  useEffect(() => {
+    trackEvent('form_start', { form_type: 'contact' });
+  }, []);
+
+  // Track form step completion
+  useEffect(() => {
+    if (step === 2) {
+      trackEvent('form_step_complete', { step: 1, form_type: 'contact' });
+    }
+  }, [step]);
 
   const onSubmit = async (data: LeadInput) => {
     setIsSubmitting(true);
@@ -96,8 +108,9 @@ export default function ContactForm() {
             <input
               id="name"
               type="text"
+              autoComplete="name"
               {...register('name')}
-              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
+              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent text-base"
               placeholder="Mario Rossi"
             />
             {errors.name && (
@@ -112,8 +125,10 @@ export default function ContactForm() {
             <input
               id="email"
               type="email"
+              inputMode="email"
+              autoComplete="email"
               {...register('email')}
-              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
+              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent text-base"
               placeholder="mario.rossi@azienda.it"
             />
             {errors.email && (
@@ -128,8 +143,10 @@ export default function ContactForm() {
             <input
               id="phone"
               type="tel"
+              inputMode="tel"
+              autoComplete="tel"
               {...register('phone')}
-              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
+              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent text-base"
               placeholder="+39 347 529 0564"
             />
           </div>

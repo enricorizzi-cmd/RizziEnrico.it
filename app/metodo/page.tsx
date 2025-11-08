@@ -8,8 +8,8 @@ import Card from '@/components/Card';
 import JSONLD from '@/components/JSONLD';
 
 export const metadata = generateMetadata({
-  title: 'Il Metodo in 5 Step - Da caos a organizzazione | Enrico Rizzi',
-  description: 'Metodo strutturato per organizzare la tua PMI: Chi, Numeri, Processi, Persone, Espansione. In 90 giorni ordine, in 6 mesi risultati.',
+  title: 'Metodo Consulenza PMI: 5 Step per Organizzare la Tua Azienda | Enrico Rizzi',
+  description: 'Metodo strutturato per organizzare la tua PMI: Chi, Numeri, Processi, Persone, Espansione. In 90 giorni ordine, in 6 mesi risultati misurabili.',
   path: '/metodo',
 });
 
@@ -130,7 +130,7 @@ export default function MetodoPage() {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Il Metodo in 5 Step
+              Metodo Consulenza PMI: 5 Step per Organizzare la Tua Azienda
             </h1>
             <p className="text-xl md:text-2xl opacity-95">
               Da caos a organizzazione: un percorso strutturato che porta risultati misurabili

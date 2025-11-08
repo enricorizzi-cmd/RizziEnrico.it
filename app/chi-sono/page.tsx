@@ -6,8 +6,8 @@ import OSMBadge from '@/components/OSMBadge';
 import CTA from '@/components/CTA';
 
 export const metadata = generateMetadata({
-  title: 'Chi sono - Enrico Rizzi | Consulente OSM Venezia-Rovigo',
-  description: 'Consulente OSM per PMI che vogliono crescere con metodo: persone, KPI e processi. Area servita: Venezia-Rovigo, Veneto.',
+  title: 'Chi sono - Consulente OSM PMI Veneto | Enrico Rizzi',
+  description: 'Consulente OSM per PMI venete con 10+ anni esperienza. Metodo pratico, risultati misurabili. Area servita: Venezia-Rovigo.',
   path: '/chi-sono',
 });
 
@@ -20,7 +20,7 @@ export default function ChiSonoPage() {
           <div className="text-center mb-16">
             {/* Foto professionale */}
             <div className="relative inline-block mb-8">
-              <ProfilePhoto src="/enrico-rizzi.jpg" size="md" />
+              <ProfilePhoto src="/enrico-rizzi.jpg" size="md" alt="Enrico Rizzi consulente OSM PMI Veneto" />
               {/* Badge OSM discreto */}
               <div className="absolute bottom-0 right-0 md:right-auto md:left-full md:ml-4 md:top-1/2 md:-translate-y-1/2">
                 <div className="bg-white rounded-lg px-3 py-2 shadow-md border border-[var(--color-line)]">
@@ -49,12 +49,18 @@ export default function ChiSonoPage() {
             <div className="prose prose-lg max-w-none text-[var(--color-text)] leading-relaxed">
               <p className="mb-4">
                 Da oltre 10 anni aiuto PMI del Veneto a passare da organizzazione caotica
-                a sistema strutturato orientato ai risultati.
+                a sistema strutturato orientato ai risultati. Ho lavorato come Consulente Senior 
+                in OSM e formatore, specializzandomi in risorse umane e tecniche di vendita.
               </p>
               <p className="mb-4">
-                Ho iniziato la mia carriera in aziende manifatturiere, dove ho visto da vicino
-                quanto il caos organizzativo limita la crescita. Ho poi approfondito il metodo OSM,
-                che applico con successo in aziende tra 9 e 200 addetti.
+                Conosco bene le sfide delle PMI venete perché le vivo sul campo ogni giorno. 
+                Non sono un teorico: parlo la lingua degli imprenditori e offro soluzioni pratiche 
+                che funzionano nella realtà aziendale.
+              </p>
+              <p className="mb-4">
+                <strong>Risultato concreto:</strong> Nel 2024 ho aiutato un'azienda manifatturiera 
+                di Padova ad aumentare il fatturato del 25% ottimizzando la rete vendita e 
+                implementando KPI mirati.
               </p>
               <p>
                 Il mio approccio è pratico e basato sui numeri: non teoria, ma strumenti concreti

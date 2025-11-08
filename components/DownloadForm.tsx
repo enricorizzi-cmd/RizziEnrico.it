@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { downloadSchema, type DownloadInput } from '@/lib/validators';
+import { trackEvent } from './Analytics';
 
 interface DownloadFormProps {
   resourceSlug: string;
@@ -49,6 +50,13 @@ export default function DownloadForm({ resourceSlug, buttonText }: DownloadFormP
       }
 
       const result = await response.json();
+      
+      // Track download event
+      trackEvent('download_lead_magnet', {
+        resource_slug: resourceSlug,
+        file: result.downloadUrl || resourceSlug,
+        type: 'lead_magnet',
+      });
       
       if (result.emailSent) {
         setSubmitSuccess(true);

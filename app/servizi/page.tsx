@@ -2,10 +2,11 @@ import { generateMetadata } from '@/lib/seo';
 import SectionTitle from '@/components/SectionTitle';
 import Card from '@/components/Card';
 import CTA from '@/components/CTA';
+import Link from 'next/link';
 
 export const metadata = generateMetadata({
-  title: 'Servizi - Consulenza OSM per PMI | Enrico Rizzi',
-  description: 'Consulenza productized con output concreti: Organizzazione PMI, Mansionari, Sviluppo Persone, KPI & Controllo di Gestione. Prezzi trasparenti.',
+  title: 'Servizi Consulenza PMI Veneto | Enrico Rizzi',
+  description: 'Consulenza productized per PMI: Organizzazione, Mansionari, Sviluppo Persone, KPI. Prezzi trasparenti. Area Venezia-Padova-Rovigo.',
   path: '/servizi',
 });
 
@@ -47,7 +48,7 @@ export default function ServiziPage() {
         {/* Hero */}
         <div className="text-center mb-16">
           <h1 className="font-heading text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-4">
-            Servizi
+            Servizi Consulenza Aziendale per PMI Venete
           </h1>
           <p className="text-xl text-[var(--color-subtext)] max-w-3xl mx-auto">
             Consulenza productized con output concreti, tempistiche chiare e investimento trasparente.
@@ -76,9 +77,15 @@ export default function ServiziPage() {
                   ))}
                 </ul>
               </div>
+              <div className="text-lg font-bold text-[var(--color-primary)] mb-4">
+                {service.price}
+              </div>
               <CTA href="/contatti" variant="primary" size="base" className="w-full mt-4">
                 Richiedi informazioni →
               </CTA>
+              <p className="text-xs text-[var(--color-subtext)] mt-3 text-center">
+                Vuoi approfondire? <Link href={`/servizi/${service.slug}`} className="text-[var(--color-primary)] hover:underline">Vedi dettagli</Link> o <Link href="/contatti" className="text-[var(--color-primary)] hover:underline">contattami</Link>
+              </p>
             </Card>
           ))}
         </div>

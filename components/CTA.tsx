@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { trackEvent } from './Analytics';
 
 interface CTAProps {
   href: string;
@@ -15,6 +18,14 @@ export default function CTA({
   children,
   className = '',
 }: CTAProps) {
+  const handleClick = () => {
+    trackEvent('cta_click', {
+      location: typeof window !== 'undefined' ? window.location.pathname : 'unknown',
+      text: typeof children === 'string' ? children : 'CTA',
+      href: href,
+    });
+  };
+
   const baseClasses = 'inline-flex items-center justify-center font-semibold rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-offset-2';
   
   const variantClasses = {
@@ -24,14 +35,15 @@ export default function CTA({
   };
 
   const sizeClasses = {
-    small: 'px-4 py-2 text-sm',
-    base: 'px-6 py-3 text-base',
-    large: 'px-8 py-4 text-lg',
+    small: 'px-4 py-2 text-sm min-h-[44px]',
+    base: 'px-6 py-3 text-base min-h-[48px]',
+    large: 'px-8 py-4 text-lg min-h-[56px]',
   };
 
   return (
     <Link
       href={href}
+      onClick={handleClick}
       className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
     >
       {children}

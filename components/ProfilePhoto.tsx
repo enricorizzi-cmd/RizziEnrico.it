@@ -50,18 +50,18 @@ export default function ProfilePhoto({
   return (
     <div className={`${sizeClasses[size]} rounded-full overflow-hidden bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-primary)]/5 p-2 ${className}`}>
       <div className="w-full h-full rounded-full overflow-hidden bg-white relative">
-        <Image
-          src={photoSrc}
-          alt={alt}
-          width={dimensions[size]}
-          height={dimensions[size]}
-          className="w-full h-full object-cover"
-          priority={size === 'lg' || size === 'md'} // Solo per foto principali
-          loading={size === 'sm' ? 'lazy' : undefined}
-          quality={85}
-          sizes={size === 'sm' ? '96px' : size === 'md' ? '(max-width: 768px) 192px, 256px' : '288px'}
-          onError={() => setImageError(true)}
-        />
+      <Image
+        src={photoSrc}
+        alt={alt || 'Enrico Rizzi consulente OSM PMI Veneto'}
+        width={dimensions[size]}
+        height={dimensions[size]}
+        className="w-full h-full object-cover"
+        priority={size === 'lg' || size === 'md'} // Solo per foto principali
+        loading={size === 'sm' ? 'lazy' : undefined}
+        quality={85}
+        sizes={size === 'sm' ? '96px' : size === 'md' ? '(max-width: 768px) 192px, 256px' : '288px'}
+        onError={() => setImageError(true)}
+      />
       </div>
     </div>
   );

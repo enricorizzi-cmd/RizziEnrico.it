@@ -12,8 +12,8 @@ import JSONLD from '@/components/JSONLD';
 import DownloadForm from '@/components/DownloadForm';
 
 export const metadata = generateMetadata({
-  title: 'i-Profile: Analisi Attitudinale Professionale | Enrico Rizzi',
-  description: 'Misura attitudini, individua potenziale e prendi decisioni basate sui dati. Strumento OSM per selezione, sviluppo team e crescita manageriale.',
+  title: 'i-Profile: Analisi Attitudinale Professionale per PMI | Enrico Rizzi',
+  description: 'Misura attitudini, individua potenziale e prendi decisioni basate sui dati. Strumento OSM per selezione, sviluppo team e crescita manageriale. Venezia-Rovigo.',
   path: '/i-profile',
 });
 

@@ -3,8 +3,8 @@ import SectionTitle from '@/components/SectionTitle';
 import Card from '@/components/Card';
 
 export const metadata = generateMetadata({
-  title: 'Blog - Insights su KPI, Organizzazione PMI | Enrico Rizzi',
-  description: 'Articoli pratici su KPI, organizzazione aziendale, mansionari, riunioni efficaci. Guida per PMI che vogliono crescere con metodo.',
+  title: 'Blog Consulenza PMI - Articoli su KPI e Organizzazione Aziendale | Enrico Rizzi',
+  description: 'Articoli pratici su KPI, organizzazione aziendale, mansionari, riunioni efficaci per PMI venete. Guide gratuite e best practice.',
   path: '/blog',
 });
 
@@ -43,7 +43,7 @@ export default function BlogPage() {
         {/* Hero */}
         <div className="text-center mb-12">
           <h1 className="font-heading text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-4">
-            Blog & Insights
+            Blog Consulenza PMI: Guide Pratiche su KPI e Organizzazione
           </h1>
           <p className="text-xl text-[var(--color-subtext)] max-w-3xl mx-auto">
             Articoli pratici su organizzazione aziendale, KPI, processi e crescita per PMI.

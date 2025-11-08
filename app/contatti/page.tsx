@@ -3,8 +3,8 @@ import ContactForm from '@/components/ContactForm';
 import Accordion from '@/components/Accordion';
 
 export const metadata = generateMetadata({
-  title: 'Check-up Aziendale Gratuito - Prenota 60/90 minuti | Enrico Rizzi',
-  description: 'Prenota un check-up aziendale gratuito di 60 minuti (via Zoom) o 90 minuti (in presenza). Analizziamo insieme numeri e criticità, ti mostro dove recuperare margini.',
+  title: 'Contatti - Check-up Gratuito PMI Veneto | Enrico Rizzi',
+  description: 'Prenota check-up aziendale gratuito: 60 min Zoom o 90 min in presenza. Analizziamo numeri e criticità della tua PMI. Venezia-Padova-Rovigo.',
   path: '/contatti',
 });
 

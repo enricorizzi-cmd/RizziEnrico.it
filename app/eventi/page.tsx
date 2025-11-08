@@ -6,8 +6,8 @@ import { format } from 'date-fns';
 import { it } from 'date-fns/locale/it';
 
 export const metadata = generateMetadata({
-  title: 'Eventi & Speaking - Calendario Eventi | Enrico Rizzi',
-  description: 'Eventi, workshop e interventi pubblici su organizzazione aziendale e KPI per PMI. Venezia, Rovigo, Veneto.',
+  title: 'Eventi & Speaking - Workshop e Webinar per PMI Venete | Enrico Rizzi',
+  description: 'Eventi, workshop e interventi pubblici su organizzazione aziendale e KPI per PMI. Venezia, Rovigo, Veneto. Calendario eventi aggiornato.',
   path: '/eventi',
 });
 

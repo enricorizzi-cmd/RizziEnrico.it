@@ -6,8 +6,8 @@ import CTA from '@/components/CTA';
 import SectionTitle from '@/components/SectionTitle';
 
 export const metadata = generateMetadata({
-  title: 'Calcolatore di Investimento - Simulatore Interesse Semplice e Composto | Enrico Rizzi',
-  description: 'Calcola il tuo patrimonio futuro con interesse semplice e composto. Analisi AI personalizzata per raggiungere l\'indipendenza finanziaria e diversificazione investimenti.',
+  title: 'Calcolatore Investimento - Simulatore Interesse Semplice e Composto | Enrico Rizzi',
+  description: 'Calcola patrimonio futuro con interesse semplice e composto. Analisi AI personalizzata per indipendenza finanziaria e diversificazione investimenti.',
   path: '/calcolatore-investimento',
 });
 

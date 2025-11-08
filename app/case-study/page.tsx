@@ -4,8 +4,8 @@ import Card from '@/components/Card';
 import { createServerClient } from '@/lib/supabase';
 
 export const metadata = generateMetadata({
-  title: 'Case Study - Storie di successo PMI organizzate | Enrico Rizzi',
-  description: 'Case study di PMI che hanno trasformato organizzazione e risultati con metodo e KPI. Risultati misurabili e testimonianze reali.',
+  title: 'Case Study PMI Venete - Storie di Successo con Metodo OSM | Enrico Rizzi',
+  description: 'Case study reali di PMI venete che hanno trasformato organizzazione e risultati con metodo e KPI. Risultati misurabili: +25% fatturato, -30% tempi consegna.',
   path: '/case-study',
 });
 
@@ -58,7 +58,7 @@ export default async function CaseStudyPage() {
         {/* Hero */}
         <div className="text-center mb-12">
           <h1 className="font-heading text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-4">
-            Case Study
+            Case Study PMI Venete: Storie di Successo con Metodo e KPI
           </h1>
           <p className="text-xl text-[var(--color-subtext)] max-w-3xl mx-auto">
             PMI che hanno trasformato organizzazione e risultati con metodo e KPI.

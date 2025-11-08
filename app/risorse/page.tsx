@@ -8,8 +8,8 @@ import CTA from '@/components/CTA';
 import DownloadForm from '@/components/DownloadForm';
 
 export const metadata = generateMetadata({
-  title: 'Risorse - KPI Pack e Tool Gratuiti | Enrico Rizzi',
-  description: 'Scarica il KPI Pack gratuito (template Excel/Sheets) e usa i calcolatori KPI online: break-even, pricing, costo spreco tempo.',
+  title: 'Risorse Gratuite - KPI Pack e Tool per PMI | Enrico Rizzi',
+  description: 'Scarica Kit KPI gratuito (template Excel), usa calcolatori online e risorse i-Profile. Tool pratici per organizzare la tua PMI. Venezia-Padova-Rovigo.',
   path: '/risorse',
 });
 
@@ -20,7 +20,7 @@ export default function RisorsePage() {
         {/* Hero */}
         <div className="text-center mb-16">
           <h1 className="font-heading text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-4">
-            Risorse
+            Risorse Gratuite per PMI: KPI Pack e Tool Pratici
           </h1>
           <p className="text-xl text-[var(--color-subtext)] max-w-3xl mx-auto">
             Tool pratici e template per iniziare subito a misurare e organizzare la tua PMI.

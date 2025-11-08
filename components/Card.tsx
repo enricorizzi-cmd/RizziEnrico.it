@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { ReactNode } from 'react';
 
 interface CardProps {
@@ -28,11 +29,13 @@ export default function Card({
     <>
       {image && (
         <div className="aspect-video bg-gray-200 relative overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={image}
             alt={imageAlt || title}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            loading="lazy"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
       )}

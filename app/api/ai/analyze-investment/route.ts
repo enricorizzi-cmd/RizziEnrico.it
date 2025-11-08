@@ -1,9 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
-import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Dynamic import per evitare errori in build time se API key non presente
+let OpenAI: any;
+let openai: any;
+
+async function getOpenAI() {
+  if (!process.env.OPENAI_API_KEY) {
+    return null;
+  }
+  
+  if (!OpenAI) {
+    OpenAI = (await import('openai')).default;
+    openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+  }
+  
+  return openai;
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,6 +36,14 @@ export async function POST(request: NextRequest) {
     } = await request.json();
 
     if (!process.env.OPENAI_API_KEY) {
+      return NextResponse.json(
+        { error: 'OpenAI API key not configured' },
+        { status: 500 }
+      );
+    }
+
+    const openaiInstance = await getOpenAI();
+    if (!openaiInstance) {
       return NextResponse.json(
         { error: 'OpenAI API key not configured' },
         { status: 500 }
@@ -92,7 +114,7 @@ Rispondi in formato JSON:
 
 L'analisi deve essere pratica, motivante, e orientata all'azione. Usa un tono professionale ma accessibile.`;
 
-    const completion = await openai.chat.completions.create({
+    const completion = await openaiInstance.chat.completions.create({
       model: 'gpt-4o',
       messages: [
         {
