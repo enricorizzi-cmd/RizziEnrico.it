@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 export default function CookieBanner() {
   const [showBanner, setShowBanner] = useState(false);
@@ -31,7 +32,10 @@ export default function CookieBanner() {
         <div className="flex-1">
           <p className="text-sm text-[var(--color-text)]">
             <strong>Usiamo cookie tecnici e di misurazione anonima.</strong> I cookie ci aiutano
-            a migliorare il sito e non contengono dati personali. Puoi scegliere tu.
+            a migliorare il sito e non contengono dati personali. Puoi scegliere tu.{' '}
+            <Link href="/cookie" className="text-[var(--color-primary)] hover:underline font-medium">
+              Maggiori informazioni
+            </Link>
           </p>
         </div>
         <div className="flex gap-3">
