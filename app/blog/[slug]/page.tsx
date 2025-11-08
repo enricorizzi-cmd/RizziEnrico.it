@@ -308,9 +308,8 @@ export default async function BlogPostPage({ params }: PageProps) {
             </div>
 
             {/* Content */}
-            <div className="prose prose-lg max-w-none">
+            <div className="prose prose-lg max-w-none text-[var(--color-text)] leading-relaxed">
               <ReactMarkdown
-                className="text-[var(--color-text)] leading-relaxed"
                 components={{
                   h1: ({ node, ...props }) => (
                     <h1 {...props} className="text-3xl font-bold mb-4 mt-8 first:mt-0 text-[var(--color-text)]" />
