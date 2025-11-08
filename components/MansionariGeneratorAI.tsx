@@ -156,8 +156,8 @@ export default function MansionariGeneratorAI() {
               </div>
               <div className="text-sm text-[var(--color-text)] mb-3">
                 <strong>Obiettivo:</strong>{' '}
-                <span className="inline">
-                  <ReactMarkdown className="prose prose-sm max-w-none [&>p]:inline [&>p]:m-0">
+                <span className="inline prose prose-sm max-w-none [&>p]:inline [&>p]:m-0">
+                  <ReactMarkdown>
                     {mans.obiettivo}
                   </ReactMarkdown>
                 </span>
@@ -167,9 +167,11 @@ export default function MansionariGeneratorAI() {
                 <ul className="list-disc list-inside text-sm text-[var(--color-subtext)] mt-1">
                   {mans.responsabilita?.map((resp: string, i: number) => (
                     <li key={i}>
-                      <ReactMarkdown className="prose prose-sm max-w-none [&>p]:inline [&>p]:m-0">
-                        {resp}
-                      </ReactMarkdown>
+                      <span className="prose prose-sm max-w-none [&>p]:inline [&>p]:m-0">
+                        <ReactMarkdown>
+                          {resp}
+                        </ReactMarkdown>
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -179,9 +181,11 @@ export default function MansionariGeneratorAI() {
                 <ul className="list-disc list-inside text-sm text-[var(--color-subtext)] mt-1">
                   {mans.attivitaOperative?.slice(0, 5).map((att: string, i: number) => (
                     <li key={i}>
-                      <ReactMarkdown className="prose prose-sm max-w-none [&>p]:inline [&>p]:m-0">
-                        {att}
-                      </ReactMarkdown>
+                      <span className="prose prose-sm max-w-none [&>p]:inline [&>p]:m-0">
+                        <ReactMarkdown>
+                          {att}
+                        </ReactMarkdown>
+                      </span>
                     </li>
                   ))}
                 </ul>
