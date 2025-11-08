@@ -59,3 +59,6 @@ Dovrebbe essere < 500 KB.
 ## Nota
 Il codice è già configurato per usare Next.js Image ottimizzato con `priority` e `loading="eager"` nella Hero. L'ottimizzazione del file sorgente migliorerà ulteriormente le performance.
 
+
+
+
