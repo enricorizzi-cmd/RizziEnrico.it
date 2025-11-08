@@ -3,7 +3,6 @@ import SectionTitle from '@/components/SectionTitle';
 import KPITool from '@/components/KPITool';
 import KPIAnalysisAI from '@/components/KPIAnalysisAI';
 import MansionariGeneratorAI from '@/components/MansionariGeneratorAI';
-import IPTeaser from '@/components/IPTeaser';
 import CTA from '@/components/CTA';
 import DownloadForm from '@/components/DownloadForm';
 
@@ -65,24 +64,6 @@ export default function RisorsePage() {
           </div>
         </section>
 
-        {/* i-Profile Teaser */}
-        <section className="mb-16">
-          <div className="bg-white rounded-[var(--radius-card)] p-8 md:p-12 border border-[var(--color-line)] max-w-3xl mx-auto">
-            <div className="text-center mb-8">
-              <div className="text-5xl mb-4">🎯</div>
-              <h2 className="font-heading text-3xl font-bold text-[var(--color-text)] mb-4">
-                Mini-Check Attitudinale i-Profile
-              </h2>
-              <p className="text-lg text-[var(--color-subtext)] mb-2">
-                Prova un teaser di 5 domande per scoprire il tuo profilo attitudinale preliminare
-              </p>
-              <p className="text-sm text-[var(--color-subtext)]">
-                Non è l'i-Profile ufficiale OSM, ma ti dà un'anteprima gratuita
-              </p>
-            </div>
-            <IPTeaser />
-          </div>
-        </section>
 
         {/* Risorse i-Profile */}
         <section className="mb-16">

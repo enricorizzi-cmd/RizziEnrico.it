@@ -10,6 +10,7 @@ import IPPackages from '@/components/IPPackages';
 import Accordion from '@/components/Accordion';
 import JSONLD from '@/components/JSONLD';
 import DownloadForm from '@/components/DownloadForm';
+import IPTeaser from '@/components/IPTeaser';
 
 export const metadata = generateMetadata({
   title: 'i-Profile: Analisi Attitudinale Professionale per PMI | Enrico Rizzi',
@@ -415,6 +416,27 @@ export default function IProfilePage() {
                 </div>
               </div>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Mini-Check Attitudinale */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="bg-white rounded-[var(--radius-card)] p-8 md:p-12 border border-[var(--color-line)] max-w-3xl mx-auto">
+            <div className="text-center mb-8">
+              <div className="text-5xl mb-4">🎯</div>
+              <h2 className="font-heading text-3xl font-bold text-[var(--color-text)] mb-4">
+                Mini-Check Attitudinale i-Profile
+              </h2>
+              <p className="text-lg text-[var(--color-subtext)] mb-2">
+                Prova un teaser di 8 domande per scoprire il tuo profilo attitudinale preliminare
+              </p>
+              <p className="text-sm text-[var(--color-subtext)]">
+                Non è l'i-Profile ufficiale OSM, ma ti dà un'anteprima gratuita dei tuoi tratti attitudinali
+              </p>
+            </div>
+            <IPTeaser />
           </div>
         </div>
       </section>

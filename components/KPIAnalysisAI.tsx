@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import CTA from './CTA';
+import ReactMarkdown from 'react-markdown';
 
 export default function KPIAnalysisAI() {
   const [kpiData, setKpiData] = useState({
@@ -122,7 +123,9 @@ export default function KPIAnalysisAI() {
             <h4 className="font-heading font-bold text-lg text-[var(--color-text)] mb-3">
               Sintesi
             </h4>
-            <p className="text-sm text-[var(--color-text)]">{analysis.sintesi}</p>
+            <ReactMarkdown className="text-sm text-[var(--color-text)] prose prose-sm max-w-none">
+              {analysis.sintesi}
+            </ReactMarkdown>
           </div>
 
           <div>
@@ -149,10 +152,17 @@ export default function KPIAnalysisAI() {
                       {crit.priorita}
                     </span>
                   </div>
-                  <p className="text-sm text-[var(--color-subtext)] mb-2">{crit.descrizione}</p>
-                  <p className="text-sm font-medium text-[var(--color-text)]">
-                    💡 Azione: {crit.azione}
-                  </p>
+                  <ReactMarkdown className="text-sm text-[var(--color-subtext)] mb-2 prose prose-sm max-w-none">
+                    {crit.descrizione}
+                  </ReactMarkdown>
+                  <div className="text-sm font-medium text-[var(--color-text)]">
+                    💡 Azione:{' '}
+                    <span className="inline">
+                      <ReactMarkdown className="prose prose-sm max-w-none [&>p]:inline [&>p]:m-0">
+                        {crit.azione}
+                      </ReactMarkdown>
+                    </span>
+                  </div>
                   {crit.margineMiglioramento && (
                     <p className="text-xs text-[var(--color-primary)] mt-1">
                       Potenziale miglioramento: {crit.margineMiglioramento}
@@ -172,7 +182,9 @@ export default function KPIAnalysisAI() {
                 {analysis.prossimiPassi.map((passo: string, idx: number) => (
                   <li key={idx} className="flex items-start gap-2 text-sm text-[var(--color-text)]">
                     <span className="text-[var(--color-primary)] mt-1">→</span>
-                    <span>{passo}</span>
+                    <ReactMarkdown className="prose prose-sm max-w-none">
+                      {passo}
+                    </ReactMarkdown>
                   </li>
                 ))}
               </ul>

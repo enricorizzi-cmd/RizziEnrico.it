@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import ReactMarkdown from 'react-markdown';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -226,27 +227,31 @@ export default function AIAssistant() {
                   : 'bg-[var(--color-card)] text-[var(--color-text)]'
               }`}
             >
-              <div className="whitespace-pre-wrap">{msg.content}</div>
-              {/* Parse links in response */}
-              {msg.role === 'assistant' && msg.content.includes('[') && (
-                <div className="mt-2 text-sm">
-                  {msg.content.match(/\[([^\]]+)\]\(([^)]+)\)/g)?.map((link, i) => {
-                    const match = link.match(/\[([^\]]+)\]\(([^)]+)\)/);
-                    if (match) {
-                      return (
-                        <a
-                          key={i}
-                          href={match[2]}
-                          className="text-[var(--color-primary)] underline"
-                          target={match[2].startsWith('http') ? '_blank' : undefined}
-                        >
-                          {match[1]}
-                        </a>
-                      );
-                    }
-                    return null;
-                  })}
-                </div>
+              {msg.role === 'assistant' ? (
+                <ReactMarkdown
+                  className="prose prose-sm max-w-none"
+                  components={{
+                    a: ({ node, ...props }) => (
+                      <a
+                        {...props}
+                        className="text-[var(--color-primary)] underline"
+                        target={props.href?.startsWith('http') ? '_blank' : undefined}
+                      />
+                    ),
+                    p: ({ node, ...props }) => <p {...props} className="mb-2 last:mb-0" />,
+                    ul: ({ node, ...props }) => <ul {...props} className="list-disc pl-4 mb-2" />,
+                    ol: ({ node, ...props }) => <ol {...props} className="list-decimal pl-4 mb-2" />,
+                    li: ({ node, ...props }) => <li {...props} className="mb-1" />,
+                    strong: ({ node, ...props }) => <strong {...props} className="font-semibold" />,
+                    h1: ({ node, ...props }) => <h1 {...props} className="text-xl font-bold mb-2 mt-4 first:mt-0" />,
+                    h2: ({ node, ...props }) => <h2 {...props} className="text-lg font-bold mb-2 mt-4 first:mt-0" />,
+                    h3: ({ node, ...props }) => <h3 {...props} className="text-base font-bold mb-2 mt-3 first:mt-0" />,
+                  }}
+                >
+                  {msg.content}
+                </ReactMarkdown>
+              ) : (
+                <div className="whitespace-pre-wrap">{msg.content}</div>
               )}
             </div>
           </div>

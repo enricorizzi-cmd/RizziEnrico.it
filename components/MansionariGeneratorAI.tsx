@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import CTA from './CTA';
+import ReactMarkdown from 'react-markdown';
 
 export default function MansionariGeneratorAI() {
   const [departments, setDepartments] = useState<string[]>(['']);
@@ -153,14 +154,23 @@ export default function MansionariGeneratorAI() {
                 <h5 className="font-semibold text-[var(--color-text)]">{mans.ruolo}</h5>
                 <p className="text-xs text-[var(--color-subtext)]">{mans.dipartimento}</p>
               </div>
-              <p className="text-sm text-[var(--color-text)] mb-3">
-                <strong>Obiettivo:</strong> {mans.obiettivo}
-              </p>
+              <div className="text-sm text-[var(--color-text)] mb-3">
+                <strong>Obiettivo:</strong>{' '}
+                <span className="inline">
+                  <ReactMarkdown className="prose prose-sm max-w-none [&>p]:inline [&>p]:m-0">
+                    {mans.obiettivo}
+                  </ReactMarkdown>
+                </span>
+              </div>
               <div className="mb-3">
                 <strong className="text-sm text-[var(--color-text)]">Responsabilità:</strong>
                 <ul className="list-disc list-inside text-sm text-[var(--color-subtext)] mt-1">
                   {mans.responsabilita?.map((resp: string, i: number) => (
-                    <li key={i}>{resp}</li>
+                    <li key={i}>
+                      <ReactMarkdown className="prose prose-sm max-w-none [&>p]:inline [&>p]:m-0">
+                        {resp}
+                      </ReactMarkdown>
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -168,7 +178,11 @@ export default function MansionariGeneratorAI() {
                 <strong className="text-sm text-[var(--color-text)]">Attività Operative:</strong>
                 <ul className="list-disc list-inside text-sm text-[var(--color-subtext)] mt-1">
                   {mans.attivitaOperative?.slice(0, 5).map((att: string, i: number) => (
-                    <li key={i}>{att}</li>
+                    <li key={i}>
+                      <ReactMarkdown className="prose prose-sm max-w-none [&>p]:inline [&>p]:m-0">
+                        {att}
+                      </ReactMarkdown>
+                    </li>
                   ))}
                 </ul>
               </div>

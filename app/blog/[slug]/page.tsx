@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { generateMetadata as generateSEOMetadata } from '@/lib/seo';
 import JSONLD from '@/components/JSONLD';
 import CTA from '@/components/CTA';
+import ReactMarkdown from 'react-markdown';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -308,9 +309,50 @@ export default async function BlogPostPage({ params }: PageProps) {
 
             {/* Content */}
             <div className="prose prose-lg max-w-none">
-              <div className="text-[var(--color-text)] leading-relaxed whitespace-pre-line">
+              <ReactMarkdown
+                className="text-[var(--color-text)] leading-relaxed"
+                components={{
+                  h1: ({ node, ...props }) => (
+                    <h1 {...props} className="text-3xl font-bold mb-4 mt-8 first:mt-0 text-[var(--color-text)]" />
+                  ),
+                  h2: ({ node, ...props }) => (
+                    <h2 {...props} className="text-2xl font-bold mb-3 mt-6 first:mt-0 text-[var(--color-text)]" />
+                  ),
+                  h3: ({ node, ...props }) => (
+                    <h3 {...props} className="text-xl font-bold mb-2 mt-4 first:mt-0 text-[var(--color-text)]" />
+                  ),
+                  p: ({ node, ...props }) => (
+                    <p {...props} className="mb-4 text-[var(--color-text)] leading-relaxed" />
+                  ),
+                  ul: ({ node, ...props }) => (
+                    <ul {...props} className="list-disc pl-6 mb-4 text-[var(--color-text)]" />
+                  ),
+                  ol: ({ node, ...props }) => (
+                    <ol {...props} className="list-decimal pl-6 mb-4 text-[var(--color-text)]" />
+                  ),
+                  li: ({ node, ...props }) => (
+                    <li {...props} className="mb-2 text-[var(--color-text)]" />
+                  ),
+                  strong: ({ node, ...props }) => (
+                    <strong {...props} className="font-semibold text-[var(--color-text)]" />
+                  ),
+                  em: ({ node, ...props }) => (
+                    <em {...props} className="italic" />
+                  ),
+                  a: ({ node, ...props }) => (
+                    <a
+                      {...props}
+                      className="text-[var(--color-primary)] underline hover:opacity-80"
+                      target={props.href?.startsWith('http') ? '_blank' : undefined}
+                    />
+                  ),
+                  hr: ({ node, ...props }) => (
+                    <hr {...props} className="my-8 border-[var(--color-line)]" />
+                  ),
+                }}
+              >
                 {post.content}
-              </div>
+              </ReactMarkdown>
             </div>
 
             {/* CTA */}
