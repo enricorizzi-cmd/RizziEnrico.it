@@ -24,17 +24,9 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '1mb', // Limita dimensione body per server actions
     },
   },
-  // Webpack config per ridurre memoria
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      // Limita memoria per build
-      config.optimization = {
-        ...config.optimization,
-        minimize: true,
-      };
-    }
-    return config;
-  },
+  // Turbopack config (Next.js 16 usa Turbopack di default)
+  // Configurazione vuota per silenziare warning webpack
+  turbopack: {},
 };
 
 export default nextConfig;
