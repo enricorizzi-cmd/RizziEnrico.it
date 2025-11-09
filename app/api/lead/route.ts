@@ -26,6 +26,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Limita dimensione body per ridurre memoria (max 50KB per form)
+    const contentLength = request.headers.get('content-length');
+    if (contentLength && parseInt(contentLength) > 50 * 1024) {
+      return NextResponse.json(
+        { error: 'Richiesta troppo grande' },
+        { status: 413 }
+      );
+    }
     const body = await request.json();
     
     // Validate input and set default source

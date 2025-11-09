@@ -8,6 +8,14 @@ const CONTACT_PHONE = '3475290564';
 
 export async function POST(request: NextRequest) {
   try {
+    // Limita dimensione body per ridurre memoria (max 50KB per form)
+    const contentLength = request.headers.get('content-length');
+    if (contentLength && parseInt(contentLength) > 50 * 1024) {
+      return NextResponse.json(
+        { error: 'Richiesta troppo grande' },
+        { status: 413 }
+      );
+    }
     const body = await request.json();
     const validatedData = downloadSchema.parse(body);
     

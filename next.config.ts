@@ -9,12 +9,31 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 60,
     // Permetti immagini locali non ottimizzate se necessario
     unoptimized: false,
+    // Limita dimensione massima per ridurre uso memoria
+    dangerouslyAllowSVG: false,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
   experimental: {
     optimizePackageImports: ['react-chartjs-2', 'chart.js', '@supabase/supabase-js', 'date-fns'],
+    // Ottimizzazioni memoria
+    serverActions: {
+      bodySizeLimit: '1mb', // Limita dimensione body per server actions
+    },
+  },
+  // Webpack config per ridurre memoria
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      // Limita memoria per build
+      config.optimization = {
+        ...config.optimization,
+        minimize: true,
+      };
+    }
+    return config;
   },
 };
 

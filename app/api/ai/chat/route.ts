@@ -114,13 +114,41 @@ Tono: Professionale ma amichevole, come un collega esperto che ti aiuta.`;
 
 export async function POST(request: NextRequest) {
   try {
-    const { messages, sessionId } = await request.json();
+    // Limita dimensione body per ridurre memoria (max 100KB)
+    const contentLength = request.headers.get('content-length');
+    if (contentLength && parseInt(contentLength) > 100 * 1024) {
+      return NextResponse.json(
+        { error: 'Richiesta troppo grande. Riduci il numero di messaggi.' },
+        { status: 413 }
+      );
+    }
+    
+    const body = await request.json();
+    const { messages, sessionId } = body;
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
         { error: 'Messages array required' },
         { status: 400 }
       );
+    }
+
+    // Limita numero di messaggi per ridurre memoria (max 20 messaggi)
+    if (messages.length > 20) {
+      return NextResponse.json(
+        { error: 'Troppi messaggi. Limite: 20 messaggi per conversazione.' },
+        { status: 400 }
+      );
+    }
+
+    // Limita dimensione singolo messaggio (max 2000 caratteri)
+    for (const msg of messages) {
+      if (msg.content && msg.content.length > 2000) {
+        return NextResponse.json(
+          { error: 'Messaggio troppo lungo. Limite: 2000 caratteri per messaggio.' },
+          { status: 400 }
+        );
+      }
     }
 
     const openaiInstance = await getOpenAI();
@@ -131,33 +159,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Rate limiting semplificato
+    // Rate limiting semplificato (usa rateLimit globale invece di cache locale)
     const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
     const rateLimitKey = `ai-chat-${sessionId || ip}`;
     
-    // In produzione: usare Redis o Upstash
-    const now = Date.now();
-    const rateLimitCache = new Map<string, { count: number; resetAt: number }>();
-    const limit = rateLimitCache.get(rateLimitKey);
+    // Usa rateLimit globale invece di creare nuovo Map ad ogni richiesta
+    const { rateLimit } = await import('@/lib/rateLimit');
+    const limit = rateLimit(rateLimitKey);
     
-    if (limit && limit.resetAt > now) {
-      if (limit.count >= 20) {
-        return NextResponse.json(
-          { error: 'Troppe richieste. Riprova tra qualche minuto.' },
-          { status: 429 }
-        );
-      }
-      limit.count++;
-    } else {
-      rateLimitCache.set(rateLimitKey, { count: 1, resetAt: now + 5 * 60 * 1000 });
+    if (!limit.allowed) {
+      return NextResponse.json(
+        { error: 'Troppe richieste. Riprova tra qualche minuto.' },
+        { status: 429 }
+      );
     }
 
-    // Prepara messaggi per OpenAI
+    // Prepara messaggi per OpenAI (limita a ultimi 15 per ridurre memoria)
+    const recentMessages = messages.slice(-15);
     const openaiMessages = [
       { role: 'system' as const, content: SYSTEM_PROMPT },
-      ...messages.map((msg: { role: string; content: string }) => ({
+      ...recentMessages.map((msg: { role: string; content: string }) => ({
         role: (msg.role === 'user' ? 'user' : msg.role === 'assistant' ? 'assistant' : 'system') as 'user' | 'assistant' | 'system',
-        content: msg.content,
+        content: (msg.content || '').substring(0, 2000), // Limita anche qui per sicurezza
       })),
     ];
 
@@ -165,7 +188,7 @@ export async function POST(request: NextRequest) {
       model: 'gpt-4o', // Usa modello più recente disponibile
       messages: openaiMessages,
       temperature: 0.7, // Bilanciato tra creatività e coerenza
-      max_tokens: 800, // Aumentato per risposte più complete
+      max_tokens: 600, // Ridotto per risparmiare memoria (da 800)
     });
 
     const response = completion.choices[0]?.message?.content || 'Mi dispiace, non sono riuscito a generare una risposta. Puoi riformulare la domanda?';

@@ -8,6 +8,14 @@ const CONTACT_EMAIL = 'e.rizzi@osmpartnervenezia.it';
 
 export async function POST(request: NextRequest) {
   try {
+    // Limita dimensione body per ridurre memoria (max 50KB per form)
+    const contentLength = request.headers.get('content-length');
+    if (contentLength && parseInt(contentLength) > 50 * 1024) {
+      return NextResponse.json(
+        { error: 'Richiesta troppo grande' },
+        { status: 413 }
+      );
+    }
     const body = await request.json();
     const validatedData = eventRegistrationSchema.parse(body);
     
@@ -24,7 +32,7 @@ export async function POST(request: NextRequest) {
       score: 20,
     }).select().single();
 
-    // Genera QR code
+    // Genera QR code con dimensioni ottimizzate per ridurre uso memoria
     const registrationId = lead?.id || `event-${Date.now()}`;
     const qrData = JSON.stringify({
       event: validatedData.event_slug,
@@ -32,7 +40,15 @@ export async function POST(request: NextRequest) {
       name: validatedData.name,
     });
 
-    const qrCodeUrl = await QRCode.toDataURL(qrData);
+    // Limita dimensione QR code per ridurre memoria (200x200px è sufficiente)
+    const qrCodeUrl = await QRCode.toDataURL(qrData, {
+      width: 200,
+      margin: 1,
+      color: {
+        dark: '#000000',
+        light: '#FFFFFF'
+      }
+    });
 
     // Invia email di conferma a Enrico
     const emailSubject = `Nuova registrazione evento - ${validatedData.event_slug}`;
