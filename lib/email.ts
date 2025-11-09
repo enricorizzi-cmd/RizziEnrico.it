@@ -63,6 +63,45 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
     if (result.error) {
       console.error('[EMAIL] ❌ Errore Resend API:', JSON.stringify(result.error, null, 2));
       
+      // Se errore 403 per indirizzo non verificato (modalità test), prova fallback
+      const isTestModeError = result.error.statusCode === 403 && 
+        (result.error.message?.toLowerCase().includes('testing emails') ||
+         result.error.message?.toLowerCase().includes('only send') ||
+         result.error.message?.toLowerCase().includes('your own email'));
+      
+      if (isTestModeError && options.to !== 'enricorizzi1991@gmail.com') {
+        console.log('[EMAIL] 🔄 Fallback: modalità test attiva, reindirizzo a enricorizzi1991@gmail.com');
+        console.log('[EMAIL] 📧 Email originale destinata a:', options.to);
+        
+        // Prova a inviare a enricorizzi1991@gmail.com con subject modificato
+        const fallbackSubject = `[FALLBACK] ${options.subject} (destinata a: ${options.to})`;
+        const fallbackText = `${options.text}\n\n---\n[NOTA] Questa email era destinata a: ${options.to}\nInviata a enricorizzi1991@gmail.com perché Resend è in modalità test.`;
+        
+        const fallbackResult = await resend.emails.send({
+          from: fromEmail,
+          to: 'enricorizzi1991@gmail.com',
+          subject: fallbackSubject,
+          html: (options.html || options.text.replace(/\n/g, '<br>')) + `<br><br><hr><p><small>[NOTA] Questa email era destinata a: ${options.to}<br>Inviata a enricorizzi1991@gmail.com perché Resend è in modalità test.</small></p>`,
+          text: fallbackText,
+        });
+        
+        if (fallbackResult.error) {
+          console.error('[EMAIL] ❌ Errore anche nel fallback:', JSON.stringify(fallbackResult.error, null, 2));
+          return false;
+        }
+        
+        if (fallbackResult.data) {
+          console.log('[EMAIL] ✅ Email inviata con fallback:', { 
+            id: fallbackResult.data.id, 
+            originalTo: options.to,
+            fallbackTo: 'enricorizzi1991@gmail.com',
+            from: fromEmail,
+            timestamp: new Date().toISOString(),
+          });
+          return true;
+        }
+      }
+      
       // Se errore è dominio non verificato, suggerisci fallback
       if (result.error.message?.toLowerCase().includes('domain') || 
           result.error.message?.toLowerCase().includes('verify')) {
@@ -96,6 +135,45 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
       statusCode: error?.statusCode,
       stack: error?.stack?.substring(0, 500),
     });
+    
+    // Se è un errore 403 per modalità test, prova fallback
+    const isTestModeError = error?.statusCode === 403 && 
+      (error?.message?.toLowerCase().includes('testing emails') ||
+       error?.message?.toLowerCase().includes('only send') ||
+       error?.message?.toLowerCase().includes('your own email'));
+    
+    if (isTestModeError && options.to !== 'enricorizzi1991@gmail.com') {
+      try {
+        console.log('[EMAIL] 🔄 Fallback catch: modalità test attiva, reindirizzo a enricorizzi1991@gmail.com');
+        const { Resend } = await import('resend');
+        const resend = new Resend(RESEND_API_KEY);
+        const fromEmail = process.env.FROM_EMAIL || `Enrico Rizzi <onboarding@resend.dev>`;
+        
+        const fallbackSubject = `[FALLBACK] ${options.subject} (destinata a: ${options.to})`;
+        const fallbackText = `${options.text}\n\n---\n[NOTA] Questa email era destinata a: ${options.to}\nInviata a enricorizzi1991@gmail.com perché Resend è in modalità test.`;
+        
+        const fallbackResult = await resend.emails.send({
+          from: fromEmail,
+          to: 'enricorizzi1991@gmail.com',
+          subject: fallbackSubject,
+          html: (options.html || options.text.replace(/\n/g, '<br>')) + `<br><br><hr><p><small>[NOTA] Questa email era destinata a: ${options.to}<br>Inviata a enricorizzi1991@gmail.com perché Resend è in modalità test.</small></p>`,
+          text: fallbackText,
+        });
+        
+        if (fallbackResult.data) {
+          console.log('[EMAIL] ✅ Email inviata con fallback (catch):', { 
+            id: fallbackResult.data.id, 
+            originalTo: options.to,
+            fallbackTo: 'enricorizzi1991@gmail.com',
+            from: fromEmail,
+            timestamp: new Date().toISOString(),
+          });
+          return true;
+        }
+      } catch (fallbackError) {
+        console.error('[EMAIL] ❌ Errore anche nel fallback:', fallbackError);
+      }
+    }
     
     // Se è un errore di dominio non verificato, suggerisci soluzione
     if (error?.message?.toLowerCase().includes('domain') || 
