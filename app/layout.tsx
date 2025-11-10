@@ -1,22 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
-import dynamic from 'next/dynamic';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CookieBanner from "@/components/CookieBanner";
 import Analytics from "@/components/Analytics";
-
-// Dynamic imports per componenti non critici - caricano solo dopo che la pagina è interattiva
-const AIAssistant = dynamic(() => import('@/components/AIAssistant'), {
-  ssr: false,
-  loading: () => null, // Non mostra nulla durante il caricamento
-});
-
-const WhatsAppWidget = dynamic(() => import('@/components/WhatsAppWidget'), {
-  ssr: false,
-  loading: () => null,
-});
+import ClientWidgets from "./components/ClientWidgets";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -68,8 +57,7 @@ export default function RootLayout({
         <main id="main-content">{children}</main>
         <Footer />
         <CookieBanner />
-        <AIAssistant />
-        <WhatsAppWidget />
+        <ClientWidgets />
         <Analytics />
       </body>
     </html>
