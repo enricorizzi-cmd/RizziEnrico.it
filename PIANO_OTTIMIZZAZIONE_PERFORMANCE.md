@@ -319,3 +319,4 @@ webpack: (config, { isServer }) => {
 **⚠️ IMPORTANTE**: L'ottimizzazione della foto Enrico (15MB → <500KB) è CRITICA e deve essere fatta PRIMA di qualsiasi altra ottimizzazione. Questo solo migliorerà LCP mobile di ~1000-1500ms.
 
 
+

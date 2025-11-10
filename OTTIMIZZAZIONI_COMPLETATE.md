@@ -105,3 +105,4 @@
 **⚠️ IMPORTANTE**: L'ottimizzazione della foto Enrico (15MB → <500KB) è la priorità assoluta. Questo solo migliorerà LCP mobile di ~1000-1500ms.
 
 
+

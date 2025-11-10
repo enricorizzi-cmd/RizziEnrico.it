@@ -64,19 +64,18 @@ const nextConfig: NextConfig = {
     }
     return config;
   },
+  // Limita memoria per server components (spostato da experimental in Next.js 16)
+  serverExternalPackages: ['sharp', 'canvas'],
   experimental: {
     optimizePackageImports: ['react-chartjs-2', 'chart.js', '@supabase/supabase-js', 'date-fns'],
     // Ottimizzazioni memoria
     serverActions: {
       bodySizeLimit: '500kb', // Ridotto da 1mb a 500kb per ridurre memoria
     },
-    // Limita memoria per server components
-    serverComponentsExternalPackages: ['sharp', 'canvas'],
     // Ottimizza bundle size riducendo JavaScript inutilizzato
     optimizeCss: true,
   },
-  // Ottimizzazioni produzione
-  swcMinify: true,
+  // swcMinify è il default in Next.js 16 e l'opzione è stata rimossa
   // Turbopack config (Next.js 16 usa Turbopack di default)
   // Configurazione vuota per silenziare warning webpack
   turbopack: {},
