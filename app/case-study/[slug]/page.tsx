@@ -118,6 +118,150 @@ const cases = {
       company: 'Azienda Commerciale',
     },
   },
+  'distribuzione-ricambi-filtri': {
+    title: 'Distribuzione ricambi e filtrazione: da urgenze a processi stabili',
+    sector: 'Commercio B2B',
+    size: '45+ addetti',
+    context: 'Azienda di distribuzione ricambi e filtri, fatturato €12M. Ruoli sovrapposti, riunioni inutili, KPI assenti in logistica. Processi reattivi basati su urgenze continue.',
+    problem: 'Ruoli sovrapposti tra magazzino e logistica, riunioni senza agenda che duravano ore, assenza totale di KPI per monitorare performance. "Fuoco da spegnere" continuo, puntualità consegne imprevedibile.',
+    intervention: 'Organizzazione logistica e magazzino:\n1. Organigramma chiaro con ruoli definiti\n2. Mansionari per posizioni operative\n3. Cruscotto KPI logistica: puntualità, scorte, efficienza\n4. Riunioni settimanali strutturate con agenda\n5. Processi standardizzati per ordini e spedizioni',
+    kpiBefore: {
+      labels: ['Genn', 'Febb', 'Mar', 'Apr', 'Mag', 'Giu'],
+      datasets: [{
+        label: 'Puntualità consegne (%)',
+        data: [68, 72, 65, 70, 75, 73],
+        borderColor: '#DC2626',
+      }],
+    },
+    kpiAfter: {
+      labels: ['Genn', 'Febb', 'Mar', 'Apr', 'Mag', 'Giu'],
+      datasets: [{
+        label: 'Puntualità consegne (%)',
+        data: [85, 88, 92, 90, 94, 96],
+        borderColor: '#16A34A',
+      }],
+    },
+    results: [
+      'Processo stabile e prevedibile (prima: urgenze continue)',
+      '+28% puntualità consegne in 6 mesi',
+      'Riduzione "fuoco da spegnere" del 70%',
+      'Riunioni efficaci: da 2 ore a 45 minuti',
+    ],
+    testimonial: {
+      quote: 'Prima era tutto "fuoco da spegnere". Ora abbiamo processi stabili, numeri chiari, riunioni che servono davvero. La logistica funziona e i clienti sono più soddisfatti.',
+      authorName: 'Giuseppe Neri',
+      role: 'Direttore Operativo',
+      company: 'Distribuzione Ricambi Veneto',
+    },
+  },
+  'produzione-alimentare-polenta': {
+    title: 'Produzione alimentare: pianificazione e qualità con KPI',
+    sector: 'Alimentare',
+    size: 'Linee produzione',
+    context: 'Azienda di produzione alimentare specializzata in polenta e prodotti a base di mais, fatturato €15M. Programmazione reattiva, dati sparsi, assenza indicatori qualità.',
+    problem: 'Programmazione produzione basata su urgenze, dati di produzione sparsi in fogli Excel, assenza totale di indicatori qualità. Scarti elevati, efficienza linee non monitorata, decisioni "a sensazione".',
+    intervention: 'Organizzazione produzione e qualità:\n1. Piano settimanale strutturato per linee\n2. KPI efficienza linee: ore/uomo, resa, scarti\n3. Dashboard produzione in tempo reale\n4. Processi qualità documentati\n5. Riunioni produzione giornaliere con numeri',
+    kpiBefore: {
+      labels: ['Genn', 'Febb', 'Mar', 'Apr', 'Mag', 'Giu'],
+      datasets: [{
+        label: 'Scarti (%)',
+        data: [8.5, 9.2, 7.8, 8.9, 9.1, 8.7],
+        borderColor: '#DC2626',
+      }],
+    },
+    kpiAfter: {
+      labels: ['Genn', 'Febb', 'Mar', 'Apr', 'Mag', 'Giu'],
+      datasets: [{
+        label: 'Scarti (%)',
+        data: [6.2, 5.8, 5.5, 5.2, 4.9, 4.7],
+        borderColor: '#16A34A',
+      }],
+    },
+    results: [
+      'Pianificazione stabile (prima: reattiva)',
+      '-45% scarti in 6 mesi',
+      'Decisioni basate su numeri (prima: "sensazione")',
+      'Efficienza linee monitorata e migliorata',
+    ],
+    testimonial: {
+      quote: 'Prima programmavamo "a occhio". Ora abbiamo numeri chiari, pianificazione stabile, qualità misurabile. Gli scarti sono diminuiti e l\'efficienza è migliorata.',
+      authorName: 'Marco Ferrari',
+      role: 'Direttore Produzione',
+      company: 'Produzione Alimentare Veneto',
+    },
+  },
+  'lattoneria-coperture-cantiere': {
+    title: 'Lattoneria & Coperture: passaggio generazionale riuscito',
+    sector: 'Edile/Impiantistico',
+    size: 'Cantiere',
+    context: 'Azienda di lattoneria e coperture, passaggio generazionale da padre a figlio. Know-how nelle persone, poco tracciamento avanzamento lavori. Necessità continuità direzionale.',
+    problem: 'Know-how non documentato, avanzamento lavori tracciato "a memoria", marginalità commesse non chiara. Passaggio generazionale rischioso senza processi.',
+    intervention: 'Documentazione e controllo commesse:\n1. Mansionari per ruoli cantiere/ufficio\n2. KPI avanzamento lavori e marginalità commessa\n3. Processi cantiere documentati\n4. Formazione nuova leadership\n5. Dashboard commesse in tempo reale',
+    kpiBefore: {
+      labels: ['Genn', 'Febb', 'Mar', 'Apr', 'Mag', 'Giu'],
+      datasets: [{
+        label: 'Marginalità commesse (%)',
+        data: [18, 15, 20, 17, 19, 16],
+        borderColor: '#DC2626',
+      }],
+    },
+    kpiAfter: {
+      labels: ['Genn', 'Febb', 'Mar', 'Apr', 'Mag', 'Giu'],
+      datasets: [{
+        label: 'Marginalità commesse (%)',
+        data: [22, 24, 26, 25, 28, 27],
+        borderColor: '#16A34A',
+      }],
+    },
+    results: [
+      'Continuità direzionale garantita',
+      'Controllo commesse in tempo reale',
+      '+35% marginalità media commesse',
+      'Processi documentati e replicabili',
+    ],
+    testimonial: {
+      quote: 'Il passaggio generazionale era critico. Grazie alla documentazione e ai KPI, abbiamo mantenuto continuità e migliorato anche i risultati. Ora abbiamo più controllo e ordine.',
+      authorName: 'Andrea Conti',
+      role: 'Nuovo Titolare',
+      company: 'Lattoneria & Coperture Veneto',
+    },
+  },
+  'impianti-clima-refrigerazione-service': {
+    title: 'Impianti clima/refrigerazione: service con qualità misurabile',
+    sector: 'Service tecnico',
+    size: 'Team service',
+    context: 'Azienda di installazione e manutenzione impianti clima e refrigerazione, fatturato €6M. Priorità confuse, reportistica carente, qualità service non misurabile.',
+    problem: 'Priorità interventi confuse, reportistica post-servizio assente, tempi intervento non tracciati. Qualità service non misurabile, rientri frequenti, clienti insoddisfatti.',
+    intervention: 'Organizzazione service e qualità:\n1. Agenda interventi con priorità chiare\n2. Feedback post-servizio sistematico\n3. KPI: tempi intervento, first-time-fix, ticket aperti\n4. Processo service documentato\n5. Dashboard service in tempo reale',
+    kpiBefore: {
+      labels: ['Genn', 'Febb', 'Mar', 'Apr', 'Mag', 'Giu'],
+      datasets: [{
+        label: 'First-time-fix (%)',
+        data: [65, 68, 62, 70, 67, 69],
+        borderColor: '#DC2626',
+      }],
+    },
+    kpiAfter: {
+      labels: ['Genn', 'Febb', 'Mar', 'Apr', 'Mag', 'Giu'],
+      datasets: [{
+        label: 'First-time-fix (%)',
+        data: [78, 82, 85, 88, 90, 92],
+        borderColor: '#16A34A',
+      }],
+    },
+    results: [
+      'Tempi intervento ridotti del 30%',
+      'Qualità percepita in crescita',
+      '-60% rientri su stessi problemi',
+      'Ticket aperti monitorati e gestiti',
+    ],
+    testimonial: {
+      quote: 'Prima gli interventi erano "a caso". Ora abbiamo priorità chiare, feedback sistematico, qualità misurabile. I clienti sono più soddisfatti e i rientri sono diminuiti.',
+      authorName: 'Roberto Marini',
+      role: 'Responsabile Service',
+      company: 'Impianti Clima Veneto',
+    },
+  },
 };
 
 export async function generateMetadata({ params }: PageProps) {

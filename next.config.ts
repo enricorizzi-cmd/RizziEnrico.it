@@ -20,8 +20,31 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
-  // Nota: Next.js 16 usa Turbopack di default, le configurazioni webpack non sono supportate
-  // Le ottimizzazioni di code splitting sono gestite automaticamente da Turbopack
+  // Next.js 16 usa webpack per i build di produzione (Turbopack è solo per sviluppo con --turbopack)
+  // Configurazione webpack per ottimizzare la generazione dei chunk
+  webpack: (config, { isServer, dev }) => {
+    // Solo per build di produzione client-side
+    if (!isServer && !dev) {
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          chunks: 'all',
+          cacheGroups: {
+            default: false,
+            vendors: false,
+            framework: {
+              name: 'framework',
+              chunks: 'all',
+              test: /[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/]/,
+              priority: 40,
+              enforce: true,
+            },
+          },
+        },
+      };
+    }
+    return config;
+  },
   // Limita memoria per server components (spostato da experimental in Next.js 16)
   serverExternalPackages: ['sharp', 'canvas'],
   experimental: {
