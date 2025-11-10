@@ -13,6 +13,7 @@ import {
   Legend,
   Filler,
 } from 'chart.js';
+import ReactMarkdown from 'react-markdown';
 import CTA from './CTA';
 
 ChartJS.register(
@@ -388,8 +389,22 @@ export default function InvestmentCalculator() {
                 Analisi Personalizzata
               </h3>
               <div className="prose prose-sm max-w-none">
-                <div className="text-[var(--color-text)] whitespace-pre-line">
-                  {analysis.report}
+                <div className="text-[var(--color-text)]">
+                  <ReactMarkdown
+                    components={{
+                      h1: ({ node, ...props }) => <h1 {...props} className="text-2xl font-bold mb-3 mt-4 first:mt-0" />,
+                      h2: ({ node, ...props }) => <h2 {...props} className="text-xl font-bold mb-2 mt-4 first:mt-0" />,
+                      h3: ({ node, ...props }) => <h3 {...props} className="text-lg font-bold mb-2 mt-3 first:mt-0" />,
+                      p: ({ node, ...props }) => <p {...props} className="mb-3 last:mb-0" />,
+                      ul: ({ node, ...props }) => <ul {...props} className="list-disc pl-5 mb-3" />,
+                      ol: ({ node, ...props }) => <ol {...props} className="list-decimal pl-5 mb-3" />,
+                      li: ({ node, ...props }) => <li {...props} className="mb-1" />,
+                      strong: ({ node, ...props }) => <strong {...props} className="font-semibold" />,
+                      em: ({ node, ...props }) => <em {...props} className="italic" />,
+                    }}
+                  >
+                    {analysis.report}
+                  </ReactMarkdown>
                 </div>
                 {analysis.recommendations && analysis.recommendations.length > 0 && (
                   <div className="mt-6">
