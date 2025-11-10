@@ -1,15 +1,9 @@
 import { notFound } from 'next/navigation';
 import { generateMetadata as generateSEOMetadata } from '@/lib/seo';
 import SectionTitle from '@/components/SectionTitle';
-import dynamic from 'next/dynamic';
-
-// Dynamic import per KPIChart (include Chart.js, pesante)
-const KPIChart = dynamic(() => import('@/components/KPIChart'), {
-  ssr: false,
-  loading: () => <div className="h-64 flex items-center justify-center text-gray-400">Caricamento grafico...</div>,
-});
 import Testimonial from '@/components/Testimonial';
 import CTA from '@/components/CTA';
+import ClientKPIChart from '@/app/components/ClientKPIChart';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -208,11 +202,11 @@ export default async function CaseDetailPage({ params }: PageProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
                 <h3 className="font-semibold text-red-700 mb-4">Prima</h3>
-                <KPIChart data={caseItem.kpiBefore} />
+                <ClientKPIChart data={caseItem.kpiBefore} />
               </div>
               <div>
                 <h3 className="font-semibold text-green-700 mb-4">Dopo</h3>
-                <KPIChart data={caseItem.kpiAfter} />
+                <ClientKPIChart data={caseItem.kpiAfter} />
               </div>
             </div>
           </section>
