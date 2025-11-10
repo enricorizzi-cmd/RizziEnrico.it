@@ -20,50 +20,8 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
-  // Ottimizzazioni webpack per ridurre memoria e bundle size
-  webpack: (config, { isServer, dev }) => {
-    if (!dev) {
-      // Ottimizzazioni solo in produzione
-      config.optimization = {
-        ...config.optimization,
-        minimize: true,
-        // Code splitting ottimizzato
-        splitChunks: {
-          chunks: 'all',
-          cacheGroups: {
-            default: false,
-            vendors: false,
-            framework: {
-              name: 'framework',
-              chunks: 'all',
-              test: /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/]/,
-              priority: 40,
-              enforce: true,
-            },
-            lib: {
-              test(module: any) {
-                return module.size() > 160000 && /node_modules[/\\]/.test(module.identifier());
-              },
-              name(module: any) {
-                const hash = require('crypto').createHash('sha1');
-                hash.update(module.identifier());
-                return hash.digest('hex').substring(0, 8);
-              },
-              priority: 30,
-              minChunks: 1,
-              reuseExistingChunk: true,
-            },
-            commons: {
-              name: 'commons',
-              minChunks: 2,
-              priority: 20,
-            },
-          },
-        },
-      };
-    }
-    return config;
-  },
+  // Nota: Next.js 16 usa Turbopack di default, le configurazioni webpack non sono supportate
+  // Le ottimizzazioni di code splitting sono gestite automaticamente da Turbopack
   // Limita memoria per server components (spostato da experimental in Next.js 16)
   serverExternalPackages: ['sharp', 'canvas'],
   experimental: {
@@ -76,9 +34,7 @@ const nextConfig: NextConfig = {
     optimizeCss: true,
   },
   // swcMinify è il default in Next.js 16 e l'opzione è stata rimossa
-  // Turbopack config (Next.js 16 usa Turbopack di default)
-  // Configurazione vuota per silenziare warning webpack
-  turbopack: {},
+  // Turbopack è il bundler di default in Next.js 16 e non richiede configurazione
 };
 
 export default nextConfig;

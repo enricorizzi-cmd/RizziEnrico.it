@@ -3,7 +3,7 @@ import Hero from '@/components/Hero';
 import InvestorQuestionnaire from '@/components/InvestorQuestionnaire';
 import CTA from '@/components/CTA';
 import SectionTitle from '@/components/SectionTitle';
-import ClientInvestmentCalculator from '@/app/components/ClientInvestmentCalculator';
+import ClientInvestmentCalculator from '@/components/ClientInvestmentCalculator';
 
 export const metadata = generateMetadata({
   title: 'Calcolatore Investimento - Simulatore Interesse Semplice e Composto | Enrico Rizzi',

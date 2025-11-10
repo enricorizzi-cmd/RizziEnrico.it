@@ -3,7 +3,7 @@ import { generateMetadata as generateSEOMetadata } from '@/lib/seo';
 import SectionTitle from '@/components/SectionTitle';
 import Testimonial from '@/components/Testimonial';
 import CTA from '@/components/CTA';
-import ClientKPIChart from '@/app/components/ClientKPIChart';
+import ClientKPIChart from '@/components/ClientKPIChart';
 
 interface PageProps {
   params: Promise<{ slug: string }>;

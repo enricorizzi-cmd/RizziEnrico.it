@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CookieBanner from "@/components/CookieBanner";
 import Analytics from "@/components/Analytics";
-import ClientWidgets from "./components/ClientWidgets";
+import ClientWidgets from "@/components/ClientWidgets";
 
 const inter = Inter({
   subsets: ["latin"],
