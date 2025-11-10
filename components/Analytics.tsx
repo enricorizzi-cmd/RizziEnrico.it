@@ -58,8 +58,9 @@ export default function Analytics() {
       if (GA4_ID && typeof window !== 'undefined' && !window.gtag) {
         // Inizializza dataLayer prima di caricare lo script
         window.dataLayer = window.dataLayer || [];
+        const dataLayer = window.dataLayer; // Salva riferimento per TypeScript
         function gtag(...args: any[]) {
-          window.dataLayer.push(args);
+          dataLayer.push(args);
         }
         window.gtag = gtag;
         gtag('js', new Date());
