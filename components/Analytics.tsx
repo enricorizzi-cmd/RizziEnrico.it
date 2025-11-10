@@ -7,41 +7,80 @@ export default function Analytics() {
   const pathname = usePathname();
   const domain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
 
+  // Preconnect per migliorare velocità caricamento script third-party
   useEffect(() => {
-    // Plausible Analytics
-    if (domain && typeof window !== 'undefined') {
-      // Load Plausible script
-      const script = document.createElement('script');
-      script.defer = true;
-      script.dataset.domain = domain;
-      script.src = 'https://plausible.io/js/script.js';
-      document.head.appendChild(script);
+    if (typeof window !== 'undefined') {
+      // Preconnect a domini third-party
+      const preconnectDomains = [
+        'https://plausible.io',
+        'https://www.googletagmanager.com',
+        'https://www.google-analytics.com',
+      ];
 
-      return () => {
-        // Cleanup
-        const existing = document.querySelector(`[data-domain="${domain}"]`);
-        if (existing) {
-          existing.remove();
+      preconnectDomains.forEach((url) => {
+        const link = document.createElement('link');
+        link.rel = 'preconnect';
+        link.href = url;
+        link.crossOrigin = 'anonymous';
+        if (!document.querySelector(`link[href="${url}"]`)) {
+          document.head.appendChild(link);
         }
-      };
+      });
     }
+  }, []);
 
-    // GA4 alternative (if needed)
-    const gaId = process.env.NEXT_PUBLIC_GA4_ID;
-    if (gaId && typeof window !== 'undefined' && !window.gtag) {
-      const script1 = document.createElement('script');
-      script1.async = true;
-      script1.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
-      document.head.appendChild(script1);
+  useEffect(() => {
+    // Carica analytics solo dopo che la pagina è interattiva per non bloccare rendering
+    const loadAnalytics = () => {
+      // Plausible Analytics
+      if (domain && typeof window !== 'undefined') {
+        // Load Plausible script con defer
+        const script = document.createElement('script');
+        script.defer = true;
+        script.dataset.domain = domain;
+        script.src = 'https://plausible.io/js/script.js';
+        script.crossOrigin = 'anonymous';
+        document.head.appendChild(script);
 
-      const script2 = document.createElement('script');
-      script2.innerHTML = `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '${gaId}');
-      `;
-      document.head.appendChild(script2);
+        return () => {
+          // Cleanup
+          const existing = document.querySelector(`[data-domain="${domain}"]`);
+          if (existing) {
+            existing.remove();
+          }
+        };
+      }
+
+      // GA4 alternative (if needed)
+      const gaId = process.env.NEXT_PUBLIC_GA4_ID;
+      if (gaId && typeof window !== 'undefined' && !window.gtag) {
+        const script1 = document.createElement('script');
+        script1.async = true;
+        script1.defer = true;
+        script1.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+        script1.crossOrigin = 'anonymous';
+        document.head.appendChild(script1);
+
+        const script2 = document.createElement('script');
+        script2.innerHTML = `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${gaId}');
+        `;
+        document.head.appendChild(script2);
+      }
+    };
+
+    // Carica analytics dopo che la pagina è interattiva (non blocca rendering iniziale)
+    if (document.readyState === 'complete') {
+      // Pagina già caricata
+      setTimeout(loadAnalytics, 100);
+    } else {
+      // Aspetta che la pagina sia interattiva
+      window.addEventListener('load', () => {
+        setTimeout(loadAnalytics, 100);
+      }, { once: true });
     }
   }, []);
 

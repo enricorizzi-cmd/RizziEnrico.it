@@ -1,9 +1,15 @@
 import { generateMetadata } from '@/lib/seo';
 import Hero from '@/components/Hero';
-import InvestmentCalculator from '@/components/InvestmentCalculator';
+import dynamic from 'next/dynamic';
 import InvestorQuestionnaire from '@/components/InvestorQuestionnaire';
 import CTA from '@/components/CTA';
 import SectionTitle from '@/components/SectionTitle';
+
+// Dynamic import per InvestmentCalculator (include Chart.js, pesante)
+const InvestmentCalculator = dynamic(() => import('@/components/InvestmentCalculator'), {
+  ssr: false,
+  loading: () => <div className="text-center py-8">Caricamento calcolatore...</div>,
+});
 
 export const metadata = generateMetadata({
   title: 'Calcolatore Investimento - Simulatore Interesse Semplice e Composto | Enrico Rizzi',

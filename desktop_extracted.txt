@@ -1,0 +1,121 @@
+
+
+--- PAGE 1 ---
+
+PageSpeed Insights Copia link Documenti
+Report di 10 nov 2025, 01:09:46
+https://rizzienrico.it/ Analizza
+ Dispositivi mobili  Computer
+Risultati visualizzati per l'URL: https://www.rizzienrico.it/
+Esegui con l'URL originale
+Scopri com'è l'esperienza dei tuoi utenti reali
+Nessun dato
+Diagnostica i problemi di prestazioni
+100 93 96 92
+Prestazioni Accessibilità Best practice SEO
+100
+Prestazioni
+I valori sono delle stime e potrebbero variare. Il punteggio relativo alle
+prestazioni viene calcolato direttamente in base a queste metriche.Vai al
+calcolatore.
+0–49 50–89 90–100
+
+--- PAGE 2 ---
+
+PageSpeed Insights Copia link Documenti
+METRICHE Espandi visualizzazione
+First Contentful Paint Largest Contentful Paint
+0,3 s 0,6 s
+Total Blocking Time Cumulative Layout Shift
+40 ms 0
+Speed Index
+0,7 s
+Captured at 10 nov 2025, 01:09 CET Desktop emulato with Lighthouse Sessione di una sola pagina
+13.0.1
+Caricamento pagina iniziale Limitazione personalizzata Using HeadlessChromium
+137.0.7151.119 with lr
+Mostra controlli relativi a: All FCP LCP TBT
+APPROFONDIMENTI
+Albero delle dipendenze di rete
+Richieste di blocco del rendering — Risparmio stimato di 10 ms
+JavaScript precedente — Risparmio stimato di 13 KiB
+Ottimizza le dimensioni del DOM
+
+--- PAGE 3 ---
+
+Suddivisione LCP
+PageSpeed Insights Copia link Documenti
+Queste informazioni sono disponibili anche nel riquadro Prestazioni di Chrome DevTools: registra una traccia per visualizzare informazioni
+più dettagliate.
+DIAGNOSTICA
+Riduci il codice JavaScript inutilizzato — Risparmio stimato di 141 KiB
+Evita payload di rete enormi — Dimensioni totali: 3.685 KiB
+Evita attività lunghe nel thread principale — 3 attività lunghe trovate
+Ulteriori informazioni sulle prestazioni della tua applicazione. Questi valori non incidono direttamente sul punteggio Prestazioni.
+CONTROLLI SUPERATI (19) Mostra
+93
+Accessibilità
+Questi controlli mettono in evidenza le opportunità per migliorare
+l'accessibilità della tua app web. Il rilevamento automatico è in grado di
+rilevare soltanto un sottoinsieme di problemi e non garantisce l'accessibilità
+della tua app web, pertanto sono consigliati anche i test manuali.
+CONTRASTO
+Il rapporto di contrasto tra i colori di sfondo e primo piano non è sufficiente.
+Si tratta di opportunità per migliorare la leggibilità dei contenuti.
+BEST PRACTICE
+I touch target non hanno dimensioni o spaziatura sufficienti.
+Questi elementi evidenziano le best practice di accessibilità comuni.
+
+--- PAGE 4 ---
+
+ARIA
+PageSpeed Insights Copia link Documenti
+Gli ID ARIA sono univoci
+Si tratta di opportunità per facilitare l'uso di ARIA nella tua applicazione e migliorare l'esperienza per gli utenti di tecnologie per la
+disabilità, come uno screen reader.
+ULTERIORI ELEMENTI DA CONTROLLARE MANUALMENTE (10) Mostra
+Questi elementi riguardano aree che uno strumento di test automatizzato non può coprire. Leggi ulteriori informazioni nella nostra guida
+su come effettuare un esame di accessibilità.
+CONTROLLI SUPERATI (23) Mostra
+NON APPLICABILE (34) Mostra
+96
+Best practice
+GENERALI
+Gli errori del browser sono stati registrati nella console
+AFFIDABILITÀ E SICUREZZA
+Assicurati che la CSP sia efficace contro gli attacchi XSS (cross-site scripting)
+Utilizza una policy HSTS efficace
+Garantisci un isolamento origine corretto con COOP
+Mitiga gli attacchi XSS (cross-site scripting) basati su DOM con Trusted Types
+
+--- PAGE 5 ---
+
+CONTROLLI SUPERATI (12) Mostra
+PageSpeed Insights Copia link Documenti
+NON APPLICABILE (3) Mostra
+92
+SEO
+Questi controlli assicurano che la pagina stia applicando il seguente
+consiglio relativo all'ottimizzazione per i motori di ricerca di base. Esistono
+molti altri fattori che Lighthouse non tratta qui che potrebbero influire sul
+tuo ranking di ricerca, incluse le prestazioni su Core Web Vitals. Scopri di
+più su Google Search Essentials.
+SCANSIONE E INDICIZZAZIONE
+robots.txt non è valido Lighthouse non può completare il download del file robots.txt
+Per poter mostrare la tua app nei risultati di ricerca, i crawler devono potervi accedere.
+ULTERIORI ELEMENTI DA CONTROLLARE MANUALMENTE (1) Mostra
+Esegui questi altri strumenti di convalida sul tuo sito per controllare ulteriori best practice per SEO.
+CONTROLLI SUPERATI (9) Mostra
+Scopri di più su PageSpeed Insights Contenuti correlati Contatti
+Novità Aggiornamenti Twitter
+Documentazione Web Fundamentals YouTube
+
+--- PAGE 6 ---
+
+Scopri di più sulle prestazioni web Case study
+PageSpeed Insights Copia link Documenti
+Fai domande su Stack Overflow Podcast
+Mailing list
+Chrome Firebase Tutti i prodotti
+Termini e Norme sulla privacy
+Per informazioni dettagliate, leggi le norme del sito Google Developers.

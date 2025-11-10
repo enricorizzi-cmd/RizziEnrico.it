@@ -1,12 +1,22 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
+import dynamic from 'next/dynamic';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CookieBanner from "@/components/CookieBanner";
-import AIAssistant from "@/components/AIAssistant";
 import Analytics from "@/components/Analytics";
-import WhatsAppWidget from "@/components/WhatsAppWidget";
+
+// Dynamic imports per componenti non critici - caricano solo dopo che la pagina è interattiva
+const AIAssistant = dynamic(() => import('@/components/AIAssistant'), {
+  ssr: false,
+  loading: () => null, // Non mostra nulla durante il caricamento
+});
+
+const WhatsAppWidget = dynamic(() => import('@/components/WhatsAppWidget'), {
+  ssr: false,
+  loading: () => null,
+});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -40,6 +50,13 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Preconnect a domini third-party per analytics (migliora velocità caricamento) */}
+        <link rel="preconnect" href="https://plausible.io" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://plausible.io" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        {/* Preload immagine hero critica per migliorare LCP */}
+        <link rel="preload" as="image" href="/enrico-rizzi.jpg" />
       </head>
       <body
         className={`${inter.variable} ${montserrat.variable} font-body antialiased`}

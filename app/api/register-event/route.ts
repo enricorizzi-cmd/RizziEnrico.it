@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { eventRegistrationSchema } from '@/lib/validators';
 import { createServerClient } from '@/lib/supabase';
-import QRCode from 'qrcode';
 import { sendEmail } from '@/lib/email';
 
 const CONTACT_EMAIL = 'e.rizzi@osmpartnervenezia.it';
@@ -32,23 +31,7 @@ export async function POST(request: NextRequest) {
       score: 20,
     }).select().single();
 
-    // Genera QR code con dimensioni ottimizzate per ridurre uso memoria
     const registrationId = lead?.id || `event-${Date.now()}`;
-    const qrData = JSON.stringify({
-      event: validatedData.event_slug,
-      registrationId,
-      name: validatedData.name,
-    });
-
-    // Limita dimensione QR code per ridurre memoria (200x200px è sufficiente)
-    const qrCodeUrl = await QRCode.toDataURL(qrData, {
-      width: 200,
-      margin: 1,
-      color: {
-        dark: '#000000',
-        light: '#FFFFFF'
-      }
-    });
 
     // Invia email di conferma a Enrico
     const emailSubject = `Nuova registrazione evento - ${validatedData.event_slug}`;
@@ -89,7 +72,6 @@ Consulente OSM per PMI`,
     return NextResponse.json({
       success: true,
       registrationId,
-      qrCodeUrl,
       message: 'Registrazione completata. Email di conferma inviata.',
     });
   } catch (error) {

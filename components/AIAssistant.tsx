@@ -103,7 +103,7 @@ export default function AIAssistant() {
           });
         } catch (e) {
           // Ignora se tabella non esiste ancora
-          console.log('AI sessions table not available');
+          // AI sessions table not available - silent in production
         }
 
         setLeadCaptured(true);

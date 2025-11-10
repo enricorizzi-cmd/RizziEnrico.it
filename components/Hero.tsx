@@ -114,6 +114,9 @@ export default function Hero({
                     className="w-full h-auto object-cover"
                     priority
                     loading="eager"
+                    fetchPriority="high"
+                    quality={85}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                   />
                 </div>
               )}

@@ -12,7 +12,6 @@ interface EventRegistrationFormProps {
 export default function EventRegistrationForm({ eventSlug }: EventRegistrationFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
 
   const {
     register,
@@ -40,7 +39,6 @@ export default function EventRegistrationForm({ eventSlug }: EventRegistrationFo
       }
 
       const result = await response.json();
-      setQrCodeUrl(result.qrCodeUrl);
       setSubmitSuccess(true);
     } catch (error) {
       alert('Errore durante la registrazione. Riprova.');
@@ -63,12 +61,6 @@ export default function EventRegistrationForm({ eventSlug }: EventRegistrationFo
         <p className="text-[var(--color-subtext)] mb-4">
           Ti abbiamo inviato una email di conferma.
         </p>
-        {qrCodeUrl && (
-          <div className="mt-6">
-            <p className="text-sm text-[var(--color-subtext)] mb-2">QR Code per check-in:</p>
-            <img src={qrCodeUrl} alt="QR Code" className="mx-auto max-w-xs" />
-          </div>
-        )}
       </div>
     );
   }

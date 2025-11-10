@@ -137,7 +137,7 @@ h3 {
   top: 1em;
 }
 
-/* Ensure touch targets are at least 44x44px */
+/* Ensure touch targets are at least 44x44px with proper spacing */
 button,
 a,
 input[type="button"],
@@ -145,6 +145,14 @@ input[type="submit"],
 [role="button"] {
   min-height: 44px;
   min-width: 44px;
+  /* Spacing minimo tra touch targets (8px = 2rem/4) */
+  margin: 4px;
+}
+
+/* Rimuovi margin per elementi inline che non devono avere spacing */
+a.inline-link,
+button.inline-button {
+  margin: 0;
 }
 
 /* Mobile-specific adjustments */
