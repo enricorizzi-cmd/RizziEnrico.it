@@ -13,8 +13,8 @@ import Link from 'next/link';
 import { generateMetadata } from '@/lib/seo';
 
 export const metadata = generateMetadata({
-  title: 'Consulenza Business PMI Veneto – Enrico Rizzi | OSM',
-  description: 'Consulenza aziendale per PMI venete: crescita vendite, risorse umane e management. Check-up gratuito. Contatta Enrico Rizzi per far crescere la tua impresa.',
+  title: 'Consulente PMI Veneto – Organizzazione, KPI e Leadership | Enrico Rizzi',
+  description: 'Consulenza aziendale per PMI venete: organizzazione, KPI e controllo di gestione. In 90 giorni mettiamo ordine, in 6 mesi vedi i numeri. Check-up gratuito. Area Venezia-Rovigo-Padova.',
 });
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
@@ -38,27 +38,54 @@ const personSchema = {
     addressLocality: 'Venezia - Rovigo',
   },
   sameAs: [
-    // Aggiungi qui i link a LinkedIn, ecc. se disponibili
+    'https://www.linkedin.com/in/enricorizzi/',
+    'https://www.facebook.com/enrico.rizzi.12',
+    'https://www.instagram.com/enricorizzi_osm/',
   ],
 };
 
 const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
-  name: 'Enrico Rizzi - Consulenza OSM',
-  description: 'Consulenza organizzazione aziendale, KPI e controllo di gestione per PMI',
+  name: 'Enrico Rizzi - Consulente Organizzazione PMI',
+  description: 'Consulenza organizzazione aziendale, KPI e controllo di gestione per PMI in Veneto',
   image: `${baseUrl}/enrico-rizzi.jpg`,
   url: baseUrl,
-  areaServed: {
-    '@type': 'State',
-    name: 'Veneto',
-  },
+  areaServed: [
+    {
+      '@type': 'City',
+      name: 'Venezia',
+    },
+    {
+      '@type': 'City',
+      name: 'Rovigo',
+    },
+    {
+      '@type': 'City',
+      name: 'Padova',
+    },
+    {
+      '@type': 'State',
+      name: 'Veneto',
+    },
+  ],
   address: {
     '@type': 'PostalAddress',
-    addressRegion: 'Veneto',
-    addressLocality: 'Venezia - Rovigo',
+    streetAddress: 'Via Sertorio Orsato 22',
+    addressLocality: 'Venezia',
+    addressRegion: 'VE',
+    postalCode: '30100',
+    addressCountry: 'IT',
   },
   telephone: '+393475290564',
+  email: 'info@rizzienrico.it',
+  priceRange: '€€',
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '09:00',
+    closes: '18:00',
+  },
 };
 
 // Schema FAQPage
@@ -473,6 +500,20 @@ export default function HomePage() {
                 <span>Esperienza su manifatturiero, servizi, commercio</span>
               </li>
             </ul>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 max-w-3xl mx-auto">
+              <Link href="/consulenza-pmi-venezia" className="bg-white rounded-[var(--radius-card)] p-4 border border-[var(--color-line)] hover:shadow-md transition-shadow text-center">
+                <h3 className="font-heading font-semibold text-[var(--color-text)] mb-2">Consulenza PMI Venezia</h3>
+                <p className="text-sm text-[var(--color-subtext)]">Servizi per aziende veneziane</p>
+              </Link>
+              <Link href="/consulenza-pmi-padova" className="bg-white rounded-[var(--radius-card)] p-4 border border-[var(--color-line)] hover:shadow-md transition-shadow text-center">
+                <h3 className="font-heading font-semibold text-[var(--color-text)] mb-2">Consulenza PMI Padova</h3>
+                <p className="text-sm text-[var(--color-subtext)]">Servizi per aziende padovane</p>
+              </Link>
+              <Link href="/consulenza-pmi-rovigo" className="bg-white rounded-[var(--radius-card)] p-4 border border-[var(--color-line)] hover:shadow-md transition-shadow text-center">
+                <h3 className="font-heading font-semibold text-[var(--color-text)] mb-2">Consulenza PMI Rovigo</h3>
+                <p className="text-sm text-[var(--color-subtext)]">Servizi per aziende rodigine</p>
+              </Link>
+            </div>
             <div className="bg-white rounded-[var(--radius-card)] p-6 border border-[var(--color-line)] max-w-2xl mx-auto">
               <Accordion items={[
                 {

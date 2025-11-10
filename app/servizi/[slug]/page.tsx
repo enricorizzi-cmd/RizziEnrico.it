@@ -177,9 +177,14 @@ export async function generateMetadata({ params }: PageProps) {
     };
   }
 
+  // Aggiungi keyword locali ai meta tag
+  const localKeywords = 'Venezia, Padova, Rovigo, Veneto';
+  const titleWithLocation = `${service.title} - ${localKeywords} | Enrico Rizzi`;
+  const descriptionWithLocation = `${service.hero.solution} Area servita: ${localKeywords}. Consulenza per PMI venete.`;
+
   return generateSEOMetadata({
-    title: `${service.title} - Servizi | Enrico Rizzi`,
-    description: service.hero.solution,
+    title: titleWithLocation,
+    description: descriptionWithLocation,
     path: `/servizi/${slug}`,
   });
 }

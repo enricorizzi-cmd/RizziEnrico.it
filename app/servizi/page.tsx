@@ -5,8 +5,8 @@ import CTA from '@/components/CTA';
 import Link from 'next/link';
 
 export const metadata = generateMetadata({
-  title: 'Servizi Consulenza PMI Veneto | Enrico Rizzi',
-  description: 'Consulenza productized per PMI: Organizzazione, Mansionari, Sviluppo Persone, KPI. Prezzi trasparenti. Area Venezia-Padova-Rovigo.',
+  title: 'Servizi di Consulenza Aziendale per PMI in Veneto – Organizzazione, Leadership, KPI | Enrico Rizzi',
+  description: 'Consulenza productized per PMI venete: Organizzazione, Mansionari, Sviluppo Persone, KPI e Controllo di Gestione. Prezzi trasparenti. Area servita: Venezia, Padova, Rovigo.',
   path: '/servizi',
 });
 

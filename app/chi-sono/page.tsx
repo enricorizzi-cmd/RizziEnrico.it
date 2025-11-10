@@ -4,16 +4,72 @@ import Testimonial from '@/components/Testimonial';
 import ProfilePhoto from '@/components/ProfilePhoto';
 import OSMBadge from '@/components/OSMBadge';
 import CTA from '@/components/CTA';
+import JSONLD from '@/components/JSONLD';
 
 export const metadata = generateMetadata({
   title: 'Chi sono - Consulente OSM PMI Veneto | Enrico Rizzi',
-  description: 'Consulente OSM per PMI venete con 10+ anni esperienza. Metodo pratico, risultati misurabili. Area servita: Venezia-Rovigo.',
+  description: 'Consulente OSM per PMI venete con 10+ anni esperienza. Metodo pratico, risultati misurabili. Area servita: Venezia, Rovigo, Padova. Specializzato in organizzazione, KPI e passaggio generazionale.',
   path: '/chi-sono',
 });
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Enrico Rizzi',
+  jobTitle: 'Consulente OSM',
+  description: 'Consulente OSM per PMI che vogliono crescere con metodo: persone, KPI e processi',
+  image: `${baseUrl}/enrico-rizzi.jpg`,
+  url: baseUrl,
+  email: 'info@rizzienrico.it',
+  telephone: '+393475290564',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Via Sertorio Orsato 22',
+    addressLocality: 'Venezia',
+    addressRegion: 'VE',
+    postalCode: '30100',
+    addressCountry: 'IT',
+  },
+  areaServed: [
+    {
+      '@type': 'City',
+      name: 'Venezia',
+    },
+    {
+      '@type': 'City',
+      name: 'Rovigo',
+    },
+    {
+      '@type': 'City',
+      name: 'Padova',
+    },
+    {
+      '@type': 'State',
+      name: 'Veneto',
+    },
+  ],
+  sameAs: [
+    'https://www.linkedin.com/in/enricorizzi/',
+    'https://www.facebook.com/enrico.rizzi.12',
+    'https://www.instagram.com/enricorizzi_osm/',
+  ],
+  knowsAbout: [
+    'Consulenza organizzazione aziendale',
+    'KPI e Controllo di Gestione',
+    'Mansionari aziendali',
+    'Sviluppo risorse umane',
+    'Leadership',
+    'Passaggio generazionale',
+  ],
+};
+
 export default function ChiSonoPage() {
   return (
-    <div className="pt-8 pb-16 bg-white min-h-screen">
+    <>
+      <JSONLD data={personSchema} />
+      <div className="pt-8 pb-16 bg-white min-h-screen">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="max-w-4xl mx-auto">
           {/* Hero */}
@@ -163,6 +219,7 @@ export default function ChiSonoPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

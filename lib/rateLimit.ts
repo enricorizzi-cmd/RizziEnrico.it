@@ -6,6 +6,9 @@ const RATE_LIMIT = {
   maxRequests: 100, // 100 richieste per window
 };
 
+// Limite massimo entry nel Map per prevenire crescita infinita memoria
+const MAX_MAP_SIZE = 500; // Ridotto da 1000 a 500 per ridurre memoria
+
 export function rateLimit(identifier: string): { allowed: boolean; remaining: number } {
   const now = Date.now();
   const record = requests.get(identifier);
@@ -16,6 +19,12 @@ export function rateLimit(identifier: string): { allowed: boolean; remaining: nu
       count: 1,
       resetTime: now + RATE_LIMIT.windowMs,
     });
+    
+    // Cleanup preventivo se Map si avvicina al limite
+    if (requests.size > MAX_MAP_SIZE * 0.9) {
+      cleanupOldEntries(now);
+    }
+    
     return { allowed: true, remaining: RATE_LIMIT.maxRequests - 1 };
   }
 
@@ -27,27 +36,44 @@ export function rateLimit(identifier: string): { allowed: boolean; remaining: nu
   return { allowed: true, remaining: RATE_LIMIT.maxRequests - record.count };
 }
 
-// Cleanup vecchie entry ogni 5 minuti (più frequente per ridurre memoria)
+// Funzione di cleanup centralizzata
+function cleanupOldEntries(now: number) {
+  let cleaned = 0;
+  for (const [key, record] of requests.entries()) {
+    if (now > record.resetTime) {
+      requests.delete(key);
+      cleaned++;
+    }
+  }
+  
+  // Se ancora sopra il limite, rimuovi le entry più vecchie
+  if (requests.size > MAX_MAP_SIZE) {
+    const entries = Array.from(requests.entries());
+    entries.sort((a, b) => a[1].resetTime - b[1].resetTime);
+    const toRemove = entries.slice(0, requests.size - MAX_MAP_SIZE);
+    for (const [key] of toRemove) {
+      requests.delete(key);
+      cleaned++;
+    }
+  }
+  
+  // Forza garbage collection se disponibile (richiede --expose-gc)
+  if (typeof global !== 'undefined' && (global as any).gc) {
+    try {
+      (global as any).gc();
+    } catch (e) {
+      // Ignora se GC non disponibile
+    }
+  }
+  
+  return cleaned;
+}
+
+// Cleanup vecchie entry ogni 3 minuti (più frequente per ridurre memoria)
 if (typeof setInterval !== 'undefined') {
   setInterval(() => {
     const now = Date.now();
-    let cleaned = 0;
-    for (const [key, record] of requests.entries()) {
-      if (now > record.resetTime) {
-        requests.delete(key);
-        cleaned++;
-      }
-    }
-    // Limita dimensione Map (max 1000 entry per sicurezza)
-    if (requests.size > 1000) {
-      const entries = Array.from(requests.entries());
-      // Rimuovi le entry più vecchie
-      entries.sort((a, b) => a[1].resetTime - b[1].resetTime);
-      const toRemove = entries.slice(0, requests.size - 1000);
-      for (const [key] of toRemove) {
-        requests.delete(key);
-      }
-    }
-  }, 5 * 60 * 1000); // Ogni 5 minuti invece di 30
+    cleanupOldEntries(now);
+  }, 3 * 60 * 1000); // Ogni 3 minuti (ridotto da 5)
 }
 

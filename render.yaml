@@ -7,13 +7,18 @@ services:
     name: rizzienrico-it
     env: node
     # Build command ottimizzato: npm ci è più veloce e consistente di npm install
-    buildCommand: npm ci && npm run build
-    startCommand: npm start
+    # Aggiunto limiti memoria Node.js per prevenire OOM
+    buildCommand: NODE_OPTIONS="--max-old-space-size=400" npm ci && NODE_OPTIONS="--max-old-space-size=400" npm run build
+    # Start command con limiti memoria e garbage collection aggressivo
+    startCommand: NODE_OPTIONS="--max-old-space-size=400 --expose-gc" npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: NEXT_PUBLIC_BASE_URL
         generateValue: true  # Render genera automaticamente l'URL
+      # Limiti memoria Node.js (400MB su 512MB disponibili = margine sicurezza)
+      - key: NODE_OPTIONS
+        value: "--max-old-space-size=400 --expose-gc"
       # Variabili già configurate su Render:
       # - NEXT_PUBLIC_SUPABASE_URL
       # - NEXT_PUBLIC_SUPABASE_ANON_KEY

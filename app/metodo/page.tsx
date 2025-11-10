@@ -8,8 +8,8 @@ import Card from '@/components/Card';
 import JSONLD from '@/components/JSONLD';
 
 export const metadata = generateMetadata({
-  title: 'Metodo Consulenza PMI: 5 Step per Organizzare la Tua Azienda | Enrico Rizzi',
-  description: 'Metodo strutturato per organizzare la tua PMI: Chi, Numeri, Processi, Persone, Espansione. In 90 giorni ordine, in 6 mesi risultati misurabili.',
+  title: 'Metodo 5 Step per PMI: Ruoli, KPI, Processi, Persone, Espansione | Enrico Rizzi',
+  description: 'Metodo strutturato per organizzare la tua PMI veneta: Chi, Numeri, Processi, Persone, Espansione. In 90 giorni ordine, in 6 mesi risultati misurabili. Consulenza Venezia-Rovigo-Padova.',
   path: '/metodo',
 });
 
