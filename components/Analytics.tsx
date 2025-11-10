@@ -157,10 +157,6 @@ declare global {
     plausible?: (event: string, options?: { u?: string; props?: Record<string, any> }) => void;
     gtag?: (...args: any[]) => void;
     dataLayer?: any[];
-    requestIdleCallback?: (
-      callback: (deadline: { didTimeout: boolean; timeRemaining: () => number }) => void,
-      options?: { timeout?: number }
-    ) => number;
   }
 }
 
