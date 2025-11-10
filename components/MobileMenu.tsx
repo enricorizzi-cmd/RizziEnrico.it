@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import Link from 'next/link';
 
 interface MobileMenuProps {
@@ -8,6 +9,27 @@ interface MobileMenuProps {
 }
 
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+  // Blocca lo scroll del body quando il menu è aperto
+  useEffect(() => {
+    if (isOpen) {
+      // Salva la posizione corrente dello scroll
+      const scrollY = window.scrollY;
+      // Blocca lo scroll del body
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+
+      return () => {
+        // Ripristina lo scroll quando il menu si chiude
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isOpen]);
   const navItems = [
     { href: '/metodo', label: 'Metodo' },
     { href: '/servizi', label: 'Servizi' },
@@ -24,11 +46,40 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   if (!isOpen) return null;
 
   return (
-    <div
-      className="lg:hidden fixed inset-0 z-50 bg-white mt-16"
-      onClick={onClose}
-    >
-      <nav className="container mx-auto px-4 py-8" aria-label="Menu mobile">
+    <div className="lg:hidden fixed inset-0 z-50 bg-white flex flex-col pt-[96px]">
+      {/* Header fisso con pulsante chiusura */}
+      <div className="flex items-center justify-between h-16 px-4 border-b border-[var(--color-line)] bg-white flex-shrink-0">
+        <span className="text-lg font-semibold text-[var(--color-text)]">Menu</span>
+        <button
+          onClick={onClose}
+          className="p-2 rounded-md text-[var(--color-text)] hover:bg-[var(--color-card)] transition-colors"
+          aria-label="Chiudi menu"
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      {/* Contenuto scrollabile */}
+      <nav 
+        className="flex-1 overflow-y-auto container mx-auto px-4 py-8" 
+        aria-label="Menu mobile"
+        onClick={(e) => {
+          // Chiudi solo se si clicca sullo sfondo, non sui link
+          if (e.target === e.currentTarget) {
+            onClose();
+          }
+        }}
+      >
         <ul className="space-y-4">
           {navItems.map((item) => (
             <li key={item.href}>
