@@ -29,13 +29,15 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'),
   icons: {
     icon: [
+      { url: '/icon.png', sizes: 'any', type: 'image/png' },
       { url: '/favicon.ico', sizes: 'any' },
       { url: '/logo-enrico-rizzi.png', sizes: '120x40', type: 'image/png' },
     ],
     apple: [
+      { url: '/icon.png', sizes: '180x180', type: 'image/png' },
       { url: '/logo-enrico-rizzi.png', sizes: '120x40', type: 'image/png' },
     ],
-    shortcut: '/favicon.ico',
+    shortcut: '/icon.png',
   },
   manifest: '/manifest.webmanifest',
 };
