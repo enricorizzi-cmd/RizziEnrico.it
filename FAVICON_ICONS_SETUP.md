@@ -135,3 +135,4 @@ Il favicon e le icons sono ora completamente configurate! Il sito mostrerà:
 
 **Tutto pronto per il deploy!** 🚀
 
+
