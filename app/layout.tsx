@@ -27,6 +27,17 @@ export const metadata: Metadata = {
   description: "Consulenza aziendale per PMI venete: organizzazione, KPI e controllo di gestione. In 90 giorni mettiamo ordine, in 6 mesi vedi i numeri. Check-up gratuito.",
   keywords: "consulenza PMI Veneto, organizzazione aziendale, KPI, controllo di gestione, consulente Venezia, consulente Rovigo, consulente Padova, Enrico Rizzi, metodo OSM",
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'),
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/logo-enrico-rizzi.png', sizes: '120x40', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/logo-enrico-rizzi.png', sizes: '120x40', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+  },
+  manifest: '/manifest.webmanifest',
 };
 
 export default function RootLayout({

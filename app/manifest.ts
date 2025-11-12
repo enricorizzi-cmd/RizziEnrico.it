@@ -11,14 +11,21 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: '#A72868',
     icons: [
       {
-        src: '/logo-enrico-rizzi.png',
-        sizes: '120x40',
-        type: 'image/png',
-      },
-      {
         src: '/favicon.ico',
         sizes: 'any',
         type: 'image/x-icon',
+      },
+      {
+        src: '/logo-enrico-rizzi.png',
+        sizes: '120x40',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/logo-enrico-rizzi.png',
+        sizes: '120x40',
+        type: 'image/png',
+        purpose: 'maskable',
       },
     ],
   };

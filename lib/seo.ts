@@ -13,7 +13,9 @@ export function generateMetadata({
 }): Metadata {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
   const url = `${baseUrl}${path}`;
-  const ogImage = image || `${baseUrl}/og-default.jpg`;
+  // Fallback temporaneo: usa logo se og-default.jpg non esiste
+  // TODO: Creare og-default.jpg (1200x630px) per Open Graph
+  const ogImage = image || `${baseUrl}/logo-enrico-rizzi.png`;
 
   return {
     title: title.length > 60 ? title.substring(0, 57) + '...' : title,
