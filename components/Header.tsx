@@ -10,6 +10,7 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
+    { href: '/', label: 'Home' },
     { href: '/metodo', label: 'Metodo' },
     { href: '/servizi', label: 'Servizi' },
     { href: '/i-profile', label: 'i-Profile' },
