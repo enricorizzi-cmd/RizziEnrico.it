@@ -282,7 +282,7 @@ export default function IPTeaser() {
     Object.keys(maxScorePerTrait).forEach((trait) => {
       let count = 0;
       questions.forEach((q) => {
-        const hasTrait = q.options.some((opt) => opt.score && opt.score[trait]);
+        const hasTrait = q.options.some((opt) => opt.score && trait in opt.score);
         if (hasTrait) count++;
       });
       totalMaxPerTrait[trait] = maxScorePerTrait[trait] * count;
