@@ -497,7 +497,7 @@ export default function IPTeaser() {
             suggerimento = 'Procedura "Interessato vs Interessante", partecipa a networking events, sfida personale: parla con 1 sconosciuto al giorno.';
             break;
           case 'resistenza_cambiamento':
-            if (score >= 3) {
+            if (tratti.resistenza_cambiamento >= 3) {
               area = 'Flessibilità al Cambiamento';
               suggerimento = 'Pratica piccoli cambiamenti settimanali, focalizzati su risultati concreti vs giustificazioni razionali.';
             } else {
