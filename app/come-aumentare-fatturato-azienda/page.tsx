@@ -283,7 +283,7 @@ export default function ComeAumentareFatturatoPage() {
               },
               {
                 question: 'Quanto costa aumentare il fatturato della mia azienda?',
-                answer: 'I servizi partono da €1.200 per interventi mirati. Consulenza continua da €2.500/mese. Offro sempre un check-up gratuito di 60 minuti (Zoom) o 90 minuti (in presenza) per valutare come aumentare il fatturato della tua azienda senza impegno.',
+                answer: 'I servizi partono a partire da 700€. Offro sempre un check-up gratuito di 60 minuti (Zoom) o 90 minuti (in presenza) per valutare come aumentare il fatturato della tua azienda senza impegno.',
               },
             ]} />
           </div>

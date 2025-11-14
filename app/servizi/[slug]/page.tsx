@@ -34,11 +34,11 @@ const services = {
       'Turnover del personale',
       'Produttività per addetto',
     ],
-    priceFrom: 2500,
+    priceFrom: 700,
     faq: [
       {
         question: 'Quanto costa una consulenza aziendale per PMI in Veneto?',
-        answer: 'Di solito una consulenza aziendale per PMI in Veneto parte da circa 1.200 € per interventi mirati e da 2.500 €/mese per consulenze continuative. Nel mio caso, partiamo sempre da un check-up gratuito di 60 minuti su Zoom o 90 minuti in presenza (Venezia-Padova-Rovigo) per capire se e come posso davvero aiutarti. Poi definiamo un piano con obiettivi, durata e investimento chiaro.',
+        answer: 'Di solito una consulenza aziendale per PMI in Veneto parte a partire da 700€. Nel mio caso, partiamo sempre da un check-up gratuito di 60 minuti su Zoom o 90 minuti in presenza (Venezia-Padova-Rovigo) per capire se e come posso davvero aiutarti. Poi definiamo un piano con obiettivi, durata e investimento chiaro.',
       },
       {
         question: 'In quanto tempo una PMI vede risultati concreti dalla consulenza?',
@@ -82,7 +82,7 @@ const services = {
       'Chiarezza ruoli (survey interna)',
       'Riduzione conflitti riportati',
     ],
-    priceFrom: 1800,
+    priceFrom: 700,
     faq: [
       {
         question: 'Quante posizioni posso includere?',
@@ -116,7 +116,7 @@ const services = {
       'Performance individuali (valutazione)',
       'Efficacia leadership (360 feedback)',
     ],
-    priceFrom: 1200,
+    priceFrom: 700,
     faq: [
       {
         question: 'Quante persone posso includere?',
@@ -156,8 +156,7 @@ const services = {
       'Soddisfazione clienti (NPS)',
       'Assenteismo e turnover',
     ],
-    priceFrom: 1500,
-    monthlyFee: 800,
+    priceFrom: 700,
     faq: [
       {
         question: 'Non ho KPI definiti, da dove partiamo?',
@@ -193,7 +192,7 @@ export async function generateMetadata({ params }: PageProps) {
   if (slug === 'consulenza-pmi') {
     return generateSEOMetadata({
       title: 'Consulenza PMI – Organizzazione completa, KPI e crescita misurabile | Enrico Rizzi',
-      description: 'Consulenza PMI con metodo OSM: ruoli chiari, KPI, processi stabili e persone motivate. In 90 giorni ottieni ordine organizzativo, in 6 mesi risultati numerici su fatturato, marginalità e tempi di consegna. Affiancamento da €2.500/mese.',
+      description: 'Consulenza PMI con metodo OSM: ruoli chiari, KPI, processi stabili e persone motivate. In 90 giorni ottieni ordine organizzativo, in 6 mesi risultati numerici su fatturato, marginalità e tempi di consegna. Affiancamento a partire da 700€.',
       path: `/servizi/${slug}`,
     });
   }
@@ -360,13 +359,10 @@ export default async function ServizioPage({ params }: PageProps) {
             </h3>
             <div className="bg-[var(--color-primary)] text-white rounded-[var(--radius-card)] p-8 inline-block">
               <div className="text-4xl font-bold mb-2">
-                Da €{service.priceFrom.toLocaleString('it-IT')}
-                {'monthlyFee' in service && service.monthlyFee && (
-                  <span className="text-2xl"> + €{service.monthlyFee.toLocaleString('it-IT')}/mese</span>
-                )}
+                a partire da 700€
               </div>
               <p className="text-sm opacity-90">
-                {'monthlyFee' in service && service.monthlyFee ? 'Setup iniziale + monitoraggio mensile' : 'Servizio completo'}
+                Servizio completo
               </p>
             </div>
           </div>

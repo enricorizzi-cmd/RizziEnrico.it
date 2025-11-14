@@ -79,7 +79,7 @@ export default function ContattiPage() {
               <Accordion items={[
                 {
                   question: 'Quanto costa una consulenza aziendale per PMI in Veneto?',
-                  answer: 'Di solito una consulenza aziendale per PMI in Veneto parte da circa 1.200 € per interventi mirati e da 2.500 €/mese per consulenze continuative. Nel mio caso, partiamo sempre da un check-up gratuito di 60 minuti su Zoom o 90 minuti in presenza (Venezia-Padova-Rovigo) per capire se e come posso davvero aiutarti. Poi definiamo un piano con obiettivi, durata e investimento chiaro.',
+                  answer: 'Di solito una consulenza aziendale per PMI in Veneto parte a partire da 700€. Nel mio caso, partiamo sempre da un check-up gratuito di 60 minuti su Zoom o 90 minuti in presenza (Venezia-Padova-Rovigo) per capire se e come posso davvero aiutarti. Poi definiamo un piano con obiettivi, durata e investimento chiaro.',
                 },
                 {
                   question: 'In quanto tempo una PMI vede risultati concreti dalla consulenza?',

@@ -114,7 +114,7 @@ const faqSchema = {
       name: 'Quanto costa una consulenza aziendale per PMI venete?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'I miei interventi partono da 1.200 € per progetti mirati e da 2.500 €/mese per una consulenza continuativa. Il primo check-up di 60 minuti su Zoom o 90 minuti in presenza è gratuito.',
+        text: 'I miei interventi partono a partire da 700€. Il primo check-up di 60 minuti su Zoom o 90 minuti in presenza è gratuito.',
       },
     },
     {
@@ -411,25 +411,25 @@ export default function HomePage() {
                 title: 'Consulenza PMI – Aumenta Fatturato e Organizza la Tua Azienda',
                 description: 'Supporto continuativo per crescita sostenibile. Gestione passaggio generazionale. Organizzazione completa con ruoli, KPI e processi.',
                 result: 'Risultato: PMI strutturata, team motivato, numeri in crescita.',
-                price: 'Da €2.500/mese',
+                price: 'a partire da 700€',
               },
               {
                 title: 'Organizzazione & Mansionari – Ruoli Chiari e Responsabilità Definite',
                 description: 'Standard OSM: ruoli chiari, responsabilità definite, mansionari allineati agli obiettivi.',
                 result: 'Risultato: organizzazione chiara, meno conflitti, efficienza aumentata.',
-                price: 'Da €1.800',
+                price: 'a partire da 700€',
               },
               {
                 title: 'Sviluppo Persone & Leadership – Forma un Team Vincente',
                 description: 'Formazione mirata, coaching manageriale, team building strutturato per massimizzare il potenziale.',
                 result: 'Risultato: team motivato, competenze sviluppate, leadership efficace.',
-                price: 'Da €1.200/giornata',
+                price: 'a partire da 700€',
               },
               {
                 title: 'KPI & Controllo di Gestione – Decisioni Basate sui Numeri',
                 description: 'Dashboard mensili, alert automatici, piano di azione sugli scostamenti. Controllo semplice ma efficace.',
                 result: 'Risultato: decisioni informate, problemi individuati tempestivamente, performance migliorate.',
-                price: 'Da €1.500 setup + €800/mese',
+                price: 'a partire da 700€',
               },
             ].map((service, index) => (
               <Card
@@ -697,7 +697,7 @@ export default function HomePage() {
             <Accordion items={[
               {
                 question: 'Quanto costa una consulenza aziendale per PMI venete?',
-                answer: 'I miei interventi partono da 1.200 € per progetti mirati e da 2.500 €/mese per una consulenza continuativa. Il primo check-up di 60 minuti su Zoom o 90 minuti in presenza è gratuito.'
+                answer: 'I miei interventi partono a partire da 700€. Il primo check-up di 60 minuti su Zoom o 90 minuti in presenza è gratuito.'
               },
               {
                 question: 'Come posso aumentare il fatturato della mia azienda in Veneto?',

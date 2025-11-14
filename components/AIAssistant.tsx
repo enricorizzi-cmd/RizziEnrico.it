@@ -30,7 +30,7 @@ export default function AIAssistant() {
     },
     prezzi: {
       keywords: ['prezzo', 'costo', 'investimento', 'quanto costa'],
-      response: 'Servizi productized con prezzi chiari: Consulenza PMI da €2.500/mese, Organizzazione da €1.800, KPI da €1.500 setup + €800/mese. Ogni servizio ha deliverable definiti. [Vedi tutti i servizi](/servizi)',
+      response: 'Servizi productized con prezzi chiari: a partire da 700€. Ogni servizio ha deliverable definiti. [Vedi tutti i servizi](/servizi)',
     },
     prenota: {
       keywords: ['prenota', 'appuntamento', 'incontro', 'check-up', 'checkup', 'diagnosi'],

@@ -264,7 +264,7 @@ export default function MigliorareProduttivitaDipendentiPage() {
               },
               {
                 question: 'Quanto costa migliorare la produttività dei dipendenti?',
-                answer: 'I servizi partono da €1.200 per interventi mirati. Consulenza continua da €2.500/mese. Offro sempre un check-up gratuito di 60 minuti (Zoom) o 90 minuti (in presenza) per valutare come migliorare la produttività dei dipendenti nella tua azienda senza impegno.',
+                answer: 'I servizi partono a partire da 700€. Offro sempre un check-up gratuito di 60 minuti (Zoom) o 90 minuti (in presenza) per valutare come migliorare la produttività dei dipendenti nella tua azienda senza impegno.',
               },
             ]} />
           </div>
