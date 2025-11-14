@@ -5,6 +5,7 @@ import ProfilePhoto from '@/components/ProfilePhoto';
 import OSMBadge from '@/components/OSMBadge';
 import CTA from '@/components/CTA';
 import JSONLD from '@/components/JSONLD';
+import Link from 'next/link';
 
 export const metadata = generateMetadata({
   title: 'Chi sono - Consulente Aziendale Veneto che Aiuta a Mettere Ordine | Enrico Rizzi',
