@@ -11,26 +11,27 @@ export default function Analytics() {
   const domain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
 
   // Preconnect per migliorare velocità caricamento script third-party
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      // Preconnect a domini third-party
-      const preconnectDomains = [
-        'https://plausible.io',
-        'https://www.googletagmanager.com',
-        'https://www.google-analytics.com',
-      ];
+  // Rimossi perché già gestiti nel layout.tsx per evitare manipolazioni DOM durante hydration
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     // Preconnect a domini third-party
+  //     const preconnectDomains = [
+  //       'https://plausible.io',
+  //       'https://www.googletagmanager.com',
+  //       'https://www.google-analytics.com',
+  //     ];
 
-      preconnectDomains.forEach((url) => {
-        const link = document.createElement('link');
-        link.rel = 'preconnect';
-        link.href = url;
-        link.crossOrigin = 'anonymous';
-        if (!document.querySelector(`link[href="${url}"]`)) {
-          document.head.appendChild(link);
-        }
-      });
-    }
-  }, []);
+  //     preconnectDomains.forEach((url) => {
+  //       const link = document.createElement('link');
+  //       link.rel = 'preconnect';
+  //       link.href = url;
+  //       link.crossOrigin = 'anonymous';
+  //       if (!document.querySelector(`link[href="${url}"]`)) {
+  //         document.head.appendChild(link);
+  //       }
+  //     });
+  //   }
+  // }, []);
 
   useEffect(() => {
     // Carica Plausible Analytics solo dopo che la pagina è interattiva per non bloccare rendering
@@ -38,6 +39,12 @@ export default function Analytics() {
     const loadAnalytics = () => {
       // Plausible Analytics
       if (domain && typeof window !== 'undefined') {
+        // Verifica se lo script esiste già per evitare duplicati
+        const existing = document.querySelector(`[data-domain="${domain}"]`);
+        if (existing) {
+          return;
+        }
+
         // Load Plausible script con defer
         const script = document.createElement('script');
         script.defer = true;
@@ -45,41 +52,35 @@ export default function Analytics() {
         script.src = 'https://plausible.io/js/script.js';
         script.crossOrigin = 'anonymous';
         document.head.appendChild(script);
-
-        return () => {
-          // Cleanup
-          const existing = document.querySelector(`[data-domain="${domain}"]`);
-          if (existing) {
-            existing.remove();
-          }
-        };
       }
     };
 
-    // Strategia di caricamento ottimizzata:
-    // 1. Se la pagina è già caricata, carica subito (con piccolo delay per non bloccare)
-    // 2. Altrimenti aspetta che la pagina sia interattiva
-    // 3. Usa requestIdleCallback se disponibile per caricare quando il browser è idle
+    // Strategia di caricamento ottimizzata per evitare problemi di hydration:
+    // Usa requestAnimationFrame per assicurarsi che l'hydration sia completa
     if (typeof window !== 'undefined') {
-      if (document.readyState === 'complete') {
-        // Pagina già caricata - usa requestIdleCallback se disponibile
+      const scheduleLoad = () => {
         if ('requestIdleCallback' in window) {
           window.requestIdleCallback(loadAnalytics, { timeout: 2000 });
         } else {
           setTimeout(loadAnalytics, 100);
         }
+      };
+
+      if (document.readyState === 'complete') {
+        // Pagina già caricata - aspetta che l'hydration sia completa
+        requestAnimationFrame(() => {
+          setTimeout(scheduleLoad, 0);
+        });
       } else {
         // Aspetta che la pagina sia interattiva
         window.addEventListener('load', () => {
-          if ('requestIdleCallback' in window) {
-            window.requestIdleCallback(loadAnalytics, { timeout: 2000 });
-          } else {
-            setTimeout(loadAnalytics, 100);
-          }
+          requestAnimationFrame(() => {
+            setTimeout(scheduleLoad, 0);
+          });
         }, { once: true });
       }
     }
-  }, []);
+  }, [domain]);
 
   // Track page views - ottimizzato per Next.js App Router
   useEffect(() => {

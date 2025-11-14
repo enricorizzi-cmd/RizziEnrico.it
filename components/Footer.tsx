@@ -195,7 +195,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-gray-700 text-center text-sm text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Enrico Rizzi. Tutti i diritti riservati.</p>
+          <p>&copy; 2025 Enrico Rizzi. Tutti i diritti riservati.</p>
           <p className="mt-2">P.IVA: 05616690284 | Brand associato a OSM</p>
         </div>
       </div>

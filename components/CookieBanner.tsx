@@ -4,9 +4,16 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 export default function CookieBanner() {
+  // Inizializza sempre false per evitare problemi di hydration
+  // Verrà aggiornato solo dopo che il componente è montato (client-side)
   const [showBanner, setShowBanner] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // Marca il componente come montato (solo client-side)
+    setMounted(true);
+    
+    // Solo dopo il mount, verifica localStorage
     const consent = localStorage.getItem('cookie-consent');
     if (!consent) {
       setShowBanner(true);
@@ -14,17 +21,23 @@ export default function CookieBanner() {
   }, []);
 
   const acceptCookies = () => {
-    localStorage.setItem('cookie-consent', 'accepted');
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('cookie-consent', 'accepted');
+    }
     setShowBanner(false);
     // Initialize analytics here if needed
   };
 
   const rejectCookies = () => {
-    localStorage.setItem('cookie-consent', 'rejected');
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('cookie-consent', 'rejected');
+    }
     setShowBanner(false);
   };
 
-  if (!showBanner) return null;
+  // Non renderizzare nulla durante l'hydration (prima che mounted sia true)
+  // Questo evita discrepanze tra server e client rendering
+  if (!mounted || !showBanner) return null;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-[var(--color-line)] shadow-lg p-4 md:p-6">
