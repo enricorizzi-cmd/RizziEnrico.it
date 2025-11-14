@@ -610,7 +610,7 @@ export default function IPTeaser() {
                 <div className="w-full bg-[var(--color-line)] rounded-full h-2.5 mb-3">
                   <div
                     className="bg-[var(--color-primary)] h-2.5 rounded-full transition-all duration-500"
-                    style={{ width: `${tratto.percentuale}%` }}
+                    style={{ width: `${tratto.percentuale}%` } as React.CSSProperties}
                   />
                 </div>
                 <p className="text-sm text-[var(--color-text)] mb-2 leading-relaxed">

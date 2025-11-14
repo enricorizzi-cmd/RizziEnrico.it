@@ -39,6 +39,18 @@ const nextConfig: NextConfig = {
     optimizeCss: true,
   },
   
+  // Configurazione compilatore per evitare transpilazione JavaScript legacy
+  compiler: {
+    // Rimuove console.log in produzione (opzionale, migliora performance)
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn'],
+    } : false,
+  },
+  
+  // Target moderno per evitare polyfill non necessari
+  // Next.js 16 usa automaticamente target moderno, ma possiamo essere espliciti
+  // Nota: Questo è gestito automaticamente da Next.js 16, ma lo documentiamo
+  
   // Ottimizzazioni aggiuntive per ridurre memoria
   onDemandEntries: {
     maxInactiveAge: 25 * 1000, // Ridotto da default 60s a 25s

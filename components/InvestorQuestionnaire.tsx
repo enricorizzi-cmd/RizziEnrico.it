@@ -240,7 +240,7 @@ export default function InvestorQuestionnaire() {
         <div className="w-full bg-[var(--color-line)] rounded-full h-2">
           <div
             className="bg-[var(--color-primary)] h-2 rounded-full transition-all duration-300"
-            style={{ width: `${progress}%` }}
+            style={{ width: `${progress}%` } as React.CSSProperties}
           />
         </div>
       </div>

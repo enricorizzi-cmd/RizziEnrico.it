@@ -26,8 +26,7 @@ export default function OSMBadge({
         alt="Open Source Management Partner"
         width={size.width}
         height={size.height}
-        className={`object-contain ${className}`}
-        style={{ opacity: 0.6 }}
+        className={`object-contain opacity-60 ${className}`}
         loading="lazy"
         quality={90}
         sizes={`${size.width}px`}
