@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CookieBanner from "@/components/CookieBanner";
 import Analytics from "@/components/Analytics";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import ClientWidgets from "@/components/ClientWidgets";
 
 const inter = Inter({
@@ -60,6 +61,8 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${montserrat.variable} font-body antialiased`}
       >
+        {/* Google Analytics - Inserito direttamente nell'head */}
+        <GoogleAnalytics />
         <a href="#main-content" className="skip-to-content">
           Vai al contenuto principale
         </a>

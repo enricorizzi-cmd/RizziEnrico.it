@@ -33,7 +33,8 @@ export default function Analytics() {
   }, []);
 
   useEffect(() => {
-    // Carica analytics solo dopo che la pagina è interattiva per non bloccare rendering
+    // Carica Plausible Analytics solo dopo che la pagina è interattiva per non bloccare rendering
+    // Google Analytics è ora caricato direttamente nel layout.tsx
     const loadAnalytics = () => {
       // Plausible Analytics
       if (domain && typeof window !== 'undefined') {
@@ -52,41 +53,6 @@ export default function Analytics() {
             existing.remove();
           }
         };
-      }
-
-      // Google Analytics 4 - Implementazione ottimizzata per performance
-      if (GA4_ID && typeof window !== 'undefined' && !window.gtag) {
-        // Inizializza dataLayer prima di caricare lo script
-        window.dataLayer = window.dataLayer || [];
-        const dataLayer = window.dataLayer; // Salva riferimento per TypeScript
-        function gtag(...args: any[]) {
-          dataLayer.push(args);
-        }
-        window.gtag = gtag;
-        gtag('js', new Date());
-
-        // Carica lo script gtag.js in modo asincrono (non blocca rendering)
-        const script1 = document.createElement('script');
-        script1.async = true; // async è sufficiente, non serve anche defer
-        script1.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`;
-        script1.crossOrigin = 'anonymous';
-        
-        // Gestione errori per migliorare resilienza
-        script1.onerror = () => {
-          console.warn('Failed to load Google Analytics script');
-        };
-        
-        document.head.appendChild(script1);
-
-        // Configurazione GA4 con ottimizzazioni performance
-        gtag('config', GA4_ID, {
-          // Ottimizzazioni per migliorare performance
-          send_page_view: false, // Gestiamo manualmente per Next.js
-          // Riduce la frequenza di invio dati
-          transport_type: 'beacon',
-          // Abilita compressione
-          anonymize_ip: true, // GDPR compliance
-        });
       }
     };
 
@@ -125,6 +91,7 @@ export default function Analytics() {
     }
 
     // Google Analytics 4 - Page view tracking
+    // Aggiorna la configurazione per tracciare il cambio di pagina in Next.js
     if (window.gtag && GA4_ID) {
       window.gtag('config', GA4_ID, {
         page_path: pathname,
@@ -132,7 +99,7 @@ export default function Analytics() {
         page_location: window.location.href,
       });
     }
-  }, [pathname]);
+  }, [pathname, GA4_ID]);
 
   return null;
 }

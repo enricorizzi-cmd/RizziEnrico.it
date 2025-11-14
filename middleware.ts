@@ -30,7 +30,7 @@ export function middleware(request: NextRequest) {
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com data:",
     "img-src 'self' data: https: blob:",
-    "connect-src 'self' https://plausible.io https://www.google-analytics.com wss:",
+    "connect-src 'self' https://plausible.io https://www.google-analytics.com https://www.googletagmanager.com wss:",
     "frame-src 'self' https://www.youtube.com https://calendly.com",
     "base-uri 'self'",
     "form-action 'self'",
