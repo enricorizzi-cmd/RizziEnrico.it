@@ -54,13 +54,8 @@ export default function RisorsePage() {
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             <KPITool toolType="waste-cost" />
-            <KPITool toolType="breakeven" />
-            <KPITool toolType="pricing" />
             <KPITool toolType="inventory-turnover" />
             <KPITool toolType="working-capital-cycle" />
-            <KPITool toolType="margin" />
-            <KPITool toolType="inventory-days" />
-            <KPITool toolType="turnover" />
           </div>
         </section>
 
