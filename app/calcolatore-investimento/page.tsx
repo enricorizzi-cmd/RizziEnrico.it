@@ -6,10 +6,10 @@ import dynamic from 'next/dynamic';
 import JSONLD from '@/components/JSONLD';
 
 // Dynamic import per componenti pesanti (migliora performance iniziale)
+// Nota: Rimossi ssr: false perché non supportato in Server Components di Next.js 16
 const ClientInvestmentCalculator = dynamic(
   () => import('@/components/ClientInvestmentCalculator'),
   { 
-    ssr: false, // Calcolatore non necessario per SEO, può essere client-only
     loading: () => (
       <div className="flex items-center justify-center py-12">
         <div className="text-center">
@@ -24,7 +24,6 @@ const ClientInvestmentCalculator = dynamic(
 const InvestorQuestionnaire = dynamic(
   () => import('@/components/InvestorQuestionnaire'),
   { 
-    ssr: false,
     loading: () => (
       <div className="flex items-center justify-center py-8">
         <p className="text-[var(--color-subtext)]">Caricamento questionario...</p>
