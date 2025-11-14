@@ -25,7 +25,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-white border-b border-[var(--color-line)] shadow-sm">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-[var(--color-line)] shadow-sm">
         {/* Mobile Header Banner - Solo su mobile */}
         <div className="lg:hidden bg-[var(--color-primary)] text-white py-2 px-4">
           <div className="container mx-auto flex items-center justify-between text-xs">

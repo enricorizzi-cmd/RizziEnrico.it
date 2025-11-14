@@ -67,7 +67,7 @@ export default function RootLayout({
           Vai al contenuto principale
         </a>
         <Header />
-        <main id="main-content">{children}</main>
+        <main id="main-content" className="pt-24 lg:pt-16">{children}</main>
         <Footer />
         <CookieBanner />
         <ClientWidgets />

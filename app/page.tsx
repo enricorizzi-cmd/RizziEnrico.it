@@ -338,23 +338,7 @@ export default function HomePage() {
             description="Esempi concreti di PMI venete che hanno ottenuto risultati misurabili con metodo e KPI."
             centered
           />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <Card
-                key={i}
-                title={`Case Study ${i}`}
-                variant="case"
-                href="/case-study/case-1"
-              >
-                <div className="space-y-2 text-sm">
-                  <p><strong>Contesto:</strong> PMI manifatturiera 45 addetti</p>
-                  <p><strong>Intervento:</strong> Organizzazione + cruscotto KPI</p>
-                  <p><strong>Risultati:</strong> +X% fatturato, -Y% tempi consegna</p>
-                </div>
-              </Card>
-            ))}
-          </div>
-          <div className="text-center mt-12">
+          <div className="text-center mt-8">
             <CTA href="/case-study" variant="secondary" size="large">
               Vedi tutti i Case Study →
             </CTA>
