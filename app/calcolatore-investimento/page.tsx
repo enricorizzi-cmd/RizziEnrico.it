@@ -46,12 +46,12 @@ export default function CalcolatoreInvestimentoPage() {
             <div className="bg-white rounded-[var(--radius-card)] p-8 border border-[var(--color-line)] text-center">
               <div className="text-5xl mb-6">💼</div>
               <h3 className="font-heading text-2xl font-bold text-[var(--color-text)] mb-4">
-                Check-up Finanziario Personalizzato
+                Check-up Strategico Patrimonio & Azienda per Imprenditori
               </h3>
               <p className="text-lg text-[var(--color-subtext)] mb-6">
                 Durante il check-up analizziamo insieme:
               </p>
-              <ul className="text-left max-w-2xl mx-auto space-y-3 mb-8">
+              <ul className="text-left max-w-2xl mx-auto space-y-3 mb-6">
                 <li className="flex items-start gap-3">
                   <span className="text-[var(--color-primary)] mt-1">✓</span>
                   <span className="text-[var(--color-text)]">Situazione attuale dei tuoi investimenti</span>
@@ -73,6 +73,11 @@ export default function CalcolatoreInvestimentoPage() {
                   <span className="text-[var(--color-text)]">Allocazione tra immobiliare, oro, finanziario, crypto, aziende</span>
                 </li>
               </ul>
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6 max-w-2xl mx-auto">
+                <p className="text-sm text-[var(--color-text)]">
+                  <strong>Nota importante:</strong> Il check-up ha scopo informativo e strategico per imprenditori e non costituisce consulenza finanziaria abilitata. Non sostituisce il parere di professionisti autorizzati in materia di investimenti.
+                </p>
+              </div>
               <CTA href="/contatti" variant="primary" size="large" className="w-full md:w-auto">
                 Prenota il tuo Check-up →
               </CTA>

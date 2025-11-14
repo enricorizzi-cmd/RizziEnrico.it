@@ -14,14 +14,14 @@ export default function Footer() {
             </div>
             <div className="mb-4">
               <h3 className="font-heading font-bold text-xl text-white">Enrico Rizzi</h3>
-              <p className="text-xs text-gray-400 mt-1">Consulente Organizzazione PMI</p>
+              <p className="text-xs text-gray-400 mt-1">Consulente aziendale senior OSM per PMI del Veneto</p>
             </div>
             <p className="text-sm text-gray-300 mb-3">
               Consulenza per PMI che vogliono crescere con metodo:
               persone, KPI e processi.
             </p>
             <p className="text-sm text-gray-300 mb-4">
-              Area servita: Venezia - Rovigo
+              <strong>Area servita: Venezia, Padova e Rovigo</strong>
             </p>
             <div className="flex items-center gap-2 pt-3 border-t border-gray-700">
               <span className="text-xs text-gray-400">Partner</span>

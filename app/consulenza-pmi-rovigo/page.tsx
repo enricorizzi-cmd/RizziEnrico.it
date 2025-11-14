@@ -57,17 +57,20 @@ export default function ConsulenzaPMIRovigoPage() {
           <div className="max-w-4xl mx-auto">
             <SectionTitle
               title="Consulenza PMI a Rovigo: Conosco le Sfide del Territorio"
-              description="Opero a Rovigo e provincia da oltre 10 anni. Conosco le dinamiche delle PMI locali: manifatturiero, servizi, commercio, agricoltura."
+              description="Da oltre 10 anni lavoro dentro e a fianco delle PMI venete: prima nell'azienda di famiglia, oggi come consulente aziendale senior OSM."
               centered
             />
             <div className="prose prose-lg max-w-none text-[var(--color-text)] leading-relaxed mt-8">
+              <p className="mb-4">
+                Opero come consulente aziendale a <strong>Rovigo e provincia</strong>, aiutando le PMI del territorio a mettere ordine in ruoli, KPI e processi per crescere in modo strutturato.
+              </p>
               <p className="mb-4">
                 Le PMI di Rovigo e provincia affrontano sfide specifiche: passaggio generazionale, 
                 organizzazione in crescita, necessità di misurare performance con KPI chiari. 
                 Il tessuto imprenditoriale rodigino è solido ma spesso manca di struttura organizzativa.
               </p>
               <p className="mb-4">
-                Opero come consulente aziendale a Rovigo, lavorando con aziende del <strong>Polesine</strong>, 
+                Lavoro con aziende del <strong>Polesine</strong>, 
                 del <strong>settore agricolo e agroalimentare</strong> e della <strong>zona industriale di Rovigo</strong>. 
                 Ho particolare esperienza con aziende familiari rodigine che affrontano il passaggio generazionale.
               </p>

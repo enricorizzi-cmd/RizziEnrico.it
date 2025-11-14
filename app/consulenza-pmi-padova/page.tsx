@@ -57,10 +57,13 @@ export default function ConsulenzaPMIPadovaPage() {
           <div className="max-w-4xl mx-auto">
             <SectionTitle
               title="Consulenza PMI a Padova: Conosco le Sfide del Territorio"
-              description="Opero a Padova e provincia da oltre 10 anni. Conosco le dinamiche delle PMI locali: manifatturiero avanzato, servizi, commercio, distribuzione."
+              description="Da oltre 10 anni lavoro dentro e a fianco delle PMI venete: prima nell'azienda di famiglia, oggi come consulente aziendale senior OSM."
               centered
             />
             <div className="prose prose-lg max-w-none text-[var(--color-text)] leading-relaxed mt-8">
+              <p className="mb-4">
+                Opero come consulente aziendale a <strong>Padova e provincia</strong>, aiutando le PMI del territorio a mettere ordine in ruoli, KPI e processi per crescere in modo strutturato.
+              </p>
               <p className="mb-4">
                 Le PMI di Padova e provincia operano in un contesto competitivo: necessitano di 
                 organizzazione solida, KPI chiari e processi efficaci per crescere. Il tessuto 

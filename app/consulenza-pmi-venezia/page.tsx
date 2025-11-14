@@ -59,10 +59,13 @@ export default function ConsulenzaPMIVeneziaPage() {
           <div className="max-w-4xl mx-auto">
             <SectionTitle
               title="Consulenza PMI a Venezia: Conosco le Sfide del Territorio"
-              description="Opero a Venezia e provincia da oltre 10 anni. Conosco le dinamiche delle PMI locali: turismo, servizi, manifatturiero, commercio."
+              description="Da oltre 10 anni lavoro dentro e a fianco delle PMI venete: prima nell'azienda di famiglia, oggi come consulente aziendale senior OSM."
               centered
             />
             <div className="prose prose-lg max-w-none text-[var(--color-text)] leading-relaxed mt-8">
+              <p className="mb-4">
+                Opero come consulente aziendale a <strong>Venezia e provincia</strong>, aiutando le PMI del territorio a mettere ordine in ruoli, KPI e processi per crescere in modo strutturato.
+              </p>
               <p className="mb-4">
                 Le PMI di Venezia e provincia operano in un contesto unico: turismo, servizi, 
                 manifatturiero e commercio. Necessitano di organizzazione solida, KPI chiari 
@@ -70,7 +73,7 @@ export default function ConsulenzaPMIVeneziaPage() {
                 è ricco ma spesso manca di struttura organizzativa.
               </p>
               <p className="mb-4">
-                Opero come consulente aziendale a Venezia, lavorando con aziende del <strong>Porto Marghera</strong>, 
+                Lavoro con aziende del <strong>Porto Marghera</strong>, 
                 del <strong>settore turistico</strong> e della <strong>zona industriale di Mestre</strong>. 
                 Conosco le specificità del territorio veneziano e le sfide delle PMI che operano in questo contesto unico.
               </p>

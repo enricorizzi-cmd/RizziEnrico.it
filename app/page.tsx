@@ -608,9 +608,10 @@ export default function HomePage() {
                   Consulente OSM per PMI del Veneto
                 </p>
                 <p className="text-[var(--color-text)] mb-6 leading-relaxed">
-                  Da oltre 10 anni aiuto imprenditori veneti a <strong>mettere ordine nella loro azienda</strong> e 
-                  passare da organizzazione caotica a sistema strutturato orientato ai risultati. Metodo pratico,
-                  numeri misurabili, zero fuffa.
+                  <strong>Da oltre 10 anni lavoro dentro e a fianco delle PMI venete</strong>: prima nell'azienda di famiglia, oggi come <strong>consulente aziendale senior OSM Partner Venezia–Rovigo</strong>.
+                </p>
+                <p className="text-[var(--color-text)] mb-6 leading-relaxed">
+                  Aiuto imprenditori di <strong>Venezia, Padova e Rovigo</strong> a mettere ordine in ruoli, KPI e processi per passare da gestione "a sensazione" a gestione per numeri, con risultati misurabili su fatturato, marginalità e tempi di consegna.
                 </p>
                 <p className="text-[var(--color-text)] mb-6 leading-relaxed">
                   <strong>Risultato concreto:</strong> Nel 2024 ho aiutato un'azienda manifatturiera 
