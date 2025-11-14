@@ -408,24 +408,28 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
+                slug: 'consulenza-pmi',
                 title: 'Consulenza PMI – Aumenta Fatturato e Organizza la Tua Azienda',
                 description: 'Supporto continuativo per crescita sostenibile. Gestione passaggio generazionale. Organizzazione completa con ruoli, KPI e processi.',
                 result: 'Risultato: PMI strutturata, team motivato, numeri in crescita.',
                 price: 'a partire da 700€',
               },
               {
+                slug: 'organizzazione-mansionari',
                 title: 'Organizzazione & Mansionari – Ruoli Chiari e Responsabilità Definite',
                 description: 'Standard OSM: ruoli chiari, responsabilità definite, mansionari allineati agli obiettivi.',
                 result: 'Risultato: organizzazione chiara, meno conflitti, efficienza aumentata.',
                 price: 'a partire da 700€',
               },
               {
+                slug: 'sviluppo-persone',
                 title: 'Sviluppo Persone & Leadership – Forma un Team Vincente',
                 description: 'Formazione mirata, coaching manageriale, team building strutturato per massimizzare il potenziale.',
                 result: 'Risultato: team motivato, competenze sviluppate, leadership efficace.',
                 price: 'a partire da 700€',
               },
               {
+                slug: 'kpi-controllo-gestione',
                 title: 'KPI & Controllo di Gestione – Decisioni Basate sui Numeri',
                 description: 'Dashboard mensili, alert automatici, piano di azione sugli scostamenti. Controllo semplice ma efficace.',
                 result: 'Risultato: decisioni informate, problemi individuati tempestivamente, performance migliorate.',
@@ -436,7 +440,7 @@ export default function HomePage() {
                 key={index}
                 title={service.title}
                 variant="service"
-                href={`/servizi/${service.title.toLowerCase().replace(/\s+/g, '-').replace(/[–—]/g, '-')}`}
+                href={`/servizi/${service.slug}`}
               >
                 <p className="text-sm mb-3">{service.description}</p>
                 <p className="text-sm font-semibold text-[var(--color-success)] mb-3">{service.result}</p>

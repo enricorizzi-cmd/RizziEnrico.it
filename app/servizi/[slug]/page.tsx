@@ -172,6 +172,38 @@ const services = {
       },
     ],
   },
+  'digitalizzazione-automazioni': {
+    title: 'Digitalizzazione & Automazioni per PMI',
+    hero: {
+      problem: 'Processi ancora su carta, doppie registrazioni, lavori ripetitivi che rubano tempo. Strumenti digitali non integrati o troppo complessi.',
+      solution: 'Digitalizzazione pratica dei processi chiave: strumenti semplici per eliminare carta, doppie registrazioni e automazioni per lavori ripetitivi.',
+      result: 'Processi più veloci, meno errori, team più produttivo. Digitalizzazione alla portata di chi non fa l\'informatico.',
+    },
+    deliverables: [
+      'Mappa dei flussi critici (ordini, offerte, interventi, magazzino, amministrazione)',
+      'Scelta degli strumenti digitali minimi (gestionale, CRM, fogli condivisi, tool collaborativi, automazioni)',
+      'Implementazione guidata e formazione al team',
+      'Piano di miglioramento a 90–180 giorni',
+    ],
+    timelines: 'Analisi: 2-3 settimane. Implementazione: 4-8 settimane. Formazione: 2-4 giornate. Follow-up: 3-6 mesi.',
+    kpis: [
+      'Riduzione tempo attività ripetitive',
+      'Riduzione errori di inserimento dati',
+      'Tempo risposta a clienti/fornitori',
+      'Soddisfazione team su strumenti',
+    ],
+    priceFrom: 0,
+    faq: [
+      {
+        question: 'Serve avere competenze IT per digitalizzare?',
+        answer: 'No, scelgo strumenti semplici che il team riesce a usare senza essere informatici. Focus su strumenti già diffusi (Google Workspace, Excel, CRM semplici) e automazioni base.',
+      },
+      {
+        question: 'Quanto tempo serve per vedere risultati?',
+        answer: 'In 4-8 settimane hai i primi flussi digitalizzati attivi. In 3-6 mesi vedi riduzione tempi e errori misurabile. L\'obiettivo è progressivo, non rivoluzione totale.',
+      },
+    ],
+  },
 };
 
 interface PageProps {

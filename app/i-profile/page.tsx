@@ -398,7 +398,7 @@ export default function IProfilePage() {
             <Card
               title="Selezione"
               variant="case"
-              href="/case-study/selezione-iprofile"
+              href="/case-study"
             >
               <div className="space-y-2 text-sm">
                 <p><strong>Contesto:</strong> Selezione posizione chiave</p>
@@ -412,7 +412,7 @@ export default function IProfilePage() {
             <Card
               title="Team Mapping"
               variant="case"
-              href="/case-study/team-mapping-iprofile"
+              href="/case-study"
             >
               <div className="space-y-2 text-sm">
                 <p><strong>Contesto:</strong> Riorganizzazione team</p>
@@ -426,7 +426,7 @@ export default function IProfilePage() {
             <Card
               title="Titolare"
               variant="case"
-              href="/case-study/titolare-iprofile"
+              href="/case-study"
             >
               <div className="space-y-2 text-sm">
                 <p><strong>Contesto:</strong> Sviluppo leadership</p>
