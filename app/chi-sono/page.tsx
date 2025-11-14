@@ -194,8 +194,8 @@ export default function ChiSonoPage() {
                 { year: '2018–2021', achievement: 'Laurea in Economia e Commercio, mentre continuo a lavorare in azienda.' },
                 { year: '2021', achievement: 'Inizio del percorso come cliente OSM con l\'azienda di famiglia e completamento con merito della Scuola per Consulenti OSM (1 anno).' },
                 { year: '2021–2023', achievement: 'Applicazione della metodologia OSM dall\'interno: organizzazione, persone, passaggio generazionale, numeri.' },
+                { year: 'Dal 2023', achievement: 'Business developer per il Triveneto di MarketOSM e OsmCoin.' },
                 { year: 'Dal 2024', achievement: 'Consulente Aziendale Senior OSM presso OSM Partner Venezia–Rovigo, specializzato in PMI venete.' },
-                { year: 'Dal 2025', achievement: 'Responsabile divisione corsi di OSM Venezia–Rovigo e responsabile MarketOSM / business developer per il Triveneto.' },
               ].map((item, index) => (
                 <div key={index} className="flex gap-6">
                   <div className="flex-shrink-0">

@@ -34,6 +34,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     { href: '/', label: 'Home' },
     { href: '/metodo', label: 'Metodo' },
     { href: '/servizi', label: 'Servizi' },
+    { href: '/digitalizzazione-pmi-ai', label: 'Digitalizzazione & AI' },
     { href: '/i-profile', label: 'i-Profile' },
     { href: '/case-study', label: 'Case Study' },
     { href: '/risorse', label: 'Risorse' },
