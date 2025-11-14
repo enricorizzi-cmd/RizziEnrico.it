@@ -6,9 +6,10 @@ import Link from 'next/link';
 import JSONLD from '@/components/JSONLD';
 
 export const metadata = generateMetadata({
-  title: 'Consulente PMI Venezia – Ottimizza la tua azienda con KPI e Processi | Enrico Rizzi',
-  description: 'Consulenza organizzazione aziendale per PMI di Venezia. Metodo OSM: ruoli chiari, KPI, processi efficaci. In 90 giorni ordine, in 6 mesi risultati misurabili. Check-up gratuito.',
+  title: 'Consulente Aziendale Venezia – Come Aumentare Fatturato e Organizzare Meglio | Enrico Rizzi',
+  description: 'Consulente aziendale Venezia: ti aiuto a aumentare il fatturato, migliorare la produttività e mettere ordine nella tua azienda. Metodo OSM testato. Check-up gratuito.',
   path: '/consulenza-pmi-venezia',
+  keywords: 'consulente aziendale Venezia, come aumentare fatturato Venezia, migliorare produttività dipendenti Venezia, organizzare meglio azienda Venezia, consulenza aziendale Venezia prezzi',
 });
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
@@ -43,10 +44,10 @@ export default function ConsulenzaPMIVeneziaPage() {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Consulente PMI Venezia – Organizzazione e KPI per Aziende Venete
+              Consulente Aziendale Venezia – Come Aumentare Fatturato e Organizzare Meglio
             </h1>
             <p className="text-xl md:text-2xl opacity-95">
-              Metodo OSM per PMI di Venezia: in 90 giorni ordine organizzativo, in 6 mesi risultati misurabili
+              Ti aiuto a migliorare la produttività dei dipendenti e mettere ordine nella tua azienda veneziana. In 90 giorni organizzazione chiara, in 6 mesi vedi i numeri concreti.
             </p>
           </div>
         </div>
@@ -69,14 +70,20 @@ export default function ConsulenzaPMIVeneziaPage() {
                 è ricco ma spesso manca di struttura organizzativa.
               </p>
               <p className="mb-4">
-                Il mio metodo OSM si adatta perfettamente alle realtà locali: ho lavorato con 
-                aziende del settore servizi, manifatturiero e commerciali del territorio, 
-                ottenendo risultati concreti in termini di organizzazione e crescita.
+                Opero come consulente OSM Partner Venezia-Rovigo, fondata nel 1998. Il metodo OSM 
+                si adatta perfettamente alle realtà locali: ho lavorato con aziende del settore servizi, 
+                manifatturiero e commerciali del territorio, ottenendo risultati concreti in termini di 
+                organizzazione e crescita attraverso lo sviluppo delle competenze manageriali e delle risorse umane.
               </p>
-              <p>
+              <p className="mb-4">
                 <strong>Risultato tipico:</strong> PMI veneziana che in 90 giorni ha definito ruoli, 
                 KPI e processi, passando da gestione reattiva a organizzazione proattiva. 
                 In 6 mesi: +20% fatturato grazie a processi ottimizzati e team più efficace.
+              </p>
+              <p>
+                Attraverso la <strong>tecnologia I-Profile</strong> e i <strong>corsi di formazione OSM</strong> 
+                (Leadership, Vendite, Public Speaking, Gestione Finanziaria), affianco gli imprenditori 
+                veneziani nel loro percorso di miglioramento verso la prosperità.
               </p>
             </div>
           </div>

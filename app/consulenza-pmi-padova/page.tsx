@@ -6,9 +6,10 @@ import Link from 'next/link';
 import JSONLD from '@/components/JSONLD';
 
 export const metadata = generateMetadata({
-  title: 'Consulente PMI Padova – Ottimizza la tua azienda con KPI e Processi | Enrico Rizzi',
-  description: 'Consulenza organizzazione aziendale per PMI di Padova. Metodo OSM: ruoli chiari, KPI, processi efficaci. In 90 giorni ordine, in 6 mesi risultati misurabili. Check-up gratuito.',
+  title: 'Consulente Aziendale Padova – Come Aumentare Fatturato e Organizzare Meglio | Enrico Rizzi',
+  description: 'Consulente aziendale Padova: ti aiuto a aumentare il fatturato, migliorare la produttività e mettere ordine nella tua azienda. Metodo OSM testato. Check-up gratuito.',
   path: '/consulenza-pmi-padova',
+  keywords: 'consulente aziendale Padova, come aumentare fatturato Padova, migliorare produttività dipendenti Padova, organizzare meglio azienda Padova, consulenza aziendale Padova prezzi',
 });
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
@@ -41,10 +42,10 @@ export default function ConsulenzaPMIPadovaPage() {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Consulente PMI Padova – Organizzazione e KPI per Aziende Venete
+              Consulente Aziendale Padova – Come Aumentare Fatturato e Organizzare Meglio
             </h1>
             <p className="text-xl md:text-2xl opacity-95">
-              Metodo OSM per PMI di Padova: in 90 giorni ordine organizzativo, in 6 mesi risultati misurabili
+              Ti aiuto a migliorare la produttività dei dipendenti e mettere ordine nella tua azienda padovana. In 90 giorni organizzazione chiara, in 6 mesi vedi i numeri concreti.
             </p>
           </div>
         </div>

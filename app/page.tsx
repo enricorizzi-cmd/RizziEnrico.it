@@ -228,6 +228,9 @@ export default function HomePage() {
           </div>
           <div className="text-center mt-8">
             <p className="text-sm text-[var(--color-subtext)]">
+              Opero come consulente <strong>OSM Partner Venezia-Rovigo</strong>, fondata nel 1998. 
+              Il metodo OSM è stato sviluppato attraverso un costante lavoro di ricerca e sviluppo 
+              e grazie al monitoraggio di decine di migliaia di collaboratori all'interno delle aziende italiane. 
               Vuoi conoscere meglio il metodo? <Link href="/metodo" className="text-[var(--color-primary)] hover:underline font-semibold" title="Scopri il metodo OSM per organizzare la tua PMI">Scopri il metodo OSM</Link> o <Link href="/servizi" className="text-[var(--color-primary)] hover:underline font-semibold" title="Vedi tutti i servizi di consulenza PMI">vedi tutti i servizi</Link>.
             </p>
           </div>
