@@ -98,7 +98,7 @@ export default function CookiePolicyPage() {
               Enrico Rizzi<br />
               Email: e.rizzi@osmpartnervenezia.it<br />
               P.IVA: 05616690284<br />
-              Area servita: Venezia - Rovigo, Veneto
+              Area servita: Venezia, Padova e Rovigo, Veneto
             </p>
 
             <h2 className="font-heading text-2xl font-semibold mt-8 mb-4">Diritti dell'Utente</h2>

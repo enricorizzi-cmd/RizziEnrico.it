@@ -145,13 +145,38 @@ export default function ChiSonoPage() {
               <p className="mb-4">
                 Oggi aiuto le PMI venete a:
               </p>
-              <ul className="list-disc list-inside space-y-2 mb-4 ml-4">
+              <ul className="list-disc list-inside space-y-2 mb-6 ml-4">
                 <li>mettere ordine in <strong>organizzazione, ruoli e responsabilità</strong>;</li>
                 <li>gestire <strong>passaggi generazionali</strong> e continuità aziendale;</li>
                 <li>sviluppare e motivare le <strong>risorse umane</strong>;</li>
                 <li>lavorare con <strong>statistiche, KPI e controllo di gestione</strong> in modo semplice e operativo;</li>
                 <li>creare piani di <strong>espansione e crescita sostenibile</strong>.</li>
               </ul>
+              <div className="bg-[var(--color-card)] rounded-[var(--radius-card)] p-6 border border-[var(--color-line)] mb-6">
+                <p className="mb-4">
+                  Negli ultimi anni ho scelto di affiancare a organizzazione e numeri anche la <strong>digitalizzazione pratica delle PMI</strong>.
+                </p>
+                <p className="mb-4">
+                  In concreto significa:
+                </p>
+                <ul className="space-y-2 ml-4">
+                  <li className="flex items-start gap-2">
+                    <span className="text-[var(--color-primary)] font-bold mt-1">•</span>
+                    <span>trasformare fogli, appunti e chat in <strong>flussi digitali semplici</strong>, che il team riesce a gestire;</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[var(--color-primary)] font-bold mt-1">•</span>
+                    <span>usare <strong>strumenti digitali e automazioni</strong> per ridurre lavori ripetitivi, errori e tempi morti;</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[var(--color-primary)] font-bold mt-1">•</span>
+                    <span>integrare l'<strong>Intelligenza Artificiale</strong> nei processi di analisi numeri, KPI e gestione del personale, senza tecnicismi e con esempi reali.</span>
+                  </li>
+                </ul>
+                <p className="mt-4">
+                  Il mio obiettivo è portare la digitalizzazione alla portata di un imprenditore che "non fa l'informatico", ma vuole un'azienda più leggera, veloce e controllabile.
+                </p>
+              </div>
               <p>
                 Il mio approccio è pratico e basato sui numeri: niente teoria astratta, ma strumenti concreti che ti permettono di vedere cambiamenti reali in azienda. Iniziamo mettendo ordine, definiamo ruoli chiari, costruiamo le statistiche giuste e poi lavoriamo su persone e risultati.
               </p>

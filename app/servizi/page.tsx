@@ -6,10 +6,10 @@ import Link from 'next/link';
 import JSONLD from '@/components/JSONLD';
 
 export const metadata = generateMetadata({
-  title: 'Servizi di consulenza aziendale per PMI in Veneto – Organizzazione, KPI, persone | Enrico Rizzi',
-  description: 'Servizi di consulenza aziendale per PMI venete: Consulenza PMI continuativa, Organizzazione & Mansionari, KPI & Controllo di Gestione, Sviluppo Persone & Leadership. Output concreti, tempistiche chiare, prezzi trasparenti.',
+  title: 'Servizi di consulenza aziendale per PMI in Veneto – Organizzazione, KPI, digitalizzazione | Enrico Rizzi',
+  description: 'Servizi di consulenza aziendale per PMI venete: Consulenza PMI continuativa, Organizzazione & Mansionari, KPI & Controllo di Gestione, Sviluppo Persone & Leadership, Digitalizzazione & Automazioni. Output concreti, tempistiche chiare, prezzi trasparenti.',
   path: '/servizi',
-  keywords: 'servizi consulenza aziendale PMI Veneto, organizzazione aziendale PMI Veneto, consulenza PMI continuativa, organizzazione mansionari, KPI controllo gestione, sviluppo persone leadership',
+  keywords: 'servizi consulenza aziendale PMI Veneto, organizzazione aziendale PMI Veneto, consulenza PMI continuativa, organizzazione mansionari, KPI controllo gestione, sviluppo persone leadership, digitalizzazione PMI, automazioni PMI',
 });
 
 const services = [
@@ -40,6 +40,18 @@ const services = [
     summary: 'Dashboard mensili, alert automatici, piano di azione sugli scostamenti. Controllo semplice ma efficace.',
     price: 'Da €1.500 setup + €800/mese',
     deliverables: ['Dashboard KPI con 12-15 indicatori', 'Alert su scostamenti', 'Review mensile + piano azione'],
+  },
+  {
+    slug: 'digitalizzazione-automazioni',
+    title: 'Digitalizzazione & Automazioni per PMI',
+    summary: 'Digitalizzazione pratica dei processi chiave: niente progetti IT infiniti, ma strumenti semplici per togliere carta, doppie registrazioni e lavori ripetitivi.',
+    price: 'Da definire su preventivo',
+    deliverables: [
+      'Mappa dei flussi critici (ordini, offerte, interventi, magazzino, amministrazione)',
+      'Scelta degli strumenti digitali minimi (gestionale, CRM, fogli condivisi, tool collaborativi, automazioni)',
+      'Implementazione guidata e formazione al team',
+      'Piano di miglioramento a 90–180 giorni',
+    ],
   },
 ];
 
@@ -182,6 +194,18 @@ export default function ServiziPage() {
               </p>
             </Card>
           ))}
+        </div>
+
+        {/* Info Digitalizzazione */}
+        <div className="max-w-4xl mx-auto mb-12">
+          <div className="bg-white rounded-[var(--radius-card)] p-6 border border-[var(--color-line)]">
+            <p className="text-sm text-[var(--color-subtext)] text-center">
+              Vuoi capire da dove partire con la digitalizzazione della tua PMI?{' '}
+              <Link href="/contatti" className="text-[var(--color-primary)] hover:underline font-semibold" title="Prenota un check-up gratuito">
+                Prenota il Check-up gratuito →
+              </Link>
+            </p>
+          </div>
         </div>
 
         {/* CTA */}

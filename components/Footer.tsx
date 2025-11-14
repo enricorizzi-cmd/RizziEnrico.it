@@ -17,8 +17,7 @@ export default function Footer() {
               <p className="text-xs text-gray-400 mt-1">Consulente aziendale senior OSM per PMI del Veneto</p>
             </div>
             <p className="text-sm text-gray-300 mb-3">
-              Consulenza per PMI che vogliono crescere con metodo:
-              persone, KPI e processi.
+              Aiuto le PMI di <strong>Venezia, Padova e Rovigo</strong> a crescere con metodo: persone, KPI, processi <strong>e digitalizzazione semplice</strong>.
             </p>
             <p className="text-sm text-gray-300 mb-4">
               <strong>Area servita: Venezia, Padova e Rovigo</strong>

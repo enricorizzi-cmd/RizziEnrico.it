@@ -8,8 +8,8 @@ import Card from '@/components/Card';
 import JSONLD from '@/components/JSONLD';
 
 export const metadata = generateMetadata({
-  title: 'Metodo consulenza PMI in 5 step – Da caos a organizzazione con KPI chiari | Enrico Rizzi',
-  description: 'Metodo consulenza PMI in 5 step: Chi, Numeri, Processi, Persone, Espansione. Da azienda reattiva a organizzata e orientata ai risultati, con ruoli, KPI e riunioni strutturate. Pensato per PMI venete e aziende familiari.',
+  title: 'Metodo consulenza PMI in 5 step – Da caos a organizzazione con KPI e digitalizzazione | Enrico Rizzi',
+  description: 'Metodo consulenza PMI in 5 step: Chi, Numeri, Processi, Persone, Espansione. Da azienda reattiva a organizzata e orientata ai risultati, con ruoli, KPI, riunioni strutturate e digitalizzazione pratica. Pensato per PMI venete e aziende familiari.',
   path: '/metodo',
 });
 
@@ -149,6 +149,51 @@ export default function MetodoPage() {
               centered
             />
             <Steps steps={steps} />
+          </div>
+        </div>
+      </section>
+
+      {/* Digitalizzazione: lo strato trasversale */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-6 text-center">
+              Digitalizzazione: lo strato che rende scalabile il metodo
+            </h2>
+            <div className="prose prose-lg max-w-none text-[var(--color-text)] leading-relaxed">
+              <p className="mb-4">
+                In tutti e 5 gli step lavoriamo anche sulla <strong>digitalizzazione pratica della tua PMI</strong>.
+              </p>
+              <p className="mb-4">
+                Non si tratta di "fare il gestionale nuovo" e basta, ma di:
+              </p>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-start gap-3">
+                  <span className="text-[var(--color-primary)] font-bold mt-1">•</span>
+                  <span>trasformare i <strong>mansionari</strong> in check-list e flussi gestibili con strumenti digitali semplici (foglio condiviso, CRM, task manager);</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[var(--color-primary)] font-bold mt-1">•</span>
+                  <span>rendere le <strong>riunioni a KPI</strong> più veloci con dashboard aggiornate automaticamente;</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[var(--color-primary)] font-bold mt-1">•</span>
+                  <span>ridurre inserimenti doppi e passaggi a voce usando <strong>automazioni</strong> (es. passaggio dati da Excel a gestionale, da form online a CRM);</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[var(--color-primary)] font-bold mt-1">•</span>
+                  <span>fare in modo che ogni persona abbia <strong>gli strumenti digitali giusti</strong> per il proprio ruolo, senza stravolgere tutto in una volta.</span>
+                </li>
+              </ul>
+              <p className="mb-6">
+                La digitalizzazione non è un progetto a parte, ma il modo in cui rendiamo stabile e scalabile il lavoro fatto su organizzazione, numeri, processi e persone.
+              </p>
+              <div className="text-center mt-8">
+                <CTA href="/digitalizzazione-pmi-ai" variant="primary">
+                  Scopri di più su Digitalizzazione & AI →
+                </CTA>
+              </div>
+            </div>
           </div>
         </div>
       </section>

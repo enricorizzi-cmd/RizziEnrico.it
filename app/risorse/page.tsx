@@ -7,8 +7,8 @@ import CTA from '@/components/CTA';
 import DownloadForm from '@/components/DownloadForm';
 
 export const metadata = generateMetadata({
-  title: 'Risorse Gratuite - KPI Pack e Tool per PMI | Enrico Rizzi',
-  description: 'Scarica Kit KPI gratuito (template Excel), usa calcolatori online e risorse i-Profile. Tool pratici per organizzare la tua PMI. Venezia-Padova-Rovigo.',
+  title: 'Risorse Gratuite - KPI, Digitalizzazione e Tool per PMI | Enrico Rizzi',
+  description: 'Scarica Kit KPI gratuito (template Excel), usa calcolatori online, tool AI e risorse i-Profile. Tool pratici e strumenti digitali per organizzare e digitalizzare la tua PMI. Venezia-Padova-Rovigo.',
   path: '/risorse',
 });
 
@@ -19,10 +19,10 @@ export default function RisorsePage() {
         {/* Hero */}
         <div className="text-center mb-16">
           <h1 className="font-heading text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-4">
-            Risorse Gratuite per PMI: KPI Pack e Tool Pratici
+            Risorse Gratuite per PMI: KPI, Digitalizzazione e Tool Pratici
           </h1>
           <p className="text-xl text-[var(--color-subtext)] max-w-3xl mx-auto">
-            Tool pratici e template per iniziare subito a misurare e organizzare la tua PMI.
+            Tool pratici, template e strumenti digitali per iniziare subito a misurare, organizzare e <strong>digitalizzare</strong> la tua PMI.
           </p>
         </div>
 
@@ -100,11 +100,11 @@ export default function RisorsePage() {
         <section className="mb-16">
           <SectionTitle
             title="Tool Intelligenza Artificiale Avanzati"
-            description="Analisi automatica e generazione con Intelligenza Artificiale (AI)"
+            description="Analisi automatica e generazione con Intelligenza Artificiale (AI) pensati per imprenditori e PMI, non per tecnici"
             centered
           />
           <p className="text-center text-sm text-[var(--color-subtext)] mb-6 max-w-2xl mx-auto">
-            Le analisi sono indicative e non sostituiscono la consulenza.
+            Le analisi sono indicative e non sostituiscono la consulenza, ma ti permettono di fare il <strong>primo passo nella digitalizzazione</strong> dei tuoi numeri e dei tuoi processi.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             <KPIAnalysisAI />

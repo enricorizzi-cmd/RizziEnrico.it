@@ -187,8 +187,8 @@ export default function HomePage() {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <p className="text-lg text-[var(--color-text)] text-center leading-relaxed">
-              <strong>Enrico Rizzi</strong> è un consulente aziendale OSM specializzato in PMI venete (Venezia, Padova, Rovigo). 
-              Aiuta le aziende familiari a mettere ordine in ruoli, KPI e processi per aumentare fatturato e produttività.
+              <strong>Enrico Rizzi</strong> è un consulente aziendale senior OSM specializzato in PMI venete (Venezia, Padova, Rovigo). 
+              Aiuta le aziende familiari a mettere ordine in ruoli, KPI, processi e digitalizzazione per aumentare fatturato e produttività.
             </p>
           </div>
         </div>
@@ -204,7 +204,7 @@ export default function HomePage() {
           />
           <div className="max-w-3xl mx-auto mt-8 mb-8">
             <h3 className="font-heading text-xl font-semibold text-[var(--color-text)] mb-4 text-center">
-              Tre aree di intervento concrete:
+              Quattro aree di intervento concrete:
             </h3>
             <ul className="space-y-3 text-[var(--color-text)]">
               <li className="flex items-start gap-3">
@@ -218,6 +218,10 @@ export default function HomePage() {
               <li className="flex items-start gap-3">
                 <span className="text-[var(--color-primary)] font-bold mt-1">•</span>
                 <span><strong>Passaggio generazionale e continuità:</strong> strutturiamo l'azienda perché funzioni anche senza la presenza costante del titolare.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-[var(--color-primary)] font-bold mt-1">•</span>
+                <span><strong>Digitalizzazione pratica per PMI:</strong> ti aiuto a scegliere e mettere in funzione strumenti digitali semplici (dashboard, app, automazioni) per rendere i processi più veloci e controllabili, senza tecnicismi.</span>
               </li>
             </ul>
           </div>
@@ -611,7 +615,7 @@ export default function HomePage() {
                   <strong>Da oltre 10 anni lavoro dentro e a fianco delle PMI venete</strong>: prima nell'azienda di famiglia, oggi come <strong>consulente aziendale senior OSM Partner Venezia–Rovigo</strong>.
                 </p>
                 <p className="text-[var(--color-text)] mb-6 leading-relaxed">
-                  Aiuto imprenditori di <strong>Venezia, Padova e Rovigo</strong> a mettere ordine in ruoli, KPI e processi per passare da gestione "a sensazione" a gestione per numeri, con risultati misurabili su fatturato, marginalità e tempi di consegna.
+                  Aiuto imprenditori di <strong>Venezia, Padova e Rovigo</strong> a mettere ordine in ruoli, KPI e processi <strong>e a sfruttare la digitalizzazione in modo semplice</strong>: cruscotti, strumenti online e automazioni che il team può davvero usare tutti i giorni.
                 </p>
                 <p className="text-[var(--color-text)] mb-6 leading-relaxed">
                   <strong>Risultato concreto:</strong> Nel 2024 ho aiutato un'azienda manifatturiera 
