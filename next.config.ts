@@ -24,8 +24,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false, // Rimuove header X-Powered-By per sicurezza
   reactStrictMode: true,
   
-  // Ottimizzazioni performance aggiuntive
-  swcMinify: true, // Usa SWC per minificazione (più veloce di Terser)
+  // Nota: swcMinify è rimosso in Next.js 16 - SWC è ora il default
   
   // Limita memoria per server components
   serverExternalPackages: ['sharp', 'canvas'],
