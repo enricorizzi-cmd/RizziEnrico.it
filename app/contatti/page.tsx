@@ -3,10 +3,10 @@ import ContactForm from '@/components/ContactForm';
 import Accordion from '@/components/Accordion';
 
 export const metadata = generateMetadata({
-  title: 'Contatti - Check-up Gratuito PMI Veneto | Enrico Rizzi',
-  description: 'Prenota check-up aziendale gratuito: 60 min Zoom o 90 min in presenza. Analizziamo numeri e criticità della tua PMI. Venezia-Padova-Rovigo.',
+  title: 'Contatti - Check-up Gratuito per Organizzare Meglio la Tua Azienda | Enrico Rizzi',
+  description: 'Prenota check-up gratuito: scopri come aumentare il fatturato e migliorare la produttività. 60 min Zoom o 90 min in presenza. Consulente aziendale Padova, Venezia, Rovigo.',
   path: '/contatti',
-  keywords: 'contatti consulente PMI, check-up gratuito, consulenza Venezia, consulenza Padova, consulenza Rovigo, prenota consulenza',
+  keywords: 'contatti consulente aziendale, check-up gratuito, consulente aziendale Padova, consulente aziendale Venezia, consulente aziendale Rovigo, come organizzare meglio la mia azienda, prenota consulenza',
 });
 
 export default function ContattiPage() {
@@ -16,23 +16,25 @@ export default function ContattiPage() {
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="font-heading text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-4">
-              Contatti - Check-up Aziendale Gratuito
+              Contatti - Check-up Gratuito per la Tua Azienda
             </h1>
             <p className="text-xl text-[var(--color-subtext)] mb-2">
-              Disponibile via Zoom o in presenza (90 minuti). Analizziamo insieme numeri e criticità della tua PMI nell'area Venezia-Padova-Rovigo.
+              Scopri <strong>come aumentare il fatturato</strong> e <strong>migliorare la produttività dei dipendenti</strong>. 
+              Check-up gratuito: 60 min Zoom o 90 min in presenza. Consulente aziendale Padova, Venezia, Rovigo.
             </p>
             <p className="text-lg text-[var(--color-subtext)]">
-              Ti mostro dove recuperare margini e come organizzarti meglio.
+              Analizziamo insieme numeri e criticità della tua azienda. Ti mostro dove recuperare margini e come mettere ordine.
             </p>
           </div>
 
           {/* Local SEO */}
           <div className="bg-white rounded-[var(--radius-card)] p-6 md:p-8 border border-[var(--color-line)] mb-8">
             <h2 className="font-heading text-2xl font-bold text-[var(--color-text)] mb-4 text-center">
-              Consulenza PMI in Veneto
+              Consulente Aziendale Padova, Venezia, Rovigo
             </h2>
             <p className="text-[var(--color-subtext)] mb-4 text-center">
-              Opero in Veneto con focus su Venezia, Padova e Rovigo. Conosco le dinamiche locali delle PMI del territorio e integro metodo e numeri per risultati concreti.
+              Opero in Veneto con focus su Venezia, Padova e Rovigo. Conosco le dinamiche locali delle aziende familiari del territorio. 
+              Ti aiuto a <strong>mettere ordine</strong>, <strong>aumentare il fatturato</strong> e <strong>migliorare la produttività</strong> con risultati concreti.
             </p>
             <ul className="space-y-2 mb-4 max-w-2xl mx-auto">
               <li className="flex items-start gap-2 text-sm text-[var(--color-text)]">

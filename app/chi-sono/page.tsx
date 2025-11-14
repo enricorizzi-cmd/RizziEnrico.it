@@ -7,10 +7,10 @@ import CTA from '@/components/CTA';
 import JSONLD from '@/components/JSONLD';
 
 export const metadata = generateMetadata({
-  title: 'Chi sono - Consulente OSM PMI Veneto | Enrico Rizzi',
-  description: 'Consulente OSM per PMI venete con 10+ anni esperienza. Metodo pratico, risultati misurabili. Area servita: Venezia, Rovigo, Padova. Specializzato in organizzazione, KPI e passaggio generazionale.',
+  title: 'Chi sono - Consulente Aziendale Veneto che Aiuta a Mettere Ordine | Enrico Rizzi',
+  description: 'Consulente aziendale con 10+ anni esperienza. Ti aiuto a aumentare il fatturato, migliorare la produttività e organizzare meglio la tua azienda familiare. Consulente Padova, Venezia, Rovigo.',
   path: '/chi-sono',
-  keywords: 'Enrico Rizzi, consulente OSM, consulente PMI Veneto, esperienza consulenza, organizzazione aziendale, KPI, passaggio generazionale',
+  keywords: 'Enrico Rizzi, consulente aziendale Veneto, consulente Padova, consulente Venezia, consulente Rovigo, come aumentare fatturato azienda, migliorare produttività dipendenti, passaggio generazionale azienda',
 });
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
@@ -93,10 +93,10 @@ export default function ChiSonoPage() {
               Enrico Rizzi
             </h1>
             <p className="text-xl text-[var(--color-subtext)] mb-2">
-              Consulente Organizzazione PMI
+              Consulente Aziendale che Aiuta a Mettere Ordine e Aumentare il Fatturato
             </p>
             <p className="text-lg text-[var(--color-subtext)]">
-              Area servita: Venezia - Rovigo, Veneto
+              Consulente aziendale Padova, Venezia, Rovigo - Veneto
             </p>
           </div>
 
@@ -105,23 +105,24 @@ export default function ChiSonoPage() {
             <SectionTitle title="La mia storia" />
             <div className="prose prose-lg max-w-none text-[var(--color-text)] leading-relaxed">
               <p className="mb-4">
-                Da oltre 10 anni aiuto PMI del Veneto a passare da organizzazione caotica
-                a sistema strutturato orientato ai risultati. Ho lavorato come Consulente Senior 
-                in OSM e formatore, specializzandomi in risorse umane e tecniche di vendita.
+                Da oltre 10 anni aiuto imprenditori veneti a <strong>mettere ordine nella loro azienda</strong> e 
+                passare da organizzazione caotica a sistema strutturato orientato ai risultati. Ho lavorato come Consulente Senior 
+                in OSM e formatore, specializzandomi in come <strong>migliorare la produttività dei dipendenti</strong> e 
+                tecniche di vendita per <strong>aumentare il fatturato</strong>.
               </p>
               <p className="mb-4">
-                Conosco bene le sfide delle PMI venete perché le vivo sul campo ogni giorno. 
+                Conosco bene le sfide delle aziende familiari venete perché le vivo sul campo ogni giorno. 
                 Non sono un teorico: parlo la lingua degli imprenditori e offro soluzioni pratiche 
-                che funzionano nella realtà aziendale.
+                che funzionano nella realtà aziendale. Ti aiuto a capire <strong>come organizzare meglio la tua azienda</strong>.
               </p>
               <p className="mb-4">
                 <strong>Risultato concreto:</strong> Nel 2024 ho aiutato un'azienda manifatturiera 
-                di Padova ad aumentare il fatturato del 25% ottimizzando la rete vendita e 
-                implementando KPI mirati.
+                di Padova ad <strong>aumentare il fatturato del 25%</strong> migliorando la produttività dei dipendenti, 
+                ottimizzando la rete vendita e implementando un sistema di controllo di gestione efficace.
               </p>
               <p>
                 Il mio approccio è pratico e basato sui numeri: non teoria, ma strumenti concreti
-                che portano risultati misurabili. In 90 giorni mettiamo ordine, in 6 mesi vedi i numeri.
+                che portano risultati misurabili. In 90 giorni mettiamo ordine nella tua azienda, in 6 mesi vedi i numeri concreti.
               </p>
             </div>
           </section>

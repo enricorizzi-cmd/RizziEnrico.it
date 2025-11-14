@@ -13,9 +13,9 @@ import Link from 'next/link';
 import { generateMetadata } from '@/lib/seo';
 
 export const metadata = generateMetadata({
-  title: 'Consulente PMI Veneto | Organizzazione, KPI e Leadership – Enrico Rizzi',
-  description: 'Consulente aziendale per PMI venete: organizzazione, KPI e leadership. In 90 giorni mettiamo ordine, in 6 mesi vedi i numeri. Check-up gratuito in Veneto.',
-  keywords: 'consulente PMI Veneto, organizzazione aziendale, KPI, leadership, consulente Venezia, consulente Rovigo, consulente Padova, Enrico Rizzi, metodo OSM, controllo di gestione',
+  title: 'Come Organizzare Meglio la Mia Azienda – Consulente Aziendale Veneto | Enrico Rizzi',
+  description: 'Scopri come aumentare il fatturato e migliorare la produttività dei dipendenti. Mettere ordine nella tua azienda familiare in Veneto. Check-up gratuito consulenza aziendale Padova, Venezia, Rovigo.',
+  keywords: 'come organizzare meglio la mia azienda, migliorare produttività dipendenti, aumentare fatturato azienda, mettere ordine in azienda, consulente aziendale Padova, consulente aziendale Venezia, consulente aziendale Rovigo, azienda familiare Veneto, passaggio generazionale azienda, controllo di gestione, KPI aziendali, organizzazione aziendale',
 });
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
@@ -107,26 +107,26 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'Quanto costa una consulenza PMI?',
+      name: 'Quanto costa una consulenza aziendale?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'I servizi partono da €1.200 per interventi mirati. Consulenza continua da €2.500/mese. Offro sempre un check-up gratuito di 60 minuti (Zoom) o 90 minuti (in presenza) per valutare le tue esigenze senza impegno.',
+        text: 'I servizi partono da €1.200 per interventi mirati. Consulenza continua da €2.500/mese. Offro sempre un check-up gratuito di 60 minuti (Zoom) o 90 minuti (in presenza) per valutare come organizzare meglio la tua azienda senza impegno.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Quanto tempo serve per vedere risultati?',
+      name: 'Quanto tempo serve per vedere risultati concreti?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'In 90 giorni mettiamo ordine con ruoli, KPI e processi definiti. In 6 mesi vedi i numeri concreti e misurabili. Ogni intervento è personalizzato, quindi i tempi possono variare in base alla complessità.',
+        text: 'In 90 giorni mettiamo ordine con ruoli chiari, controllo di gestione e processi definiti. In 6 mesi vedi i numeri concreti: aumento fatturato, miglioramento produttività dipendenti, organizzazione efficace. Ogni intervento è personalizzato, quindi i tempi possono variare in base alla complessità della tua azienda.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Fate interventi anche fuori Veneto?',
+      name: 'Come posso migliorare la produttività dei dipendenti?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Sì, su valutazione. Opero principalmente in Veneto (Venezia, Padova, Rovigo) ma posso valutare interventi in altre regioni del Nord Italia.',
+        text: 'Ti aiuto a definire ruoli chiari, obiettivi misurabili e processi efficaci. Implementiamo un sistema di controllo di gestione che mostra a tutti i risultati e le aree di miglioramento. In questo modo i dipendenti sanno cosa fare e perché, aumentando naturalmente la produttività.',
       },
     },
     {
@@ -134,15 +134,23 @@ const faqSchema = {
       name: 'Come funziona il check-up gratuito?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Il check-up è una sessione di 60 minuti via Zoom o 90 minuti in presenza dove analizziamo insieme numeri e criticità della tua PMI. Ti mostro dove recuperare margini e come organizzarti meglio. Senza impegno, è l\'occasione per conoscersi e valutare se possiamo lavorare insieme.',
+        text: 'Il check-up è una sessione di 60 minuti via Zoom o 90 minuti in presenza dove analizziamo insieme numeri e criticità della tua azienda. Ti mostro dove recuperare margini, come mettere ordine e migliorare l\'organizzazione. Senza impegno, è l\'occasione per capire se posso aiutarti a raggiungere i tuoi obiettivi.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Quali settori seguite?',
+      name: 'Fate consulenza anche per aziende familiari?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Ho esperienza su manifatturiero, servizi, commercio, distribuzione. Il metodo OSM si adatta a qualsiasi settore. L\'importante è avere un\'organizzazione chiara, KPI misurabili e processi definiti.',
+        text: 'Sì, ho particolare esperienza con aziende familiari venete. Ti aiuto a gestire meglio il personale, organizzare i processi e, se necessario, gestire il passaggio generazionale. Il metodo si adatta perfettamente alle specificità delle aziende familiari.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Consulente aziendale Padova, Venezia, Rovigo: fate interventi anche fuori Veneto?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Opero principalmente in Veneto (Venezia, Padova, Rovigo) ma posso valutare interventi in altre regioni del Nord Italia su valutazione caso per caso.',
       },
     },
   ],
@@ -155,9 +163,9 @@ export default function HomePage() {
       <JSONLD data={localBusinessSchema} />
       <JSONLD data={faqSchema} />
       <Hero
-        h1="La tua PMI ha bisogno di crescere? Scopri come posso aiutarti"
-        subtitle="Consulente OSM per PMI venete. In 90 giorni mettiamo ordine, in 6 mesi vedi i numeri concreti."
-        badge="Consulente OSM • Venezia-Rovigo"
+        h1="Come aumentare il fatturato della tua azienda veneta"
+        subtitle="Migliora la produttività dei dipendenti e metti ordine nella tua azienda familiare. In 90 giorni organizzazione chiara, in 6 mesi vedi i numeri concreti."
+        badge="Consulente Aziendale • Venezia-Padova-Rovigo"
         image="/enrico-rizzi.jpg"
         primaryCTA={{
           text: 'Contattami Ora - Check-up Gratuito',
@@ -180,8 +188,8 @@ export default function HomePage() {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 lg:px-8">
           <SectionTitle
-            title="Perché Scegliere un Consulente OSM per la Tua PMI"
-            description="Non sono un consulente generico: conosco le PMI venete e parlo la lingua degli imprenditori"
+            title="Perché Scegliere un Consulente Aziendale per la Tua Azienda"
+            description="Non sono un consulente generico: conosco le aziende venete e parlo la lingua degli imprenditori. Ti aiuto a mettere ordine e migliorare i risultati."
             centered
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
@@ -230,8 +238,8 @@ export default function HomePage() {
       <section className="py-16 bg-[var(--color-card)]">
         <div className="container mx-auto px-4 lg:px-8">
           <SectionTitle
-            title="Metodo Consulenza PMI: 5 Step per Organizzare la Tua Azienda"
-            description="Un percorso strutturato che porta da caos a organizzazione: chi, numeri, processi, persone, espansione."
+            title="Come Organizzare Meglio la Tua Azienda: 5 Step Pratici"
+            description="Un percorso strutturato che ti aiuta a mettere ordine: ruoli chiari, numeri che guidano le decisioni, processi efficaci, persone motivate, crescita sostenibile."
             centered
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
@@ -358,8 +366,8 @@ export default function HomePage() {
       <section className="py-16 bg-[var(--color-card)]">
         <div className="container mx-auto px-4 lg:px-8">
           <SectionTitle
-            title="Servizi Consulenza Aziendale per PMI Venete"
-            description="Consulenza productized con output concreti, tempistiche chiare e investimento trasparente."
+            title="Servizi Consulenza Aziendale per Aziende Venete"
+            description="Ti aiuto a migliorare la produttività, implementare controllo di gestione e organizzare meglio la tua azienda. Output concreti, tempistiche chiare, investimento trasparente."
             centered
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -501,10 +509,10 @@ export default function HomePage() {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-4 text-center">
-              Consulenza PMI in Veneto: Dove Opero
+              Consulente Aziendale Padova, Venezia, Rovigo: Dove Opero
             </h2>
             <p className="text-lg text-[var(--color-subtext)] mb-6 text-center">
-              Opero in Veneto con focus su Venezia, Padova e Rovigo. Conosco le dinamiche locali delle PMI del territorio e integro metodo e numeri per risultati concreti.
+              Opero in Veneto con focus su Venezia, Padova e Rovigo. Conosco le dinamiche locali delle aziende familiari del territorio e ti aiuto a migliorare organizzazione e risultati concreti.
             </p>
             <ul className="space-y-3 mb-8 max-w-2xl mx-auto">
               <li className="flex items-start gap-3 text-[var(--color-text)]">
@@ -584,14 +592,14 @@ export default function HomePage() {
                   Consulente OSM per PMI del Veneto
                 </p>
                 <p className="text-[var(--color-text)] mb-6 leading-relaxed">
-                  Da oltre 10 anni aiuto PMI a passare da organizzazione caotica
-                  a sistema strutturato orientato ai risultati. Metodo pratico,
+                  Da oltre 10 anni aiuto imprenditori veneti a <strong>mettere ordine nella loro azienda</strong> e 
+                  passare da organizzazione caotica a sistema strutturato orientato ai risultati. Metodo pratico,
                   numeri misurabili, zero fuffa.
                 </p>
                 <p className="text-[var(--color-text)] mb-6 leading-relaxed">
                   <strong>Risultato concreto:</strong> Nel 2024 ho aiutato un'azienda manifatturiera 
-                  di Padova ad aumentare il fatturato del 25% ottimizzando la rete vendita e 
-                  implementando KPI mirati.
+                  di Padova ad <strong>aumentare il fatturato del 25%</strong> migliorando la produttività dei dipendenti, 
+                  ottimizzando la rete vendita e implementando un sistema di controllo di gestione efficace.
                 </p>
                 <div className="flex items-center justify-center md:justify-start gap-4 flex-wrap">
                   <CTA href="/chi-sono" variant="primary">
@@ -652,24 +660,28 @@ export default function HomePage() {
           <div className="max-w-3xl mx-auto">
             <Accordion items={[
               {
-                question: 'Quanto costa una consulenza PMI?',
-                answer: 'I servizi partono da €1.200 per interventi mirati. Consulenza continua da €2.500/mese. Offro sempre un check-up gratuito di 60 minuti (Zoom) o 90 minuti (in presenza) per valutare le tue esigenze senza impegno.'
+                question: 'Quanto costa una consulenza aziendale?',
+                answer: 'I servizi partono da €1.200 per interventi mirati. Consulenza continua da €2.500/mese. Offro sempre un check-up gratuito di 60 minuti (Zoom) o 90 minuti (in presenza) per valutare come organizzare meglio la tua azienda senza impegno.'
               },
               {
-                question: 'Quanto tempo serve per vedere risultati?',
-                answer: 'In 90 giorni mettiamo ordine con ruoli, KPI e processi definiti. In 6 mesi vedi i numeri concreti e misurabili. Ogni intervento è personalizzato, quindi i tempi possono variare in base alla complessità.'
+                question: 'Come posso aumentare il fatturato della mia azienda?',
+                answer: 'Ti aiuto a migliorare la produttività dei dipendenti, ottimizzare i processi e implementare un controllo di gestione efficace. In 90 giorni mettiamo ordine, in 6 mesi vedi i numeri concreti: aumento fatturato, riduzione costi, organizzazione chiara.'
               },
               {
-                question: 'Fate interventi anche fuori Veneto?',
-                answer: 'Sì, su valutazione. Opero principalmente in Veneto (Venezia, Padova, Rovigo) ma posso valutare interventi in altre regioni del Nord Italia.'
+                question: 'Come migliorare la produttività dei dipendenti?',
+                answer: 'Definiamo ruoli chiari, obiettivi misurabili e processi efficaci. Implementiamo un sistema che mostra a tutti i risultati e le aree di miglioramento. I dipendenti sanno cosa fare e perché, aumentando naturalmente la produttività.'
               },
               {
-                question: 'Come funziona il check-up gratuito?',
-                answer: 'Il check-up è una sessione di 60 minuti via Zoom o 90 minuti in presenza dove analizziamo insieme numeri e criticità della tua PMI. Ti mostro dove recuperare margini e come organizzarti meglio. Senza impegno, è l\'occasione per conoscersi e valutare se possiamo lavorare insieme.'
+                question: 'Fate consulenza per aziende familiari?',
+                answer: 'Sì, ho particolare esperienza con aziende familiari venete. Ti aiuto a gestire meglio il personale, organizzare i processi e, se necessario, gestire il passaggio generazionale. Il metodo si adatta perfettamente alle specificità delle aziende familiari.'
               },
               {
-                question: 'Quali settori seguite?',
-                answer: 'Ho esperienza su manifatturiero, servizi, commercio, distribuzione. Il metodo OSM si adatta a qualsiasi settore. L\'importante è avere un\'organizzazione chiara, KPI misurabili e processi definiti.'
+                question: 'Consulente aziendale Padova, Venezia, Rovigo: fate interventi anche fuori Veneto?',
+                answer: 'Opero principalmente in Veneto (Venezia, Padova, Rovigo) ma posso valutare interventi in altre regioni del Nord Italia su valutazione caso per caso.'
+              },
+              {
+                question: 'Quanto tempo serve per mettere ordine nella mia azienda?',
+                answer: 'In 90 giorni definiamo ruoli chiari, controllo di gestione e processi efficaci. In 6 mesi vedi i risultati concreti: aumento fatturato, miglioramento produttività, organizzazione che funziona. Ogni intervento è personalizzato sulla tua situazione.'
               }
             ]} />
           </div>
@@ -680,9 +692,10 @@ export default function HomePage() {
       <section className="py-16 bg-[var(--color-primary)] text-white">
         <div className="container mx-auto px-4 lg:px-8 text-center">
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
-            Pronto a mettere ordine nella tua PMI?
+            Pronto a Mettere Ordine nella Tua Azienda?
           </h2>
           <p className="text-xl mb-8 opacity-90">
+            Scopri come aumentare il fatturato e migliorare la produttività dei dipendenti. 
             Prenota il Check-up gratuito: porta numeri e criticità, ti mostro dove recuperare margini.
           </p>
           <CTA href="/contatti" variant="secondary" size="large" className="bg-white text-[var(--color-primary)] hover:bg-gray-100">

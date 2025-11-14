@@ -6,10 +6,10 @@ import Link from 'next/link';
 import JSONLD from '@/components/JSONLD';
 
 export const metadata = generateMetadata({
-  title: 'Servizi di Consulenza Aziendale per PMI Venete – Organizzazione, Leadership, KPI',
-  description: 'Consulenza productized per PMI venete: Organizzazione, Mansionari, Sviluppo Persone, KPI e Controllo di Gestione. Prezzi trasparenti. Area servita: Venezia, Padova, Rovigo.',
+  title: 'Servizi Consulenza Aziendale – Come Migliorare Produttività e Organizzazione',
+  description: 'Scopri come aumentare il fatturato, migliorare la produttività dei dipendenti e mettere ordine nella tua azienda. Servizi consulenza aziendale Padova, Venezia, Rovigo. Prezzi trasparenti.',
   path: '/servizi',
-  keywords: 'servizi consulenza PMI, organizzazione aziendale, mansionari, sviluppo persone, KPI controllo gestione, consulente Venezia, consulente Padova, consulente Rovigo',
+  keywords: 'servizi consulenza aziendale, migliorare produttività dipendenti, aumentare fatturato azienda, organizzazione aziendale, controllo di gestione, consulente aziendale Padova, consulente aziendale Venezia, consulente aziendale Rovigo, passaggio generazionale azienda',
 });
 
 const services = [
@@ -129,11 +129,11 @@ export default function ServiziPage() {
         {/* Hero */}
         <div className="text-center mb-16">
           <h1 className="font-heading text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-4">
-            Servizi di Consulenza Aziendale per PMI Venete
+            Servizi Consulenza Aziendale per Migliorare la Tua Azienda
           </h1>
           <p className="text-xl text-[var(--color-subtext)] max-w-3xl mx-auto">
-            Consulenza productized con output concreti, tempistiche chiare e investimento trasparente.
-            Ogni servizio ha deliverable definiti, tempi certi e possibilità di richiedere informazioni personalizzate.
+            Ti aiuto a <strong>aumentare il fatturato</strong>, <strong>migliorare la produttività dei dipendenti</strong> e <strong>mettere ordine</strong> nella tua azienda familiare. 
+            Output concreti, tempistiche chiare, investimento trasparente. Consulente aziendale Padova, Venezia, Rovigo.
           </p>
         </div>
 
@@ -174,11 +174,11 @@ export default function ServiziPage() {
         {/* CTA */}
         <div className="text-center bg-white rounded-[var(--radius-card)] p-8 border border-[var(--color-line)]">
           <h2 className="font-heading text-2xl font-bold text-[var(--color-text)] mb-4">
-            Non sai quale servizio fa per te?
+            Non Sai Come Organizzare Meglio la Tua Azienda?
           </h2>
           <p className="text-[var(--color-subtext)] mb-6">
-            Prenota una diagnosi gratuita di 30 minuti. Analizziamo insieme numeri e criticità,
-            ti mostro dove recuperare margini.
+            Prenota un check-up gratuito di 60 minuti. Analizziamo insieme numeri e criticità della tua azienda,
+            ti mostro dove recuperare margini e come migliorare la produttività dei dipendenti.
           </p>
           <CTA href="/contatti" variant="primary" size="large">
             Prenota il Check-up gratuito →
