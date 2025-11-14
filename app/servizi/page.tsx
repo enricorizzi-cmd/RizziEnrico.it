@@ -6,10 +6,10 @@ import Link from 'next/link';
 import JSONLD from '@/components/JSONLD';
 
 export const metadata = generateMetadata({
-  title: 'Servizi Consulenza Aziendale – Come Migliorare Produttività e Organizzazione',
-  description: 'Scopri come aumentare il fatturato, migliorare la produttività dei dipendenti e mettere ordine nella tua azienda. Servizi consulenza aziendale Padova, Venezia, Rovigo. Prezzi trasparenti.',
+  title: 'Servizi di consulenza aziendale per PMI in Veneto – Organizzazione, KPI, persone | Enrico Rizzi',
+  description: 'Servizi di consulenza aziendale per PMI venete: Consulenza PMI continuativa, Organizzazione & Mansionari, KPI & Controllo di Gestione, Sviluppo Persone & Leadership. Output concreti, tempistiche chiare, prezzi trasparenti.',
   path: '/servizi',
-  keywords: 'servizi consulenza aziendale, migliorare produttività dipendenti, aumentare fatturato azienda, organizzazione aziendale, controllo di gestione, consulente aziendale Padova, consulente aziendale Venezia, consulente aziendale Rovigo, passaggio generazionale azienda',
+  keywords: 'servizi consulenza aziendale PMI Veneto, organizzazione aziendale PMI Veneto, consulenza PMI continuativa, organizzazione mansionari, KPI controllo gestione, sviluppo persone leadership',
 });
 
 const services = [
@@ -135,6 +135,19 @@ export default function ServiziPage() {
             Ti aiuto a <strong>aumentare il fatturato</strong>, <strong>migliorare la produttività dei dipendenti</strong> e <strong>mettere ordine</strong> nella tua azienda familiare. 
             Output concreti, tempistiche chiare, investimento trasparente. Consulente aziendale Padova, Venezia, Rovigo.
           </p>
+        </div>
+
+        {/* Box "In breve" */}
+        <div className="max-w-4xl mx-auto mb-12">
+          <div className="bg-white rounded-[var(--radius-card)] p-6 border-2 border-[var(--color-primary)] shadow-md">
+            <h2 className="font-heading text-xl font-bold text-[var(--color-primary)] mb-3">
+              In breve
+            </h2>
+            <p className="text-[var(--color-text)] leading-relaxed">
+              La consulenza PMI di Enrico Rizzi è pensata per le piccole e medie imprese venete che vogliono passare da gestione "a sensazione" a gestione per numeri. 
+              Lavoriamo su organizzazione, KPI e persone per aumentare fatturato, marginalità e produttività nel giro di 6 mesi.
+            </p>
+          </div>
         </div>
 
         {/* Lista Servizi */}

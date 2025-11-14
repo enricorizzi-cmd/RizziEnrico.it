@@ -8,8 +8,8 @@ import Card from '@/components/Card';
 import JSONLD from '@/components/JSONLD';
 
 export const metadata = generateMetadata({
-  title: 'Metodo 5 Step per PMI: Ruoli, KPI, Processi, Persone, Espansione | Enrico Rizzi',
-  description: 'Metodo strutturato per organizzare la tua PMI veneta: Chi, Numeri, Processi, Persone, Espansione. In 90 giorni ordine, in 6 mesi risultati misurabili. Consulenza Venezia-Rovigo-Padova.',
+  title: 'Metodo consulenza PMI in 5 step – Da caos a organizzazione con KPI chiari | Enrico Rizzi',
+  description: 'Metodo consulenza PMI in 5 step: Chi, Numeri, Processi, Persone, Espansione. Da azienda reattiva a organizzata e orientata ai risultati, con ruoli, KPI e riunioni strutturate. Pensato per PMI venete e aziende familiari.',
   path: '/metodo',
 });
 
@@ -86,24 +86,24 @@ const steps = [
 
 const faqs = [
   {
-    question: 'Quanto tempo richiede il metodo completo?',
-    answer: 'Il metodo è strutturato in fasi: le prime 3 (Chi, Numeri, Processi) si completano in 90 giorni lavorativi. Le fasi 4 e 5 (Persone, Espansione) richiedono 3-4 mesi aggiuntivi. Il totale è circa 6 mesi per vedere i risultati numerici significativi.',
+    question: 'Come funziona il metodo di consulenza PMI in 5 step?',
+    answer: 'Il metodo in 5 step guida la PMI da caos a organizzazione, lavorando su chi, numeri, processi, persone ed espansione. Partiamo da ruoli e mansionari chiari, poi definiamo KPI e cruscotti, sistemiamo riunioni e processi, sviluppiamo le persone chiave e infine prepariamo l\'azienda a crescere in modo strutturato.',
   },
   {
-    question: 'Posso applicare solo alcuni step?',
-    answer: 'Sì, anche se l\'approccio completo dà i migliori risultati. Possiamo partire dai step più critici per la tua azienda (spesso Numeri e Processi) e poi completare gli altri. Valutiamo insieme durante la diagnosi iniziale.',
+    question: 'Possiamo applicare solo alcuni step del metodo e non tutti?',
+    answer: 'Sì, in alcuni casi è possibile applicare solo una parte del metodo, ad esempio processi e KPI o solo organizzazione e mansionari. Durante il check-up verifichiamo se è sufficiente intervenire su uno o due step o se è meglio programmare un percorso completo per evitare di mettere "pezze" che durano poco.',
   },
   {
-    question: 'Cosa succede se non ho ancora dei KPI definiti?',
-    answer: 'Partiamo da zero, niente panico! Iniziamo con 5-6 KPI base: fatturato, marginalità, incassi, lead, consegne, qualità. Poi li espandiamo gradualmente nel secondo step. L\'importante è iniziare a misurare qualcosa.',
+    question: 'Quanto dura in media un percorso completo con il metodo in 5 step?',
+    answer: 'Un percorso completo con il metodo in 5 step dura tipicamente tra 6 e 12 mesi. I primi 90 giorni sono dedicati a mettere ordine su ruoli, processi e numeri base. I mesi successivi servono per stabilizzare le nuove abitudini, formare le persone chiave e consolidare i risultati economici.',
   },
   {
-    question: 'Il metodo funziona anche per aziende più piccole (5-10 persone)?',
-    answer: 'Sì, anzi spesso è più veloce da implementare. Adattiamo il metodo alla dimensione: per piccole aziende ci concentriamo su KPI essenziali (5-8) e processi snelli. Il principio rimane lo stesso: ordine, misurazione, crescita.',
+    question: 'Il metodo è adatto anche a PMI sotto i 10 dipendenti?',
+    answer: 'Sì, il metodo è adatto anche a PMI tra 5 e 10 dipendenti, soprattutto se in crescita o in fase di passaggio generazionale. In aziende piccole spesso le stesse persone ricoprono più ruoli: definire chi fa cosa, quali KPI guardare e come organizzare le riunioni è ancora più critico per non bloccare la crescita.',
   },
   {
-    question: 'Chi segue l\'implementazione in azienda?',
-    answer: 'Io ti affianco per l\'implementazione completa, con incontri settimanali o quindicinali. I tuoi collaboratori vengono formati sui KPI e processi. L\'obiettivo è renderti autonomo nel tempo, con un sistema che funziona senza la mia presenza costante.',
+    question: 'Chi segue operativamente l\'implementazione del metodo in azienda?',
+    answer: 'L\'implementazione viene seguita insieme all\'imprenditore e a una o più figure chiave interne (es. responsabile amministrativo, responsabile produzione o responsabile commerciale). Io porto metodo, strumenti e supporto; l\'azienda mette impegno, dati e decisioni. L\'obiettivo è rendere autonomo il management, non creare dipendenza dal consulente.',
   },
 ];
 

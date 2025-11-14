@@ -6,10 +6,10 @@ import Link from 'next/link';
 import JSONLD from '@/components/JSONLD';
 
 export const metadata = generateMetadata({
-  title: 'Consulente Aziendale Rovigo – Come Aumentare Fatturato e Organizzare Meglio | Enrico Rizzi',
-  description: 'Consulente aziendale Rovigo: ti aiuto a aumentare il fatturato, migliorare la produttività e mettere ordine nella tua azienda. Metodo OSM testato. Check-up gratuito.',
+  title: 'Consulenza PMI Rovigo – Passaggio generazionale, KPI e organizzazione | Enrico Rizzi',
+  description: 'Consulenza PMI a Rovigo e provincia per aziende manifatturiere, servizi, commercio e agricoltura. Focus su passaggio generazionale, KPI e organizzazione. Caso reale: +15% fatturato in 8 mesi e transizione di leadership riuscita. Check-up gratuito a Rovigo.',
   path: '/consulenza-pmi-rovigo',
-  keywords: 'consulente aziendale Rovigo, come aumentare fatturato Rovigo, migliorare produttività dipendenti Rovigo, organizzare meglio azienda Rovigo, consulenza aziendale Rovigo prezzi',
+  keywords: 'consulente aziendale Rovigo, consulenza PMI Rovigo, consulente Rovigo, passaggio generazionale Rovigo, organizzazione aziendale Rovigo',
 });
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
@@ -65,6 +65,11 @@ export default function ConsulenzaPMIRovigoPage() {
                 Le PMI di Rovigo e provincia affrontano sfide specifiche: passaggio generazionale, 
                 organizzazione in crescita, necessità di misurare performance con KPI chiari. 
                 Il tessuto imprenditoriale rodigino è solido ma spesso manca di struttura organizzativa.
+              </p>
+              <p className="mb-4">
+                Opero come consulente aziendale a Rovigo, lavorando con aziende del <strong>Polesine</strong>, 
+                del <strong>settore agricolo e agroalimentare</strong> e della <strong>zona industriale di Rovigo</strong>. 
+                Ho particolare esperienza con aziende familiari rodigine che affrontano il passaggio generazionale.
               </p>
               <p className="mb-4">
                 Opero come consulente OSM Partner Venezia-Rovigo, fondata nel 1998. Il metodo OSM 
@@ -161,6 +166,48 @@ export default function ConsulenzaPMIRovigoPage() {
                 <Link href="/case-study" className="text-[var(--color-primary)] hover:underline font-semibold">
                   Vedi tutti i case study →
                 </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Locale */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <SectionTitle
+              title="Domande Frequenti - Consulente Aziendale Rovigo"
+              description="Risposte alle domande più comuni per PMI rodigine"
+              centered
+            />
+            <div className="space-y-6 mt-8">
+              <div className="bg-[var(--color-card)] rounded-[var(--radius-card)] p-6 border border-[var(--color-line)]">
+                <h3 className="font-heading text-lg font-bold text-[var(--color-text)] mb-2">
+                  In cosa aiuti concretamente le PMI di Rovigo e provincia?
+                </h3>
+                <p className="text-[var(--color-text)]">
+                  Aiuto le PMI di Rovigo a gestire passaggi generazionali, organizzare meglio ruoli e reparti e introdurre KPI chiari. 
+                  Nel territorio rodigino spesso le aziende sono solide ma molto familiari: lavoriamo su struttura, responsabilità, controllo di gestione e crescita sostenibile, senza snaturare l'identità dell'impresa.
+                </p>
+              </div>
+              <div className="bg-[var(--color-card)] rounded-[var(--radius-card)] p-6 border border-[var(--color-line)]">
+                <h3 className="font-heading text-lg font-bold text-[var(--color-text)] mb-2">
+                  Come gestisci il passaggio generazionale nelle aziende familiari di Rovigo?
+                </h3>
+                <p className="text-[var(--color-text)]">
+                  Parto da una mappatura chiara di ruoli attuali, aspettative della famiglia e obiettivi aziendali. 
+                  Applichiamo il metodo in 5 step con particolare attenzione a deleghe, formazione del nuovo management, KPI di controllo e comunicazione interna, così il passaggio non resta solo "annunciato" ma diventa operativo.
+                </p>
+              </div>
+              <div className="bg-[var(--color-card)] rounded-[var(--radius-card)] p-6 border border-[var(--color-line)]">
+                <h3 className="font-heading text-lg font-bold text-[var(--color-text)] mb-2">
+                  Come funziona il check-up gratuito per una PMI di Rovigo?
+                </h3>
+                <p className="text-[var(--color-text)]">
+                  Per le PMI di Rovigo il check-up gratuito può essere fatto via Zoom (60 minuti) o in presenza (90 minuti, anche presso la sede OSM Partner Venezia-Rovigo a Lendinara). 
+                  Analizziamo numeri essenziali, struttura organizzativa, ruoli chiave e problemi principali. Alla fine hai una fotografia chiara di dove stai perdendo tempo, margini e opportunità.
+                </p>
               </div>
             </div>
           </div>

@@ -37,16 +37,28 @@ const services = {
     priceFrom: 2500,
     faq: [
       {
+        question: 'Quanto costa una consulenza aziendale per PMI in Veneto?',
+        answer: 'Di solito una consulenza aziendale per PMI in Veneto parte da circa 1.200 € per interventi mirati e da 2.500 €/mese per consulenze continuative. Nel mio caso, partiamo sempre da un check-up gratuito di 60 minuti su Zoom o 90 minuti in presenza (Venezia-Padova-Rovigo) per capire se e come posso davvero aiutarti. Poi definiamo un piano con obiettivi, durata e investimento chiaro.',
+      },
+      {
+        question: 'In quanto tempo una PMI vede risultati concreti dalla consulenza?',
+        answer: 'Una PMI ben coinvolta inizia a vedere ordine organizzativo già entro 90 giorni e risultati numerici entro 6 mesi. Con il metodo in 5 step lavoriamo prima su ruoli e processi, poi su KPI e persone. Questo fa sì che in pochi mesi si vedano miglioramenti su fatturato, marginalità, tempi di consegna e produttività dei dipendenti.',
+      },
+      {
+        question: 'Il tuo metodo funziona anche per aziende familiari venete?',
+        answer: 'Sì, il metodo è pensato proprio per aziende familiari venete che sono cresciute "a sentimento" e ora hanno bisogno di struttura. Lavoro spesso su passaggi generazionali, conflitti tra soci, ruoli non chiari tra famiglia e manager. Con ruoli definiti, KPI e processi condivisi diventa più semplice gestire sia la famiglia che l\'azienda.',
+      },
+      {
+        question: 'Serve già avere KPI e controllo di gestione per iniziare?',
+        answer: 'No, non serve avere KPI strutturati per iniziare il percorso. Molte PMI con cui lavoro partono da zero o da fogli Excel molto artigianali. Nel metodo c\'è una fase dedicata alla definizione di 12–15 KPI chiave e alla creazione di un cruscotto semplice, leggibile e utile nelle riunioni.',
+      },
+      {
         question: 'Come funziona l\'affiancamento?',
         answer: 'Incontri settimanali o quindicinali da 2-3 ore. Lavoriamo insieme su priorità immediate e su implementazione del metodo. Ti formo per renderti autonomo nel tempo.',
       },
       {
         question: 'Può funzionare anche per passaggio generazionale?',
         answer: 'Sì, è uno dei casi d\'uso principali. Affianco il nuovo management nella fase di transizione, garantendo continuità operativa e trasferimento conoscenze strutturato.',
-      },
-      {
-        question: 'Cosa succede dopo i 12 mesi?',
-        answer: 'Diventi autonomo con un sistema funzionante. Possiamo continuare con supporto ridotto (1 incontro/mese) o chiudere. L\'obiettivo è che tu non abbia bisogno di me indefinitamente.',
       },
     ],
   },
@@ -177,7 +189,16 @@ export async function generateMetadata({ params }: PageProps) {
     };
   }
 
-  // Aggiungi keyword locali ai meta tag
+  // Meta tag specifici per Consulenza PMI
+  if (slug === 'consulenza-pmi') {
+    return generateSEOMetadata({
+      title: 'Consulenza PMI – Organizzazione completa, KPI e crescita misurabile | Enrico Rizzi',
+      description: 'Consulenza PMI con metodo OSM: ruoli chiari, KPI, processi stabili e persone motivate. In 90 giorni ottieni ordine organizzativo, in 6 mesi risultati numerici su fatturato, marginalità e tempi di consegna. Affiancamento da €2.500/mese.',
+      path: `/servizi/${slug}`,
+    });
+  }
+
+  // Meta tag per altri servizi
   const localKeywords = 'Venezia, Padova, Rovigo, Veneto';
   const titleWithLocation = `${service.title} - ${localKeywords} | Enrico Rizzi`;
   const descriptionWithLocation = `${service.hero.solution} Area servita: ${localKeywords}. Consulenza per PMI venete.`;
@@ -250,6 +271,20 @@ export default async function ServizioPage({ params }: PageProps) {
               description={service.hero.solution}
               centered
             />
+            {/* Box "In breve" solo per Consulenza PMI */}
+            {slug === 'consulenza-pmi' && (
+              <div className="max-w-4xl mx-auto mt-8 mb-8">
+                <div className="bg-white rounded-[var(--radius-card)] p-6 border-2 border-[var(--color-primary)] shadow-md">
+                  <h2 className="font-heading text-xl font-bold text-[var(--color-primary)] mb-3">
+                    In breve
+                  </h2>
+                  <p className="text-[var(--color-text)] leading-relaxed">
+                    La consulenza PMI di Enrico Rizzi è pensata per le piccole e medie imprese venete che vogliono passare da gestione "a sensazione" a gestione per numeri. 
+                    Lavoriamo su organizzazione, KPI e persone per aumentare fatturato, marginalità e produttività nel giro di 6 mesi.
+                  </p>
+                </div>
+              </div>
+            )}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
               <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-lg">
                 <h3 className="font-semibold text-red-900 mb-2">Il Problema</h3>

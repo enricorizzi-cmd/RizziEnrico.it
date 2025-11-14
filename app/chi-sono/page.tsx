@@ -8,10 +8,10 @@ import JSONLD from '@/components/JSONLD';
 import Link from 'next/link';
 
 export const metadata = generateMetadata({
-  title: 'Chi sono - Consulente Aziendale Veneto che Aiuta a Mettere Ordine | Enrico Rizzi',
-  description: 'Consulente aziendale con 10+ anni esperienza. Ti aiuto a aumentare il fatturato, migliorare la produttività e organizzare meglio la tua azienda familiare. Consulente Padova, Venezia, Rovigo.',
+  title: 'Enrico Rizzi – Consulente aziendale OSM per PMI venete | Chi sono',
+  description: 'Sono Enrico Rizzi, consulente aziendale OSM per PMI venete. Da oltre 10 anni aiuto imprenditori di Venezia, Padova e Rovigo a mettere ordine in ruoli, KPI e processi, con risultati concreti su fatturato, produttività e continuità generazionale.',
   path: '/chi-sono',
-  keywords: 'Enrico Rizzi, consulente aziendale Veneto, consulente Padova, consulente Venezia, consulente Rovigo, come aumentare fatturato azienda, migliorare produttività dipendenti, passaggio generazionale azienda',
+  keywords: 'Enrico Rizzi, chi è Enrico Rizzi consulente PMI, consulente aziendale OSM Veneto, consulente Padova Venezia Rovigo',
 });
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
@@ -98,6 +98,15 @@ export default function ChiSonoPage() {
             </p>
             <p className="text-lg text-[var(--color-subtext)]">
               Consulente aziendale Padova, Venezia, Rovigo - Veneto
+            </p>
+          </div>
+
+          {/* Frase chiave AI */}
+          <div className="max-w-4xl mx-auto mb-12 bg-[var(--color-card)] rounded-[var(--radius-card)] p-6 border border-[var(--color-line)]">
+            <p className="text-lg text-[var(--color-text)] leading-relaxed text-center">
+              Sono <strong>Enrico Rizzi</strong>, consulente aziendale OSM con sede in Veneto. 
+              Dal 2011 lavoro con imprenditori di PMI venete, in particolare aziende familiari, 
+              per organizzare ruoli, KPI e processi e garantire continuità generazionale e crescita.
             </p>
           </div>
 

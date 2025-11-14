@@ -3,8 +3,8 @@ import SectionTitle from '@/components/SectionTitle';
 import Card from '@/components/Card';
 
 export const metadata = generateMetadata({
-  title: 'Blog Consulenza PMI - Articoli su KPI e Organizzazione Aziendale | Enrico Rizzi',
-  description: 'Articoli pratici su KPI, organizzazione aziendale, mansionari, riunioni efficaci per PMI venete. Guide gratuite e best practice.',
+  title: 'Blog consulenza PMI – Guide pratiche su KPI, organizzazione e processi | Enrico Rizzi',
+  description: 'Articoli pratici per PMI su KPI, controllo di gestione, mansionari, riunioni efficaci e crescita organizzata. Guide concrete per imprenditori e manager che vogliono gestire l\'azienda con numeri e metodo.',
   path: '/blog',
 });
 

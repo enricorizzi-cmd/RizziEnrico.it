@@ -6,10 +6,10 @@ import Link from 'next/link';
 import JSONLD from '@/components/JSONLD';
 
 export const metadata = generateMetadata({
-  title: 'Consulente Aziendale Padova – Come Aumentare Fatturato e Organizzare Meglio | Enrico Rizzi',
-  description: 'Consulente aziendale Padova: ti aiuto a aumentare il fatturato, migliorare la produttività e mettere ordine nella tua azienda. Metodo OSM testato. Check-up gratuito.',
+  title: 'Consulenza PMI Padova – Consulente aziendale per organizzazione, KPI e crescita | Enrico Rizzi',
+  description: 'Consulente aziendale per PMI di Padova e provincia. Organizzazione completa con ruoli chiari, KPI e processi stabili. Esperienza su manifatturiero, servizi e commercio padovano. Caso reale: +25% fatturato in 6 mesi. Check-up gratuito a Padova.',
   path: '/consulenza-pmi-padova',
-  keywords: 'consulente aziendale Padova, come aumentare fatturato Padova, migliorare produttività dipendenti Padova, organizzare meglio azienda Padova, consulenza aziendale Padova prezzi',
+  keywords: 'consulente aziendale Padova, consulenza PMI Padova, consulente Padova, organizzazione aziendale Padova, KPI PMI Padova',
 });
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
@@ -155,6 +155,48 @@ export default function ConsulenzaPMIPadovaPage() {
                 <Link href="/case-study" className="text-[var(--color-primary)] hover:underline font-semibold">
                   Vedi tutti i case study →
                 </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Locale */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <SectionTitle
+              title="Domande Frequenti - Consulente Aziendale Padova"
+              description="Risposte alle domande più comuni per PMI padovane"
+              centered
+            />
+            <div className="space-y-6 mt-8">
+              <div className="bg-[var(--color-card)] rounded-[var(--radius-card)] p-6 border border-[var(--color-line)]">
+                <h3 className="font-heading text-lg font-bold text-[var(--color-text)] mb-2">
+                  Perché scegliere un consulente aziendale a Padova invece di una figura interna?
+                </h3>
+                <p className="text-[var(--color-text)]">
+                  Un consulente esterno a Padova porta metodo, esperienza su più PMI locali e una visione meno condizionata dalla storia interna. 
+                  In molte aziende padovane la figura interna è troppo coinvolta nelle dinamiche quotidiane; con un consulente puoi mettere sul tavolo numeri, ruoli e priorità in modo neutrale e strutturato.
+                </p>
+              </div>
+              <div className="bg-[var(--color-card)] rounded-[var(--radius-card)] p-6 border border-[var(--color-line)]">
+                <h3 className="font-heading text-lg font-bold text-[var(--color-text)] mb-2">
+                  Conosci davvero le realtà produttive della provincia di Padova?
+                </h3>
+                <p className="text-[var(--color-text)]">
+                  Sì, lavoro da anni con PMI manifatturiere, commerciali e di servizi della provincia di Padova. 
+                  Ho seguito aziende in zona industriale padovana e in diversi comuni della provincia. Il metodo è lo stesso, ma gli esempi, i casi e le soluzioni tengono conto del tessuto produttivo locale.
+                </p>
+              </div>
+              <div className="bg-[var(--color-card)] rounded-[var(--radius-card)] p-6 border border-[var(--color-line)]">
+                <h3 className="font-heading text-lg font-bold text-[var(--color-text)] mb-2">
+                  Come funziona il check-up gratuito per una PMI di Padova?
+                </h3>
+                <p className="text-[var(--color-text)]">
+                  Per le PMI di Padova il check-up gratuito può essere fatto via Zoom (60 minuti) o in presenza (90 minuti). 
+                  Analizziamo numeri essenziali, struttura organizzativa, ruoli chiave e problemi principali. Alla fine hai una fotografia chiara di dove stai perdendo tempo, margini e opportunità.
+                </p>
               </div>
             </div>
           </div>

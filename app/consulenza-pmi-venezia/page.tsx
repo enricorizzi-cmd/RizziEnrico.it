@@ -6,10 +6,10 @@ import Link from 'next/link';
 import JSONLD from '@/components/JSONLD';
 
 export const metadata = generateMetadata({
-  title: 'Consulente Aziendale Venezia – Come Aumentare Fatturato e Organizzare Meglio | Enrico Rizzi',
-  description: 'Consulente aziendale Venezia: ti aiuto a aumentare il fatturato, migliorare la produttività e mettere ordine nella tua azienda. Metodo OSM testato. Check-up gratuito.',
+  title: 'Consulenza PMI Venezia – Organizza la tua azienda con KPI e processi chiari | Enrico Rizzi',
+  description: 'Consulenza PMI a Venezia e provincia: turismo, servizi, manifatturiero, commercio. Metodo OSM, ruoli definiti, KPI chiari, processi documentati. Risultati tipici: +20% fatturato in 6 mesi con organizzazione più solida e team allineato. Check-up gratuito.',
   path: '/consulenza-pmi-venezia',
-  keywords: 'consulente aziendale Venezia, come aumentare fatturato Venezia, migliorare produttività dipendenti Venezia, organizzare meglio azienda Venezia, consulenza aziendale Venezia prezzi',
+  keywords: 'consulente aziendale Venezia, consulenza PMI Venezia, consulente Venezia, organizzazione aziendale Venezia, KPI PMI Venezia',
 });
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
@@ -68,6 +68,11 @@ export default function ConsulenzaPMIVeneziaPage() {
                 manifatturiero e commercio. Necessitano di organizzazione solida, KPI chiari 
                 e processi efficaci per competere e crescere. Il tessuto imprenditoriale veneziano 
                 è ricco ma spesso manca di struttura organizzativa.
+              </p>
+              <p className="mb-4">
+                Opero come consulente aziendale a Venezia, lavorando con aziende del <strong>Porto Marghera</strong>, 
+                del <strong>settore turistico</strong> e della <strong>zona industriale di Mestre</strong>. 
+                Conosco le specificità del territorio veneziano e le sfide delle PMI che operano in questo contesto unico.
               </p>
               <p className="mb-4">
                 Opero come consulente OSM Partner Venezia-Rovigo, fondata nel 1998. Il metodo OSM 
@@ -163,6 +168,49 @@ export default function ConsulenzaPMIVeneziaPage() {
                 <Link href="/case-study" className="text-[var(--color-primary)] hover:underline font-semibold">
                   Vedi tutti i case study →
                 </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Locale */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <SectionTitle
+              title="Domande Frequenti - Consulente Aziendale Venezia"
+              description="Risposte alle domande più comuni per PMI veneziane"
+              centered
+            />
+            <div className="space-y-6 mt-8">
+              <div className="bg-[var(--color-card)] rounded-[var(--radius-card)] p-6 border border-[var(--color-line)]">
+                <h3 className="font-heading text-lg font-bold text-[var(--color-text)] mb-2">
+                  Fai incontri in presenza anche in centro storico o solo in terraferma?
+                </h3>
+                <p className="text-[var(--color-text)]">
+                  Posso organizzare incontri sia in terraferma (Mestre, Marghera, ecc.) sia, dove ha senso, in centro storico. 
+                  Alterniamo incontri in presenza e lavoro da remoto per ottimizzare il tempo di tutti, mantenendo comunque una presenza fisica in azienda nelle fasi più delicate.
+                </p>
+              </div>
+              <div className="bg-[var(--color-card)] rounded-[var(--radius-card)] p-6 border border-[var(--color-line)]">
+                <h3 className="font-heading text-lg font-bold text-[var(--color-text)] mb-2">
+                  Quanto tempo serve a una PMI veneziana per mettere ordine con KPI e processi?
+                </h3>
+                <p className="text-[var(--color-text)]">
+                  In genere bastano 90 giorni per mettere le basi di ruoli, KPI e processi in una PMI veneziana motivata a cambiare. 
+                  I successivi 3–6 mesi servono per consolidare le nuove abitudini, adattare l'organizzazione ai picchi stagionali e rendere il team autonomo nell'uso dei numeri.
+                </p>
+              </div>
+              <div className="bg-[var(--color-card)] rounded-[var(--radius-card)] p-6 border border-[var(--color-line)]">
+                <h3 className="font-heading text-lg font-bold text-[var(--color-text)] mb-2">
+                  Consulente aziendale Venezia: lavorate anche con aziende del settore turistico?
+                </h3>
+                <p className="text-[var(--color-text)]">
+                  Sì, ho esperienza con PMI del settore turistico veneziano. Il metodo OSM si adatta perfettamente: 
+                  organizzazione ruoli, KPI di occupazione e soddisfazione clienti, processi di vendita strutturati. 
+                  Anche nel turismo, organizzazione e numeri fanno la differenza.
+                </p>
               </div>
             </div>
           </div>

@@ -270,9 +270,20 @@ export default async function BlogPostPage({ params }: PageProps) {
     description: post.excerpt,
     author: {
       '@type': 'Person',
-      name: post.author,
+      name: 'Enrico Rizzi',
+      jobTitle: 'Consulente aziendale OSM per PMI',
     },
     datePublished: post.publishedAt,
+    dateModified: post.publishedAt, // Aggiorna quando modifichi l'articolo
+    mainEntityOfPage: `${baseUrl}/blog/${slug}`,
+    publisher: {
+      '@type': 'Organization',
+      name: 'Enrico Rizzi',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/logo-enrico-rizzi.png`,
+      },
+    },
     url: `${baseUrl}/blog/${slug}`,
   };
 
