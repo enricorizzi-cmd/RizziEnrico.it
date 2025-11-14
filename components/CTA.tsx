@@ -45,6 +45,7 @@ export default function CTA({
       href={href}
       onClick={handleClick}
       className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+      aria-label={typeof children === 'string' ? children : undefined}
     >
       {children}
     </Link>

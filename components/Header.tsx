@@ -66,6 +66,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
+                aria-label={item.href === '/contatti' ? 'Prenota un check-up gratuito' : `Vai alla pagina ${item.label}`}
                 className={`px-4 py-2 text-sm font-medium text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors rounded-md hover:bg-[var(--color-card)] ${
                   item.href === '/contatti' ? 'ml-4 px-6 bg-[var(--color-primary)] text-white font-semibold hover:opacity-90' : ''
                 }`}
@@ -75,6 +76,7 @@ export default function Header() {
             ))}
             <a
               href="tel:+393475290564"
+              aria-label="Chiama Enrico Rizzi al numero +39 347 529 0564"
               className="ml-4 flex items-center gap-2 px-4 py-2 text-sm font-semibold text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -86,10 +88,11 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <button
+            type="button"
+            aria-label={isMobileMenuOpen ? "Chiudi menu di navigazione" : "Apri menu di navigazione"}
+            aria-expanded={isMobileMenuOpen}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="lg:hidden p-2 rounded-md text-[var(--color-text)] hover:bg-[var(--color-card)]"
-            aria-label="Menu"
-            aria-expanded={isMobileMenuOpen}
           >
             <svg
               className="w-6 h-6"

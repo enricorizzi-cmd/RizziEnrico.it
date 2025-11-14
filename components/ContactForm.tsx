@@ -97,24 +97,27 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" aria-label="Form di contatto per check-up gratuito">
       {/* Step 1: Info base */}
       {step === 1 && (
-        <div className="space-y-4">
+        <div className="space-y-4" role="group" aria-label="Informazioni di contatto">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-[var(--color-text)] mb-2">
-              Nome e Cognome *
+              Nome e Cognome <span className="text-[var(--color-error)]" aria-label="campo obbligatorio">*</span>
             </label>
             <input
               id="name"
               type="text"
               autoComplete="name"
+              aria-required="true"
+              aria-invalid={errors.name ? 'true' : 'false'}
+              aria-describedby={errors.name ? 'name-error' : undefined}
               {...register('name')}
-              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent text-base"
+              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent text-base min-h-[48px]"
               placeholder="Mario Rossi"
             />
             {errors.name && (
-              <p className="mt-1 text-sm text-[var(--color-error)]">{errors.name.message}</p>
+              <p id="name-error" className="mt-1 text-sm text-[var(--color-error)]" role="alert">{errors.name.message}</p>
             )}
           </div>
 
@@ -127,12 +130,15 @@ export default function ContactForm() {
               type="email"
               inputMode="email"
               autoComplete="email"
+              aria-required="true"
+              aria-invalid={errors.email ? 'true' : 'false'}
+              aria-describedby={errors.email ? 'email-error' : undefined}
               {...register('email')}
-              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent text-base"
+              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent text-base min-h-[48px]"
               placeholder="mario.rossi@azienda.it"
             />
             {errors.email && (
-              <p className="mt-1 text-sm text-[var(--color-error)]">{errors.email.message}</p>
+              <p id="email-error" className="mt-1 text-sm text-[var(--color-error)]" role="alert">{errors.email.message}</p>
             )}
           </div>
 
@@ -145,19 +151,20 @@ export default function ContactForm() {
               type="tel"
               inputMode="tel"
               autoComplete="tel"
+              aria-label="Numero di telefono (opzionale)"
               {...register('phone')}
-              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent text-base"
+              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent text-base min-h-[48px]"
               placeholder="+39 347 529 0564"
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-[var(--color-text)] mb-3">
-              Preferenza incontro *
+          <div role="group" aria-labelledby="meeting-type-label">
+            <label id="meeting-type-label" className="block text-sm font-medium text-[var(--color-text)] mb-3">
+              Preferenza incontro <span className="text-[var(--color-error)]" aria-label="campo obbligatorio">*</span>
             </label>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-required="true">
               {/* Via Zoom - Selezionabile */}
-              <label className={`relative flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
+              <label className={`relative flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all min-h-[100px] ${
                 watch('meeting_type') === 'zoom'
                   ? 'border-[var(--color-primary)] bg-[var(--color-primary)]/5'
                   : 'border-[var(--color-line)] hover:border-[var(--color-primary)]/50'
@@ -165,6 +172,7 @@ export default function ContactForm() {
                 <input
                   type="radio"
                   value="zoom"
+                  aria-label="Incontro via Zoom, durata 60 minuti"
                   {...register('meeting_type', { required: 'Seleziona una preferenza' })}
                   className="sr-only"
                 />
@@ -174,7 +182,7 @@ export default function ContactForm() {
               </label>
               
               {/* In presenza - Selezionabile */}
-              <label className={`relative flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
+              <label className={`relative flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all min-h-[100px] ${
                 watch('meeting_type') === 'presence'
                   ? 'border-[var(--color-primary)] bg-[var(--color-primary)]/5'
                   : 'border-[var(--color-line)] hover:border-[var(--color-primary)]/50'
@@ -182,6 +190,7 @@ export default function ContactForm() {
                 <input
                   type="radio"
                   value="presence"
+                  aria-label="Incontro in presenza, durata 90 minuti, disponibile a Venezia, Padova e Rovigo"
                   {...register('meeting_type', { required: 'Seleziona una preferenza' })}
                   className="sr-only"
                 />
@@ -222,7 +231,8 @@ export default function ContactForm() {
           <button
             type="button"
             onClick={() => setStep(2)}
-            className="w-full px-6 py-3 bg-[var(--color-primary)] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
+            aria-label="Continua al passo successivo del form"
+            className="w-full px-6 py-3 bg-[var(--color-primary)] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity min-h-[48px] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2"
           >
             Continua →
           </button>
@@ -231,7 +241,7 @@ export default function ContactForm() {
 
       {/* Step 2: Qualificazione */}
       {step === 2 && (
-        <div className="space-y-4">
+        <div className="space-y-4" role="group" aria-label="Informazioni aziendali">
           <div>
             <label htmlFor="company" className="block text-sm font-medium text-[var(--color-text)] mb-2">
               Azienda
@@ -239,8 +249,10 @@ export default function ContactForm() {
             <input
               id="company"
               type="text"
+              autoComplete="organization"
+              aria-label="Nome dell'azienda (opzionale)"
               {...register('company')}
-              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
+              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent min-h-[48px]"
               placeholder="Nome azienda"
             />
           </div>
@@ -252,8 +264,10 @@ export default function ContactForm() {
             <input
               id="size_employees"
               type="number"
+              inputMode="numeric"
+              aria-label="Numero di collaboratori dell'azienda (opzionale)"
               {...register('size_employees', { valueAsNumber: true })}
-              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
+              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent min-h-[48px]"
               placeholder="Es: 45"
             />
           </div>
@@ -264,8 +278,9 @@ export default function ContactForm() {
             </label>
             <select
               id="revenue_range"
+              aria-label="Seleziona il range di fatturato dell'azienda (opzionale)"
               {...register('revenue_range')}
-              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
+              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent min-h-[48px]"
             >
               <option value="">Seleziona...</option>
               <option value="100k-500k">€100k - €500k</option>
@@ -282,9 +297,10 @@ export default function ContactForm() {
             </label>
             <textarea
               id="main_problem"
+              aria-label="Descrivi il problema principale della tua PMI (opzionale)"
               {...register('main_problem')}
               rows={3}
-              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
+              className="w-full px-4 py-3 border border-[var(--color-line)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent min-h-[100px]"
               placeholder="Descrivi brevemente la criticità principale della tua PMI..."
             />
           </div>
@@ -297,14 +313,17 @@ export default function ContactForm() {
             <button
               type="button"
               onClick={() => setStep(1)}
-              className="flex-1 px-6 py-3 border border-[var(--color-line)] text-[var(--color-text)] font-semibold rounded-lg hover:bg-[var(--color-card)] transition-colors"
+              aria-label="Torna al passo precedente del form"
+              className="flex-1 px-6 py-3 border border-[var(--color-line)] text-[var(--color-text)] font-semibold rounded-lg hover:bg-[var(--color-card)] transition-colors min-h-[48px] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2"
             >
               ← Indietro
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 px-6 py-3 bg-[var(--color-primary)] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
+              aria-label={isSubmitting ? 'Invio del form in corso, attendere' : 'Invia la richiesta di check-up gratuito'}
+              aria-busy={isSubmitting}
+              className="flex-1 px-6 py-3 bg-[var(--color-primary)] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 min-h-[48px] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2"
             >
               {isSubmitting ? 'Invio in corso...' : 'Invia richiesta'}
             </button>
@@ -313,7 +332,7 @@ export default function ContactForm() {
       )}
 
       {submitError && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-sm text-red-800">
+        <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-sm text-red-800" role="alert" aria-live="polite">
           {submitError}
         </div>
       )}

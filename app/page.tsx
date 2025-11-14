@@ -90,6 +90,20 @@ const localBusinessSchema = {
   ],
 };
 
+// BreadcrumbList schema per homepage (migliora navigazione SEO)
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: baseUrl,
+    },
+  ],
+};
+
 // Schema FAQPage
 const faqSchema = {
   '@context': 'https://schema.org',
@@ -160,6 +174,7 @@ export default function HomePage() {
       <JSONLD data={personSchema} />
       <JSONLD data={localBusinessSchema} />
       <JSONLD data={faqSchema} />
+      <JSONLD data={breadcrumbSchema} />
       <Hero
         h1="Come aumentare il fatturato della tua azienda veneta"
         subtitle="Migliora la produttività dei dipendenti e metti ordine nella tua azienda familiare. In 90 giorni organizzazione chiara, in 6 mesi vedi i numeri concreti."

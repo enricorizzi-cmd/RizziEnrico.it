@@ -1,6 +1,29 @@
 import { generateMetadata } from '@/lib/seo';
 import ContactForm from '@/components/ContactForm';
 import Accordion from '@/components/Accordion';
+import JSONLD from '@/components/JSONLD';
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
+
+// BreadcrumbList schema per pagina contatti
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: baseUrl,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Contatti',
+      item: `${baseUrl}/contatti`,
+    },
+  ],
+};
 
 export const metadata = generateMetadata({
   title: 'Check-up gratuito PMI Veneto – Contatta Enrico Rizzi, consulente aziendale | Enrico Rizzi',
@@ -11,7 +34,9 @@ export const metadata = generateMetadata({
 
 export default function ContattiPage() {
   return (
-    <div className="py-16 bg-[var(--color-card)] min-h-screen">
+    <>
+      <JSONLD data={breadcrumbSchema} />
+      <div className="py-16 bg-[var(--color-card)] min-h-screen">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
@@ -117,6 +142,7 @@ export default function ContattiPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

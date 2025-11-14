@@ -15,6 +15,26 @@ export const metadata = generateMetadata({
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
 
+// BreadcrumbList schema per pagina chi-sono
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: baseUrl,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Chi sono',
+      item: `${baseUrl}/chi-sono`,
+    },
+  ],
+};
+
 const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
@@ -74,6 +94,7 @@ export default function ChiSonoPage() {
   return (
     <>
       <JSONLD data={personSchema} />
+      <JSONLD data={breadcrumbSchema} />
       <div className="pt-8 pb-16 bg-white min-h-screen">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="max-w-4xl mx-auto">

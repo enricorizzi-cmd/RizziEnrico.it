@@ -13,6 +13,7 @@ const inter = Inter({
   variable: "--font-body",
   display: "swap",
   preload: true,
+  adjustFontFallback: true, // Migliora CLS prevenendo layout shift durante caricamento font
 });
 
 const montserrat = Montserrat({
@@ -21,6 +22,7 @@ const montserrat = Montserrat({
   variable: "--font-heading",
   display: "swap",
   preload: true,
+  adjustFontFallback: true, // Migliora CLS prevenendo layout shift durante caricamento font
 });
 
 export const metadata: Metadata = {
@@ -50,6 +52,7 @@ export default function RootLayout({
   return (
     <html lang="it">
       <head>
+        {/* Preconnect a font Google per migliorare performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Preconnect a domini third-party per analytics (migliora velocità caricamento) */}
@@ -57,6 +60,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://plausible.io" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        {/* Preload immagine hero critica per migliorare LCP */}
+        <link rel="preload" as="image" href="/enrico-rizzi.jpg" fetchPriority="high" />
       </head>
       <body
         className={`${inter.variable} ${montserrat.variable} font-body antialiased`}

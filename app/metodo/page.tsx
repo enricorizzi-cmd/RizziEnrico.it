@@ -7,6 +7,28 @@ import IPBadge from '@/components/IPBadge';
 import Card from '@/components/Card';
 import JSONLD from '@/components/JSONLD';
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
+
+// BreadcrumbList schema per pagina metodo
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: baseUrl,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Metodo',
+      item: `${baseUrl}/metodo`,
+    },
+  ],
+};
+
 export const metadata = generateMetadata({
   title: 'Metodo consulenza PMI in 5 step – Da caos a organizzazione con KPI e digitalizzazione | Enrico Rizzi',
   description: 'Metodo consulenza PMI in 5 step: Chi, Numeri, Processi, Persone, Espansione. Da azienda reattiva a organizzata e orientata ai risultati, con ruoli, KPI, riunioni strutturate e digitalizzazione pratica. Pensato per PMI venete e aziende familiari.',
@@ -124,6 +146,7 @@ export default function MetodoPage() {
   return (
     <>
       <JSONLD data={faqSchema} />
+      <JSONLD data={breadcrumbSchema} />
       
       {/* Hero */}
       <section className="bg-gradient-to-b from-[var(--color-primary)] to-[var(--color-primary)]/90 text-white py-16 md:py-24">

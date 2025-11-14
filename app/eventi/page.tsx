@@ -2,6 +2,7 @@ import { generateMetadata } from '@/lib/seo';
 import SectionTitle from '@/components/SectionTitle';
 import Card from '@/components/Card';
 import CTA from '@/components/CTA';
+import JSONLD from '@/components/JSONLD';
 import { format } from 'date-fns';
 import { it } from 'date-fns/locale/it';
 
@@ -100,8 +101,74 @@ const events: Array<{
 ];
 
 export default function EventiPage() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
+  
+  // Schema Event per ogni evento (migliora SEO e rich snippets)
+  const eventSchemas = events.map((event) => ({
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": event.title,
+    "description": event.description,
+    "startDate": event.dateStart.toISOString(),
+    "endDate": event.dateEnd.toISOString(),
+    "eventAttendanceMode": event.isOnline 
+      ? "https://schema.org/OnlineEventAttendanceMode" 
+      : "https://schema.org/OfflineEventAttendanceMode",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "location": event.isOnline ? undefined : {
+      "@type": "Place",
+      "name": event.locationName,
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": event.address,
+        "addressRegion": "Veneto",
+        "addressCountry": "IT"
+      }
+    },
+    "organizer": {
+      "@type": "Organization",
+      "name": "OSM Partner Venezia-Rovigo",
+      "url": "https://eventiosm.it"
+    },
+    "url": event.externalUrl,
+    ...(event.speaker && {
+      "performer": {
+        "@type": "Person",
+        "name": event.speaker
+      }
+    })
+  }));
+
+  // BreadcrumbList schema per migliorare navigazione SEO
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": baseUrl
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Eventi",
+        "item": `${baseUrl}/eventi`
+      }
+    ]
+  };
+
   return (
-    <div className="py-16 bg-[var(--color-card)] min-h-screen">
+    <>
+      {/* Schema JSON-LD per Eventi */}
+      {eventSchemas.map((schema, index) => (
+        <JSONLD key={`event-${index}`} data={schema} />
+      ))}
+      {/* BreadcrumbList Schema */}
+      <JSONLD data={breadcrumbSchema} />
+      
+      <div className="py-16 bg-[var(--color-card)] min-h-screen">
       <div className="container mx-auto px-4 lg:px-8">
         {/* Hero */}
         <div className="text-center mb-12">
@@ -215,6 +282,7 @@ export default function EventiPage() {
         )}
       </div>
     </div>
+    </>
   );
 }
 

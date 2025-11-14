@@ -3,6 +3,21 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const response = NextResponse.next();
+  const pathname = request.nextUrl.pathname;
+
+  // Cache headers per risorse statiche (migliora performance)
+  if (pathname.startsWith('/_next/static')) {
+    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+  } else if (pathname.startsWith('/_next/image')) {
+    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+  } else if (pathname.match(/\.(jpg|jpeg|png|gif|webp|avif|svg|ico|woff|woff2|ttf|eot)$/)) {
+    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+  } else if (pathname.match(/\.(css|js)$/)) {
+    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+  } else {
+    // Cache per pagine HTML (più breve)
+    response.headers.set('Cache-Control', 'public, max-age=3600, must-revalidate');
+  }
 
   // Security headers
   response.headers.set('X-DNS-Prefetch-Control', 'on');

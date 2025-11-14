@@ -57,6 +57,26 @@ const services = [
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
 
+// BreadcrumbList schema per pagina servizi
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: baseUrl,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Servizi',
+      item: `${baseUrl}/servizi`,
+    },
+  ],
+};
+
 // Schema JSON-LD Service per pagina servizi
 const serviceSchema = {
   '@context': 'https://schema.org',
@@ -136,6 +156,7 @@ export default function ServiziPage() {
   return (
     <>
       <JSONLD data={serviceSchema} />
+      <JSONLD data={breadcrumbSchema} />
       <div className="py-16 bg-[var(--color-card)] min-h-screen">
       <div className="container mx-auto px-4 lg:px-8">
         {/* Hero */}

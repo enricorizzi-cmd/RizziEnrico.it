@@ -2,7 +2,30 @@ import { generateMetadata } from '@/lib/seo';
 import SectionTitle from '@/components/SectionTitle';
 import CTA from '@/components/CTA';
 import Hero from '@/components/Hero';
+import JSONLD from '@/components/JSONLD';
 import Link from 'next/link';
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
+
+// BreadcrumbList schema per pagina digitalizzazione
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: baseUrl,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Digitalizzazione & AI',
+      item: `${baseUrl}/digitalizzazione-pmi-ai`,
+    },
+  ],
+};
 
 export const metadata = generateMetadata({
   title: 'Digitalizzazione & Intelligenza Artificiale per PMI venete | Enrico Rizzi',
@@ -14,6 +37,7 @@ export const metadata = generateMetadata({
 export default function DigitalizzazionePMIPage() {
   return (
     <>
+      <JSONLD data={breadcrumbSchema} />
       {/* Hero */}
       <Hero
         h1="Digitalizzazione & Intelligenza Artificiale per PMI"

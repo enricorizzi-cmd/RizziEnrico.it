@@ -20,9 +20,12 @@ const nextConfig: NextConfig = {
     // Disabilita ottimizzazione immagini troppo grandi (previene OOM)
     remotePatterns: [],
   },
-  compress: true,
-  poweredByHeader: false,
+  compress: true, // Abilita compressione gzip
+  poweredByHeader: false, // Rimuove header X-Powered-By per sicurezza
   reactStrictMode: true,
+  
+  // Ottimizzazioni performance aggiuntive
+  swcMinify: true, // Usa SWC per minificazione (più veloce di Terser)
   
   // Limita memoria per server components
   serverExternalPackages: ['sharp', 'canvas'],
