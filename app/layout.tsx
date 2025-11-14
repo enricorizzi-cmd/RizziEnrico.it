@@ -60,8 +60,6 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://plausible.io" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-        {/* Preload immagine hero critica per migliorare LCP */}
-        <link rel="preload" as="image" href="/enrico-rizzi.jpg" fetchPriority="high" />
       </head>
       <body
         className={`${inter.variable} ${montserrat.variable} font-body antialiased`}

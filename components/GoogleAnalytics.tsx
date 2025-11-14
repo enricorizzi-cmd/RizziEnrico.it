@@ -1,22 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
 import Script from 'next/script';
 
 const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID || 'G-0PKBSWJH3V';
 
 export default function GoogleAnalytics() {
-  // Inizializza dataLayer solo client-side dopo hydration
-  useEffect(() => {
-    // Inizializza dataLayer se non esiste già
-    if (typeof window !== 'undefined' && !window.dataLayer) {
-      window.dataLayer = window.dataLayer || [];
-      window.gtag = function gtag(...args: any[]) {
-        window.dataLayer!.push(args);
-      };
-    }
-  }, []);
-
   return (
     <>
       {/* Script esterno Google Analytics - usa next/script per ottimizzazione */}
@@ -29,6 +17,7 @@ export default function GoogleAnalytics() {
       <Script
         id="ga-config"
         strategy="afterInteractive"
+        suppressHydrationWarning
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];

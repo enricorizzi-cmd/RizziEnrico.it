@@ -9,6 +9,7 @@ import IPBadge from '@/components/IPBadge';
 import Accordion from '@/components/Accordion';
 import JSONLD from '@/components/JSONLD';
 import ContactForm from '@/components/ContactForm';
+import PreloadImage from '@/components/PreloadImage';
 import Link from 'next/link';
 import { generateMetadata } from '@/lib/seo';
 
@@ -171,6 +172,8 @@ const faqSchema = {
 export default function HomePage() {
   return (
     <>
+      {/* Preload immagine hero critica solo sulla home per migliorare LCP */}
+      <PreloadImage href="/enrico-rizzi.jpg" as="image" fetchPriority="high" />
       <JSONLD data={personSchema} />
       <JSONLD data={localBusinessSchema} />
       <JSONLD data={faqSchema} />
