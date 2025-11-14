@@ -13,8 +13,9 @@ import Link from 'next/link';
 import { generateMetadata } from '@/lib/seo';
 
 export const metadata = generateMetadata({
-  title: 'Consulente PMI Veneto – Organizzazione, KPI e Leadership | Enrico Rizzi',
-  description: 'Consulenza aziendale per PMI venete: organizzazione, KPI e controllo di gestione. In 90 giorni mettiamo ordine, in 6 mesi vedi i numeri. Check-up gratuito. Area Venezia-Rovigo-Padova.',
+  title: 'Consulente PMI Veneto | Organizzazione, KPI e Leadership – Enrico Rizzi',
+  description: 'Consulente aziendale per PMI venete: organizzazione, KPI e leadership. In 90 giorni mettiamo ordine, in 6 mesi vedi i numeri. Check-up gratuito in Veneto.',
+  keywords: 'consulente PMI Veneto, organizzazione aziendale, KPI, leadership, consulente Venezia, consulente Rovigo, consulente Padova, Enrico Rizzi, metodo OSM, controllo di gestione',
 });
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
@@ -73,19 +74,30 @@ const localBusinessSchema = {
     '@type': 'PostalAddress',
     streetAddress: 'Via Sertorio Orsato 22',
     addressLocality: 'Venezia',
-    addressRegion: 'VE',
+    addressRegion: 'Veneto',
     postalCode: '30100',
     addressCountry: 'IT',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: '45.4408',
+    longitude: '12.3155',
   },
   telephone: '+393475290564',
   email: 'info@rizzienrico.it',
   priceRange: '€€',
+  openingHours: 'Mo-Fr 09:00-18:00',
   openingHoursSpecification: {
     '@type': 'OpeningHoursSpecification',
     dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
     opens: '09:00',
     closes: '18:00',
   },
+  sameAs: [
+    'https://www.linkedin.com/in/enricorizzi/',
+    'https://www.facebook.com/enrico.rizzi.12',
+    'https://www.instagram.com/enricorizzi_osm/',
+  ],
 };
 
 // Schema FAQPage
@@ -199,12 +211,17 @@ export default function HomePage() {
                 <div className="text-4xl mb-3">{point.icon}</div>
                 <p className="text-sm">{point.description}</p>
                 <p className="text-sm mt-3">
-                  <Link href="/chi-sono" className="text-[var(--color-primary)] hover:underline font-semibold">
+                  <Link href="/chi-sono" className="text-[var(--color-primary)] hover:underline font-semibold" title="Scopri chi è Enrico Rizzi e la sua esperienza con PMI venete">
                     Scopri di più su Enrico Rizzi →
                   </Link>
                 </p>
               </Card>
             ))}
+          </div>
+          <div className="text-center mt-8">
+            <p className="text-sm text-[var(--color-subtext)]">
+              Vuoi conoscere meglio il metodo? <Link href="/metodo" className="text-[var(--color-primary)] hover:underline font-semibold" title="Scopri il metodo OSM per organizzare la tua PMI">Scopri il metodo OSM</Link> o <Link href="/servizi" className="text-[var(--color-primary)] hover:underline font-semibold" title="Vedi tutti i servizi di consulenza PMI">vedi tutti i servizi</Link>.
+            </p>
           </div>
         </div>
       </section>
@@ -265,6 +282,11 @@ export default function HomePage() {
               Applica il Metodo alla Tua PMI - Check-up Gratuito →
             </CTA>
           </div>
+          <div className="text-center mt-6">
+            <p className="text-sm text-[var(--color-subtext)]">
+              Vuoi vedere esempi concreti? <Link href="/case-study" className="text-[var(--color-primary)] hover:underline font-semibold" title="Case study di PMI che hanno ottenuto risultati">Vedi i case study</Link> o <Link href="/servizi" className="text-[var(--color-primary)] hover:underline font-semibold" title="Scopri i servizi di consulenza">scopri i servizi</Link>.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -300,9 +322,11 @@ export default function HomePage() {
           <div className="text-center mt-6">
             <p className="text-sm text-[var(--color-subtext)] mb-4">
               Vuoi risultati simili per la tua PMI? 
-              <Link href="/contatti" className="text-[var(--color-primary)] hover:underline font-semibold ml-1">
+              <Link href="/contatti" className="text-[var(--color-primary)] hover:underline font-semibold ml-1" title="Prenota un check-up gratuito con Enrico Rizzi">
                 Contattami per un check-up gratuito
-              </Link>
+              </Link> o <Link href="/servizi" className="text-[var(--color-primary)] hover:underline font-semibold ml-1" title="Scopri i servizi di consulenza PMI">
+                scopri i servizi disponibili
+              </Link>.
             </p>
           </div>
         </div>
@@ -392,10 +416,12 @@ export default function HomePage() {
           <div className="text-center mt-6">
             <p className="text-sm text-[var(--color-subtext)]">
               Non sai quale servizio fa per te? 
-              <Link href="/contatti" className="text-[var(--color-primary)] hover:underline font-semibold ml-1">
+              <Link href="/contatti" className="text-[var(--color-primary)] hover:underline font-semibold ml-1" title="Prenota un check-up gratuito per valutare le tue esigenze">
                 Prenota un check-up gratuito
               </Link>
-              {' '}e analizziamo insieme le tue esigenze.
+              {' '}e analizziamo insieme le tue esigenze. Oppure <Link href="/metodo" className="text-[var(--color-primary)] hover:underline font-semibold ml-1" title="Scopri il metodo OSM per organizzare la tua PMI">
+                scopri il metodo
+              </Link> che applico.
             </p>
           </div>
         </div>
@@ -578,6 +604,11 @@ export default function HomePage() {
                     <span>Partner</span>
                     <OSMBadge variant="footer" useImage={true} />
                   </div>
+                </div>
+                <div className="mt-6 text-center md:text-left">
+                  <p className="text-sm text-[var(--color-subtext)]">
+                    Scopri anche: <Link href="/servizi" className="text-[var(--color-primary)] hover:underline font-semibold" title="Servizi di consulenza PMI">servizi</Link>, <Link href="/metodo" className="text-[var(--color-primary)] hover:underline font-semibold" title="Metodo OSM">metodo</Link> e <Link href="/case-study" className="text-[var(--color-primary)] hover:underline font-semibold" title="Case study PMI">case study</Link>.
+                  </p>
                 </div>
               </div>
             </div>

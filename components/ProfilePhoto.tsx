@@ -52,7 +52,7 @@ export default function ProfilePhoto({
       <div className="w-full h-full rounded-full overflow-hidden bg-white relative">
       <Image
         src={photoSrc}
-        alt={alt || 'Enrico Rizzi consulente OSM PMI Veneto'}
+        alt={alt || 'Enrico Rizzi consulente aziendale per PMI venete specializzato in organizzazione, KPI e controllo di gestione'}
         width={dimensions[size]}
         height={dimensions[size]}
         className="w-full h-full object-cover"

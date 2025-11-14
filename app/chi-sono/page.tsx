@@ -10,6 +10,7 @@ export const metadata = generateMetadata({
   title: 'Chi sono - Consulente OSM PMI Veneto | Enrico Rizzi',
   description: 'Consulente OSM per PMI venete con 10+ anni esperienza. Metodo pratico, risultati misurabili. Area servita: Venezia, Rovigo, Padova. Specializzato in organizzazione, KPI e passaggio generazionale.',
   path: '/chi-sono',
+  keywords: 'Enrico Rizzi, consulente OSM, consulente PMI Veneto, esperienza consulenza, organizzazione aziendale, KPI, passaggio generazionale',
 });
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
@@ -215,6 +216,11 @@ export default function ChiSonoPage() {
             <CTA href="/contatti" variant="secondary" size="large" className="bg-white text-[var(--color-primary)] hover:bg-gray-100">
               Prenota diagnosi 30' →
             </CTA>
+            <div className="mt-6 text-center">
+              <p className="text-sm text-white/80">
+                Scopri anche: <Link href="/servizi" className="text-white hover:underline font-semibold" title="Servizi di consulenza PMI">servizi</Link>, <Link href="/metodo" className="text-white hover:underline font-semibold" title="Metodo OSM">metodo</Link> e <Link href="/case-study" className="text-white hover:underline font-semibold" title="Case study PMI">case study</Link>.
+              </p>
+            </div>
           </section>
         </div>
       </div>

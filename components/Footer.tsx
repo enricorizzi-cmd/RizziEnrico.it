@@ -34,47 +34,47 @@ export default function Footer() {
             <h4 className="font-heading font-semibold mb-4">Navigazione</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/metodo" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/metodo" className="text-gray-300 hover:text-white transition-colors" title="Scopri il metodo OSM per organizzare la tua PMI">
                   Metodo
                 </Link>
               </li>
               <li>
-                <Link href="/servizi" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/servizi" className="text-gray-300 hover:text-white transition-colors" title="Scopri i servizi di consulenza PMI di Enrico Rizzi">
                   Servizi
                 </Link>
               </li>
               <li>
-                <Link href="/i-profile" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/i-profile" className="text-gray-300 hover:text-white transition-colors" title="i-Profile: strumento per valutazione attitudinale">
                   i-Profile
                 </Link>
               </li>
               <li>
-                <Link href="/case-study" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/case-study" className="text-gray-300 hover:text-white transition-colors" title="Case study di PMI che hanno ottenuto risultati">
                   Case Study
                 </Link>
               </li>
               <li>
-                <Link href="/risorse" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/risorse" className="text-gray-300 hover:text-white transition-colors" title="Risorse gratuite: KPI Pack e strumenti per PMI">
                   Risorse
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/blog" className="text-gray-300 hover:text-white transition-colors" title="Articoli e approfondimenti su organizzazione aziendale e KPI">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="/eventi" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/eventi" className="text-gray-300 hover:text-white transition-colors" title="Eventi e workshop per PMI venete">
                   Eventi
                 </Link>
               </li>
               <li>
-                <Link href="/chi-sono" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/chi-sono" className="text-gray-300 hover:text-white transition-colors" title="Scopri chi è Enrico Rizzi, consulente OSM per PMI venete">
                   Chi sono
                 </Link>
               </li>
               <li>
-                <Link href="/contatti" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/contatti" className="text-gray-300 hover:text-white transition-colors" title="Contatta Enrico Rizzi per un check-up gratuito">
                   Contatti
                 </Link>
               </li>
@@ -86,12 +86,12 @@ export default function Footer() {
             <h4 className="font-heading font-semibold mb-4">Risorse</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/risorse" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/risorse" className="text-gray-300 hover:text-white transition-colors" title="Scarica il KPI Pack gratuito per PMI">
                   KPI Pack
                 </Link>
               </li>
               <li>
-                <Link href="/calcolatore-investimento" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/calcolatore-investimento" className="text-gray-300 hover:text-white transition-colors" title="Calcola l'investimento per la tua consulenza PMI">
                   Calcolatore Investimento
                 </Link>
               </li>
@@ -103,7 +103,7 @@ export default function Footer() {
             <h4 className="font-heading font-semibold mb-4">Contatti</h4>
             <ul className="space-y-2 text-sm text-gray-300">
               <li>
-                <Link href="/contatti" className="hover:text-white transition-colors">
+                <Link href="/contatti" className="hover:text-white transition-colors" title="Prenota un check-up gratuito con Enrico Rizzi">
                   Prenota un incontro
                 </Link>
               </li>
@@ -171,13 +171,13 @@ export default function Footer() {
               </div>
             </div>
             <div className="mt-6 pt-6 border-t border-gray-600 space-y-2 text-xs text-gray-400">
-              <Link href="/privacy" className="block hover:text-gray-300 transition-colors">
+              <Link href="/privacy" className="block hover:text-gray-300 transition-colors" title="Privacy Policy del sito">
                 Privacy Policy
               </Link>
-              <Link href="/cookie" className="block hover:text-gray-300 transition-colors">
+              <Link href="/cookie" className="block hover:text-gray-300 transition-colors" title="Cookie Policy e gestione cookie">
                 Cookie Policy
               </Link>
-              <Link href="/termini" className="block hover:text-gray-300 transition-colors">
+              <Link href="/termini" className="block hover:text-gray-300 transition-colors" title="Termini e condizioni di servizio">
                 Termini di servizio
               </Link>
             </div>

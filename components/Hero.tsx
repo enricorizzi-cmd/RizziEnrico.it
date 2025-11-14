@@ -108,7 +108,7 @@ export default function Hero({
                 <div className="relative rounded-[var(--radius-card)] overflow-hidden shadow-xl">
                   <Image
                     src={image}
-                    alt="Enrico Rizzi consulente OSM PMI Veneto"
+                    alt="Enrico Rizzi consulente aziendale per PMI venete che affianca imprenditori nell'organizzazione, KPI e leadership"
                     width={600}
                     height={600}
                     className="w-full h-auto object-cover"

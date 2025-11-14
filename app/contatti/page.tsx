@@ -6,6 +6,7 @@ export const metadata = generateMetadata({
   title: 'Contatti - Check-up Gratuito PMI Veneto | Enrico Rizzi',
   description: 'Prenota check-up aziendale gratuito: 60 min Zoom o 90 min in presenza. Analizziamo numeri e criticità della tua PMI. Venezia-Padova-Rovigo.',
   path: '/contatti',
+  keywords: 'contatti consulente PMI, check-up gratuito, consulenza Venezia, consulenza Padova, consulenza Rovigo, prenota consulenza',
 });
 
 export default function ContattiPage() {
@@ -15,7 +16,7 @@ export default function ContattiPage() {
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="font-heading text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-4">
-              Check-up Aziendale Gratuito
+              Contatti - Check-up Aziendale Gratuito
             </h1>
             <p className="text-xl text-[var(--color-subtext)] mb-2">
               Disponibile via Zoom o in presenza (90 minuti). Analizziamo insieme numeri e criticità della tua PMI nell'area Venezia-Padova-Rovigo.
