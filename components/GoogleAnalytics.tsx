@@ -24,7 +24,8 @@ export default function GoogleAnalytics() {
 
     // 2. Script inline con dataLayer, gtag, config - SECONDO come da istruzioni Google
     const script2 = document.createElement('script');
-    script2.innerHTML = `
+    // Usa textContent invece di innerHTML per compatibilità e sicurezza
+    script2.textContent = `
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
