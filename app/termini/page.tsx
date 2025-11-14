@@ -36,7 +36,7 @@ export default function TerminiPage() {
             <h2 className="font-heading text-2xl font-semibold mt-8 mb-4">2. Oggetto e Scopo del Sito</h2>
             <p>
               Il Sito ha lo scopo di fornire informazioni sui servizi di consulenza organizzativa 
-              per PMI offerti da Enrico Rizzi, consulente OSM (Organizzazione Scientifica del Lavoro). 
+              per PMI offerti da Enrico Rizzi, consulente OSM (Open Source Management). 
               Il Sito consente agli utenti di:
             </p>
             <ul>

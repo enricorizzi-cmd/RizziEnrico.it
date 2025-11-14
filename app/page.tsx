@@ -175,9 +175,9 @@ export default function HomePage() {
         }}
         proofStrip={{
           stats: [
-            { label: 'PMI organizzate', value: '25+' },
             { label: 'Anni esperienza', value: '10+' },
             { label: 'Partner OSM', value: 'Venezia-Rovigo' },
+            { label: 'Consulente Senior', value: 'OSM' },
           ],
         }}
       />
@@ -630,7 +630,7 @@ export default function HomePage() {
                 </p>
                 <p className="text-[var(--color-text)] mb-6 leading-relaxed">
                   <strong>Risultato concreto:</strong> Nel 2024 ho aiutato un'azienda manifatturiera 
-                  di Padova ad <strong>aumentare il fatturato del 25%</strong> migliorando la produttività dei dipendenti, 
+                  di Padova ad <strong>aumentare significativamente il fatturato</strong> migliorando la produttività dei dipendenti, 
                   ottimizzando la rete vendita e implementando un sistema di controllo di gestione efficace.
                 </p>
                 <div className="flex items-center justify-center md:justify-start gap-4 flex-wrap">
@@ -666,10 +666,10 @@ export default function HomePage() {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { value: "fino a +30%", label: "Aumento fatturato PMI clienti", icon: "📈" },
-              { value: "-25%", label: "Riduzione tempi consegna", icon: "⏱️" },
+              { value: "Risultati", label: "Misurabili su fatturato", icon: "📈" },
               { value: "90", label: "Giorni per vedere ordine", icon: "📅" },
-              { value: "25+", label: "PMI organizzate", icon: "🏢" }
+              { value: "6", label: "Mesi per risultati numerici", icon: "📊" },
+              { value: "Senior", label: "Consulente OSM", icon: "🏢" }
             ].map((stat, index) => (
               <div key={index}>
                 <div className="text-4xl mb-2">{stat.icon}</div>

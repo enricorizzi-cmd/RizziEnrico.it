@@ -226,7 +226,7 @@ export default function ComeOrganizzareMeglioAziendaPage() {
               ))}
             </div>
             <p className="text-lg mb-8 opacity-90">
-              Nel 2024 ho aiutato un'azienda manifatturiera di Padova ad aumentare il fatturato del 25% 
+              Nel 2024 ho aiutato un'azienda manifatturiera di Padova ad aumentare significativamente il fatturato 
               migliorando la produttività dei dipendenti e implementando un sistema di controllo di gestione efficace.
             </p>
             <CTA href="/contatti" variant="secondary" size="large" className="bg-white text-[var(--color-primary)] hover:bg-gray-100">

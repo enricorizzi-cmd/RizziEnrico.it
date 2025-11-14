@@ -27,7 +27,7 @@ const faqSchema = {
       name: 'Come posso aumentare il fatturato della mia azienda?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Per aumentare il fatturato devi lavorare su 3 leve principali: 1) Migliorare la produttività dei dipendenti con ruoli chiari e formazione mirata, 2) Ottimizzare la rete vendita con processi efficaci e KPI di vendita, 3) Implementare un controllo di gestione che ti mostri dove recuperare margini. Nel 2024 ho aiutato un\'azienda di Padova ad aumentare il fatturato del 25% con questo approccio.',
+        text: 'Per aumentare il fatturato devi lavorare su 3 leve principali: 1) Migliorare la produttività dei dipendenti con ruoli chiari e formazione mirata, 2) Ottimizzare la rete vendita con processi efficaci e KPI di vendita, 3) Implementare un controllo di gestione che ti mostri dove recuperare margini. Nel 2024 ho aiutato un\'azienda di Padova ad aumentare significativamente il fatturato con questo approccio.',
       },
     },
     {
@@ -271,7 +271,7 @@ export default function ComeAumentareFatturatoPage() {
             <Accordion items={[
               {
                 question: 'Come posso aumentare il fatturato della mia azienda?',
-                answer: 'Per aumentare il fatturato devi lavorare su 3 leve principali: 1) Migliorare la produttività dei dipendenti con ruoli chiari e formazione mirata, 2) Ottimizzare la rete vendita con processi efficaci e KPI di vendita, 3) Implementare un controllo di gestione che ti mostri dove recuperare margini. Nel 2024 ho aiutato un\'azienda di Padova ad aumentare il fatturato del 25% con questo approccio.',
+                answer: 'Per aumentare il fatturato devi lavorare su 3 leve principali: 1) Migliorare la produttività dei dipendenti con ruoli chiari e formazione mirata, 2) Ottimizzare la rete vendita con processi efficaci e KPI di vendita, 3) Implementare un controllo di gestione che ti mostri dove recuperare margini. Nel 2024 ho aiutato un\'azienda di Padova ad aumentare significativamente il fatturato con questo approccio.',
               },
               {
                 question: 'Quanto tempo serve per aumentare il fatturato?',

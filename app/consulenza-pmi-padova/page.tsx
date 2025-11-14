@@ -73,7 +73,7 @@ export default function ConsulenzaPMIPadovaPage() {
               </p>
               <p>
                 <strong>Risultato concreto:</strong> Nel 2024 ho aiutato un'azienda manifatturiera 
-                di Padova ad aumentare il fatturato del 25% ottimizzando la rete vendita e 
+                di Padova ad aumentare significativamente il fatturato ottimizzando la rete vendita e 
                 implementando KPI mirati. In 90 giorni: ruoli definiti, processi documentati, 
                 cruscotto KPI operativo.
               </p>

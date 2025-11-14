@@ -66,7 +66,7 @@ CASE STUDY:
 - Lattoneria & Coperture: passaggio generazionale riuscito con mansionari e KPI commesse
 - Impianti clima/refrigerazione: service con qualità misurabile, agenda interventi prioritizzata
 
-PRINCIPI OSM (Organizzazione Scientifica del Lavoro):
+PRINCIPI OSM (Open Source Management):
 - Standardizzazione: processi chiari e ripetibili
 - Misurazione: KPI per ogni attività critica
 - Responsabilizzazione: ruoli definiti, obiettivi chiari
