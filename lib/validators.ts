@@ -44,7 +44,7 @@ export const workshopRegistrationSchema = z.object({
   provincia: z.string().min(2, 'Provincia richiesta').max(50),
   fonte: z.enum(['BNI', 'OSM', 'Social', 'Passaparola', 'Altro']),
   problema: z.string().optional(),
-  evento: z.string().default('Workshop 12.12.2024'),
+  evento: z.string(),
 });
 
 // Schema per test maturità digitale
