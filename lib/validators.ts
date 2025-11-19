@@ -54,7 +54,7 @@ export const testMaturitaSchema = z.object({
   cognome: z.string().min(2).optional(),
   email: z.string().email().optional(),
   azienda: z.string().optional(),
-  risposte: z.record(z.any()),
+  risposte: z.record(z.string(), z.any()),
 });
 
 export type LeadInput = z.infer<typeof leadSchema>;
