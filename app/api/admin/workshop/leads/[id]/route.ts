@@ -3,9 +3,10 @@ import { createServerClient } from '@/lib/supabase';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
     const supabase = createServerClient();
 
@@ -15,7 +16,7 @@ export async function PATCH(
     const { data, error } = await supabase
       .from('workshop_leads')
       .update(body)
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
 
@@ -40,7 +41,7 @@ export async function PATCH(
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${cronSecret}`,
               },
-              body: JSON.stringify({ leadId: params.id }),
+              body: JSON.stringify({ leadId: id }),
             }
           );
         }
