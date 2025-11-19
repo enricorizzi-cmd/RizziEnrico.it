@@ -1,0 +1,385 @@
+'use client';
+
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { testMaturitaSchema, type TestMaturitaInput } from '@/lib/validators';
+
+interface Question {
+  id: string;
+  categoria: string;
+  domanda: string;
+  tipo: 'si_no' | 'scala';
+  peso: number;
+}
+
+const questions: Question[] = [
+  // Raccolta dati & CRM
+  { id: 'q1', categoria: 'Raccolta Dati & CRM', domanda: 'Hai un posto unico dove finiscono tutti i nominativi dei contatti (lead, clienti, fornitori)?', tipo: 'si_no', peso: 3 },
+  { id: 'q2', categoria: 'Raccolta Dati & CRM', domanda: 'Sai sempre chi ti ha contattato, quando e da dove?', tipo: 'si_no', peso: 2 },
+  { id: 'q3', categoria: 'Raccolta Dati & CRM', domanda: 'Hai un sistema per classificare i lead in base alla loro qualità?', tipo: 'si_no', peso: 2 },
+  
+  // Automazioni base
+  { id: 'q4', categoria: 'Automazioni Base', domanda: 'Hai almeno 1 automazione che parte quando qualcuno compila un form sul tuo sito?', tipo: 'si_no', peso: 3 },
+  { id: 'q5', categoria: 'Automazioni Base', domanda: 'Hai email automatiche di benvenuto per nuovi clienti?', tipo: 'si_no', peso: 2 },
+  { id: 'q6', categoria: 'Automazioni Base', domanda: 'Hai reminder automatici per follow-up con i lead?', tipo: 'si_no', peso: 2 },
+  
+  // Presenza online
+  { id: 'q7', categoria: 'Presenza Online', domanda: 'Il tuo sito web è ottimizzato per mobile?', tipo: 'si_no', peso: 2 },
+  { id: 'q8', categoria: 'Presenza Online', domanda: 'Hai un Google Business Profile aggiornato con recensioni?', tipo: 'si_no', peso: 2 },
+  { id: 'q9', categoria: 'Presenza Online', domanda: 'Hai almeno 1 landing page dedicata per campagne specifiche?', tipo: 'si_no', peso: 2 },
+  
+  // KPI & Dashboard
+  { id: 'q10', categoria: 'KPI & Dashboard', domanda: 'Monitori almeno 3 KPI digitali (lead, conversioni, traffico)?', tipo: 'si_no', peso: 3 },
+  { id: 'q11', categoria: 'KPI & Dashboard', domanda: 'Hai una dashboard dove vedi i numeri principali in tempo reale?', tipo: 'si_no', peso: 2 },
+  { id: 'q12', categoria: 'KPI & Dashboard', domanda: 'Sai da dove arrivano i tuoi migliori clienti?', tipo: 'si_no', peso: 2 },
+  
+  // Uso dell'IA
+  { id: 'q13', categoria: 'Uso dell\'IA', domanda: 'Usi l\'AI per generare contenuti (post, email, copy)?', tipo: 'si_no', peso: 2 },
+  { id: 'q14', categoria: 'Uso dell\'IA', domanda: 'Hai provato almeno 1 tool AI per analizzare dati aziendali?', tipo: 'si_no', peso: 2 },
+  { id: 'q15', categoria: 'Uso dell\'IA', domanda: 'Hai template AI pronti per le attività ripetitive?', tipo: 'si_no', peso: 2 },
+];
+
+export default function TestMaturitaDigitalePage() {
+  const [currentStep, setCurrentStep] = useState<'form' | 'questions' | 'results'>('form');
+  const [answers, setAnswers] = useState<Record<string, any>>({});
+  const [results, setResults] = useState<any>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState<TestMaturitaInput | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+  } = useForm<TestMaturitaInput>({
+    resolver: zodResolver(testMaturitaSchema),
+  });
+
+  const onSubmitForm = async (data: TestMaturitaInput) => {
+    setFormData(data);
+    setCurrentStep('questions');
+  };
+
+  const handleAnswer = (questionId: string, value: any) => {
+    setAnswers({ ...answers, [questionId]: value });
+  };
+
+  const calculateResults = () => {
+    const scoresPerCategory: Record<string, number> = {};
+    let totalScore = 0;
+    let maxScore = 0;
+
+    questions.forEach((q) => {
+      const answer = answers[q.id];
+      const category = q.categoria;
+      
+      if (!scoresPerCategory[category]) {
+        scoresPerCategory[category] = 0;
+      }
+
+      maxScore += q.peso;
+
+      if (answer === true || answer === 'si') {
+        scoresPerCategory[category] += q.peso;
+        totalScore += q.peso;
+      }
+    });
+
+    const percentage = (totalScore / maxScore) * 100;
+    
+    let livello = 'Iniziale';
+    if (percentage >= 80) livello = 'Eccellente';
+    else if (percentage >= 60) livello = 'Avanzato';
+    else if (percentage >= 40) livello = 'Intermedio';
+    else if (percentage >= 20) livello = 'Base';
+
+    const raccomandazioni: string[] = [];
+    
+    Object.entries(scoresPerCategory).forEach(([category, score]) => {
+      const categoryMax = questions
+        .filter((q) => q.categoria === category)
+        .reduce((sum, q) => sum + q.peso, 0);
+      const categoryPercentage = (score / categoryMax) * 100;
+      
+      if (categoryPercentage < 50) {
+        raccomandazioni.push(`Migliora ${category}: hai completato solo il ${categoryPercentage.toFixed(0)}% delle attività`);
+      }
+    });
+
+    return {
+      punteggio_totale: totalScore,
+      punteggio_per_categoria: scoresPerCategory,
+      livello_maturita: livello,
+      percentage,
+      raccomandazioni,
+    };
+  };
+
+  const submitTest = async () => {
+    setIsSubmitting(true);
+    const calculatedResults = calculateResults();
+    setResults(calculatedResults);
+
+    try {
+      // Salva risultati con dati del form iniziale
+      const formValues = formData || getValues();
+      await fetch('/api/test-maturita/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome: formValues.nome,
+          cognome: formValues.cognome,
+          email: formValues.email,
+          azienda: formValues.azienda,
+          risposte: answers,
+          punteggio_totale: calculatedResults.punteggio_totale,
+          punteggio_per_categoria: calculatedResults.punteggio_per_categoria,
+          livello_maturita: calculatedResults.livello_maturita,
+          raccomandazioni: calculatedResults.raccomandazioni,
+        }),
+      });
+    } catch (error) {
+      console.error('Error saving test:', error);
+    } finally {
+      setIsSubmitting(false);
+      setCurrentStep('results');
+    }
+  };
+
+  const allQuestionsAnswered = questions.every((q) => answers[q.id] !== undefined);
+
+  if (currentStep === 'form') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 py-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12">
+            <h1 className="text-4xl font-bold mb-6 text-center font-heading">
+              Test di Maturità Digitale
+            </h1>
+            <p className="text-center text-gray-600 mb-8">
+              Scopri il livello di digitalizzazione della tua azienda in 5 minuti
+            </p>
+
+            <form onSubmit={handleSubmit(onSubmitForm)} className="space-y-6">
+              <div>
+                <label className="block text-sm font-semibold mb-2">Nome</label>
+                <input
+                  {...register('nome')}
+                  type="text"
+                  className="w-full px-4 py-3 border rounded-lg"
+                  placeholder="Mario"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-2">Cognome</label>
+                <input
+                  {...register('cognome')}
+                  type="text"
+                  className="w-full px-4 py-3 border rounded-lg"
+                  placeholder="Rossi"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-2">Email</label>
+                <input
+                  {...register('email')}
+                  type="email"
+                  className="w-full px-4 py-3 border rounded-lg"
+                  placeholder="mario.rossi@azienda.it"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-2">Azienda (opzionale)</label>
+                <input
+                  {...register('azienda')}
+                  type="text"
+                  className="w-full px-4 py-3 border rounded-lg"
+                  placeholder="Nome azienda"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all"
+              >
+                Inizia il Test
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (currentStep === 'questions') {
+    const currentCategory = questions.find((q) => !answers[q.id])?.categoria || '';
+    const questionsInCategory = questions.filter((q) => q.categoria === currentCategory);
+    const answeredCount = questions.filter((q) => answers[q.id] !== undefined).length;
+
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 py-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            {/* Progress Bar */}
+            <div className="mb-8">
+              <div className="flex justify-between mb-2">
+                <span className="text-sm font-semibold">{currentCategory}</span>
+                <span className="text-sm text-gray-600">
+                  {answeredCount} / {questions.length}
+                </span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div
+                  className="bg-gradient-to-r from-purple-600 to-blue-600 h-2 rounded-full transition-all"
+                  style={{ width: `${(answeredCount / questions.length) * 100}%` }}
+                ></div>
+              </div>
+            </div>
+
+            {/* Questions */}
+            <div className="bg-white rounded-xl shadow-lg p-8 space-y-8">
+              {questionsInCategory.map((question) => (
+                <div key={question.id} className="border-b pb-6 last:border-0">
+                  <h3 className="text-lg font-semibold mb-4">{question.domanda}</h3>
+                  <div className="flex gap-4">
+                    <button
+                      onClick={() => handleAnswer(question.id, true)}
+                      className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all ${
+                        answers[question.id] === true
+                          ? 'bg-green-500 text-white'
+                          : 'bg-gray-100 hover:bg-gray-200'
+                      }`}
+                    >
+                      ✅ Sì
+                    </button>
+                    <button
+                      onClick={() => handleAnswer(question.id, false)}
+                      className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all ${
+                        answers[question.id] === false
+                          ? 'bg-red-500 text-white'
+                          : 'bg-gray-100 hover:bg-gray-200'
+                      }`}
+                    >
+                      ❌ No
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Submit Button */}
+            {allQuestionsAnswered && (
+              <div className="mt-8 text-center">
+                <button
+                  onClick={submitTest}
+                  disabled={isSubmitting}
+                  className="bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 px-12 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all disabled:opacity-50"
+                >
+                  {isSubmitting ? 'Calcolo risultati...' : 'Vedi Risultati'}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (currentStep === 'results' && results) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 py-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            {/* Score Card */}
+            <div className="bg-white rounded-xl shadow-xl p-8 mb-8 text-center">
+              <h2 className="text-3xl font-bold mb-4 font-heading">Il Tuo Livello di Maturità</h2>
+              <div className="text-6xl font-bold mb-2 text-purple-600">
+                {results.percentage.toFixed(0)}%
+              </div>
+              <div className="text-2xl font-semibold text-gray-700 mb-6">
+                {results.livello_maturita}
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-4">
+                <div
+                  className="bg-gradient-to-r from-purple-600 to-blue-600 h-4 rounded-full transition-all"
+                  style={{ width: `${results.percentage}%` }}
+                ></div>
+              </div>
+            </div>
+
+            {/* Per Categoria */}
+            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+              <h3 className="text-2xl font-bold mb-6 font-heading">Punteggio per Categoria</h3>
+              <div className="space-y-4">
+                {Object.entries(results.punteggio_per_categoria).map(([category, score]: [string, any]) => {
+                  const categoryMax = questions
+                    .filter((q) => q.categoria === category)
+                    .reduce((sum, q) => sum + q.peso, 0);
+                  const percentage = (score / categoryMax) * 100;
+                  
+                  return (
+                    <div key={category}>
+                      <div className="flex justify-between mb-2">
+                        <span className="font-semibold">{category}</span>
+                        <span className="text-gray-600">
+                          {score} / {categoryMax} ({percentage.toFixed(0)}%)
+                        </span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div
+                          className={`h-2 rounded-full transition-all ${
+                            percentage >= 70
+                              ? 'bg-green-500'
+                              : percentage >= 40
+                              ? 'bg-yellow-500'
+                              : 'bg-red-500'
+                          }`}
+                          style={{ width: `${percentage}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Raccomandazioni */}
+            {results.raccomandazioni.length > 0 && (
+              <div className="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-6 mb-8">
+                <h3 className="text-xl font-bold mb-4 font-heading">💡 Raccomandazioni</h3>
+                <ul className="space-y-2">
+                  {results.raccomandazioni.map((rec: string, idx: number) => (
+                    <li key={idx} className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>{rec}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* CTA */}
+            <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl shadow-xl p-8 text-white text-center">
+              <h3 className="text-2xl font-bold mb-4 font-heading">
+                Vuoi Migliorare la Tua Maturità Digitale?
+              </h3>
+              <p className="mb-6">
+                Prenota un Check-up Digitale Gratuito e scopri come possiamo aiutarti
+              </p>
+              <a
+                href={process.env.NEXT_PUBLIC_CALENDLY_CHECKUP_URL || 'https://calendly.com/enricorizzi/check-up-gratuito-in-azienda'}
+                className="inline-block bg-white text-purple-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-all"
+              >
+                Prenota Check-up Gratuito
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+}
+
