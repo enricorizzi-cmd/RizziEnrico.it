@@ -49,9 +49,9 @@ export async function GET(request: NextRequest) {
 
     const totaleChiamate = chiamateData?.reduce((sum, lead) => sum + (lead.numero_chiamate || 0), 0) || 0;
 
-    // Tasso presenza
-    const tassoPresenza = confermati && confermati > 0 
-      ? ((presenti || 0) / confermati) * 100 
+    // Tasso presenza: presenti / totale iscritti
+    const tassoPresenza = totaleIscritti && totaleIscritti > 0 
+      ? ((presenti || 0) / totaleIscritti) * 100 
       : 0;
 
     return NextResponse.json({
