@@ -106,7 +106,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
         const fallbackText = `${options.text}\n\n---\n[NOTA] Questa email era destinata a: ${options.to}\nInviata a enricorizzi1991@gmail.com perché Resend è in modalità test.\n${leadEmailSent ? '✅ Email inviata anche al lead originale.' : '❌ Email NON inviata al lead originale (bloccata da Resend test mode).'}`;
         
         const fallbackResult = await resend.emails.send({
-          from: fromEmail,
+          from: 'onboarding@resend.dev', // Usa sempre onboarding@resend.dev per il fallback (funziona sempre)
           to: 'enricorizzi1991@gmail.com',
           subject: fallbackSubject,
           html: (options.html || options.text.replace(/\n/g, '<br>')) + `<br><br><hr><p><small>[NOTA] Questa email era destinata a: ${options.to}<br>Inviata a enricorizzi1991@gmail.com perché Resend è in modalità test.<br>${leadEmailSent ? '✅ Email inviata anche al lead originale.' : '❌ Email NON inviata al lead originale (bloccata da Resend test mode).'}</small></p>`,
@@ -206,7 +206,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
         const fallbackText = `${options.text}\n\n---\n[NOTA] Questa email era destinata a: ${options.to}\nInviata a enricorizzi1991@gmail.com perché Resend è in modalità test.\n${leadEmailSent ? '✅ Email inviata anche al lead originale.' : '❌ Email NON inviata al lead originale (bloccata da Resend test mode).'}`;
         
         const fallbackResult = await resend.emails.send({
-          from: fromEmail,
+          from: 'onboarding@resend.dev', // Usa sempre onboarding@resend.dev per il fallback (funziona sempre)
           to: 'enricorizzi1991@gmail.com',
           subject: fallbackSubject,
           html: (options.html || options.text.replace(/\n/g, '<br>')) + `<br><br><hr><p><small>[NOTA] Questa email era destinata a: ${options.to}<br>Inviata a enricorizzi1991@gmail.com perché Resend è in modalità test.<br>${leadEmailSent ? '✅ Email inviata anche al lead originale.' : '❌ Email NON inviata al lead originale (bloccata da Resend test mode).'}</small></p>`,
