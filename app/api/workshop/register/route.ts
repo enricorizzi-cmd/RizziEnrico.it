@@ -129,6 +129,24 @@ OSM Partner Venezia`;
         subject: '🎉 Registrazione Workshop Confermata - Automatizza la tua Azienda',
         html: confirmEmailHtml,
         text: confirmEmailText,
+        emailId: 'email_conferma_iscrizione',
+        leadId: lead.id,
+      }).then(async () => {
+        // Aggiorna metadata per tracciare email conferma inviata
+        const { data: currentLead } = await supabase
+          .from('workshop_leads')
+          .select('metadata')
+          .eq('id', lead.id)
+          .single();
+        
+        if (currentLead) {
+          const metadata = (currentLead.metadata as any) || {};
+          metadata.email_conferma_iscrizione_sent = new Date().toISOString();
+          await supabase
+            .from('workshop_leads')
+            .update({ metadata })
+            .eq('id', lead.id);
+        }
       }).catch((err) => {
         console.error('[WORKSHOP] Errore invio email conferma (non bloccante):', err);
         return false;
@@ -227,6 +245,22 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
               emailId: 'auto_test_5_giorni',
               leadId: lead.id,
             });
+
+            // Aggiorna metadata per tracciare email inviata
+            const { data: currentLead } = await supabase
+              .from('workshop_leads')
+              .select('metadata')
+              .eq('id', lead.id)
+              .single();
+            
+            if (currentLead) {
+              const metadata = (currentLead.metadata as any) || {};
+              metadata.email_5_giorni_sent = new Date().toISOString();
+              await supabase
+                .from('workshop_leads')
+                .update({ metadata })
+                .eq('id', lead.id);
+            }
           } catch (err) {
             console.error('[WORKSHOP] Errore invio email T+5 automatica:', err);
           }
@@ -265,6 +299,22 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
               emailId: 'auto_test_10_giorni',
               leadId: lead.id,
             });
+
+            // Aggiorna metadata per tracciare email inviata
+            const { data: currentLead } = await supabase
+              .from('workshop_leads')
+              .select('metadata')
+              .eq('id', lead.id)
+              .single();
+            
+            if (currentLead) {
+              const metadata = (currentLead.metadata as any) || {};
+              metadata.email_10_giorni_sent = new Date().toISOString();
+              await supabase
+                .from('workshop_leads')
+                .update({ metadata })
+                .eq('id', lead.id);
+            }
           } catch (err) {
             console.error('[WORKSHOP] Errore invio email T+10 automatica:', err);
           }
@@ -302,6 +352,22 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
               emailId: 'auto_test_3_giorni',
               leadId: lead.id,
             });
+
+            // Aggiorna metadata per tracciare email inviata
+            const { data: currentLead } = await supabase
+              .from('workshop_leads')
+              .select('metadata')
+              .eq('id', lead.id)
+              .single();
+            
+            if (currentLead) {
+              const metadata = (currentLead.metadata as any) || {};
+              metadata.email_3_giorni_sent = new Date().toISOString();
+              await supabase
+                .from('workshop_leads')
+                .update({ metadata })
+                .eq('id', lead.id);
+            }
           } catch (err) {
             console.error('[WORKSHOP] Errore invio email T-3 automatica:', err);
           }
@@ -339,6 +405,22 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
               emailId: 'auto_test_giorno_evento',
               leadId: lead.id,
             });
+
+            // Aggiorna metadata per tracciare email inviata
+            const { data: currentLead } = await supabase
+              .from('workshop_leads')
+              .select('metadata')
+              .eq('id', lead.id)
+              .single();
+            
+            if (currentLead) {
+              const metadata = (currentLead.metadata as any) || {};
+              metadata.email_giorno_evento_sent = new Date().toISOString();
+              await supabase
+                .from('workshop_leads')
+                .update({ metadata })
+                .eq('id', lead.id);
+            }
           } catch (err) {
             console.error('[WORKSHOP] Errore invio email T+0 automatica:', err);
           }

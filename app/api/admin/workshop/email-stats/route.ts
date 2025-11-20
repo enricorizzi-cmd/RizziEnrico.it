@@ -21,6 +21,7 @@ export async function GET(request: NextRequest) {
 
     // Analizza metadata per tracciare email inviate
     const emailTypes = [
+      'email_conferma_iscrizione_sent',
       'email_5_giorni_sent',
       'email_10_giorni_sent',
       'email_3_giorni_sent',
