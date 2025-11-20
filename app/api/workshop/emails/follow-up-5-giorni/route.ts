@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
       .from('workshop_leads')
       .select('*')
       .in('stato', ['nuovo', 'confermato'])
-      .eq('evento', 'Workshop 12.12.2024')
+      .eq('evento', 'Workshop 12.12.2024') // Manteniamo per retrocompatibilità con lead esistenti
       .gte('created_at', `${fiveDaysAgoStr}T00:00:00`)
       .lt('created_at', `${fiveDaysAgoStr}T23:59:59`);
 

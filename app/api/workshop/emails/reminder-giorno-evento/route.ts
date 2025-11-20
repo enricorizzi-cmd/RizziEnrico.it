@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       .from('workshop_leads')
       .select('*')
       .in('stato', ['nuovo', 'confermato'])
-      .eq('evento', 'Workshop 12.12.2024');
+      .eq('evento', 'Workshop 12.12.2024'); // Manteniamo per retrocompatibilità con lead esistenti
 
     if (error) {
       console.error('Supabase error:', error);

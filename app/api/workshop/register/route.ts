@@ -277,7 +277,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
 
             await sendEmail({
               to: validatedData.email,
-              subject: '🎯 [AUTO-TEST] A 5 giorni dal workshop: preparati al meglio',
+              subject: '🎯 [AUTO-TEST] Preparati al meglio per il workshop',
               html: emailHtml,
               text: `Test automatico email T+5`,
               emailId: 'auto_test_5_giorni',

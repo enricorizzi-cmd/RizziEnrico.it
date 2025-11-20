@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
       .from('workshop_leads')
       .select('*')
       .eq('email', TEST_EMAIL)
-      .eq('evento', 'Workshop 12.12.2024')
+      .eq('evento', 'Workshop 12.12.2024') // Manteniamo per retrocompatibilità con lead esistenti
       .limit(1)
       .single();
 
@@ -76,14 +76,14 @@ export async function POST(request: NextRequest) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
     <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
-      <h1 style="color: white; margin: 0; font-size: 28px;">🎉 Registrazione Confermata!    </h1>
+      <h1 style="color: white; margin: 0; font-size: 28px;">🎉 Registrazione Confermata!</h1>
     </a>
   </div>
   
-  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+  <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
     <p>Grazie per esserti iscritto al workshop:</p>
@@ -152,6 +152,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
         text: confirmEmailText,
         emailId: 'test_conferma',
         leadId: lead.id,
+        unsubscribeUrl: `${BASE_URL}/unsubscribe?email=${encodeURIComponent(TEST_EMAIL)}&lead=${encodeURIComponent(lead.id)}`,
       });
       emailResults.push({ type: 'Conferma Iscrizione', success: true });
     } catch (error: any) {
@@ -164,19 +165,19 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
       const emailHtml = `
 <!DOCTYPE html>
 <html>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
     <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
       <h1 style="color: white; margin: 0; font-size: 28px;">🎯 Preparati al Meglio    </h1>
     </a>
   </div>
   
-  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+  <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
     <p>Siamo felici che tu sia iscritto al workshop <strong>"Automatizza la tua Azienda: AI & Digitalizzazione"</strong>!</p>
     
-    <p>Mancano ancora <strong>${daysRemaining} giorni</strong> e vogliamo aiutarti a prepararti al meglio per trarre il massimo dall'evento.</p>
+    <p>Vogliamo aiutarti a prepararti al meglio per trarre il massimo dall'evento.</p>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
       <h3 style="margin-top: 0; color: #667eea;">Cosa vedrai al workshop:</h3>
@@ -208,11 +209,12 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
 
       await sendEmail({
         to: TEST_EMAIL,
-        subject: '🎯 [TEST] A 5 giorni dal workshop: preparati al meglio',
+        subject: '🎯 [TEST] Preparati al meglio per il workshop',
         html: emailHtml,
         text: `Test email T+5`,
         emailId: 'test_5_giorni',
         leadId: lead.id,
+        unsubscribeUrl: `${BASE_URL}/unsubscribe?email=${encodeURIComponent(TEST_EMAIL)}&lead=${encodeURIComponent(lead.id)}`,
       });
       emailResults.push({ type: 'Email T+5', success: true });
     } catch (error: any) {
@@ -225,17 +227,17 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
       const emailHtml = `
 <!DOCTYPE html>
 <html>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
     <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
       <h1 style="color: white; margin: 0; font-size: 28px;">💡 Case Study Reale    </h1>
     </a>
   </div>
   
-  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+  <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
-    <p>Mancano solo <strong>${daysUntilWorkshop} giorni</strong> al workshop e vogliamo condividere con te un caso reale di successo.</p>
+    <p>Manca poco al workshop e vogliamo condividere con te un caso reale di successo.</p>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
       <h3 style="margin-top: 0; color: #667eea;">📊 Case Study: PMI Veneta</h3>
@@ -274,6 +276,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
         text: `Test email T+10`,
         emailId: 'test_10_giorni',
         leadId: lead.id,
+        unsubscribeUrl: `${BASE_URL}/unsubscribe?email=${encodeURIComponent(TEST_EMAIL)}&lead=${encodeURIComponent(lead.id)}`,
       });
       emailResults.push({ type: 'Email T+10', success: true });
     } catch (error: any) {
@@ -285,14 +288,14 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
       const emailHtml = `
 <!DOCTYPE html>
 <html>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
     <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
       <h1 style="color: white; margin: 0; font-size: 28px;">⏰ Solo 3 Giorni!    </h1>
     </a>
   </div>
   
-  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+  <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
     <p>Ci siamo quasi! Solo <strong>3 giorni</strong> al workshop "Automatizza la tua Azienda: AI & Digitalizzazione".</p>
@@ -327,11 +330,12 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
 
       await sendEmail({
         to: TEST_EMAIL,
-        subject: '⏰ [TEST] Solo 3 giorni! Preparati per il workshop',
+        subject: '📋 [TEST] Preparati per il workshop',
         html: emailHtml,
         text: `Test email T-3`,
         emailId: 'test_3_giorni',
         leadId: lead.id,
+        unsubscribeUrl: `${BASE_URL}/unsubscribe?email=${encodeURIComponent(TEST_EMAIL)}&lead=${encodeURIComponent(lead.id)}`,
       });
       emailResults.push({ type: 'Email T-3', success: true });
     } catch (error: any) {
@@ -343,13 +347,13 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
       const emailHtml = `
 <!DOCTYPE html>
 <html>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
     <h1 style="color: white; margin: 0; font-size: 32px;">🚀 Oggi è il Giorno!    </h1>
     </a>
   </div>
   
-  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+  <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 20px; margin-bottom: 20px; font-weight: bold;">Ciao <strong>${lead.nome}</strong>,</p>
     
     <p style="font-size: 18px; margin-bottom: 20px;">Oggi è il giorno! Stasera alle <strong>18:00</strong> ti aspettiamo al workshop <strong>"Automatizza la tua Azienda: AI & Digitalizzazione"</strong>.</p>
@@ -375,11 +379,12 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
 
       await sendEmail({
         to: TEST_EMAIL,
-        subject: '🚀 [TEST] Oggi è il giorno! Ti aspettiamo stasera alle 18:00',
+        subject: '🚀 [TEST] Oggi è il giorno! Ti aspettiamo dalle ore 17.00',
         html: emailHtml,
         text: `Test email T+0`,
         emailId: 'test_giorno_evento',
         leadId: lead.id,
+        unsubscribeUrl: `${BASE_URL}/unsubscribe?email=${encodeURIComponent(TEST_EMAIL)}&lead=${encodeURIComponent(lead.id)}`,
       });
       emailResults.push({ type: 'Email T+0', success: true });
     } catch (error: any) {
@@ -391,14 +396,14 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
       const emailHtml = `
 <!DOCTYPE html>
 <html>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
     <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
       <h1 style="color: white; margin: 0; font-size: 28px;">🎉 Grazie!    </h1>
     </a>
   </div>
   
-  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+  <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
     <p>Grazie per essere stato al workshop "Automatizza la tua Azienda: AI & Digitalizzazione"!</p>
@@ -433,6 +438,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
         text: `Test email post-evento`,
         emailId: 'test_post_immediata',
         leadId: lead.id,
+        unsubscribeUrl: `${BASE_URL}/unsubscribe?email=${encodeURIComponent(TEST_EMAIL)}&lead=${encodeURIComponent(lead.id)}`,
       });
       emailResults.push({ type: 'Email Post-Evento Immediata', success: true });
     } catch (error: any) {
