@@ -42,6 +42,7 @@ const questions: Question[] = [
 
 export default function TestMaturitaDigitalePage() {
   const [currentStep, setCurrentStep] = useState<'form' | 'questions' | 'results'>('form');
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, any>>({});
   const [results, setResults] = useState<any>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,11 +59,30 @@ export default function TestMaturitaDigitalePage() {
 
   const onSubmitForm = async (data: TestMaturitaFormInput) => {
     setFormData(data);
+    setCurrentQuestionIndex(0);
     setCurrentStep('questions');
   };
 
   const handleAnswer = (questionId: string, value: any) => {
     setAnswers({ ...answers, [questionId]: value });
+    // Avanza automaticamente alla domanda successiva dopo 300ms
+    setTimeout(() => {
+      if (currentQuestionIndex < questions.length - 1) {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+      }
+    }, 300);
+  };
+
+  const goToNext = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+  };
+
+  const goToPrevious = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    }
   };
 
   const calculateResults = () => {
@@ -224,9 +244,10 @@ export default function TestMaturitaDigitalePage() {
   }
 
   if (currentStep === 'questions') {
-    const currentCategory = questions.find((q) => !answers[q.id])?.categoria || '';
-    const questionsInCategory = questions.filter((q) => q.categoria === currentCategory);
+    const currentQuestion = questions[currentQuestionIndex];
     const answeredCount = questions.filter((q) => answers[q.id] !== undefined).length;
+    const isFirstQuestion = currentQuestionIndex === 0;
+    const isLastQuestion = currentQuestionIndex === questions.length - 1;
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 py-16">
@@ -235,62 +256,81 @@ export default function TestMaturitaDigitalePage() {
             {/* Progress Bar */}
             <div className="mb-8">
               <div className="flex justify-between mb-2">
-                <span className="text-sm font-semibold">{currentCategory}</span>
+                <span className="text-sm font-semibold">{currentQuestion.categoria}</span>
                 <span className="text-sm text-gray-600">
-                  {answeredCount} / {questions.length}
+                  Domanda {currentQuestionIndex + 1} / {questions.length}
                 </span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div
                   className="bg-gradient-to-r from-purple-600 to-blue-600 h-2 rounded-full transition-all"
-                  style={{ width: `${(answeredCount / questions.length) * 100}%` }}
+                  style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
                 ></div>
               </div>
             </div>
 
-            {/* Questions */}
-            <div className="bg-white rounded-xl shadow-lg p-8 space-y-8">
-              {questionsInCategory.map((question) => (
-                <div key={question.id} className="border-b pb-6 last:border-0">
-                  <h3 className="text-lg font-semibold mb-4">{question.domanda}</h3>
-                  <div className="flex gap-4">
-                    <button
-                      onClick={() => handleAnswer(question.id, true)}
-                      className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all ${
-                        answers[question.id] === true
-                          ? 'bg-green-500 text-white'
-                          : 'bg-gray-100 hover:bg-gray-200'
-                      }`}
-                    >
-                      ✅ Sì
-                    </button>
-                    <button
-                      onClick={() => handleAnswer(question.id, false)}
-                      className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all ${
-                        answers[question.id] === false
-                          ? 'bg-red-500 text-white'
-                          : 'bg-gray-100 hover:bg-gray-200'
-                      }`}
-                    >
-                      ❌ No
-                    </button>
-                  </div>
-                </div>
-              ))}
+            {/* Current Question */}
+            <div className="bg-white rounded-xl shadow-lg p-8 mb-6">
+              <h3 className="text-lg font-semibold mb-6">{currentQuestion.domanda}</h3>
+              <div className="flex gap-4 mb-6">
+                <button
+                  onClick={() => handleAnswer(currentQuestion.id, true)}
+                  className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all ${
+                    answers[currentQuestion.id] === true
+                      ? 'bg-green-500 text-white'
+                      : 'bg-gray-100 hover:bg-gray-200'
+                  }`}
+                >
+                  ✅ Sì
+                </button>
+                <button
+                  onClick={() => handleAnswer(currentQuestion.id, false)}
+                  className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all ${
+                    answers[currentQuestion.id] === false
+                      ? 'bg-red-500 text-white'
+                      : 'bg-gray-100 hover:bg-gray-200'
+                  }`}
+                >
+                  ❌ No
+                </button>
+              </div>
             </div>
 
-            {/* Submit Button */}
-            {allQuestionsAnswered && (
-              <div className="mt-8 text-center">
+            {/* Navigation Buttons */}
+            <div className="flex justify-between gap-4">
+              <button
+                onClick={goToPrevious}
+                disabled={isFirstQuestion}
+                className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                  isFirstQuestion
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
+                }`}
+              >
+                ← Indietro
+              </button>
+              
+              {isLastQuestion ? (
                 <button
                   onClick={submitTest}
-                  disabled={isSubmitting}
-                  className="bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 px-12 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all disabled:opacity-50"
+                  disabled={isSubmitting || !allQuestionsAnswered}
+                  className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                    isSubmitting || !allQuestionsAnswered
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700'
+                  }`}
                 >
                   {isSubmitting ? 'Calcolo risultati...' : 'Vedi Risultati'}
                 </button>
-              </div>
-            )}
+              ) : (
+                <button
+                  onClick={goToNext}
+                  className="px-6 py-3 rounded-lg font-semibold bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 transition-all"
+                >
+                  Successivo →
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

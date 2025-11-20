@@ -105,29 +105,46 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
         const fallbackSubject = `[FALLBACK] ${options.subject} (destinata a: ${options.to})`;
         const fallbackText = `${options.text}\n\n---\n[NOTA] Questa email era destinata a: ${options.to}\nInviata a enricorizzi1991@gmail.com perché Resend è in modalità test.\n${leadEmailSent ? '✅ Email inviata anche al lead originale.' : '❌ Email NON inviata al lead originale (bloccata da Resend test mode).'}`;
         
-        const fallbackResult = await resend.emails.send({
-          from: 'onboarding@resend.dev', // Usa sempre onboarding@resend.dev per il fallback (funziona sempre)
-          to: 'enricorizzi1991@gmail.com',
-          subject: fallbackSubject,
-          html: (options.html || options.text.replace(/\n/g, '<br>')) + `<br><br><hr><p><small>[NOTA] Questa email era destinata a: ${options.to}<br>Inviata a enricorizzi1991@gmail.com perché Resend è in modalità test.<br>${leadEmailSent ? '✅ Email inviata anche al lead originale.' : '❌ Email NON inviata al lead originale (bloccata da Resend test mode).'}</small></p>`,
-          text: fallbackText,
-        });
-        
-        if (fallbackResult.error) {
-          console.error('[EMAIL] ❌ Errore anche nel fallback:', JSON.stringify(fallbackResult.error, null, 2));
-          return leadEmailSent; // Ritorna true se almeno il lead ha ricevuto l'email
-        }
-        
-        if (fallbackResult.data) {
-          console.log('[EMAIL] ✅ Email fallback inviata:', { 
-            id: fallbackResult.data.id, 
-            originalTo: options.to,
-            fallbackTo: 'enricorizzi1991@gmail.com',
-            leadEmailSent,
-            from: fromEmail,
-            timestamp: new Date().toISOString(),
+        try {
+          console.log('[EMAIL] 🔄 Tentativo invio fallback a enricorizzi1991@gmail.com');
+          const fallbackResult = await resend.emails.send({
+            from: 'onboarding@resend.dev', // Usa sempre onboarding@resend.dev per il fallback (funziona sempre)
+            to: 'enricorizzi1991@gmail.com',
+            subject: fallbackSubject,
+            html: (options.html || options.text.replace(/\n/g, '<br>')) + `<br><br><hr><p><small>[NOTA] Questa email era destinata a: ${options.to}<br>Inviata a enricorizzi1991@gmail.com perché Resend è in modalità test.<br>${leadEmailSent ? '✅ Email inviata anche al lead originale.' : '❌ Email NON inviata al lead originale (bloccata da Resend test mode).'}</small></p>`,
+            text: fallbackText,
           });
-          return true; // Ritorna true se almeno il fallback è stato inviato
+          
+          if (fallbackResult.error) {
+            console.error('[EMAIL] ❌ Errore anche nel fallback:', JSON.stringify(fallbackResult.error, null, 2));
+            console.error('[EMAIL] ❌ Dettagli errore fallback:', {
+              statusCode: fallbackResult.error.statusCode,
+              message: fallbackResult.error.message,
+              name: fallbackResult.error.name,
+            });
+            // Anche se il fallback fallisce, ritorna true se il lead ha ricevuto l'email
+            return leadEmailSent;
+          }
+          
+          if (fallbackResult.data) {
+            console.log('[EMAIL] ✅ Email fallback inviata con successo:', { 
+              id: fallbackResult.data.id, 
+              originalTo: options.to,
+              fallbackTo: 'enricorizzi1991@gmail.com',
+              leadEmailSent,
+              from: 'onboarding@resend.dev',
+              timestamp: new Date().toISOString(),
+            });
+            return true; // Ritorna true se almeno il fallback è stato inviato
+          }
+        } catch (fallbackError: any) {
+          console.error('[EMAIL] ❌ Eccezione durante invio fallback:', {
+            message: fallbackError?.message,
+            name: fallbackError?.name,
+            stack: fallbackError?.stack?.substring(0, 500),
+          });
+          // Anche se il fallback fallisce, ritorna true se il lead ha ricevuto l'email
+          return leadEmailSent;
         }
       }
       
@@ -205,24 +222,44 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
         const fallbackSubject = `[FALLBACK] ${options.subject} (destinata a: ${options.to})`;
         const fallbackText = `${options.text}\n\n---\n[NOTA] Questa email era destinata a: ${options.to}\nInviata a enricorizzi1991@gmail.com perché Resend è in modalità test.\n${leadEmailSent ? '✅ Email inviata anche al lead originale.' : '❌ Email NON inviata al lead originale (bloccata da Resend test mode).'}`;
         
-        const fallbackResult = await resend.emails.send({
-          from: 'onboarding@resend.dev', // Usa sempre onboarding@resend.dev per il fallback (funziona sempre)
-          to: 'enricorizzi1991@gmail.com',
-          subject: fallbackSubject,
-          html: (options.html || options.text.replace(/\n/g, '<br>')) + `<br><br><hr><p><small>[NOTA] Questa email era destinata a: ${options.to}<br>Inviata a enricorizzi1991@gmail.com perché Resend è in modalità test.<br>${leadEmailSent ? '✅ Email inviata anche al lead originale.' : '❌ Email NON inviata al lead originale (bloccata da Resend test mode).'}</small></p>`,
-          text: fallbackText,
-        });
-        
-        if (fallbackResult.data) {
-          console.log('[EMAIL] ✅ Email fallback inviata (catch):', { 
-            id: fallbackResult.data.id, 
-            originalTo: options.to,
-            fallbackTo: 'enricorizzi1991@gmail.com',
-            leadEmailSent,
-            from: fromEmail,
-            timestamp: new Date().toISOString(),
+        try {
+          console.log('[EMAIL] 🔄 Tentativo invio fallback a enricorizzi1991@gmail.com (catch)');
+          const fallbackResult = await resend.emails.send({
+            from: 'onboarding@resend.dev', // Usa sempre onboarding@resend.dev per il fallback (funziona sempre)
+            to: 'enricorizzi1991@gmail.com',
+            subject: fallbackSubject,
+            html: (options.html || options.text.replace(/\n/g, '<br>')) + `<br><br><hr><p><small>[NOTA] Questa email era destinata a: ${options.to}<br>Inviata a enricorizzi1991@gmail.com perché Resend è in modalità test.<br>${leadEmailSent ? '✅ Email inviata anche al lead originale.' : '❌ Email NON inviata al lead originale (bloccata da Resend test mode).'}</small></p>`,
+            text: fallbackText,
           });
-          return true;
+          
+          if (fallbackResult.error) {
+            console.error('[EMAIL] ❌ Errore anche nel fallback (catch):', JSON.stringify(fallbackResult.error, null, 2));
+            console.error('[EMAIL] ❌ Dettagli errore fallback (catch):', {
+              statusCode: fallbackResult.error.statusCode,
+              message: fallbackResult.error.message,
+              name: fallbackResult.error.name,
+            });
+            return leadEmailSent;
+          }
+          
+          if (fallbackResult.data) {
+            console.log('[EMAIL] ✅ Email fallback inviata con successo (catch):', { 
+              id: fallbackResult.data.id, 
+              originalTo: options.to,
+              fallbackTo: 'enricorizzi1991@gmail.com',
+              leadEmailSent,
+              from: 'onboarding@resend.dev',
+              timestamp: new Date().toISOString(),
+            });
+            return true;
+          }
+        } catch (fallbackError: any) {
+          console.error('[EMAIL] ❌ Eccezione durante invio fallback (catch):', {
+            message: fallbackError?.message,
+            name: fallbackError?.name,
+            stack: fallbackError?.stack?.substring(0, 500),
+          });
+          return leadEmailSent;
         }
       } catch (fallbackError) {
         console.error('[EMAIL] ❌ Errore anche nel fallback:', fallbackError);
