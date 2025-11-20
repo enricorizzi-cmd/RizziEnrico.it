@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     
     // Verifica se oggi è 3 giorni prima del workshop (9 dicembre)
     const today = new Date();
-    const workshopDate = new Date('2024-12-12');
+    const workshopDate = new Date('2025-12-12');
     const daysUntilWorkshop = Math.ceil((workshopDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
     
     if (daysUntilWorkshop !== 3) {

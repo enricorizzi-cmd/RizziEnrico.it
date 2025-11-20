@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     
     // Verifica se oggi è il giorno del workshop (12 dicembre)
     const today = new Date();
-    const workshopDate = new Date('2024-12-12');
+    const workshopDate = new Date('2025-12-12');
     const todayStr = today.toISOString().split('T')[0];
     const workshopDateStr = workshopDate.toISOString().split('T')[0];
     
