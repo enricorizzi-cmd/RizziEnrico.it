@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Image from 'next/image';
 import { testMaturitaFormSchema, testMaturitaSchema, type TestMaturitaFormInput, type TestMaturitaInput } from '@/lib/validators';
 
 interface Question {
@@ -199,29 +200,23 @@ export default function TestMaturitaDigitalePage() {
   if (currentStep === 'form') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 py-16 relative overflow-hidden">
-        {/* OSM Logo Background */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10">
-          <img 
-            src="/logo-osm.svg" 
-            alt="OSM Logo" 
-            className="w-96 h-96 object-contain"
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-        
         <div className="container mx-auto px-4 relative z-10">
+          {/* OSM Logo - Posizionato in alto */}
+          <div className="flex justify-center mb-8">
+            <Image
+              src="/logo-osm-partner.png"
+              alt="Open Source Management Partner"
+              width={150}
+              height={45}
+              className="object-contain opacity-80 hover:opacity-100 transition-opacity"
+              loading="eager"
+              quality={90}
+              sizes="150px"
+              priority
+            />
+          </div>
+          
           <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12">
-            <div className="flex justify-center mb-6">
-              <img 
-                src="/logo-osm.svg" 
-                alt="OSM Logo" 
-                className="h-16 object-contain"
-                loading="eager"
-                decoding="async"
-                fetchPriority="high"
-              />
-            </div>
             <h1 className="text-4xl font-bold mb-6 text-center font-heading">
               Test di Maturità Digitale
             </h1>

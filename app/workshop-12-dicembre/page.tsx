@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Image from 'next/image';
 import { workshopRegistrationSchema, type WorkshopRegistrationInput } from '@/lib/validators';
 
 export default function WorkshopPage() {
@@ -124,17 +125,6 @@ export default function WorkshopPage() {
         {/* Gradient Overlay with Animation */}
         <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-blue-600/10 to-purple-600/10 animate-gradient-shift"></div>
         
-        {/* OSM Logo */}
-        <div className="absolute inset-0 overflow-hidden flex items-center justify-center pointer-events-none opacity-20">
-          <img 
-            src="/logo-osm.svg" 
-            alt="OSM Logo" 
-            className="w-64 h-64 object-contain"
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-        
         {/* Floating Particles */}
         <div className="absolute inset-0 overflow-hidden">
           {[...Array(20)].map((_, i) => (
@@ -152,6 +142,20 @@ export default function WorkshopPage() {
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
+          {/* OSM Logo - Posizionato in alto a destra */}
+          <div className="flex justify-end mb-6">
+            <Image
+              src="/logo-osm-partner.png"
+              alt="Open Source Management Partner"
+              width={120}
+              height={36}
+              className="object-contain opacity-80 hover:opacity-100 transition-opacity"
+              loading="eager"
+              quality={90}
+              sizes="120px"
+            />
+          </div>
+          
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-block mb-6 animate-fade-in-down">
               <span className="px-6 py-3 bg-white/80 backdrop-blur-sm text-purple-700 rounded-full text-sm font-semibold shadow-lg border border-purple-200/50 hover:scale-105 transition-transform duration-300 inline-flex items-center gap-2">
