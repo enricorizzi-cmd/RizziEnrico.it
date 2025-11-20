@@ -66,10 +66,26 @@ export default function TestMaturitaAnalyticsDashboard() {
   const router = useRouter();
   const [stats, setStats] = useState<TestStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [aiInsights, setAiInsights] = useState<any>(null);
+  const [loadingInsights, setLoadingInsights] = useState(true);
 
   useEffect(() => {
     fetchStats();
+    fetchAIInsights();
   }, []);
+
+  const fetchAIInsights = async () => {
+    try {
+      const response = await fetch('/api/admin/test-maturita/insights');
+      if (!response.ok) throw new Error('Errore nel caricamento');
+      const data = await response.json();
+      setAiInsights(data.insights);
+    } catch (error) {
+      console.error('Error fetching AI insights:', error);
+    } finally {
+      setLoadingInsights(false);
+    }
+  };
 
   const fetchStats = async () => {
     try {

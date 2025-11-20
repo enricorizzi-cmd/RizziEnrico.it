@@ -26,7 +26,6 @@ export async function GET(request: NextRequest) {
       'email_10_giorni_sent',
       'email_3_giorni_sent',
       'email_giorno_evento_sent',
-      'email_1_giorno_sent', // reminder esistente
       'email_post_immediata_sent',
       'email_post_24h_sent',
       'email_post_48h_sent',

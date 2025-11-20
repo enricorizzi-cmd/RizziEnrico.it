@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@/lib/supabase';
 import { sendEmail } from '@/lib/email';
+import { generateICS, generateGoogleCalendarUrl, generateMapsUrl } from '@/lib/calendar';
 
 const NOTIFICATION_EMAIL = 'enricorizzi1991@gmail.com';
 const WORKSHOP_DATE = 'Venerdì 12 dicembre 2025';
@@ -191,9 +192,39 @@ export async function POST(request: NextRequest) {
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
       <h3 style="margin-top: 0; color: #667eea;">📅 Dettagli Evento:</h3>
-      <p style="margin: 5px 0;"><strong>Data:</strong> ${WORKSHOP_DATE}</p>
-      <p style="margin: 5px 0;"><strong>Orario:</strong> ${WORKSHOP_TIME}</p>
-      <p style="margin: 5px 0;"><strong>Luogo:</strong> ${WORKSHOP_LOCATION}</p>
+      <p style="margin: 5px 0;">
+        <strong>Data:</strong> 
+        <a href="${generateGoogleCalendarUrl({
+          title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
+          description: 'Workshop esclusivo OSM',
+          startDate: new Date('2025-12-12T17:00:00'),
+          endDate: new Date('2025-12-12T19:00:00'),
+          location: WORKSHOP_LOCATION,
+        })}" style="color: #667eea; text-decoration: underline;">${WORKSHOP_DATE}</a>
+        <span style="margin-left: 10px; font-size: 12px;">
+          (<a href="data:text/calendar;charset=utf-8,${encodeURIComponent(generateICS({
+            title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
+            description: 'Workshop esclusivo OSM',
+            startDate: new Date('2025-12-12T17:00:00'),
+            endDate: new Date('2025-12-12T19:00:00'),
+            location: WORKSHOP_LOCATION,
+          }))}" download="workshop-12-dicembre.ics" style="color: #667eea; text-decoration: underline;">Aggiungi al calendario</a>)
+        </span>
+      </p>
+      <p style="margin: 5px 0;">
+        <strong>🕐 Orario:</strong> 
+        <a href="${generateGoogleCalendarUrl({
+          title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
+          description: 'Workshop esclusivo OSM',
+          startDate: new Date('2025-12-12T17:00:00'),
+          endDate: new Date('2025-12-12T19:00:00'),
+          location: WORKSHOP_LOCATION,
+        })}" style="color: #667eea; text-decoration: underline;">${WORKSHOP_TIME}</a>
+      </p>
+      <p style="margin: 5px 0;">
+        <strong>📍 Luogo:</strong> 
+        <a href="${generateMapsUrl(WORKSHOP_LOCATION)}" style="color: #667eea; text-decoration: underline;">${WORKSHOP_LOCATION}</a>
+      </p>
     </div>
     
     <p style="margin-top: 30px;">Non vediamo l'ora di vederti! 🚀</p>

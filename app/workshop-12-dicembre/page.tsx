@@ -262,13 +262,13 @@ export default function WorkshopPage() {
                 {
                   icon: '🎯',
                   title: 'Sistema Concreto',
-                  desc: 'Vedrai un sistema reale (landing + CRM + automazioni + AI) che raccoglie, ordina e segue i lead.',
+                  desc: 'Vedrai un sistema reale (landing + CRM + automazioni + AI) che raccoglie, ordina e segue i lead. Lead marketing automation, automazioni di processi e creazione di strumenti personalizzati e dedicati su misura dell\'azienda.',
                   gradient: 'from-purple-500 to-purple-600',
                 },
                 {
                   icon: '🤖',
                   title: 'Automazioni Efficaci',
-                  desc: 'Scoprirai come automatizzare email, reminder e follow-up senza bisogno di IT interno.',
+                  desc: 'Scoprirai come automatizzare email, reminder e follow-up senza bisogno di IT interno. Oltre a questa demo ci saranno indicazioni su come dare comandi efficaci alle AI.',
                   gradient: 'from-blue-500 to-blue-600',
                 },
                 {
@@ -327,7 +327,7 @@ export default function WorkshopPage() {
                   </h3>
                   <ul className="space-y-4 text-gray-700">
                     {[
-                      'PMI tra 1 e 20 milioni di fatturato',
+                      'PMI che vogliono creare continuità e autonomia',
                       'Imprenditori che vogliono mettere ordine nella digitalizzazione',
                       'Chi cerca soluzioni concrete, non teoria',
                       'Chi vuole vedere risultati step by step',
@@ -349,10 +349,9 @@ export default function WorkshopPage() {
                   </h3>
                   <ul className="space-y-4 text-gray-700">
                     {[
-                      'Grandi aziende con IT interno dedicato',
                       'Chi cerca solo teoria senza pratica',
-                      'Chi non è pronto a investire nella digitalizzazione',
-                      'Consulenti informatici (è fatto per imprenditori)',
+                      'Chi vuole il software magico',
+                      'Chi cerca un incontro tecnico informatico (parleremo di opportunità e strategie)',
                     ].map((item, idx) => (
                       <li key={idx} className="flex items-start group/item">
                         <span className="text-red-500 mr-3 text-xl group-hover/item:scale-125 transition-transform duration-300">•</span>
@@ -387,7 +386,15 @@ export default function WorkshopPage() {
               </p>
             </div>
             <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 rounded-full font-semibold shadow-lg border-2 border-purple-200/50 hover:scale-105 hover:shadow-xl transition-all duration-300">
-              <span className="text-2xl animate-bounce">🏆</span>
+              <Image
+                src="/logo-osm-partner.png"
+                alt="OSM Partner Venezia"
+                width={40}
+                height={12}
+                className="object-contain opacity-80 hover:opacity-100 transition-opacity animate-pulse"
+                loading="lazy"
+                decoding="async"
+              />
               <span>OSM Partner Venezia</span>
             </div>
           </div>
@@ -544,7 +551,7 @@ export default function WorkshopPage() {
 
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Qual è oggi il principale problema che senti sulla digitalizzazione/marketing nella tua azienda?
+                    Qual è oggi il principale problema che senti sulla digitalizzazione/marketing nella tua azienda? *
                   </label>
                     <textarea
                       {...register('problema')}
@@ -552,6 +559,9 @@ export default function WorkshopPage() {
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm resize-none"
                       placeholder="Descrivi brevemente..."
                     />
+                    {errors.problema && (
+                      <p className="text-red-500 text-sm mt-1">{errors.problema.message}</p>
+                    )}
                 </div>
 
                 <input type="hidden" {...register('evento')} />

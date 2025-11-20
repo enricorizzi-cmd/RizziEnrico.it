@@ -43,7 +43,7 @@ export const workshopRegistrationSchema = z.object({
   ruolo: z.string().min(2, 'Ruolo richiesto').max(100),
   provincia: z.string().min(2, 'Provincia richiesta').max(50),
   fonte: z.enum(['BNI', 'OSM', 'Social', 'Passaparola', 'Altro']),
-  problema: z.string().optional(),
+  problema: z.string().min(5, 'Descrivi il problema principale (minimo 5 caratteri)'),
   evento: z.string(),
 });
 

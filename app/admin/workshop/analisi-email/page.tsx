@@ -61,11 +61,11 @@ interface EmailStats {
 }
 
 const EMAIL_TYPE_LABELS: Record<string, string> = {
+  'email_conferma_iscrizione_sent': 'Email conferma iscrizione',
   'email_5_giorni_sent': 'Email 5 giorni dopo iscrizione',
   'email_10_giorni_sent': 'Email 10 giorni dopo iscrizione',
   'email_3_giorni_sent': 'Email 3 giorni prima evento',
   'email_giorno_evento_sent': 'Email giorno evento',
-  'email_1_giorno_sent': 'Email 1 giorno prima (reminder)',
   'email_post_immediata_sent': 'Email post-evento immediata',
   'email_post_24h_sent': 'Email post-evento 24h',
   'email_post_48h_sent': 'Email post-evento 48h',

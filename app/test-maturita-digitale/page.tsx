@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
@@ -93,14 +93,23 @@ export default function TestMaturitaDigitalePage() {
   const goToNextPage = () => {
     if (currentPage < totalPages - 1) {
       setCurrentPage(currentPage + 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const goToPreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
+
+  // Scroll automatico in alto quando cambia la pagina
+  useEffect(() => {
+    if (currentStep === 'questions') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [currentPage, currentStep]);
 
   const calculateResults = () => {
     const scoresPerCategory: Record<string, number> = {};
@@ -317,53 +326,53 @@ export default function TestMaturitaDigitalePage() {
               {currentPageQuestions.map((question, index) => (
                 <div
                   key={question.id}
-                  className={`bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border-l-4 ${
+                  className={`bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-l-4 ${
                     answers[question.id] === true
-                      ? 'border-l-green-500 bg-green-50/30'
+                      ? 'border-l-green-500 bg-green-50/20'
                       : answers[question.id] === false
-                      ? 'border-l-red-500 bg-red-50/30'
+                      ? 'border-l-red-500 bg-red-50/20'
                       : 'border-l-purple-500'
                   }`}
                 >
-                  <div className="p-5">
+                  <div className="p-4">
                     {/* Question Number & Category */}
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="text-xs font-bold text-purple-600 bg-purple-100 px-2 py-1 rounded">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xs font-bold text-purple-600 bg-purple-100 px-2 py-0.5 rounded">
                         {currentPage * QUESTIONS_PER_PAGE + index + 1}
                       </span>
                       <span className="text-xs text-gray-500 font-medium">{question.categoria}</span>
                     </div>
                     
                     {/* Question Text */}
-                    <h3 className="text-base font-semibold text-gray-800 mb-4 leading-relaxed">
+                    <h3 className="text-sm font-semibold text-gray-800 mb-3 leading-snug">
                       {question.domanda}
                     </h3>
                     
                     {/* Answer Buttons */}
-                    <div className="flex gap-3">
+                    <div className="flex gap-2">
                       <button
                         onClick={() => handleAnswer(question.id, true)}
-                        className={`flex-1 py-2.5 px-4 rounded-lg font-medium transition-all duration-200 transform hover:scale-[1.02] ${
+                        className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 transform hover:scale-[1.02] ${
                           answers[question.id] === true
                             ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-md'
                             : 'bg-gray-50 hover:bg-green-50 text-gray-700 border border-gray-200 hover:border-green-300'
                         }`}
                       >
-                        <span className="flex items-center justify-center gap-2">
-                          <span className="text-lg">✓</span>
+                        <span className="flex items-center justify-center gap-1.5">
+                          <span className="text-base">✓</span>
                           <span>Sì</span>
                         </span>
                       </button>
                       <button
                         onClick={() => handleAnswer(question.id, false)}
-                        className={`flex-1 py-2.5 px-4 rounded-lg font-medium transition-all duration-200 transform hover:scale-[1.02] ${
+                        className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 transform hover:scale-[1.02] ${
                           answers[question.id] === false
                             ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-md'
                             : 'bg-gray-50 hover:bg-red-50 text-gray-700 border border-gray-200 hover:border-red-300'
                         }`}
                       >
-                        <span className="flex items-center justify-center gap-2">
-                          <span className="text-lg">✗</span>
+                        <span className="flex items-center justify-center gap-1.5">
+                          <span className="text-base">✗</span>
                           <span>No</span>
                         </span>
                       </button>
