@@ -423,15 +423,42 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
             const emailHtml = `
 <!DOCTYPE html>
 <html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-    <h1 style="color: white; margin: 0; font-size: 28px;">⏰ Solo 3 Giorni!</h1>
+    <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
+      <h1 style="color: white; margin: 0; font-size: 28px;">📋 Preparati per il Workshop</h1>
+    </a>
   </div>
   
   <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${validatedData.nome}</strong>,</p>
     
-    <p>Ci siamo quasi! Solo <strong>3 giorni</strong> al workshop "Automatizza la tua Azienda: AI & Digitalizzazione".</p>
+    <p>Manca poco al workshop "Automatizza la tua Azienda: AI & Digitalizzazione".</p>
+    
+    <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
+      <h3 style="margin-top: 0; color: #667eea;">📅 Dettagli Evento:</h3>
+      <p style="margin: 5px 0;"><strong>Data:</strong> ${WORKSHOP_DATE}</p>
+      <p style="margin: 5px 0;"><strong>Orario:</strong> ${WORKSHOP_TIME}</p>
+      <p style="margin: 5px 0;"><strong>Luogo:</strong> ${WORKSHOP_LOCATION}</p>
+    </div>
+    
+    <h3 style="color: #667eea; margin-top: 30px;">📋 Preparazione Pratica:</h3>
+    <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+      <p style="margin: 10px 0;"><strong>✅ Cosa portare:</strong></p>
+      <ul style="line-height: 2;">
+        <li>📱 Smartphone o tablet (opzionale, per vedere la demo)</li>
+        <li>📝 Qualche dato aziendale se vuoi fare domande specifiche</li>
+        <li>💡 La voglia di mettere ordine nella tua digitalizzazione!</li>
+      </ul>
+    </div>
+    
+    <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px;">
+      <p style="margin: 0;"><strong>💡 Non dimenticare:</strong> Se non l'hai ancora fatto, compila il <a href="${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test di Maturità Digitale</a> prima del workshop.</p>
+    </div>
     
     <p style="margin-top: 30px;">A presto! 🚀</p>
     
