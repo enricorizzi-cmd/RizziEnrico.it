@@ -34,15 +34,31 @@ const questions: Question[] = [
   { id: 'q11', categoria: 'KPI & Dashboard', domanda: 'Hai una dashboard dove vedi i numeri principali in tempo reale?', tipo: 'si_no', peso: 2 },
   { id: 'q12', categoria: 'KPI & Dashboard', domanda: 'Sai da dove arrivano i tuoi migliori clienti?', tipo: 'si_no', peso: 2 },
   
-  // Uso dell'IA
+  // Uso dell'IA (Marketing)
   { id: 'q13', categoria: 'Uso dell\'IA', domanda: 'Usi l\'AI per generare contenuti (post, email, copy)?', tipo: 'si_no', peso: 2 },
   { id: 'q14', categoria: 'Uso dell\'IA', domanda: 'Hai provato almeno 1 tool AI per analizzare dati aziendali?', tipo: 'si_no', peso: 2 },
   { id: 'q15', categoria: 'Uso dell\'IA', domanda: 'Hai template AI pronti per le attività ripetitive?', tipo: 'si_no', peso: 2 },
+  
+  // Digitalizzazione Aziendale
+  { id: 'q16', categoria: 'Digitalizzazione Aziendale', domanda: 'Hai digitalizzato almeno il 50% dei processi amministrativi (fatturazione, ordini, preventivi)?', tipo: 'si_no', peso: 3 },
+  { id: 'q17', categoria: 'Digitalizzazione Aziendale', domanda: 'I tuoi dipendenti possono accedere a documenti e informazioni aziendali da remoto?', tipo: 'si_no', peso: 2 },
+  { id: 'q18', categoria: 'Digitalizzazione Aziendale', domanda: 'Hai un sistema di gestione documentale digitale (archiviazione, ricerca, condivisione)?', tipo: 'si_no', peso: 3 },
+  { id: 'q19', categoria: 'Digitalizzazione Aziendale', domanda: 'I processi di approvazione (ordini, spese, ferie) sono digitalizzati?', tipo: 'si_no', peso: 2 },
+  { id: 'q20', categoria: 'Digitalizzazione Aziendale', domanda: 'Hai integrato i sistemi aziendali (ERP, CRM, contabilità) per evitare doppia digitazione?', tipo: 'si_no', peso: 3 },
+  
+  // AI nei Processi Operativi
+  { id: 'q21', categoria: 'AI nei Processi Operativi', domanda: 'Usi l\'AI per automatizzare analisi di dati operativi (produzione, scorte, qualità)?', tipo: 'si_no', peso: 3 },
+  { id: 'q22', categoria: 'AI nei Processi Operativi', domanda: 'Hai implementato AI per ottimizzare processi produttivi o logistici?', tipo: 'si_no', peso: 3 },
+  { id: 'q23', categoria: 'AI nei Processi Operativi', domanda: 'Usi l\'AI per prevedere domanda, scorte o manutenzioni?', tipo: 'si_no', peso: 2 },
+  { id: 'q24', categoria: 'AI nei Processi Operativi', domanda: 'Hai chatbot o assistenti AI per supporto clienti interno?', tipo: 'si_no', peso: 2 },
+  { id: 'q25', categoria: 'AI nei Processi Operativi', domanda: 'Usi l\'AI per analizzare e migliorare processi aziendali (identificare colli di bottiglia, inefficienze)?', tipo: 'si_no', peso: 3 },
 ];
+
+const QUESTIONS_PER_PAGE = 5;
 
 export default function TestMaturitaDigitalePage() {
   const [currentStep, setCurrentStep] = useState<'form' | 'questions' | 'results'>('form');
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
   const [answers, setAnswers] = useState<Record<string, any>>({});
   const [results, setResults] = useState<any>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -57,31 +73,31 @@ export default function TestMaturitaDigitalePage() {
     resolver: zodResolver(testMaturitaFormSchema),
   });
 
+  const totalPages = Math.ceil(questions.length / QUESTIONS_PER_PAGE);
+  const currentPageQuestions = questions.slice(
+    currentPage * QUESTIONS_PER_PAGE,
+    (currentPage + 1) * QUESTIONS_PER_PAGE
+  );
+
   const onSubmitForm = async (data: TestMaturitaFormInput) => {
     setFormData(data);
-    setCurrentQuestionIndex(0);
+    setCurrentPage(0);
     setCurrentStep('questions');
   };
 
   const handleAnswer = (questionId: string, value: any) => {
     setAnswers({ ...answers, [questionId]: value });
-    // Avanza automaticamente alla domanda successiva dopo 300ms
-    setTimeout(() => {
-      if (currentQuestionIndex < questions.length - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-      }
-    }, 300);
   };
 
-  const goToNext = () => {
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+  const goToNextPage = () => {
+    if (currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1);
     }
   };
 
-  const goToPrevious = () => {
-    if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
+  const goToPreviousPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
     }
   };
 
@@ -157,6 +173,7 @@ export default function TestMaturitaDigitalePage() {
           punteggio_per_categoria: calculatedResults.punteggio_per_categoria,
           livello_maturita: calculatedResults.livello_maturita,
           raccomandazioni: calculatedResults.raccomandazioni,
+          percentage: calculatedResults.percentage,
         }),
       });
     } catch (error) {
@@ -167,7 +184,10 @@ export default function TestMaturitaDigitalePage() {
     }
   };
 
+  const allCurrentPageQuestionsAnswered = currentPageQuestions.every((q) => answers[q.id] !== undefined);
   const allQuestionsAnswered = questions.every((q) => answers[q.id] !== undefined);
+  const isFirstPage = currentPage === 0;
+  const isLastPage = currentPage === totalPages - 1;
 
   if (currentStep === 'form') {
     return (
@@ -244,65 +264,67 @@ export default function TestMaturitaDigitalePage() {
   }
 
   if (currentStep === 'questions') {
-    const currentQuestion = questions[currentQuestionIndex];
     const answeredCount = questions.filter((q) => answers[q.id] !== undefined).length;
-    const isFirstQuestion = currentQuestionIndex === 0;
-    const isLastQuestion = currentQuestionIndex === questions.length - 1;
+    const currentCategory = currentPageQuestions[0]?.categoria || '';
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 py-16">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             {/* Progress Bar */}
             <div className="mb-8">
               <div className="flex justify-between mb-2">
-                <span className="text-sm font-semibold">{currentQuestion.categoria}</span>
+                <span className="text-sm font-semibold">{currentCategory}</span>
                 <span className="text-sm text-gray-600">
-                  Domanda {currentQuestionIndex + 1} / {questions.length}
+                  Pagina {currentPage + 1} / {totalPages} • Domande completate: {answeredCount} / {questions.length}
                 </span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div
                   className="bg-gradient-to-r from-purple-600 to-blue-600 h-2 rounded-full transition-all"
-                  style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
+                  style={{ width: `${(answeredCount / questions.length) * 100}%` }}
                 ></div>
               </div>
             </div>
 
-            {/* Current Question */}
-            <div className="bg-white rounded-xl shadow-lg p-8 mb-6">
-              <h3 className="text-lg font-semibold mb-6">{currentQuestion.domanda}</h3>
-              <div className="flex gap-4 mb-6">
-                <button
-                  onClick={() => handleAnswer(currentQuestion.id, true)}
-                  className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all ${
-                    answers[currentQuestion.id] === true
-                      ? 'bg-green-500 text-white'
-                      : 'bg-gray-100 hover:bg-gray-200'
-                  }`}
-                >
-                  ✅ Sì
-                </button>
-                <button
-                  onClick={() => handleAnswer(currentQuestion.id, false)}
-                  className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all ${
-                    answers[currentQuestion.id] === false
-                      ? 'bg-red-500 text-white'
-                      : 'bg-gray-100 hover:bg-gray-200'
-                  }`}
-                >
-                  ❌ No
-                </button>
-              </div>
+            {/* Questions for Current Page */}
+            <div className="bg-white rounded-xl shadow-lg p-8 mb-6 space-y-6">
+              {currentPageQuestions.map((question) => (
+                <div key={question.id} className="border-b border-gray-200 last:border-b-0 pb-6 last:pb-0">
+                  <h3 className="text-lg font-semibold mb-4">{question.domanda}</h3>
+                  <div className="flex gap-4">
+                    <button
+                      onClick={() => handleAnswer(question.id, true)}
+                      className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all ${
+                        answers[question.id] === true
+                          ? 'bg-green-500 text-white'
+                          : 'bg-gray-100 hover:bg-gray-200'
+                      }`}
+                    >
+                      ✅ Sì
+                    </button>
+                    <button
+                      onClick={() => handleAnswer(question.id, false)}
+                      className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all ${
+                        answers[question.id] === false
+                          ? 'bg-red-500 text-white'
+                          : 'bg-gray-100 hover:bg-gray-200'
+                      }`}
+                    >
+                      ❌ No
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
 
             {/* Navigation Buttons */}
             <div className="flex justify-between gap-4">
               <button
-                onClick={goToPrevious}
-                disabled={isFirstQuestion}
+                onClick={goToPreviousPage}
+                disabled={isFirstPage}
                 className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                  isFirstQuestion
+                  isFirstPage
                     ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                     : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
                 }`}
@@ -310,7 +332,7 @@ export default function TestMaturitaDigitalePage() {
                 ← Indietro
               </button>
               
-              {isLastQuestion ? (
+              {isLastPage ? (
                 <button
                   onClick={submitTest}
                   disabled={isSubmitting || !allQuestionsAnswered}
@@ -324,8 +346,13 @@ export default function TestMaturitaDigitalePage() {
                 </button>
               ) : (
                 <button
-                  onClick={goToNext}
-                  className="px-6 py-3 rounded-lg font-semibold bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 transition-all"
+                  onClick={goToNextPage}
+                  disabled={!allCurrentPageQuestionsAnswered}
+                  className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                    !allCurrentPageQuestionsAnswered
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700'
+                  }`}
                 >
                   Successivo →
                 </button>
@@ -433,4 +460,3 @@ export default function TestMaturitaDigitalePage() {
 
   return null;
 }
-
