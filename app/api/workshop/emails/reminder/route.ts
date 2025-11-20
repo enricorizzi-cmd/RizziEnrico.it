@@ -3,9 +3,9 @@ import { createServerClient } from '@/lib/supabase';
 import { sendEmail } from '@/lib/email';
 
 const NOTIFICATION_EMAIL = 'enricorizzi1991@gmail.com';
-const WORKSHOP_DATE = '12 dicembre 2024';
-const WORKSHOP_TIME = '18:00';
-const WORKSHOP_LOCATION = 'OSM Partner Venezia'; // Da aggiornare con indirizzo esatto
+const WORKSHOP_DATE = 'Venerdì 12 dicembre 2025';
+const WORKSHOP_TIME = 'dalle ore 17.00 (accettazione dalle ore 16.30)';
+const WORKSHOP_LOCATION = 'OSM Venezia - Via Sertorio Orsato 22, Venezia';
 
 export async function POST(request: NextRequest) {
   try {
@@ -68,7 +68,9 @@ export async function POST(request: NextRequest) {
 </head>
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-    <h1 style="color: white; margin: 0; font-size: 28px;">📅 Promemoria Workshop</h1>
+    <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
+      <h1 style="color: white; margin: 0; font-size: 28px;">📅 Promemoria Workshop</h1>
+    </a>
   </div>
   
   <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
@@ -98,7 +100,11 @@ export async function POST(request: NextRequest) {
     
     <p style="margin-top: 30px;">A presto,<br>
     <strong>Enrico Rizzi & Francesco Fusano</strong><br>
-    <span style="color: #667eea;">OSM Partner Venezia</span></p>
+    <a href="https://www.osmpartnervenezia.it/" style="color: #667eea; text-decoration: none;">OSM Partner Venezia</a></p>
+    
+    <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+      <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="display: inline-block; background: #667eea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px;">📅 Vai alla pagina del Workshop</a>
+    </div>
   </div>
 </body>
 </html>`;
@@ -123,12 +129,14 @@ Ci vediamo domani! 🚀
 
 A presto,
 Enrico Rizzi & Francesco Fusano
-OSM Partner Venezia`;
+<a href="https://www.osmpartnervenezia.it/">OSM Partner Venezia</a>
+
+Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
 
         await Promise.all([
           sendEmail({
             to: lead.email,
-            subject: '📅 Promemoria Workshop - Domani alle 18:00',
+            subject: '📅 Promemoria Workshop - Domani dalle ore 17.00',
             html: emailHtml,
             text: emailText,
           }),

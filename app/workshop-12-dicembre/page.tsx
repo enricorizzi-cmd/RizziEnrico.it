@@ -124,6 +124,17 @@ export default function WorkshopPage() {
         {/* Gradient Overlay with Animation */}
         <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-blue-600/10 to-purple-600/10 animate-gradient-shift"></div>
         
+        {/* OSM Logo */}
+        <div className="absolute inset-0 overflow-hidden flex items-center justify-center pointer-events-none opacity-20">
+          <img 
+            src="/logo-osm.svg" 
+            alt="OSM Logo" 
+            className="w-64 h-64 object-contain"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        
         {/* Floating Particles */}
         <div className="absolute inset-0 overflow-hidden">
           {[...Array(20)].map((_, i) => (
@@ -158,15 +169,25 @@ export default function WorkshopPage() {
             <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
               Da imprenditori per imprenditori. Scopri come trasformare il caos digitale in processi automatici che funzionano davvero.
             </p>
+            <div className="mb-8 animate-fade-in-up animation-delay-300">
+              <a
+                href="#registrazione"
+                className="inline-block bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 px-8 rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                Iscriviti Ora →
+              </a>
+            </div>
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in-up animation-delay-400">
               <div className="group text-center sm:text-left bg-white/60 backdrop-blur-sm px-6 py-4 rounded-2xl shadow-lg border border-purple-200/50 hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <div className="text-3xl font-bold text-purple-600 group-hover:scale-110 transition-transform">12 Dicembre</div>
-                <div className="text-gray-600">2024</div>
+                <div className="text-3xl font-bold text-purple-600 group-hover:scale-110 transition-transform">Venerdì 12 dicembre</div>
+                <div className="text-gray-600">2025</div>
               </div>
               <div className="hidden sm:block w-px h-12 bg-gradient-to-b from-transparent via-purple-300 to-transparent"></div>
               <div className="group text-center sm:text-left bg-white/60 backdrop-blur-sm px-6 py-4 rounded-2xl shadow-lg border border-blue-200/50 hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <div className="text-3xl font-bold text-blue-600 group-hover:scale-110 transition-transform">18:00</div>
-                <div className="text-gray-600">OSM Partner Venezia</div>
+                <div className="text-lg font-bold text-blue-600 group-hover:scale-110 transition-transform">dalle ore 17.00</div>
+                <div className="text-sm text-gray-600">accettazione dalle ore 16.30</div>
+                <div className="text-sm text-gray-600 mt-1">OSM Venezia</div>
+                <div className="text-xs text-gray-500 mt-1">Via Sertorio Orsato 22, Venezia</div>
               </div>
             </div>
           </div>
@@ -370,7 +391,7 @@ export default function WorkshopPage() {
       </section>
 
       {/* Form Registrazione */}
-      <section className="py-20 bg-gradient-to-br from-purple-600 via-blue-600 to-purple-700 relative overflow-hidden z-10">
+      <section id="registrazione" className="py-20 bg-gradient-to-br from-purple-600 via-blue-600 to-purple-700 relative overflow-hidden z-10">
         {/* Animated Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{
@@ -384,7 +405,7 @@ export default function WorkshopPage() {
             <div className="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12 border-2 border-white/20 hover:shadow-[0_20px_60px_rgba(0,0,0,0.3)] transition-all duration-500 scroll-animate">
               <div className="text-center mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4 font-heading bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text">
-                  Blocca il Tuo Posto
+                  Riserva il Tuo Posto
                 </h2>
                 <p className="text-gray-600 text-lg">
                   Iscriviti gratuitamente. <span className="font-semibold text-purple-600">Posti limitati.</span>

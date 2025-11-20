@@ -52,6 +52,28 @@ interface DashboardStats {
   confermati: number;
 }
 
+interface ProblemInsight {
+  problema: string;
+  frequenza: number;
+  categoria: string;
+  priorita: 'alta' | 'media' | 'bassa';
+  rilevanza?: string;
+}
+
+interface Insights {
+  categorie: Array<{
+    nome: string;
+    problemi: string[];
+    frequenza: number;
+    priorita: 'alta' | 'media' | 'bassa';
+  }>;
+  problemi_principali: ProblemInsight[];
+  sintesi: string;
+  raccomandazioni?: string[];
+  totale_problemi: number;
+  problemi_analizzati?: number;
+}
+
 export default function WorkshopAdminDashboard() {
   const router = useRouter();
   const [leads, setLeads] = useState<WorkshopLead[]>([]);
@@ -62,10 +84,13 @@ export default function WorkshopAdminDashboard() {
     fonte: 'tutti',
   });
   const [editingLead, setEditingLead] = useState<WorkshopLead | null>(null);
+  const [insights, setInsights] = useState<Insights | null>(null);
+  const [loadingInsights, setLoadingInsights] = useState(false);
 
   useEffect(() => {
     fetchLeads();
     fetchStats();
+    fetchInsights();
   }, [filters]);
 
   const fetchLeads = async () => {
@@ -93,6 +118,20 @@ export default function WorkshopAdminDashboard() {
       setStats(data);
     } catch (error) {
       console.error('Error fetching stats:', error);
+    }
+  };
+
+  const fetchInsights = async () => {
+    setLoadingInsights(true);
+    try {
+      const response = await fetch('/api/admin/workshop/insights');
+      if (!response.ok) throw new Error('Errore nel caricamento insights');
+      const data = await response.json();
+      setInsights(data.insights);
+    } catch (error) {
+      console.error('Error fetching insights:', error);
+    } finally {
+      setLoadingInsights(false);
     }
   };
 
@@ -274,6 +313,151 @@ export default function WorkshopAdminDashboard() {
             )}
           </div>
         )}
+
+        {/* Riquadro Insight AI */}
+        <div className="mb-8">
+          <div className="bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 rounded-xl shadow-lg p-6 border border-purple-200">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="bg-gradient-to-br from-purple-600 to-indigo-600 p-3 rounded-lg">
+                  <span className="text-2xl">🤖</span>
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-800">Insight AI - Analisi Problemi</h2>
+                  <p className="text-sm text-gray-600">Analisi intelligente dei problemi segnalati dagli iscritti</p>
+                </div>
+              </div>
+              {loadingInsights && (
+                <div className="text-sm text-gray-500">Analizzando...</div>
+              )}
+            </div>
+
+            {insights && (
+              <div className="space-y-6">
+                {/* Sintesi */}
+                {insights.sintesi && (
+                  <div className="bg-white rounded-lg p-4 border-l-4 border-purple-600">
+                    <h3 className="font-semibold text-gray-800 mb-2">📋 Sintesi</h3>
+                    <p className="text-gray-700">{insights.sintesi}</p>
+                    <div className="mt-2 text-sm text-gray-500">
+                      {insights.totale_problemi} problemi analizzati
+                    </div>
+                  </div>
+                )}
+
+                {/* Problemi Principali */}
+                {insights.problemi_principali && insights.problemi_principali.length > 0 && (
+                  <div className="bg-white rounded-lg p-4">
+                    <h3 className="font-semibold text-gray-800 mb-4">🎯 Problemi Principali</h3>
+                    <div className="space-y-3">
+                      {insights.problemi_principali.slice(0, 5).map((problema, index) => (
+                        <div
+                          key={index}
+                          className={`p-3 rounded-lg border-l-4 ${
+                            problema.priorita === 'alta'
+                              ? 'bg-red-50 border-red-500'
+                              : problema.priorita === 'media'
+                              ? 'bg-yellow-50 border-yellow-500'
+                              : 'bg-blue-50 border-blue-500'
+                          }`}
+                        >
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="text-xs font-semibold px-2 py-1 rounded bg-white">
+                                  {problema.categoria}
+                                </span>
+                                <span className={`text-xs font-semibold px-2 py-1 rounded ${
+                                  problema.priorita === 'alta'
+                                    ? 'bg-red-100 text-red-700'
+                                    : problema.priorita === 'media'
+                                    ? 'bg-yellow-100 text-yellow-700'
+                                    : 'bg-blue-100 text-blue-700'
+                                }`}>
+                                  {problema.priorita.toUpperCase()}
+                                </span>
+                                <span className="text-xs text-gray-500">
+                                  {problema.frequenza} {problema.frequenza === 1 ? 'volta' : 'volte'}
+                                </span>
+                              </div>
+                              <p className="text-gray-800 font-medium">{problema.problema}</p>
+                              {problema.rilevanza && (
+                                <p className="text-sm text-gray-600 mt-1">{problema.rilevanza}</p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Categorie */}
+                {insights.categorie && insights.categorie.length > 0 && (
+                  <div className="bg-white rounded-lg p-4">
+                    <h3 className="font-semibold text-gray-800 mb-4">📁 Categorie</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {insights.categorie.map((categoria, index) => (
+                        <div
+                          key={index}
+                          className="p-3 bg-gray-50 rounded-lg border border-gray-200"
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="font-semibold text-gray-800">{categoria.nome}</span>
+                            <span className="text-xs text-gray-500">
+                              {categoria.frequenza} {categoria.frequenza === 1 ? 'problema' : 'problemi'}
+                            </span>
+                          </div>
+                          <ul className="text-sm text-gray-600 space-y-1">
+                            {categoria.problemi.slice(0, 3).map((p, i) => (
+                              <li key={i} className="flex items-start">
+                                <span className="mr-2">•</span>
+                                <span className="flex-1">{p}</span>
+                              </li>
+                            ))}
+                            {categoria.problemi.length > 3 && (
+                              <li className="text-xs text-gray-500">
+                                +{categoria.problemi.length - 3} altri
+                              </li>
+                            )}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Raccomandazioni */}
+                {insights.raccomandazioni && insights.raccomandazioni.length > 0 && (
+                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
+                    <h3 className="font-semibold text-gray-800 mb-3">💡 Raccomandazioni</h3>
+                    <ul className="space-y-2">
+                      {insights.raccomandazioni.map((rec, index) => (
+                        <li key={index} className="flex items-start text-gray-700">
+                          <span className="mr-2 text-blue-600">→</span>
+                          <span>{rec}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {(!insights.problemi_principali || insights.problemi_principali.length === 0) && (
+                  <div className="bg-white rounded-lg p-6 text-center text-gray-500">
+                    <p>Nessun problema segnalato ancora.</p>
+                    <p className="text-sm mt-2">I problemi verranno analizzati automaticamente quando disponibili.</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {!insights && !loadingInsights && (
+              <div className="bg-white rounded-lg p-6 text-center text-gray-500">
+                <p>Caricamento insight...</p>
+              </div>
+            )}
+          </div>
+        </div>
 
         {/* Filtri */}
         <div className="bg-white p-6 rounded-lg shadow mb-8">

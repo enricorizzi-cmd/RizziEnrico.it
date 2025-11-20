@@ -3,9 +3,9 @@ import { createServerClient } from '@/lib/supabase';
 import { sendEmail } from '@/lib/email';
 
 const NOTIFICATION_EMAIL = 'enricorizzi1991@gmail.com';
-const WORKSHOP_DATE = '12 dicembre 2024';
-const WORKSHOP_TIME = '18:00';
-const WORKSHOP_LOCATION = 'OSM Partner Venezia';
+const WORKSHOP_DATE = 'Venerdì 12 dicembre 2025';
+const WORKSHOP_TIME = 'dalle ore 17.00 (accettazione dalle ore 16.30)';
+const WORKSHOP_LOCATION = 'OSM Venezia - Via Sertorio Orsato 22, Venezia';
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
 
 export async function POST(request: NextRequest) {
@@ -65,8 +65,8 @@ export async function POST(request: NextRequest) {
         }
 
         // Calcola giorni rimanenti fino al workshop
-        const workshopDate = new Date('2024-12-12');
-        workshopDate.setHours(18, 0, 0, 0); // Workshop alle 18:00
+        const workshopDate = new Date('2025-12-12');
+        workshopDate.setHours(17, 0, 0, 0); // Workshop dalle ore 17.00
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const daysRemaining = Math.ceil((workshopDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
@@ -104,7 +104,9 @@ export async function POST(request: NextRequest) {
 </head>
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-    <h1 style="color: white; margin: 0; font-size: 28px;">🎯 Preparati al Meglio</h1>
+    <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
+      <h1 style="color: white; margin: 0; font-size: 28px;">🎯 Preparati al Meglio</h1>
+    </a>
   </div>
   
   <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
@@ -112,7 +114,7 @@ export async function POST(request: NextRequest) {
     
     <p>Siamo felici che tu sia iscritto al workshop <strong>"Automatizza la tua Azienda: AI & Digitalizzazione"</strong>!</p>
     
-    <p>Mancano ancora <strong>${daysRemaining} giorni</strong> e vogliamo aiutarti a prepararti al meglio per trarre il massimo dall'evento.</p>
+    <p>Vogliamo aiutarti a prepararti al meglio per trarre il massimo dall'evento.</p>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
       <h3 style="margin-top: 0; color: #667eea;">Cosa vedrai al workshop:</h3>
@@ -145,7 +147,11 @@ export async function POST(request: NextRequest) {
     
     <p style="margin-top: 30px;">A presto,<br>
     <strong>Enrico Rizzi & Francesco Fusano</strong><br>
-    <span style="color: #667eea;">OSM Partner Venezia</span></p>
+    <a href="https://www.osmpartnervenezia.it/" style="color: #667eea; text-decoration: none;">OSM Partner Venezia</a></p>
+    
+    <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+      <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="display: inline-block; background: #667eea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px;">📅 Vai alla pagina del Workshop</a>
+    </div>
   </div>
 </body>
 </html>`;
@@ -154,7 +160,7 @@ export async function POST(request: NextRequest) {
 
 Siamo felici che tu sia iscritto al workshop "Automatizza la tua Azienda: AI & Digitalizzazione"!
 
-Mancano ancora ${daysRemaining} giorni e vogliamo aiutarti a prepararti al meglio.
+Vogliamo aiutarti a prepararti al meglio per trarre il massimo dall'evento.
 
 Cosa vedrai al workshop:
 ✅ Un sistema reale in azione: landing page + CRM + automazioni + AI
@@ -179,12 +185,14 @@ Ci vediamo presto! 🚀
 
 A presto,
 Enrico Rizzi & Francesco Fusano
-OSM Partner Venezia`;
+<a href="https://www.osmpartnervenezia.it/">OSM Partner Venezia</a>
+
+Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
 
         await Promise.all([
           sendEmail({
             to: lead.email,
-            subject: '🎯 A 5 giorni dal workshop: preparati al meglio',
+            subject: '🎯 Preparati al meglio per il workshop',
             html: emailHtml,
             text: emailText,
           }),

@@ -198,9 +198,30 @@ export default function TestMaturitaDigitalePage() {
 
   if (currentStep === 'form') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 py-16">
-        <div className="container mx-auto px-4">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 py-16 relative overflow-hidden">
+        {/* OSM Logo Background */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10">
+          <img 
+            src="/logo-osm.svg" 
+            alt="OSM Logo" 
+            className="w-96 h-96 object-contain"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12">
+            <div className="flex justify-center mb-6">
+              <img 
+                src="/logo-osm.svg" 
+                alt="OSM Logo" 
+                className="h-16 object-contain"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
+              />
+            </div>
             <h1 className="text-4xl font-bold mb-6 text-center font-heading">
               Test di Maturità Digitale
             </h1>
@@ -279,61 +300,93 @@ export default function TestMaturitaDigitalePage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             {/* Progress Bar */}
-            <div className="mb-8">
-              <div className="flex justify-between mb-2">
-                <span className="text-sm font-semibold">{currentCategory}</span>
-                <span className="text-sm text-gray-600">
-                  Pagina {currentPage + 1} / {totalPages} • Domande completate: {answeredCount} / {questions.length}
+            <div className="mb-6 bg-white rounded-lg shadow-sm p-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-bold text-purple-600">{currentCategory}</span>
+                </div>
+                <span className="text-xs text-gray-500">
+                  Pagina {currentPage + 1} / {totalPages} • {answeredCount} / {questions.length} completate
                 </span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
+              <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-purple-600 to-blue-600 h-2 rounded-full transition-all"
+                  className="bg-gradient-to-r from-purple-600 via-blue-500 to-indigo-600 h-2.5 rounded-full transition-all duration-500 ease-out"
                   style={{ width: `${(answeredCount / questions.length) * 100}%` }}
                 ></div>
               </div>
             </div>
 
             {/* Questions for Current Page */}
-            <div className="bg-white rounded-xl shadow-lg p-8 mb-6 space-y-6">
-              {currentPageQuestions.map((question) => (
-                <div key={question.id} className="border-b border-gray-200 last:border-b-0 pb-6 last:pb-0">
-                  <h3 className="text-lg font-semibold mb-4">{question.domanda}</h3>
-                  <div className="flex gap-4">
-                    <button
-                      onClick={() => handleAnswer(question.id, true)}
-                      className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all ${
-                        answers[question.id] === true
-                          ? 'bg-green-500 text-white'
-                          : 'bg-gray-100 hover:bg-gray-200'
-                      }`}
-                    >
-                      ✅ Sì
-                    </button>
-                    <button
-                      onClick={() => handleAnswer(question.id, false)}
-                      className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all ${
-                        answers[question.id] === false
-                          ? 'bg-red-500 text-white'
-                          : 'bg-gray-100 hover:bg-gray-200'
-                      }`}
-                    >
-                      ❌ No
-                    </button>
+            <div className="space-y-4 mb-6">
+              {currentPageQuestions.map((question, index) => (
+                <div
+                  key={question.id}
+                  className={`bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border-l-4 ${
+                    answers[question.id] === true
+                      ? 'border-l-green-500 bg-green-50/30'
+                      : answers[question.id] === false
+                      ? 'border-l-red-500 bg-red-50/30'
+                      : 'border-l-purple-500'
+                  }`}
+                >
+                  <div className="p-5">
+                    {/* Question Number & Category */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-xs font-bold text-purple-600 bg-purple-100 px-2 py-1 rounded">
+                        {currentPage * QUESTIONS_PER_PAGE + index + 1}
+                      </span>
+                      <span className="text-xs text-gray-500 font-medium">{question.categoria}</span>
+                    </div>
+                    
+                    {/* Question Text */}
+                    <h3 className="text-base font-semibold text-gray-800 mb-4 leading-relaxed">
+                      {question.domanda}
+                    </h3>
+                    
+                    {/* Answer Buttons */}
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => handleAnswer(question.id, true)}
+                        className={`flex-1 py-2.5 px-4 rounded-lg font-medium transition-all duration-200 transform hover:scale-[1.02] ${
+                          answers[question.id] === true
+                            ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-md'
+                            : 'bg-gray-50 hover:bg-green-50 text-gray-700 border border-gray-200 hover:border-green-300'
+                        }`}
+                      >
+                        <span className="flex items-center justify-center gap-2">
+                          <span className="text-lg">✓</span>
+                          <span>Sì</span>
+                        </span>
+                      </button>
+                      <button
+                        onClick={() => handleAnswer(question.id, false)}
+                        className={`flex-1 py-2.5 px-4 rounded-lg font-medium transition-all duration-200 transform hover:scale-[1.02] ${
+                          answers[question.id] === false
+                            ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-md'
+                            : 'bg-gray-50 hover:bg-red-50 text-gray-700 border border-gray-200 hover:border-red-300'
+                        }`}
+                      >
+                        <span className="flex items-center justify-center gap-2">
+                          <span className="text-lg">✗</span>
+                          <span>No</span>
+                        </span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
 
             {/* Navigation Buttons */}
-            <div className="flex justify-between gap-4">
+            <div className="flex justify-between gap-4 bg-white rounded-lg shadow-sm p-4">
               <button
                 onClick={goToPreviousPage}
                 disabled={isFirstPage}
-                className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                className={`px-5 py-2.5 rounded-lg font-medium transition-all duration-200 ${
                   isFirstPage
-                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                    : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:shadow-md transform hover:scale-[1.02]'
                 }`}
               >
                 ← Indietro
@@ -343,22 +396,29 @@ export default function TestMaturitaDigitalePage() {
                 <button
                   onClick={submitTest}
                   disabled={isSubmitting || !allQuestionsAnswered}
-                  className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                  className={`px-6 py-2.5 rounded-lg font-semibold transition-all duration-200 ${
                     isSubmitting || !allQuestionsAnswered
-                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700'
+                      ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 shadow-md hover:shadow-lg transform hover:scale-[1.02]'
                   }`}
                 >
-                  {isSubmitting ? 'Calcolo risultati...' : 'Vedi Risultati'}
+                  {isSubmitting ? (
+                    <span className="flex items-center gap-2">
+                      <span className="animate-spin">⏳</span>
+                      <span>Calcolo risultati...</span>
+                    </span>
+                  ) : (
+                    'Vedi Risultati →'
+                  )}
                 </button>
               ) : (
                 <button
                   onClick={goToNextPage}
                   disabled={!allCurrentPageQuestionsAnswered}
-                  className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                  className={`px-6 py-2.5 rounded-lg font-semibold transition-all duration-200 ${
                     !allCurrentPageQuestionsAnswered
-                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700'
+                      ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 shadow-md hover:shadow-lg transform hover:scale-[1.02]'
                   }`}
                 >
                   Successivo →

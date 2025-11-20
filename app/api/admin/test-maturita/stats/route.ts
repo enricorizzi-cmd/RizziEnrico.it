@@ -83,12 +83,26 @@ export async function GET(request: NextRequest) {
       else scoreDistribution[4].count++;
     });
 
-    // Calcola medie per categoria
+    // Calcola massimo possibile per ogni categoria (basato sulle domande)
+    const categoryMaxScores: Record<string, number> = {
+      "Raccolta Dati & CRM": 7, // 3+2+2
+      "Automazioni Base": 7, // 3+2+2
+      "Presenza Online": 6, // 2+2+2
+      "KPI & Dashboard": 7, // 3+2+2
+      "Uso dell'IA": 6, // 2+2+2
+      "Digitalizzazione Aziendale": 13, // 3+2+3+2+3
+      "AI nei Processi Operativi": 13, // 3+3+2+2+3
+    };
+
+    // Calcola medie per categoria (converti in percentuale)
     Object.keys(byCategory).forEach(category => {
       const scores = categoryScores[category];
       if (scores.length > 0) {
+        const averageScore = scores.reduce((a, b) => a + b, 0) / scores.length;
+        const maxScore = categoryMaxScores[category] || 10; // Default 10 se categoria non trovata
+        // Converti in percentuale: (punteggio_medio / punteggio_massimo) * 100
         byCategory[category].average = Math.round(
-          (scores.reduce((a, b) => a + b, 0) / scores.length) * 100
+          (averageScore / maxScore) * 100 * 100
         ) / 100;
       }
     });

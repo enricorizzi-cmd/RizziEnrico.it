@@ -3,9 +3,9 @@ import { createServerClient } from '@/lib/supabase';
 import { sendEmail } from '@/lib/email';
 
 const NOTIFICATION_EMAIL = 'enricorizzi1991@gmail.com';
-const WORKSHOP_DATE = '12 dicembre 2024';
-const WORKSHOP_TIME = '18:00';
-const WORKSHOP_LOCATION = 'OSM Partner Venezia';
+const WORKSHOP_DATE = 'Venerdì 12 dicembre 2025';
+const WORKSHOP_TIME = 'dalle ore 17.00 (accettazione dalle ore 16.30)';
+const WORKSHOP_LOCATION = 'OSM Venezia - Via Sertorio Orsato 22, Venezia';
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
 
 export async function POST(request: NextRequest) {
@@ -28,8 +28,8 @@ export async function POST(request: NextRequest) {
     const tenDaysAgoStr = tenDaysAgo.toISOString().split('T')[0];
     
     // Verifica se siamo troppo vicini all'evento o se è già passato
-    const workshopDate = new Date('2024-12-12');
-    workshopDate.setHours(18, 0, 0, 0); // Workshop alle 18:00
+    const workshopDate = new Date('2025-12-12');
+    workshopDate.setHours(17, 0, 0, 0); // Workshop dalle ore 17.00
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const daysUntilWorkshop = Math.ceil((workshopDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
@@ -110,40 +110,78 @@ export async function POST(request: NextRequest) {
 </head>
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-    <h1 style="color: white; margin: 0; font-size: 28px;">💡 Case Study Reale</h1>
+    <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
+      <h1 style="color: white; margin: 0; font-size: 28px;">💡 Case Study Reale</h1>
+    </a>
   </div>
   
   <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
-    <p>Mancano solo <strong>${daysUntilWorkshop} giorni</strong> al workshop e vogliamo condividere con te un caso reale di successo.</p>
+    <p>Vogliamo condividere con te due casi reali di successo che mostrano come la digitalizzazione può trasformare la gestione di una PMI.</p>
     
+    <!-- Case History 1: Ristorante -->
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
-      <h3 style="margin-top: 0; color: #667eea;">📊 Case Study: PMI Veneta</h3>
-      <p><strong>Azienda:</strong> PMI manifatturiera, 15 dipendenti, fatturato 8M€</p>
-      <p><strong>Problema iniziale:</strong> Lead gestiti manualmente, email perse, nessuna automazione</p>
-      <p><strong>Soluzione implementata:</strong> Sistema completo (landing + CRM + automazioni) in 30 giorni</p>
+      <h3 style="margin-top: 0; color: #667eea;">🍽️ Case Study 1: Dal caos di Excel a un gestionale unico</h3>
+      <p style="margin: 5px 0;"><strong>Settore:</strong> Ristorazione – ristoratore con più locali</p>
+      <p style="margin: 5px 0;"><strong>Problema:</strong> Decine di file Excel sparsi per gestire flusso finanziario, food cost, margini e previsioni. Accesso ai numeri solo da PC in ufficio.</p>
       
       <div style="background: #e7f3ff; padding: 15px; margin: 15px 0; border-radius: 4px;">
-        <h4 style="margin-top: 0; color: #2196F3;">🎯 Risultati in 30 giorni:</h4>
-        <ul style="line-height: 2; margin: 0;">
-          <li>✅ <strong>+40%</strong> lead gestiti senza aumentare personale</li>
-          <li>✅ <strong>-60%</strong> tempo speso su attività ripetitive</li>
-          <li>✅ <strong>100%</strong> lead seguiti (prima il 30% si perdeva)</li>
-          <li>✅ <strong>Dashboard real-time</strong> per vedere numeri in tempo reale</li>
+        <h4 style="margin-top: 0; color: #2196F3;">✅ Soluzione implementata:</h4>
+        <ul style="line-height: 1.8; margin: 10px 0 0 0; padding-left: 20px;">
+          <li>Gestionale unico accessibile da app mobile e sito web</li>
+          <li>Monitoraggio flusso finanziario in tempo reale</li>
+          <li>Food cost aggiornabile per singolo piatto</li>
+          <li>Calcolo margini per piatto e per punto vendita</li>
+          <li>Modulo di previsione con AI per incassi e flusso di cassa</li>
         </ul>
       </div>
       
-      <p style="font-style: italic; color: #666;">"Finalmente ho messo ordine nella digitalizzazione. Ora so esattamente da dove arrivano i lead e posso seguire tutti senza perdere nessuno." - Imprenditore</p>
+      <div style="background: #d4edda; padding: 15px; margin: 15px 0; border-radius: 4px; border-left: 4px solid #28a745;">
+        <h4 style="margin-top: 0; color: #155724;">🎯 Risultati:</h4>
+        <ul style="line-height: 1.8; margin: 10px 0 0 0; padding-left: 20px;">
+          <li><strong>Eliminati decine di file Excel</strong> sostituiti da un unico gestionale</li>
+          <li>Il titolare vede <strong>in tempo reale</strong> flusso finanziario, budget e margini direttamente da smartphone</li>
+          <li>Le scelte su menu e prezzi vengono fatte <strong>sui numeri, non più "a naso"</strong></li>
+          <li>L'amministrazione ha <strong>ridotto drasticamente</strong> il tempo speso in attività manuali</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Case History 2: Edilizia -->
+    <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #28a745;">
+      <h3 style="margin-top: 0; color: #28a745;">🏗️ Case Study 2: Da faldoni di carta a gestionale condiviso</h3>
+      <p style="margin: 5px 0;"><strong>Settore:</strong> Edilizia</p>
+      <p style="margin: 5px 0;"><strong>Problema:</strong> Faldoni di carta per ogni cantiere. Preventivi, ordini, fatture sparsi tra blocchi appunti, fogli A4, email e WhatsApp. Nessun controllo su margini cantieri fino alla chiusura lavori.</p>
+      
+      <div style="background: #e7f3ff; padding: 15px; margin: 15px 0; border-radius: 4px;">
+        <h4 style="margin-top: 0; color: #2196F3;">✅ Soluzione implementata:</h4>
+        <ul style="line-height: 1.8; margin: 10px 0 0 0; padding-left: 20px;">
+          <li>Un unico file Excel strutturato come gestionale, caricato in cloud</li>
+          <li>Accessibile contemporaneamente da più utenti (ufficio, titolare, capocantiere)</li>
+          <li>Sezioni dedicate: cantieri, clienti, subappalti, ordini, margini, fatturazione e incassi</li>
+          <li>Accesso anche da tablet/smartphone durante visite in cantiere</li>
+        </ul>
+      </div>
+      
+      <div style="background: #d4edda; padding: 15px; margin: 15px 0; border-radius: 4px; border-left: 4px solid #28a745;">
+        <h4 style="margin-top: 0; color: #155724;">🎯 Risultati:</h4>
+        <ul style="line-height: 1.8; margin: 10px 0 0 0; padding-left: 20px;">
+          <li><strong>Eliminata gran parte del cartaceo</strong> e dei doppioni di informazioni</li>
+          <li>Possibile sapere in ogni momento <strong>quanti cantieri sono aperti</strong> e <strong>quanto si sta guadagnando</strong> su ciascuno</li>
+          <li>Il titolare ha un <strong>quadro chiaro dei margini per cantiere</strong>, senza dover aspettare mesi</li>
+          <li>Le informazioni non sono più "nella testa di uno", ma <strong>condivise</strong> in un unico strumento</li>
+        </ul>
+      </div>
     </div>
     
     <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px;">
-      <p style="margin: 0;"><strong>🎯 Al workshop vedrai esattamente come hanno fatto:</strong></p>
-      <ul style="line-height: 2; margin: 10px 0 0 0;">
-        <li>Step-by-step il processo di implementazione</li>
+      <p style="margin: 0;"><strong>🎯 Al workshop vedrai:</strong></p>
+      <ul style="line-height: 2; margin: 10px 0 0 0; padding-left: 20px;">
+        <li>Come implementare soluzioni simili nella tua azienda</li>
         <li>Il sistema reale in azione (non teoria!)</li>
-        <li>Come hanno automatizzato email e follow-up</li>
-        <li>La dashboard che usano ogni giorno</li>
+        <li>Come automatizzare processi e ridurre il lavoro manuale</li>
+        <li>Dashboard e strumenti che puoi usare subito</li>
       </ul>
     </div>
     
@@ -162,33 +200,57 @@ export async function POST(request: NextRequest) {
     
     <p style="margin-top: 30px;">A presto,<br>
     <strong>Enrico Rizzi & Francesco Fusano</strong><br>
-    <span style="color: #667eea;">OSM Partner Venezia</span></p>
+    <a href="https://www.osmpartnervenezia.it/" style="color: #667eea; text-decoration: none;">OSM Partner Venezia</a></p>
+    
+    <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+      <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="display: inline-block; background: #667eea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px;">📅 Vai alla pagina del Workshop</a>
+    </div>
   </div>
 </body>
 </html>`;
 
         const emailText = `Ciao ${lead.nome},
 
-Mancano solo ${daysUntilWorkshop} giorni al workshop e vogliamo condividere con te un caso reale di successo.
+Vogliamo condividere con te due casi reali di successo che mostrano come la digitalizzazione può trasformare la gestione di una PMI.
 
-📊 Case Study: PMI Veneta
-Azienda: PMI manifatturiera, 15 dipendenti, fatturato 8M€
-Problema iniziale: Lead gestiti manualmente, email perse, nessuna automazione
-Soluzione implementata: Sistema completo (landing + CRM + automazioni) in 30 giorni
+🍽️ CASE STUDY 1: Dal caos di Excel a un gestionale unico
+Settore: Ristorazione – ristoratore con più locali
+Problema: Decine di file Excel sparsi per gestire flusso finanziario, food cost, margini e previsioni. Accesso ai numeri solo da PC in ufficio.
 
-🎯 Risultati in 30 giorni:
-✅ +40% lead gestiti senza aumentare personale
-✅ -60% tempo speso su attività ripetitive
-✅ 100% lead seguiti (prima il 30% si perdeva)
-✅ Dashboard real-time per vedere numeri in tempo reale
+✅ Soluzione:
+- Gestionale unico accessibile da app mobile e sito web
+- Monitoraggio flusso finanziario in tempo reale
+- Food cost aggiornabile per singolo piatto
+- Calcolo margini per piatto e per punto vendita
+- Modulo di previsione con AI per incassi e flusso di cassa
 
-"Finalmente ho messo ordine nella digitalizzazione. Ora so esattamente da dove arrivano i lead e posso seguire tutti senza perdere nessuno." - Imprenditore
+🎯 Risultati:
+- Eliminati decine di file Excel sostituiti da un unico gestionale
+- Il titolare vede in tempo reale flusso finanziario, budget e margini direttamente da smartphone
+- Le scelte su menu e prezzi vengono fatte sui numeri, non più "a naso"
+- L'amministrazione ha ridotto drasticamente il tempo speso in attività manuali
 
-🎯 Al workshop vedrai esattamente come hanno fatto:
-- Step-by-step il processo di implementazione
+🏗️ CASE STUDY 2: Da faldoni di carta a gestionale condiviso
+Settore: Edilizia
+Problema: Faldoni di carta per ogni cantiere. Preventivi, ordini, fatture sparsi tra blocchi appunti, fogli A4, email e WhatsApp. Nessun controllo su margini cantieri fino alla chiusura lavori.
+
+✅ Soluzione:
+- Un unico file Excel strutturato come gestionale, caricato in cloud
+- Accessibile contemporaneamente da più utenti (ufficio, titolare, capocantiere)
+- Sezioni dedicate: cantieri, clienti, subappalti, ordini, margini, fatturazione e incassi
+- Accesso anche da tablet/smartphone durante visite in cantiere
+
+🎯 Risultati:
+- Eliminata gran parte del cartaceo e dei doppioni di informazioni
+- Possibile sapere in ogni momento quanti cantieri sono aperti e quanto si sta guadagnando su ciascuno
+- Il titolare ha un quadro chiaro dei margini per cantiere, senza dover aspettare mesi
+- Le informazioni non sono più "nella testa di uno", ma condivise in un unico strumento
+
+🎯 Al workshop vedrai:
+- Come implementare soluzioni simili nella tua azienda
 - Il sistema reale in azione (non teoria!)
-- Come hanno automatizzato email e follow-up
-- La dashboard che usano ogni giorno
+- Come automatizzare processi e ridurre il lavoro manuale
+- Dashboard e strumenti che puoi usare subito
 
 💡 Non dimenticare: Se non l'hai ancora fatto, compila il Test di Maturità Digitale:
 ${BASE_URL}/test-maturita-digitale
@@ -202,12 +264,14 @@ Non vediamo l'ora di vederti! 🚀
 
 A presto,
 Enrico Rizzi & Francesco Fusano
-OSM Partner Venezia`;
+<a href="https://www.osmpartnervenezia.it/">OSM Partner Venezia</a>
+
+Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
 
         await Promise.all([
           sendEmail({
             to: lead.email,
-            subject: '💡 Case Study: come una PMI ha automatizzato in 30 giorni',
+            subject: '💡 Case Study: due PMI che hanno trasformato la loro gestione',
             html: emailHtml,
             text: emailText,
           }),

@@ -26,7 +26,9 @@ const emailTemplates: EmailTemplate[] = [
 </head>
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-    <h1 style="color: white; margin: 0; font-size: 28px;">🎉 Grazie!</h1>
+    <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
+      <h1 style="color: white; margin: 0; font-size: 28px;">🎉 Grazie!</h1>
+    </a>
   </div>
   
   <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
@@ -48,7 +50,11 @@ const emailTemplates: EmailTemplate[] = [
     
     <p style="margin-top: 30px;">A presto,<br>
     <strong>Enrico Rizzi & Francesco Fusano</strong><br>
-    <span style="color: #667eea;">OSM Partner Venezia</span></p>
+    <a href="https://www.osmpartnervenezia.it/" style="color: #667eea; text-decoration: none;">OSM Partner Venezia</a></p>
+    
+    <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+      <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="display: inline-block; background: #667eea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px;">📅 Vai alla pagina del Workshop</a>
+    </div>
   </div>
 </body>
 </html>`,
@@ -67,7 +73,9 @@ ${CALENDLY_CHECKUP_URL}
 
 A presto,
 Enrico Rizzi & Francesco Fusano
-OSM Partner Venezia`,
+<a href="https://www.osmpartnervenezia.it/">OSM Partner Venezia</a>
+
+Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`,
   },
   {
     delayHours: 24, // 24 ore dopo
@@ -89,7 +97,11 @@ OSM Partner Venezia`,
     
     <p>A presto,<br>
     <strong>Enrico Rizzi & Francesco Fusano</strong><br>
-    OSM Partner Venezia</p>
+    <a href="https://www.osmpartnervenezia.it/" style="color: #667eea; text-decoration: none;">OSM Partner Venezia</a></p>
+    
+    <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+      <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="display: inline-block; background: #667eea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px;">📅 Vai alla pagina del Workshop</a>
+    </div>
   </div>
 </body>
 </html>`,
@@ -104,7 +116,9 @@ ${CALENDLY_CHECKUP_URL}
 
 A presto,
 Enrico Rizzi & Francesco Fusano
-OSM Partner Venezia`,
+<a href="https://www.osmpartnervenezia.it/">OSM Partner Venezia</a>
+
+Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`,
   },
   {
     delayHours: 48, // 48 ore dopo
@@ -131,7 +145,11 @@ OSM Partner Venezia`,
     
     <p>A presto,<br>
     <strong>Enrico Rizzi & Francesco Fusano</strong><br>
-    OSM Partner Venezia</p>
+    <a href="https://www.osmpartnervenezia.it/" style="color: #667eea; text-decoration: none;">OSM Partner Venezia</a></p>
+    
+    <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+      <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="display: inline-block; background: #667eea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px;">📅 Vai alla pagina del Workshop</a>
+    </div>
   </div>
 </body>
 </html>`,
@@ -149,7 +167,9 @@ ${CALENDLY_CHECKUP_URL}
 
 A presto,
 Enrico Rizzi & Francesco Fusano
-OSM Partner Venezia`,
+<a href="https://www.osmpartnervenezia.it/">OSM Partner Venezia</a>
+
+Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`,
   },
 ];
 

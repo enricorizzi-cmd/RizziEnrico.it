@@ -25,6 +25,7 @@ const events: Array<{
   isOnline: boolean;
   externalUrl: string;
   speaker?: string;
+  isHighlighted?: boolean;
 }> = [
   {
     slug: 'la-sanita-privata-del-futuro-padova',
@@ -97,6 +98,20 @@ const events: Array<{
     isOnline: false,
     externalUrl: 'https://eventiosm.it/event/2025-12-11-vicenza-edilizia-2025-come-crescere-in-un-mercato-che-cambia',
     speaker: 'Fabio Polidori',
+  },
+  // Workshop 12 Dicembre - Evento evidenziato
+  {
+    slug: 'workshop-12-dicembre',
+    title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
+    description: 'Da imprenditori per imprenditori. Scopri come trasformare il caos digitale in processi automatici che funzionano davvero. Workshop esclusivo OSM con demo live di automazioni, AI e dashboard real-time.',
+    dateStart: new Date('2025-12-12T17:00:00'),
+    dateEnd: new Date('2025-12-12T19:00:00'),
+    locationName: 'OSM Venezia',
+    address: 'Via Sertorio Orsato 22, Venezia',
+    isOnline: false,
+    externalUrl: 'https://www.rizzienrico.it/workshop-12-dicembre',
+    speaker: 'Enrico Rizzi & Francesco Fusano',
+    isHighlighted: true, // Flag per evidenziare questo evento
   },
 ];
 
@@ -197,12 +212,33 @@ export default function EventiPage() {
         {/* Lista Eventi */}
         {events.length > 0 ? (
           <div className="space-y-6 max-w-4xl mx-auto">
-            {events.map((event) => (
-            <Card
+            {events
+              .filter(event => {
+                // Filtra eventi passati (mantieni solo eventi futuri o di oggi)
+                const now = new Date();
+                now.setHours(0, 0, 0, 0);
+                const eventDate = new Date(event.dateStart);
+                eventDate.setHours(0, 0, 0, 0);
+                return eventDate >= now;
+              })
+              .sort((a, b) => {
+                // Ordina per data, ma metti l'evento evidenziato per primo
+                if ((a as any).isHighlighted) return -1;
+                if ((b as any).isHighlighted) return 1;
+                return a.dateStart.getTime() - b.dateStart.getTime();
+              })
+              .map((event) => {
+                const isHighlighted = (event as any).isHighlighted;
+                return (
+            <div
               key={event.slug}
+              className={`${isHighlighted ? 'ring-4 ring-purple-500 ring-offset-4 bg-gradient-to-br from-purple-50 to-blue-50' : ''} rounded-lg overflow-hidden`}
+            >
+            <Card
               title={event.title}
               variant="event"
               href={event.externalUrl}
+              className={isHighlighted ? 'border-2 border-purple-500' : ''}
             >
               <div className="space-y-3">
                 <div className="flex items-center gap-2 text-sm text-[var(--color-subtext)]">
@@ -254,7 +290,20 @@ export default function EventiPage() {
                 </div>
               </div>
             </Card>
-          ))}
+            {isHighlighted && (
+              <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4 text-center">
+                <p className="font-bold text-lg mb-2">🎯 Workshop Esclusivo OSM</p>
+                <a
+                  href={event.externalUrl}
+                  className="inline-block bg-white text-purple-600 font-bold py-2 px-6 rounded-lg hover:bg-purple-50 transition-colors"
+                >
+                  Iscriviti Ora →
+                </a>
+              </div>
+            )}
+            </div>
+                );
+              })}
           </div>
         ) : (
           <div className="max-w-4xl mx-auto">

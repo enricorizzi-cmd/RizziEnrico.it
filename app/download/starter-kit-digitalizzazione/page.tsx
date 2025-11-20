@@ -19,7 +19,7 @@ export default function StarterKitPage() {
           <p className="text-xl text-gray-600">
             Workshop "Automatizza la tua Azienda: AI & Digitalizzazione"
             <br />
-            <span className="text-sm">12 Dicembre 2024 - OSM Partner Venezia</span>
+            <span className="text-sm">Venerdì 12 dicembre 2025 - OSM Venezia - Via Sertorio Orsato 22, Venezia</span>
           </p>
         </div>
 
@@ -196,7 +196,7 @@ export default function StarterKitPage() {
             <br />
             Enrico Rizzi & Francesco Fusano - OSM Partner Venezia
             <br />
-            12 Dicembre 2024
+            Venerdì 12 dicembre 2025
           </p>
         </div>
       </div>
