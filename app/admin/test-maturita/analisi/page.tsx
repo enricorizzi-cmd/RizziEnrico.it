@@ -213,6 +213,74 @@ export default function TestMaturitaAnalyticsDashboard() {
           </div>
         </div>
 
+        {/* AI Insights Panel */}
+        {(aiInsights || loadingInsights) && (
+          <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg shadow-lg p-6 mb-8 border-2 border-purple-200">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-2xl">🤖</span>
+              <h2 className="text-2xl font-bold text-gray-900">Analisi AI dei Risultati</h2>
+            </div>
+            {loadingInsights ? (
+              <p className="text-gray-600">Caricamento analisi...</p>
+            ) : aiInsights ? (
+              <div className="space-y-4">
+                {aiInsights.analisi_aggregata && (
+                  <div className="bg-white rounded-lg p-4 border border-purple-200">
+                    <h3 className="font-semibold text-purple-700 mb-2">📊 Analisi Aggregata</h3>
+                    <p className="text-gray-700 leading-relaxed">{aiInsights.analisi_aggregata}</p>
+                  </div>
+                )}
+                {aiInsights.tendenze_principali && aiInsights.tendenze_principali.length > 0 && (
+                  <div className="bg-white rounded-lg p-4 border border-blue-200">
+                    <h3 className="font-semibold text-blue-700 mb-2">📈 Tendenze Principali</h3>
+                    <ul className="list-disc list-inside space-y-1 text-gray-700">
+                      {aiInsights.tendenze_principali.map((tendenza: string, idx: number) => (
+                        <li key={idx}>{tendenza}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {aiInsights.aree_critiche && aiInsights.aree_critiche.length > 0 && (
+                  <div className="bg-white rounded-lg p-4 border border-red-200">
+                    <h3 className="font-semibold text-red-700 mb-2">⚠️ Aree Critiche</h3>
+                    <div className="space-y-3">
+                      {aiInsights.aree_critiche.map((area: any, idx: number) => (
+                        <div key={idx} className="border-l-4 border-red-400 pl-3">
+                          <p className="font-semibold text-gray-800">{area.categoria}</p>
+                          {area.problema && <p className="text-sm text-gray-600">{area.problema}</p>}
+                          {area.impatto && <p className="text-sm text-gray-600 mt-1">💡 {area.impatto}</p>}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {aiInsights.raccomandazioni && aiInsights.raccomandazioni.length > 0 && (
+                  <div className="bg-white rounded-lg p-4 border border-green-200">
+                    <h3 className="font-semibold text-green-700 mb-2">✅ Raccomandazioni</h3>
+                    <ul className="list-disc list-inside space-y-1 text-gray-700">
+                      {aiInsights.raccomandazioni.map((rec: string, idx: number) => (
+                        <li key={idx}>{rec}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {aiInsights.focus_workshop && aiInsights.focus_workshop.length > 0 && (
+                  <div className="bg-white rounded-lg p-4 border border-indigo-200">
+                    <h3 className="font-semibold text-indigo-700 mb-2">🎯 Focus Workshop</h3>
+                    <ul className="list-disc list-inside space-y-1 text-gray-700">
+                      {aiInsights.focus_workshop.map((focus: string, idx: number) => (
+                        <li key={idx}>{focus}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p className="text-gray-600">Nessun insight disponibile al momento.</p>
+            )}
+          </div>
+        )}
+
         {/* Grafici principali */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {/* Distribuzione livelli */}
