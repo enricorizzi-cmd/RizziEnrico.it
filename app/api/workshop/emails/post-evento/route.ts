@@ -231,7 +231,12 @@ Data invio: ${new Date().toLocaleString('it-IT')}`;
 
     // Aggiorna metadata per tracciare email inviate
     const metadata = (lead.metadata as any) || {};
-    metadata[`email_${emailType}_sent`] = new Date().toISOString();
+    // Mappa emailType ai nomi usati nella dashboard
+    const metadataKey = emailType === 'immediate' ? 'email_post_immediata_sent' 
+                      : emailType === '24h' ? 'email_post_24h_sent'
+                      : emailType === '48h' ? 'email_post_48h_sent'
+                      : `email_${emailType}_sent`;
+    metadata[metadataKey] = new Date().toISOString();
 
     await supabase
       .from('workshop_leads')
