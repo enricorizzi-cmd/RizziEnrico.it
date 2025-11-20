@@ -2,6 +2,27 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { Pie, Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 interface WorkshopLead {
   id: string;
@@ -145,33 +166,94 @@ export default function WorkshopAdminDashboard() {
           </div>
         )}
 
-        {/* Stats per Fonte */}
-        {stats && stats.per_fonte && (
-          <div className="bg-white p-6 rounded-lg shadow mb-8">
-            <h2 className="text-xl font-bold mb-4">Lead per Fonte</h2>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              {Object.entries(stats.per_fonte).map(([fonte, count]) => (
-                <div key={fonte} className="text-center">
-                  <div className="text-2xl font-bold text-purple-600">{count}</div>
-                  <div className="text-sm text-gray-600">{fonte}</div>
+        {/* Grafici */}
+        {stats && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            {/* Grafico a Torta - Lead per Fonte */}
+            {stats.per_fonte && Object.keys(stats.per_fonte).length > 0 && (
+              <div className="bg-white p-6 rounded-lg shadow">
+                <h2 className="text-xl font-bold mb-4">Lead per Fonte</h2>
+                <div className="h-64">
+                  <Pie
+                    data={{
+                      labels: Object.keys(stats.per_fonte),
+                      datasets: [
+                        {
+                          label: 'Lead',
+                          data: Object.values(stats.per_fonte),
+                          backgroundColor: [
+                            'rgba(147, 51, 234, 0.8)',
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(16, 185, 129, 0.8)',
+                            'rgba(245, 158, 11, 0.8)',
+                            'rgba(239, 68, 68, 0.8)',
+                          ],
+                          borderColor: [
+                            'rgba(147, 51, 234, 1)',
+                            'rgba(59, 130, 246, 1)',
+                            'rgba(16, 185, 129, 1)',
+                            'rgba(245, 158, 11, 1)',
+                            'rgba(239, 68, 68, 1)',
+                          ],
+                          borderWidth: 2,
+                        },
+                      ],
+                    }}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      plugins: {
+                        legend: {
+                          position: 'bottom',
+                        },
+                      },
+                    }}
+                  />
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
+              </div>
+            )}
 
-        {/* Stats per Stato */}
-        {stats && stats.per_stato && (
-          <div className="bg-white p-6 rounded-lg shadow mb-8">
-            <h2 className="text-xl font-bold mb-4">Lead per Stato</h2>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              {Object.entries(stats.per_stato).map(([stato, count]) => (
-                <div key={stato} className="text-center">
-                  <div className="text-2xl font-bold text-blue-600">{count}</div>
-                  <div className="text-sm text-gray-600">{stato}</div>
+            {/* Grafico a Barre - Lead per Stato */}
+            {stats.per_stato && Object.keys(stats.per_stato).length > 0 && (
+              <div className="bg-white p-6 rounded-lg shadow">
+                <h2 className="text-xl font-bold mb-4">Lead per Stato</h2>
+                <div className="h-64">
+                  <Bar
+                    data={{
+                      labels: Object.keys(stats.per_stato).map((s) => 
+                        s.charAt(0).toUpperCase() + s.slice(1).replace(/_/g, ' ')
+                      ),
+                      datasets: [
+                        {
+                          label: 'Numero Lead',
+                          data: Object.values(stats.per_stato),
+                          backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                          borderColor: 'rgba(59, 130, 246, 1)',
+                          borderWidth: 2,
+                        },
+                      ],
+                    }}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      plugins: {
+                        legend: {
+                          display: false,
+                        },
+                      },
+                      scales: {
+                        y: {
+                          beginAtZero: true,
+                          ticks: {
+                            stepSize: 1,
+                          },
+                        },
+                      },
+                    }}
+                  />
                 </div>
-              ))}
-            </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -236,6 +318,12 @@ export default function WorkshopAdminDashboard() {
                       Fonte
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Problema Segnalato
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Note
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Stato
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -265,6 +353,55 @@ export default function WorkshopAdminDashboard() {
                       <span className="px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">
                         {lead.fonte}
                       </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="text-sm text-gray-900 max-w-xs">
+                        {lead.problema ? (
+                          <span 
+                            className="block overflow-hidden text-ellipsis" 
+                            style={{ 
+                              display: '-webkit-box',
+                              WebkitLineClamp: 2,
+                              WebkitBoxOrient: 'vertical',
+                              maxHeight: '3em'
+                            }}
+                            title={lead.problema}
+                          >
+                            {lead.problema}
+                          </span>
+                        ) : (
+                          <span className="text-gray-400 italic">Nessun problema segnalato</span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-2">
+                        <div className="text-sm text-gray-900 max-w-xs flex-1">
+                          {lead.note ? (
+                            <span 
+                              className="block overflow-hidden text-ellipsis"
+                              style={{ 
+                                display: '-webkit-box',
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: 'vertical',
+                                maxHeight: '3em'
+                              }}
+                              title={lead.note}
+                            >
+                              {lead.note}
+                            </span>
+                          ) : (
+                            <span className="text-gray-400 italic">Nessuna nota</span>
+                          )}
+                        </div>
+                        <button
+                          onClick={() => setEditingLead(lead)}
+                          className="text-purple-600 hover:text-purple-900 p-1"
+                          title="Modifica note"
+                        >
+                          ✏️
+                        </button>
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <select
@@ -306,13 +443,6 @@ export default function WorkshopAdminDashboard() {
                           title="Segna presente"
                         >
                           ✅
-                        </button>
-                        <button
-                          onClick={() => setEditingLead(lead)}
-                          className="text-purple-600 hover:text-purple-900"
-                          title="Modifica note"
-                        >
-                          ✏️
                         </button>
                       </div>
                     </td>
