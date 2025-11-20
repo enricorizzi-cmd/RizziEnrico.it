@@ -26,6 +26,16 @@ export default function WorkshopBanner() {
     }
   }, [pathname]);
 
+  // Gestisci il padding del main quando il banner è visibile
+  useEffect(() => {
+    if (isVisible && pathname === '/') {
+      document.body.classList.add('workshop-banner-visible');
+      return () => {
+        document.body.classList.remove('workshop-banner-visible');
+      };
+    }
+  }, [isVisible, pathname]);
+
   const handleDismiss = () => {
     setIsVisible(false);
     setIsDismissed(true);
@@ -126,19 +136,6 @@ export default function WorkshopBanner() {
         </div>
       </Link>
 
-      <style jsx>{`
-        @keyframes progress-bar {
-          0% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(100%);
-          }
-        }
-        .animate-progress-bar {
-          animation: progress-bar 3s ease-in-out infinite;
-        }
-      `}</style>
     </div>
   );
 }

@@ -13,6 +13,9 @@
   --color-warning: #F59E0B;
   --color-error: #DC2626;
   
+  /* Workshop Banner */
+  --workshop-banner-height: 4rem;
+  
   /* Spacing */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
@@ -297,4 +300,29 @@ button.inline-button {
 
 .animation-delay-400 {
   animation-delay: 400ms;
+}
+
+/* Workshop Banner - Padding adjustment when visible */
+body.workshop-banner-visible main {
+  padding-top: calc(24px + var(--workshop-banner-height));
+}
+
+@media (min-width: 1024px) {
+  body.workshop-banner-visible main {
+    padding-top: calc(16px + var(--workshop-banner-height));
+  }
+}
+
+/* Workshop Banner Progress Bar Animation */
+@keyframes progress-bar {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-progress-bar {
+  animation: progress-bar 3s ease-in-out infinite;
 }
