@@ -210,13 +210,18 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
         // Email T+5 (simulata)
         new Promise(resolve => setTimeout(resolve, 2000)).then(async () => {
           try {
-            const daysRemaining = 7;
             const emailHtml = `
 <!DOCTYPE html>
 <html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-    <h1 style="color: white; margin: 0; font-size: 28px;">🎯 Preparati al Meglio</h1>
+    <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
+      <h1 style="color: white; margin: 0; font-size: 28px;">🎯 Preparati al Meglio</h1>
+    </a>
   </div>
   
   <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
@@ -224,7 +229,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
     
     <p>Siamo felici che tu sia iscritto al workshop <strong>"Automatizza la tua Azienda: AI & Digitalizzazione"</strong>!</p>
     
-    <p>Mancano ancora <strong>${daysRemaining} giorni</strong> e vogliamo aiutarti a prepararti al meglio per trarre il massimo dall'evento.</p>
+    <p>Vogliamo aiutarti a prepararti al meglio per trarre il massimo dall'evento.</p>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
       <h3 style="margin-top: 0; color: #667eea;">Cosa vedrai al workshop:</h3>
@@ -277,22 +282,99 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
             console.error('[WORKSHOP] Errore invio email T+5 automatica:', err);
           }
         }),
-        // Email T+10 (simulata)
+        // Email T+10 (simulata) - con case study completi
         new Promise(resolve => setTimeout(resolve, 4000)).then(async () => {
           try {
-            const daysUntilWorkshop = 2;
             const emailHtml = `
 <!DOCTYPE html>
 <html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-    <h1 style="color: white; margin: 0; font-size: 28px;">💡 Case Study Reale</h1>
+    <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
+      <h1 style="color: white; margin: 0; font-size: 28px;">💡 Case Study Reale</h1>
+    </a>
   </div>
   
   <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${validatedData.nome}</strong>,</p>
     
-    <p>Mancano solo <strong>${daysUntilWorkshop} giorni</strong> al workshop e vogliamo condividere con te un caso reale di successo.</p>
+    <p>Manca poco al workshop e vogliamo condividere con te due casi reali di successo che mostrano come la digitalizzazione può trasformare la gestione di una PMI.</p>
+    
+    <!-- Case History 1: Ristorante -->
+    <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
+      <h3 style="margin-top: 0; color: #667eea;">🍽️ Case Study 1: Dal caos di Excel a un gestionale unico</h3>
+      <p style="margin: 5px 0;"><strong>Settore:</strong> Ristorazione – ristoratore con più locali</p>
+      <p style="margin: 5px 0;"><strong>Problema:</strong> Decine di file Excel sparsi per gestire flusso finanziario, food cost, margini e previsioni. Accesso ai numeri solo da PC in ufficio.</p>
+      
+      <div style="background: #e7f3ff; padding: 15px; margin: 15px 0; border-radius: 4px;">
+        <h4 style="margin-top: 0; color: #2196F3;">✅ Soluzione implementata:</h4>
+        <ul style="line-height: 1.8; margin: 10px 0 0 0; padding-left: 20px;">
+          <li>Gestionale unico accessibile da app mobile e sito web</li>
+          <li>Monitoraggio flusso finanziario in tempo reale</li>
+          <li>Food cost aggiornabile per singolo piatto</li>
+          <li>Calcolo margini per piatto e per punto vendita</li>
+          <li>Modulo di previsione con AI per incassi e flusso di cassa</li>
+        </ul>
+      </div>
+      
+      <div style="background: #d4edda; padding: 15px; margin: 15px 0; border-radius: 4px; border-left: 4px solid #28a745;">
+        <h4 style="margin-top: 0; color: #155724;">🎯 Risultati:</h4>
+        <ul style="line-height: 1.8; margin: 10px 0 0 0; padding-left: 20px;">
+          <li><strong>Eliminati decine di file Excel</strong> sostituiti da un unico gestionale</li>
+          <li>Il titolare vede <strong>in tempo reale</strong> flusso finanziario, budget e margini direttamente da smartphone</li>
+          <li>Le scelte su menu e prezzi vengono fatte <strong>sui numeri, non più "a naso"</strong></li>
+          <li>L'amministrazione ha <strong>ridotto drasticamente</strong> il tempo speso in attività manuali</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Case History 2: Edilizia -->
+    <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #28a745;">
+      <h3 style="margin-top: 0; color: #28a745;">🏗️ Case Study 2: Da faldoni di carta a gestionale condiviso</h3>
+      <p style="margin: 5px 0;"><strong>Settore:</strong> Edilizia</p>
+      <p style="margin: 5px 0;"><strong>Problema:</strong> Faldoni di carta per ogni cantiere. Preventivi, ordini, fatture sparsi tra blocchi appunti, fogli A4, email e WhatsApp. Nessun controllo su margini cantieri fino alla chiusura lavori.</p>
+      
+      <div style="background: #e7f3ff; padding: 15px; margin: 15px 0; border-radius: 4px;">
+        <h4 style="margin-top: 0; color: #2196F3;">✅ Soluzione implementata:</h4>
+        <ul style="line-height: 1.8; margin: 10px 0 0 0; padding-left: 20px;">
+          <li>Un unico file Excel strutturato come gestionale, caricato in cloud</li>
+          <li>Accessibile contemporaneamente da più utenti (ufficio, titolare, capocantiere)</li>
+          <li>Sezioni dedicate: cantieri, clienti, subappalti, ordini, margini, fatturazione e incassi</li>
+          <li>Accesso anche da tablet/smartphone durante visite in cantiere</li>
+        </ul>
+      </div>
+      
+      <div style="background: #d4edda; padding: 15px; margin: 15px 0; border-radius: 4px; border-left: 4px solid #28a745;">
+        <h4 style="margin-top: 0; color: #155724;">🎯 Risultati:</h4>
+        <ul style="line-height: 1.8; margin: 10px 0 0 0; padding-left: 20px;">
+          <li><strong>Eliminata gran parte del cartaceo</strong> e dei doppioni di informazioni</li>
+          <li>Possibile sapere in ogni momento <strong>quanti cantieri sono aperti</strong> e <strong>quanto si sta guadagnando</strong> su ciascuno</li>
+          <li>Il titolare ha un <strong>quadro chiaro dei margini per cantiere</strong>, senza dover aspettare mesi</li>
+          <li>Le informazioni non sono più "nella testa di uno", ma <strong>condivise</strong> in un unico strumento</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px;">
+      <p style="margin: 0;"><strong>🎯 Al workshop vedrai:</strong></p>
+      <ul style="line-height: 2; margin: 10px 0 0 0; padding-left: 20px;">
+        <li>Come implementare soluzioni simili nella tua azienda</li>
+        <li>Il sistema reale in azione (non teoria!)</li>
+        <li>Come automatizzare processi e ridurre il lavoro manuale</li>
+        <li>Dashboard e strumenti che puoi usare subito</li>
+      </ul>
+    </div>
+    
+    <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
+      <h3 style="margin-top: 0; color: #667eea;">📅 Dettagli Evento:</h3>
+      <p style="margin: 5px 0;"><strong>Data:</strong> ${WORKSHOP_DATE}</p>
+      <p style="margin: 5px 0;"><strong>Orario:</strong> ${WORKSHOP_TIME}</p>
+      <p style="margin: 5px 0;"><strong>Luogo:</strong> ${WORKSHOP_LOCATION}</p>
+    </div>
     
     <p style="margin-top: 30px;">Non vediamo l'ora di vederti! 🚀</p>
     
@@ -309,7 +391,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
 
             await sendEmail({
               to: validatedData.email,
-              subject: '💡 [AUTO-TEST] Case Study: come una PMI ha automatizzato in 30 giorni',
+              subject: '💡 [AUTO-TEST] Case Study Reale: due PMI trasformate dalla digitalizzazione',
               html: emailHtml,
               text: `Test automatico email T+10`,
               emailId: 'auto_test_10_giorni',
@@ -366,7 +448,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
 
             await sendEmail({
               to: validatedData.email,
-              subject: '⏰ [AUTO-TEST] Solo 3 giorni! Preparati per il workshop',
+              subject: '📋 [AUTO-TEST] Preparati per il workshop',
               html: emailHtml,
               text: `Test automatico email T-3`,
               emailId: 'auto_test_3_giorni',
