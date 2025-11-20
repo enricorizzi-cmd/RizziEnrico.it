@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@/lib/supabase';
 import { sendEmail } from '@/lib/email';
 
+const NOTIFICATION_EMAIL = 'enricorizzi1991@gmail.com';
 const CALENDLY_CHECKUP_URL = process.env.NEXT_PUBLIC_CALENDLY_CHECKUP_URL || 'https://calendly.com/enricorizzi/check-up-gratuito-in-azienda';
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
 
@@ -200,13 +201,33 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Invia email
-    await sendEmail({
-      to: lead.email,
-      subject: template.subject,
-      html: template.html(lead),
-      text: template.text(lead),
-    });
+    // Invia email al lead e notifica a enricorizzi1991@gmail.com
+    await Promise.all([
+      sendEmail({
+        to: lead.email,
+        subject: template.subject,
+        html: template.html(lead),
+        text: template.text(lead),
+      }),
+      new Promise(resolve => setTimeout(resolve, 500)).then(() => {
+        const notificationText = `Email post-evento inviata a ${lead.nome} ${lead.cognome} (${lead.email}):
+        
+Tipo email: ${emailType}
+Oggetto: ${template.subject}
+
+ID Lead: ${lead.id}
+Data invio: ${new Date().toLocaleString('it-IT')}`;
+        
+        return sendEmail({
+          to: NOTIFICATION_EMAIL,
+          subject: `📧 Email post-evento inviata - ${lead.nome} ${lead.cognome} (${emailType})`,
+          text: notificationText,
+        }).catch((err) => {
+          console.error('[WORKSHOP] Errore invio notifica post-evento (non bloccante):', err);
+          return false;
+        });
+      }),
+    ]);
 
     // Aggiorna metadata per tracciare email inviate
     const metadata = (lead.metadata as any) || {};

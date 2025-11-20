@@ -6,6 +6,7 @@ import { rateLimit } from '@/lib/rateLimit';
 import { sendEmail } from '@/lib/email';
 
 const CONTACT_EMAIL = 'e.rizzi@osmpartnervenezia.it';
+const NOTIFICATION_EMAIL = 'enricorizzi1991@gmail.com';
 const CONTACT_PHONE = '3475290564';
 
 // Calendly URLs - Configura questi valori nelle variabili ambiente
@@ -117,11 +118,19 @@ Contatta: ${validatedData.phone ? `tel:${CONTACT_PHONE}` : CONTACT_EMAIL}
 WhatsApp: https://wa.me/39${CONTACT_PHONE}
 Prenota Check-up: ${calendlyUrl}`;
 
-    const emailSent = await sendEmail({
-      to: CONTACT_EMAIL,
-      subject: emailSubject,
-      text: emailText,
-    });
+    // Invia email a CONTACT_EMAIL e NOTIFICATION_EMAIL
+    const emailSent = await Promise.all([
+      sendEmail({
+        to: CONTACT_EMAIL,
+        subject: emailSubject,
+        text: emailText,
+      }),
+      sendEmail({
+        to: NOTIFICATION_EMAIL,
+        subject: emailSubject,
+        text: emailText,
+      }),
+    ]).then(() => true).catch(() => false);
 
     // Invia email di conferma al lead (opzionale)
     if (validatedData.email) {

@@ -4,6 +4,7 @@ import { createServerClient } from '@/lib/supabase';
 import { sendEmail } from '@/lib/email';
 
 const CONTACT_EMAIL = 'e.rizzi@osmpartnervenezia.it';
+const NOTIFICATION_EMAIL = 'enricorizzi1991@gmail.com';
 const CONTACT_PHONE = '3475290564';
 
 export async function POST(request: NextRequest) {
@@ -39,11 +40,19 @@ Timestamp: ${new Date().toISOString()}
 
 Link download: ${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/resources/kpi-pack.xlsx`;
 
-    const emailSentToEnrico = await sendEmail({
-      to: CONTACT_EMAIL,
-      subject: emailSubject,
-      text: emailText,
-    });
+    // Invia email a CONTACT_EMAIL e NOTIFICATION_EMAIL
+    const emailSentToEnrico = await Promise.all([
+      sendEmail({
+        to: CONTACT_EMAIL,
+        subject: emailSubject,
+        text: emailText,
+      }),
+      sendEmail({
+        to: NOTIFICATION_EMAIL,
+        subject: emailSubject,
+        text: emailText,
+      }),
+    ]).then(() => true).catch(() => false);
 
     // Invia email al richiedente con link download
     const downloadUrl = '/resources/kpi-pack.xlsx';

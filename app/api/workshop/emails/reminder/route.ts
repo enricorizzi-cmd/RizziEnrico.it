@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@/lib/supabase';
 import { sendEmail } from '@/lib/email';
 
+const NOTIFICATION_EMAIL = 'enricorizzi1991@gmail.com';
 const WORKSHOP_DATE = '12 dicembre 2024';
 const WORKSHOP_TIME = '18:00';
 const WORKSHOP_LOCATION = 'OSM Partner Venezia'; // Da aggiornare con indirizzo esatto
@@ -124,12 +125,29 @@ A presto,
 Enrico Rizzi & Francesco Fusano
 OSM Partner Venezia`;
 
-        await sendEmail({
-          to: lead.email,
-          subject: '📅 Promemoria Workshop - Domani alle 18:00',
-          html: emailHtml,
-          text: emailText,
-        });
+        await Promise.all([
+          sendEmail({
+            to: lead.email,
+            subject: '📅 Promemoria Workshop - Domani alle 18:00',
+            html: emailHtml,
+            text: emailText,
+          }),
+          new Promise(resolve => setTimeout(resolve, 500)).then(() => {
+            const notificationText = `Promemoria workshop inviato a ${lead.nome} ${lead.cognome} (${lead.email}):
+            
+ID Lead: ${lead.id}
+Data invio: ${new Date().toLocaleString('it-IT')}`;
+            
+            return sendEmail({
+              to: NOTIFICATION_EMAIL,
+              subject: `📅 Promemoria workshop inviato - ${lead.nome} ${lead.cognome}`,
+              text: notificationText,
+            }).catch((err) => {
+              console.error('[WORKSHOP] Errore invio notifica reminder (non bloccante):', err);
+              return false;
+            });
+          }),
+        ]);
 
         sent++;
       } catch (error) {
