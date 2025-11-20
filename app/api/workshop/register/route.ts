@@ -120,19 +120,21 @@ A presto,
 Enrico Rizzi & Francesco Fusano
 OSM Partner Venezia`;
 
-    await sendEmail({
-      to: validatedData.email,
-      subject: '🎉 Registrazione Workshop Confermata - Automatizza la tua Azienda',
-      html: confirmEmailHtml,
-      text: confirmEmailText,
-    });
-
-    // Attendi 1 secondo per evitare rate limit prima di inviare la notifica admin
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Email di notifica a Enrico (DOPO, così non supera il rate limit)
-    const emailSubject = `🎯 Nuova registrazione Workshop - ${validatedData.nome} ${validatedData.cognome}`;
-    const emailText = `Nuova registrazione al Workshop "Automatizza la tua Azienda: AI & Digitalizzazione":
+    // Invia email in modo asincrono (non bloccare la risposta)
+    // Le email vengono inviate in background, se falliscono non blocca la risposta
+    Promise.all([
+      sendEmail({
+        to: validatedData.email,
+        subject: '🎉 Registrazione Workshop Confermata - Automatizza la tua Azienda',
+        html: confirmEmailHtml,
+        text: confirmEmailText,
+      }).catch((err) => {
+        console.error('[WORKSHOP] Errore invio email conferma (non bloccante):', err);
+        return false;
+      }),
+      new Promise(resolve => setTimeout(resolve, 1000)).then(() => {
+        const emailSubject = `🎯 Nuova registrazione Workshop - ${validatedData.nome} ${validatedData.cognome}`;
+        const emailText = `Nuova registrazione al Workshop "Automatizza la tua Azienda: AI & Digitalizzazione":
 
 📋 Dati registrazione:
 Nome: ${validatedData.nome} ${validatedData.cognome}
@@ -149,12 +151,20 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
 
 📊 Dashboard: ${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/admin/workshop`;
 
-    await sendEmail({
-      to: CONTACT_EMAIL,
-      subject: emailSubject,
-      text: emailText,
+        return sendEmail({
+          to: CONTACT_EMAIL,
+          subject: emailSubject,
+          text: emailText,
+        }).catch((err) => {
+          console.error('[WORKSHOP] Errore invio email notifica (non bloccante):', err);
+          return false;
+        });
+      })
+    ]).catch((err) => {
+      console.error('[WORKSHOP] Errore generale invio email (non bloccante):', err);
     });
 
+    // Ritorna subito la risposta senza aspettare le email
     return NextResponse.json({
       success: true,
       id: lead.id,

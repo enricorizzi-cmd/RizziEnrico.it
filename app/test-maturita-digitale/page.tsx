@@ -160,7 +160,7 @@ export default function TestMaturitaDigitalePage() {
     try {
       // Salva risultati con dati del form iniziale
       const formValues = formData || getValues();
-      await fetch('/api/test-maturita/submit', {
+      const response = await fetch('/api/test-maturita/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -176,8 +176,15 @@ export default function TestMaturitaDigitalePage() {
           percentage: calculatedResults.percentage,
         }),
       });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Error saving test:', errorData);
+        // Mostra risultati comunque anche se il salvataggio fallisce
+      }
     } catch (error) {
       console.error('Error saving test:', error);
+      // Mostra risultati comunque anche se c'è un errore
     } finally {
       setIsSubmitting(false);
       setCurrentStep('results');

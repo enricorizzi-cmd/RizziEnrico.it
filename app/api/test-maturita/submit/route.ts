@@ -138,21 +138,20 @@ A presto,
 Enrico Rizzi
 OSM Partner Venezia`;
 
-    // Invia email all'utente
-    if (validatedData.email) {
-      await sendEmail({
+    // Invia email in modo asincrono (non bloccare la risposta)
+    // Le email vengono inviate in background, se falliscono non blocca la risposta
+    Promise.all([
+      validatedData.email ? sendEmail({
         to: validatedData.email,
         subject: `📊 Risultati Test di Maturità Digitale - ${livelloMaturita}`,
         html: userEmailHtml,
         text: userEmailText,
-      });
-    }
-
-    // Attendi 500ms prima di inviare notifica
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    // Email di notifica a Enrico
-    const notificationText = `Nuova compilazione Test di Maturità Digitale:
+      }).catch((err) => {
+        console.error('[TEST] Errore invio email utente (non bloccante):', err);
+        return false;
+      }) : Promise.resolve(true),
+      new Promise(resolve => setTimeout(resolve, 500)).then(() => {
+        const notificationText = `Nuova compilazione Test di Maturità Digitale:
 
 📋 Dati compilatore:
 Nome: ${validatedData.nome} ${validatedData.cognome}
@@ -172,12 +171,20 @@ ${raccomandazioni.length > 0 ? `\nRaccomandazioni:\n${raccomandazioni.map((rec: 
 ID Test: ${data.id}
 Data compilazione: ${new Date().toLocaleString('it-IT')}`;
 
-    await sendEmail({
-      to: NOTIFICATION_EMAIL,
-      subject: `📊 Nuova compilazione Test Maturità Digitale - ${validatedData.nome} ${validatedData.cognome} (${livelloMaturita})`,
-      text: notificationText,
+        return sendEmail({
+          to: NOTIFICATION_EMAIL,
+          subject: `📊 Nuova compilazione Test Maturità Digitale - ${validatedData.nome} ${validatedData.cognome} (${livelloMaturita})`,
+          text: notificationText,
+        }).catch((err) => {
+          console.error('[TEST] Errore invio email notifica (non bloccante):', err);
+          return false;
+        });
+      })
+    ]).catch((err) => {
+      console.error('[TEST] Errore generale invio email (non bloccante):', err);
     });
 
+    // Ritorna subito la risposta senza aspettare le email
     return NextResponse.json({
       success: true,
       id: data.id,
