@@ -24,14 +24,14 @@ const emailTemplates: EmailTemplate[] = [
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
     <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
       <h1 style="color: white; margin: 0; font-size: 28px;">🎉 Grazie!</h1>
     </a>
   </div>
   
-  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+  <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
     <p>Grazie per essere stato al workshop "Automatizza la tua Azienda: AI & Digitalizzazione"!</p>
@@ -83,7 +83,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`,
     html: (lead) => `
 <!DOCTYPE html>
 <html>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: #f9f9f9; padding: 30px; border-radius: 10px;">
     <p style="font-size: 18px;">Ciao <strong>${lead.nome}</strong>,</p>
     
@@ -126,7 +126,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`,
     html: (lead) => `
 <!DOCTYPE html>
 <html>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: #f9f9f9; padding: 30px; border-radius: 10px;">
     <p style="font-size: 18px;">Ciao <strong>${lead.nome}</strong>,</p>
     
@@ -228,6 +228,7 @@ export async function POST(request: NextRequest) {
         subject: template.subject,
         html: template.html(lead),
         text: template.text(lead),
+        unsubscribeUrl: `${BASE_URL}/unsubscribe?email=${encodeURIComponent(lead.email)}&lead=${encodeURIComponent(lead.id)}`,
       }),
       new Promise(resolve => setTimeout(resolve, 500)).then(() => {
         const notificationText = `Email post-evento inviata a ${lead.nome} ${lead.cognome} (${lead.email}):

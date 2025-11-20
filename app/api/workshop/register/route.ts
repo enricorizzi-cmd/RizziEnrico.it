@@ -61,17 +61,17 @@ export async function POST(request: NextRequest) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
     <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
       <h1 style="color: white; margin: 0; font-size: 28px;">🎉 Registrazione Confermata!</h1>
     </a>
   </div>
   
-  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
-    <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${validatedData.nome}</strong>,</p>
+  <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
+    <p style="font-size: 18px; margin-bottom: 20px; color: #1a1a1a;">Ciao <strong style="color: #000000;">${validatedData.nome}</strong>,</p>
     
-    <p>Grazie per esserti iscritto al workshop:</p>
+    <p style="color: #1a1a1a;">Grazie per esserti iscritto al workshop:</p>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
       <h2 style="margin-top: 0; color: #667eea;">"Automatizza la tua Azienda: AI & Digitalizzazione"</h2>
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
     </div>
     
     <h3 style="color: #667eea; margin-top: 30px;">Cosa ti porterai a casa:</h3>
-    <ul style="line-height: 2;">
+    <ul style="line-height: 2; color: #1a1a1a;">
       <li>✅ Un sistema concreto di digitalizzazione che puoi replicare</li>
       <li>✅ Demo live di automazioni e AI per PMI</li>
       <li>✅ Starter Kit: checklist pratica per digitalizzare la tua PMI</li>
@@ -119,14 +119,14 @@ export async function POST(request: NextRequest) {
     </ul>
     
     <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px;">
-      <p style="margin: 0;"><strong>💡 Prossimo passo:</strong> Compila il <a href="${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test di Maturità Digitale</a> per capire da dove partire.</p>
+      <p style="margin: 0; color: #1a1a1a;"><strong style="color: #000000;">💡 Prossimo passo:</strong> Compila il <a href="${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/test-maturita-digitale" style="color: #4a5568; font-weight: bold; text-decoration: underline;">Test di Maturità Digitale</a> per capire da dove partire.</p>
     </div>
     
-    <p style="margin-top: 30px;">Riceverai un promemoria il giorno prima dell'evento con tutti i dettagli.</p>
+    <p style="margin-top: 30px; color: #1a1a1a;">Riceverai un promemoria il giorno prima dell'evento con tutti i dettagli.</p>
     
-    <p style="margin-top: 30px;">A presto,<br>
-    <strong>Enrico Rizzi & Francesco Fusano</strong><br>
-    <a href="https://www.osmpartnervenezia.it/" style="color: #667eea; text-decoration: none;">OSM Partner Venezia</a></p>
+    <p style="margin-top: 30px; color: #1a1a1a;">A presto,<br>
+    <strong style="color: #000000;">Enrico Rizzi & Francesco Fusano</strong><br>
+    <a href="https://www.osmpartnervenezia.it/" style="color: #4a5568; text-decoration: underline;">OSM Partner Venezia</a></p>
     
     <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
       <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="display: inline-block; background: #667eea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px;">📅 Vai alla pagina del Workshop</a>
@@ -170,6 +170,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
         text: confirmEmailText,
         emailId: 'email_conferma_iscrizione',
         leadId: lead.id,
+        unsubscribeUrl: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/unsubscribe?email=${encodeURIComponent(validatedData.email)}&lead=${encodeURIComponent(lead.id)}`,
       }).then(async () => {
         // Aggiorna metadata per tracciare email conferma inviata
         const { data: currentLead } = await supabase
@@ -248,14 +249,14 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
     <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
       <h1 style="color: white; margin: 0; font-size: 28px;">🎯 Preparati al Meglio</h1>
     </a>
   </div>
   
-  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+  <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${validatedData.nome}</strong>,</p>
     
     <p>Siamo felici che tu sia iscritto al workshop <strong>"Automatizza la tua Azienda: AI & Digitalizzazione"</strong>!</p>
@@ -292,6 +293,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
               text: `Test automatico email T+5`,
               emailId: 'auto_test_5_giorni',
               leadId: lead.id,
+              unsubscribeUrl: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/unsubscribe?email=${encodeURIComponent(validatedData.email)}&lead=${encodeURIComponent(lead.id)}`,
             });
 
             // Aggiorna metadata per tracciare email inviata
@@ -323,14 +325,14 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
     <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
       <h1 style="color: white; margin: 0; font-size: 28px;">💡 Case Study Reale</h1>
     </a>
   </div>
   
-  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+  <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${validatedData.nome}</strong>,</p>
     
     <p>Manca poco al workshop e vogliamo condividere con te due casi reali di successo che mostrano come la digitalizzazione può trasformare la gestione di una PMI.</p>
@@ -427,6 +429,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
               text: `Test automatico email T+10`,
               emailId: 'auto_test_10_giorni',
               leadId: lead.id,
+              unsubscribeUrl: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/unsubscribe?email=${encodeURIComponent(validatedData.email)}&lead=${encodeURIComponent(lead.id)}`,
             });
 
             // Aggiorna metadata per tracciare email inviata
@@ -458,14 +461,14 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
     <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
       <h1 style="color: white; margin: 0; font-size: 28px;">📋 Preparati per il Workshop</h1>
     </a>
   </div>
   
-  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+  <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${validatedData.nome}</strong>,</p>
     
     <p>Manca poco al workshop "Automatizza la tua Azienda: AI & Digitalizzazione".</p>
@@ -511,6 +514,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
               text: `Test automatico email T-3`,
               emailId: 'auto_test_3_giorni',
               leadId: lead.id,
+              unsubscribeUrl: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/unsubscribe?email=${encodeURIComponent(validatedData.email)}&lead=${encodeURIComponent(lead.id)}`,
             });
 
             // Aggiorna metadata per tracciare email inviata
@@ -538,12 +542,12 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
             const emailHtml = `
 <!DOCTYPE html>
 <html>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
     <h1 style="color: white; margin: 0; font-size: 32px;">🚀 Oggi è il Giorno!</h1>
   </div>
   
-  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+  <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 20px; margin-bottom: 20px; font-weight: bold;">Ciao <strong>${validatedData.nome}</strong>,</p>
     
     <p style="font-size: 18px; margin-bottom: 20px;">Oggi è il giorno! Ti aspettiamo al workshop <strong>dalle ore 17.00</strong> (accettazione dalle ore 16.30).</p>
@@ -598,12 +602,12 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
             const emailHtml = `
 <!DOCTYPE html>
 <html>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
     <h1 style="color: white; margin: 0; font-size: 28px;">🎉 Grazie!</h1>
   </div>
   
-  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+  <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${validatedData.nome}</strong>,</p>
     
     <p>Grazie per essere stato al workshop "Automatizza la tua Azienda: AI & Digitalizzazione"!</p>
@@ -669,7 +673,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
             const emailHtml = `
 <!DOCTYPE html>
 <html>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: #f9f9f9; padding: 30px; border-radius: 10px;">
     <p style="font-size: 18px;">Ciao <strong>${validatedData.nome}</strong>,</p>
     
@@ -729,7 +733,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
             const emailHtml = `
 <!DOCTYPE html>
 <html>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: #f9f9f9; padding: 30px; border-radius: 10px;">
     <p style="font-size: 18px;">Ciao <strong>${validatedData.nome}</strong>,</p>
     

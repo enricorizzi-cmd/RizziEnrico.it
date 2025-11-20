@@ -10,6 +10,7 @@ interface EmailOptions {
   text: string;
   emailId?: string; // ID univoco per tracciare questa email
   leadId?: string; // ID del lead per tracking
+  unsubscribeUrl?: string; // URL per disiscrizione (opzionale, ma consigliato per email massive)
 }
 
 export async function sendEmail(options: EmailOptions): Promise<boolean> {
@@ -106,6 +107,21 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
       );
     }
 
+    // Prepara headers per migliorare deliverability
+    const headers: Record<string, string> = {};
+    
+    // Aggiungi List-Unsubscribe header (richiesto per email massive)
+    if (options.unsubscribeUrl) {
+      headers['List-Unsubscribe'] = `<${options.unsubscribeUrl}>`;
+      headers['List-Unsubscribe-Post'] = 'List-Unsubscribe=One-Click';
+    } else {
+      // Se non fornito, usa URL di default
+      const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
+      const defaultUnsubscribeUrl = `${BASE_URL}/unsubscribe?email=${encodeURIComponent(options.to)}`;
+      headers['List-Unsubscribe'] = `<${defaultUnsubscribeUrl}>`;
+      headers['List-Unsubscribe-Post'] = 'List-Unsubscribe=One-Click';
+    }
+
     // Prepara email principale
     const mailOptions = {
       from: FROM_EMAIL,
@@ -113,6 +129,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
       subject: options.subject,
       text: options.text,
       html: htmlWithTracking,
+      headers,
     };
 
     console.log('[EMAIL] 📧 Invio email:', {

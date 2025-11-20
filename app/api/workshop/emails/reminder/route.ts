@@ -6,6 +6,7 @@ const NOTIFICATION_EMAIL = 'enricorizzi1991@gmail.com';
 const WORKSHOP_DATE = 'Venerdì 12 dicembre 2025';
 const WORKSHOP_TIME = 'dalle ore 17.00 (accettazione dalle ore 16.30)';
 const WORKSHOP_LOCATION = 'OSM Venezia - Via Sertorio Orsato 22, Venezia';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
 
 export async function POST(request: NextRequest) {
   try {
@@ -66,14 +67,14 @@ export async function POST(request: NextRequest) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
     <a href="https://www.rizzienrico.it/workshop-12-dicembre" style="text-decoration: none; color: white;">
       <h1 style="color: white; margin: 0; font-size: 28px;">📅 Promemoria Workshop</h1>
     </a>
   </div>
   
-  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+  <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
     <p>Ti ricordiamo che <strong>domani</strong> si terrà il workshop:</p>
@@ -139,6 +140,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
             subject: '📅 Promemoria Workshop - Domani dalle ore 17.00',
             html: emailHtml,
             text: emailText,
+            unsubscribeUrl: `${BASE_URL}/unsubscribe?email=${encodeURIComponent(lead.email)}&lead=${encodeURIComponent(lead.id)}`,
           }),
           new Promise(resolve => setTimeout(resolve, 500)).then(() => {
             const notificationText = `Promemoria workshop inviato a ${lead.nome} ${lead.cognome} (${lead.email}):
