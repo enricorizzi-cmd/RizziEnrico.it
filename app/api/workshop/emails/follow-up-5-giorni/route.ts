@@ -28,11 +28,10 @@ export async function POST(request: NextRequest) {
     fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5);
     const fiveDaysAgoStr = fiveDaysAgo.toISOString().split('T')[0];
     
-    // Trova lead iscritti 5 giorni fa, con stato nuovo/confermato, che non hanno già ricevuto questa email
+    // Trova tutti i lead iscritti 5 giorni fa che non hanno già ricevuto questa email
     const { data: leads, error } = await supabase
       .from('workshop_leads')
       .select('*')
-      .in('stato', ['nuovo', 'confermato'])
       .eq('evento', 'Workshop 12.12.2024') // Manteniamo per retrocompatibilità con lead esistenti
       .gte('created_at', `${fiveDaysAgoStr}T00:00:00`)
       .lt('created_at', `${fiveDaysAgoStr}T23:59:59`);

@@ -26,13 +26,12 @@ export async function POST(request: NextRequest) {
     tomorrow.setDate(tomorrow.getDate() + 1);
     const tomorrowDateStr = tomorrow.toISOString().split('T')[0];
 
-    // Trova lead con evento domani e stato nuovo/confermato
-    // Nota: qui assumiamo che l'evento sia il 12 dicembre 2024
+    // Trova tutti gli iscritti all'evento
+    // Nota: qui assumiamo che l'evento sia il 12 dicembre 2025
     // Per un sistema più flessibile, potresti controllare la data evento
     const { data: leads, error } = await supabase
       .from('workshop_leads')
       .select('*')
-      .in('stato', ['nuovo', 'confermato'])
       .eq('evento', 'Workshop 12.12.2024'); // Manteniamo per retrocompatibilità con lead esistenti
 
     if (error) {

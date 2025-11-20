@@ -4,7 +4,7 @@ import { createServerClient } from '@/lib/supabase';
 const NOTIFICATION_EMAIL = 'enricorizzi1991@gmail.com';
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
 
-// Endpoint per inviare email post-evento immediata a tutti i lead con stato "presente"
+// Endpoint per inviare email post-evento immediata a tutti gli iscritti
 // Viene chiamato alle 19:00 del 12 dicembre 2025
 export async function POST(request: NextRequest) {
   try {
@@ -20,11 +20,10 @@ export async function POST(request: NextRequest) {
 
     const supabase = createServerClient();
     
-    // Trova tutti i lead con stato "presente" che non hanno ancora ricevuto l'email post-evento immediata
+    // Trova tutti i lead iscritti che non hanno ancora ricevuto l'email post-evento immediata
     const { data: leads, error } = await supabase
       .from('workshop_leads')
       .select('*')
-      .eq('stato', 'presente')
       .eq('evento', 'Workshop 12.12.2024') // Manteniamo per retrocompatibilità
       .is('metadata->email_post_immediata_sent', null); // Solo quelli che non l'hanno ancora ricevuta
 
@@ -38,7 +37,7 @@ export async function POST(request: NextRequest) {
 
     if (!leads || leads.length === 0) {
       return NextResponse.json({
-        message: 'Nessun lead presente da notificare o tutti hanno già ricevuto l\'email',
+        message: 'Nessun iscritto da notificare o tutti hanno già ricevuto l\'email',
         sent: 0,
         errors: 0,
       });
@@ -52,7 +51,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Invia email post-evento immediata a tutti i lead presenti
+    // Invia email post-evento immediata a tutti gli iscritti
     const results = await Promise.allSettled(
       leads.map(async (lead) => {
         try {
@@ -87,7 +86,7 @@ export async function POST(request: NextRequest) {
     // Notifica a enricorizzi1991@gmail.com
     const notificationText = `Email post-evento immediata inviate alle 19:00 del 12 dicembre 2025:
 
-Totale lead presenti: ${leads.length}
+Totale iscritti: ${leads.length}
 Email inviate con successo: ${successful}
 Errori: ${failed}
 

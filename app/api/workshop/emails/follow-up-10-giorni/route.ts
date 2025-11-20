@@ -53,11 +53,10 @@ export async function POST(request: NextRequest) {
       });
     }
     
-    // Trova lead iscritti 10 giorni fa
+    // Trova tutti i lead iscritti 10 giorni fa
     const { data: leads, error } = await supabase
       .from('workshop_leads')
       .select('*')
-      .in('stato', ['nuovo', 'confermato'])
       .eq('evento', 'Workshop 12.12.2024') // Manteniamo per retrocompatibilità con lead esistenti
       .gte('created_at', `${tenDaysAgoStr}T00:00:00`)
       .lt('created_at', `${tenDaysAgoStr}T23:59:59`);

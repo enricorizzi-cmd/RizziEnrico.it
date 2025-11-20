@@ -37,11 +37,10 @@ export async function POST(request: NextRequest) {
       });
     }
     
-    // Trova tutti i lead con stato nuovo/confermato
+    // Trova tutti gli iscritti
     const { data: leads, error } = await supabase
       .from('workshop_leads')
       .select('*')
-      .in('stato', ['nuovo', 'confermato'])
       .eq('evento', 'Workshop 12.12.2024'); // Manteniamo per retrocompatibilità con lead esistenti
 
     if (error) {
