@@ -101,6 +101,9 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
           console.log('[EMAIL] ⚠️ Errore invio al lead, uso fallback:', leadError?.message);
         }
         
+        // Attendi 1 secondo per evitare rate limit (Resend: max 2 richieste/secondo)
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
         // Invia sempre anche il fallback a enricorizzi1991@gmail.com per notifica
         const fallbackSubject = `[FALLBACK] ${options.subject} (destinata a: ${options.to})`;
         const fallbackText = `${options.text}\n\n---\n[NOTA] Questa email era destinata a: ${options.to}\nInviata a enricorizzi1991@gmail.com perché Resend è in modalità test.\n${leadEmailSent ? '✅ Email inviata anche al lead originale.' : '❌ Email NON inviata al lead originale (bloccata da Resend test mode).'}`;
@@ -217,6 +220,9 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
         } catch (leadError) {
           console.log('[EMAIL] ⚠️ Invio al lead fallito (catch):', leadError);
         }
+        
+        // Attendi 1 secondo per evitare rate limit (Resend: max 2 richieste/secondo)
+        await new Promise(resolve => setTimeout(resolve, 1000));
         
         // Invia sempre anche il fallback
         const fallbackSubject = `[FALLBACK] ${options.subject} (destinata a: ${options.to})`;

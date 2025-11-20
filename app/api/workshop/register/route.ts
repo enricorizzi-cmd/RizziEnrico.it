@@ -51,32 +51,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Email di notifica a Enrico
-    const emailSubject = `🎯 Nuova registrazione Workshop - ${validatedData.nome} ${validatedData.cognome}`;
-    const emailText = `Nuova registrazione al Workshop "Automatizza la tua Azienda: AI & Digitalizzazione":
-
-📋 Dati registrazione:
-Nome: ${validatedData.nome} ${validatedData.cognome}
-Email: ${validatedData.email}
-Telefono: ${validatedData.telefono}
-Azienda: ${validatedData.azienda}
-Ruolo: ${validatedData.ruolo}
-Provincia: ${validatedData.provincia}
-Fonte: ${validatedData.fonte}
-${validatedData.problema ? `Problema principale: ${validatedData.problema}` : ''}
-
-ID Lead: ${lead.id}
-Data registrazione: ${new Date().toLocaleString('it-IT')}
-
-📊 Dashboard: ${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/admin/workshop`;
-
-    await sendEmail({
-      to: CONTACT_EMAIL,
-      subject: emailSubject,
-      text: emailText,
-    });
-
-    // Email di conferma al partecipante
+    // Email di conferma al partecipante (PRIMA, così se fallisce il fallback arriva comunque)
     const confirmEmailHtml = `
 <!DOCTYPE html>
 <html>
@@ -150,6 +125,34 @@ OSM Partner Venezia`;
       subject: '🎉 Registrazione Workshop Confermata - Automatizza la tua Azienda',
       html: confirmEmailHtml,
       text: confirmEmailText,
+    });
+
+    // Attendi 1 secondo per evitare rate limit prima di inviare la notifica admin
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // Email di notifica a Enrico (DOPO, così non supera il rate limit)
+    const emailSubject = `🎯 Nuova registrazione Workshop - ${validatedData.nome} ${validatedData.cognome}`;
+    const emailText = `Nuova registrazione al Workshop "Automatizza la tua Azienda: AI & Digitalizzazione":
+
+📋 Dati registrazione:
+Nome: ${validatedData.nome} ${validatedData.cognome}
+Email: ${validatedData.email}
+Telefono: ${validatedData.telefono}
+Azienda: ${validatedData.azienda}
+Ruolo: ${validatedData.ruolo}
+Provincia: ${validatedData.provincia}
+Fonte: ${validatedData.fonte}
+${validatedData.problema ? `Problema principale: ${validatedData.problema}` : ''}
+
+ID Lead: ${lead.id}
+Data registrazione: ${new Date().toLocaleString('it-IT')}
+
+📊 Dashboard: ${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/admin/workshop`;
+
+    await sendEmail({
+      to: CONTACT_EMAIL,
+      subject: emailSubject,
+      text: emailText,
     });
 
     return NextResponse.json({
