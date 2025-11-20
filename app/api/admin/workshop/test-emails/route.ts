@@ -298,7 +298,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
-    <p>Ci siamo quasi! Solo <strong>3 giorni</strong> al workshop "Automatizza la tua Azienda: AI & Digitalizzazione".</p>
+    <p>Manca poco al workshop "Automatizza la tua Azienda: AI & Digitalizzazione".</p>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea; text-align: center;">
       <h2 style="margin-top: 0; color: #667eea; font-size: 32px;">📅 12 Dicembre 2024</h2>
