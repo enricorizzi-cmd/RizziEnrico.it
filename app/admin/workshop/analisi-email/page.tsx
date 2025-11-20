@@ -71,12 +71,20 @@ const EMAIL_TYPE_LABELS: Record<string, string> = {
   'email_post_48h_sent': 'Email post-evento 48h',
 };
 
+interface EmailContent {
+  subject: string;
+  text: string;
+}
+
 export default function EmailAnalyticsDashboard() {
   const router = useRouter();
   const [stats, setStats] = useState<EmailStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [expandedDetails, setExpandedDetails] = useState<Record<string, boolean>>({});
+  const [expandedContent, setExpandedContent] = useState<Record<string, boolean>>({});
+  const [emailContents, setEmailContents] = useState<Record<string, EmailContent>>({});
+  const [loadingContent, setLoadingContent] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     fetchStats();
@@ -100,6 +108,41 @@ export default function EmailAnalyticsDashboard() {
       ...prev,
       [type]: !prev[type],
     }));
+  };
+
+  const toggleContent = async (type: string) => {
+    const isExpanded = expandedContent[type];
+    
+    if (isExpanded) {
+      // Se già espanso, chiudi
+      setExpandedContent(prev => ({
+        ...prev,
+        [type]: false,
+      }));
+    } else {
+      // Se non espanso, carica contenuto e apri
+      if (!emailContents[type]) {
+        setLoadingContent(prev => ({ ...prev, [type]: true }));
+        try {
+          const response = await fetch(`/api/admin/workshop/email-content?type=${encodeURIComponent(type)}`);
+          if (response.ok) {
+            const data = await response.json();
+            setEmailContents(prev => ({
+              ...prev,
+              [type]: { subject: data.subject, text: data.text },
+            }));
+          }
+        } catch (error) {
+          console.error('Errore caricamento contenuto email:', error);
+        } finally {
+          setLoadingContent(prev => ({ ...prev, [type]: false }));
+        }
+      }
+      setExpandedContent(prev => ({
+        ...prev,
+        [type]: true,
+      }));
+    }
   };
 
   if (loading) {
@@ -284,12 +327,20 @@ export default function EmailAnalyticsDashboard() {
                   <h3 className="font-semibold text-lg">
                     {EMAIL_TYPE_LABELS[type] || type}
                   </h3>
-                  <button
-                    onClick={() => toggleDetails(type)}
-                    className="text-purple-600 hover:text-purple-800 text-sm font-semibold"
-                  >
-                    {expandedDetails[type] ? 'Nascondi' : 'Mostra'} dettagli
-                  </button>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => toggleContent(type)}
+                      className="text-blue-600 hover:text-blue-800 text-sm font-semibold px-3 py-1 border border-blue-300 rounded hover:bg-blue-50 transition-colors"
+                    >
+                      {loadingContent[type] ? 'Caricamento...' : expandedContent[type] ? 'Nascondi contenuto' : 'Visualizza contenuto'}
+                    </button>
+                    <button
+                      onClick={() => toggleDetails(type)}
+                      className="text-purple-600 hover:text-purple-800 text-sm font-semibold"
+                    >
+                      {expandedDetails[type] ? 'Nascondi' : 'Mostra'} dettagli
+                    </button>
+                  </div>
                 </div>
                 <div className="grid grid-cols-3 gap-4 text-sm">
                   <div>
@@ -305,6 +356,26 @@ export default function EmailAnalyticsDashboard() {
                     <span className="ml-2 font-semibold text-red-600">{data.not_sent}</span>
                   </div>
                 </div>
+                
+                {expandedContent[type] && emailContents[type] && (
+                  <div className="mt-4 border-t pt-4 bg-gray-50 rounded-lg p-4">
+                    <h4 className="font-semibold mb-3 text-gray-800">📧 Contenuto Email:</h4>
+                    <div className="space-y-3">
+                      <div>
+                        <span className="text-sm font-semibold text-gray-700 block mb-1">Oggetto:</span>
+                        <div className="bg-white p-3 rounded border border-gray-200 text-sm text-gray-900">
+                          {emailContents[type].subject}
+                        </div>
+                      </div>
+                      <div>
+                        <span className="text-sm font-semibold text-gray-700 block mb-1">Testo:</span>
+                        <div className="bg-white p-3 rounded border border-gray-200 text-sm text-gray-900 whitespace-pre-wrap font-mono">
+                          {emailContents[type].text}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 
                 {expandedDetails[type] && (
                   <div className="mt-4 border-t pt-4">
