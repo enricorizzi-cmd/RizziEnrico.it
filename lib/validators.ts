@@ -47,7 +47,15 @@ export const workshopRegistrationSchema = z.object({
   evento: z.string(),
 });
 
-// Schema per test maturità digitale
+// Schema per form iniziale test maturità digitale
+export const testMaturitaFormSchema = z.object({
+  nome: z.string().min(2, 'Nome deve contenere almeno 2 caratteri'),
+  cognome: z.string().min(2, 'Cognome deve contenere almeno 2 caratteri'),
+  email: z.string().email('Email non valida'),
+  azienda: z.string().optional(),
+});
+
+// Schema per test maturità digitale completo (con risposte)
 export const testMaturitaSchema = z.object({
   workshop_lead_id: z.string().uuid().optional(),
   nome: z.string().min(2).optional(),
@@ -62,5 +70,6 @@ export type BookingInput = z.infer<typeof bookingSchema>;
 export type EventRegistrationInput = z.infer<typeof eventRegistrationSchema>;
 export type DownloadInput = z.infer<typeof downloadSchema>;
 export type WorkshopRegistrationInput = z.infer<typeof workshopRegistrationSchema>;
+export type TestMaturitaFormInput = z.infer<typeof testMaturitaFormSchema>;
 export type TestMaturitaInput = z.infer<typeof testMaturitaSchema>;
 

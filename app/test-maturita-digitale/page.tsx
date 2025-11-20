@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { testMaturitaSchema, type TestMaturitaInput } from '@/lib/validators';
+import { testMaturitaFormSchema, testMaturitaSchema, type TestMaturitaFormInput, type TestMaturitaInput } from '@/lib/validators';
 
 interface Question {
   id: string;
@@ -45,18 +45,18 @@ export default function TestMaturitaDigitalePage() {
   const [answers, setAnswers] = useState<Record<string, any>>({});
   const [results, setResults] = useState<any>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState<TestMaturitaInput | null>(null);
+  const [formData, setFormData] = useState<TestMaturitaFormInput | null>(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     getValues,
-  } = useForm<TestMaturitaInput>({
-    resolver: zodResolver(testMaturitaSchema),
+  } = useForm<TestMaturitaFormInput>({
+    resolver: zodResolver(testMaturitaFormSchema),
   });
 
-  const onSubmitForm = async (data: TestMaturitaInput) => {
+  const onSubmitForm = async (data: TestMaturitaFormInput) => {
     setFormData(data);
     setCurrentStep('questions');
   };
@@ -161,33 +161,44 @@ export default function TestMaturitaDigitalePage() {
               Scopri il livello di digitalizzazione della tua azienda in 5 minuti
             </p>
 
-            <form onSubmit={handleSubmit(onSubmitForm)} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmitForm, (errors) => {
+              console.error('Validation errors:', errors);
+            })} className="space-y-6">
               <div>
                 <label className="block text-sm font-semibold mb-2">Nome</label>
                 <input
                   {...register('nome')}
                   type="text"
-                  className="w-full px-4 py-3 border rounded-lg"
+                  className={`w-full px-4 py-3 border rounded-lg ${errors.nome ? 'border-red-500' : ''}`}
                   placeholder="Mario"
                 />
+                {errors.nome && (
+                  <p className="text-red-500 text-sm mt-1">{errors.nome.message}</p>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-semibold mb-2">Cognome</label>
                 <input
                   {...register('cognome')}
                   type="text"
-                  className="w-full px-4 py-3 border rounded-lg"
+                  className={`w-full px-4 py-3 border rounded-lg ${errors.cognome ? 'border-red-500' : ''}`}
                   placeholder="Rossi"
                 />
+                {errors.cognome && (
+                  <p className="text-red-500 text-sm mt-1">{errors.cognome.message}</p>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-semibold mb-2">Email</label>
                 <input
                   {...register('email')}
                   type="email"
-                  className="w-full px-4 py-3 border rounded-lg"
+                  className={`w-full px-4 py-3 border rounded-lg ${errors.email ? 'border-red-500' : ''}`}
                   placeholder="mario.rossi@azienda.it"
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-semibold mb-2">Azienda (opzionale)</label>
