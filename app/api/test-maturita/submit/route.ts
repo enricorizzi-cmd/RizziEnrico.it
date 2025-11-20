@@ -3,7 +3,6 @@ import { testMaturitaSchema } from '@/lib/validators';
 import { createServerClient } from '@/lib/supabase';
 import { sendEmail } from '@/lib/email';
 
-const CONTACT_EMAIL = 'e.rizzi@osmpartnervenezia.it';
 const NOTIFICATION_EMAIL = 'enricorizzi1991@gmail.com';
 
 export async function POST(request: NextRequest) {
