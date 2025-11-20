@@ -82,7 +82,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
       const leadId = options.leadId; // Salva in variabile locale per TypeScript
       
       // Aggiungi pixel tracking per aperture (alla fine del body)
-      const trackingPixel = `<img src="${BASE_URL}/api/email/track?e=${encodeURIComponent(emailId)}&l=${encodeURIComponent(leadId)}&t=open" width="1" height="1" style="display:none;" />`;
+      const trackingPixel = `<img src="${BASE_URL}/api/email/track?e=${encodeURIComponent(emailId)}&l=${encodeURIComponent(leadId)}&t=open" width="1" height="1" style="display:none;" alt="" />`;
       
       // Inserisci il pixel prima della chiusura del body o alla fine dell'html
       if (htmlWithTracking.includes('</body>')) {
