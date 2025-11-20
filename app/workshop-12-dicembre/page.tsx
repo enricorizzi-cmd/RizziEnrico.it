@@ -188,7 +188,7 @@ export default function WorkshopPage() {
               </div>
               <div className="hidden sm:block w-px h-12 bg-gradient-to-b from-transparent via-purple-300 to-transparent"></div>
               <div className="group text-center sm:text-left bg-white/60 backdrop-blur-sm px-6 py-4 rounded-2xl shadow-lg border border-blue-200/50 hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <div className="text-lg font-bold text-blue-600 group-hover:scale-110 transition-transform">dalle ore 17.00</div>
+                <div className="text-lg font-bold text-blue-600 group-hover:scale-110 transition-transform">inizio ore 17.00</div>
                 <div className="text-sm text-gray-600">accettazione dalle ore 16.30</div>
                 <div className="text-sm text-gray-600 mt-1">OSM Venezia</div>
                 <div className="text-xs text-gray-500 mt-1">Via Sertorio Orsato 22, Venezia</div>
