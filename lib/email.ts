@@ -1,3 +1,5 @@
+import nodemailer from 'nodemailer';
+
 const CONTACT_EMAIL = 'e.rizzi@osmpartnervenezia.it';
 const NOTIFICATION_EMAIL = 'enricorizzi1991@gmail.com';
 
@@ -30,9 +32,6 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
   }
 
   try {
-    // Import nodemailer
-    const nodemailer = await import('nodemailer');
-
     // Determina se usare SSL (porta 465) o TLS (porta 587)
     const useSSL = SMTP_PORT === 465;
     const useTLS = SMTP_PORT === 587;
@@ -60,7 +59,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
       // Retry automatico
       maxConnections: 1,
       maxMessages: 1,
-    });
+    } as nodemailer.TransportOptions);
 
     console.log('[EMAIL] 🔧 Configurazione SMTP:', {
       host: SMTP_HOST,
