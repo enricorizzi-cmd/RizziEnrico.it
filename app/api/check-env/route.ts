@@ -6,16 +6,28 @@ import { NextResponse } from 'next/server';
  */
 export async function GET() {
   const envCheck = {
-    // Variabili critiche email
-    RESEND_API_KEY: {
-      exists: !!process.env.RESEND_API_KEY,
-      formatValid: process.env.RESEND_API_KEY?.startsWith('re_') || false,
-      length: process.env.RESEND_API_KEY?.length || 0,
-      prefix: process.env.RESEND_API_KEY?.substring(0, 10) + '...' || 'non configurato',
+    // Variabili critiche email (SMTP Aruba)
+    SMTP_HOST: {
+      exists: !!process.env.SMTP_HOST,
+      value: process.env.SMTP_HOST || 'non configurato',
+    },
+    SMTP_PORT: {
+      exists: !!process.env.SMTP_PORT,
+      value: process.env.SMTP_PORT || 'non configurato (default: 587)',
+    },
+    SMTP_USER: {
+      exists: !!process.env.SMTP_USER,
+      value: process.env.SMTP_USER ? process.env.SMTP_USER.substring(0, 10) + '...' : 'non configurato',
+      length: process.env.SMTP_USER?.length || 0,
+    },
+    SMTP_PASS: {
+      exists: !!process.env.SMTP_PASS,
+      length: process.env.SMTP_PASS?.length || 0,
+      masked: process.env.SMTP_PASS ? '***' : 'non configurato',
     },
     FROM_EMAIL: {
       exists: !!process.env.FROM_EMAIL,
-      value: process.env.FROM_EMAIL || 'non configurato (usando default: onboarding@resend.dev)',
+      value: process.env.FROM_EMAIL || 'non configurato (usando default: info@rizzienrico.it)',
     },
     
     // Variabili critiche AI
@@ -69,17 +81,17 @@ export async function GET() {
   };
 
   // Calcola statistiche
-  const criticalVars = ['RESEND_API_KEY', 'OPENAI_API_KEY', 'NEXT_PUBLIC_SUPABASE_URL', 'NEXT_PUBLIC_SUPABASE_ANON_KEY'] as const;
+  const criticalVars = ['SMTP_HOST', 'SMTP_USER', 'SMTP_PASS', 'OPENAI_API_KEY', 'NEXT_PUBLIC_SUPABASE_URL', 'NEXT_PUBLIC_SUPABASE_ANON_KEY'] as const;
   const missingCritical = criticalVars.filter(v => {
     const envVar = envCheck[v];
     return envVar && typeof envVar === 'object' && 'exists' in envVar ? !envVar.exists : false;
   });
   const issues = [];
 
-  if (!envCheck.RESEND_API_KEY.exists) issues.push('❌ RESEND_API_KEY mancante - email non funzionerà');
-  if (envCheck.RESEND_API_KEY.exists && !envCheck.RESEND_API_KEY.formatValid) {
-    issues.push('⚠️ RESEND_API_KEY formato non valido - deve iniziare con "re_"');
-  }
+  // Verifica variabili SMTP
+  if (!envCheck.SMTP_HOST.exists) issues.push('❌ SMTP_HOST mancante - email non funzionerà');
+  if (!envCheck.SMTP_USER.exists) issues.push('❌ SMTP_USER mancante - email non funzionerà');
+  if (!envCheck.SMTP_PASS.exists) issues.push('❌ SMTP_PASS mancante - email non funzionerà');
   
   if (!envCheck.OPENAI_API_KEY.exists) issues.push('❌ OPENAI_API_KEY mancante - chat AI non funzionerà');
   if (envCheck.OPENAI_API_KEY.exists && !envCheck.OPENAI_API_KEY.formatValid) {
