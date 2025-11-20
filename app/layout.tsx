@@ -7,6 +7,7 @@ import CookieBanner from "@/components/CookieBanner";
 import Analytics from "@/components/Analytics";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import ClientWidgets from "@/components/ClientWidgets";
+import WorkshopBanner from "@/components/WorkshopBanner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -69,8 +70,20 @@ export default function RootLayout({
         <a href="#main-content" className="skip-to-content">
           Vai al contenuto principale
         </a>
+        <WorkshopBanner />
         <Header />
         <main id="main-content" className="pt-24 lg:pt-16">{children}</main>
+        {/* Aggiungi padding-top quando il banner è visibile */}
+        <style jsx global>{`
+          body:has(.workshop-banner-visible) main {
+            padding-top: calc(24px + 4rem);
+          }
+          @media (min-width: 1024px) {
+            body:has(.workshop-banner-visible) main {
+              padding-top: calc(16px + 4rem);
+            }
+          }
+        `}</style>
         <Footer />
         <CookieBanner />
         <ClientWidgets />
