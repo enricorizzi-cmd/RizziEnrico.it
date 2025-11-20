@@ -1,0 +1,48 @@
+name: Workshop Email Automation
+
+on:
+  schedule:
+    # Email T+5 e T+10: ogni giorno alle 10:00 UTC (11:00 ora italiana in inverno, 12:00 in estate)
+    - cron: '0 10 * * *'
+    # Email T-3: 9 dicembre 2024, 10:00 UTC
+    - cron: '0 10 9 12 *'
+    # Email T+0: 12 dicembre 2024, 10:00 UTC
+    - cron: '0 10 12 12 *'
+  workflow_dispatch: # Permette esecuzione manuale
+
+jobs:
+  send-emails:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Email T+5
+        if: github.event.schedule == '0 10 * * *'
+        run: |
+          curl -X POST https://rizzienrico-it.onrender.com/api/workshop/emails/follow-up-5-giorni \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -w "\nHTTP Status: %{http_code}\n"
+      
+      - name: Send Email T+10
+        if: github.event.schedule == '0 10 * * *'
+        run: |
+          curl -X POST https://rizzienrico-it.onrender.com/api/workshop/emails/follow-up-10-giorni \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -w "\nHTTP Status: %{http_code}\n"
+      
+      - name: Send Email T-3
+        if: github.event.schedule == '0 10 9 12 *'
+        run: |
+          curl -X POST https://rizzienrico-it.onrender.com/api/workshop/emails/countdown-3-giorni \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -w "\nHTTP Status: %{http_code}\n"
+      
+      - name: Send Email T+0 (Giorno Evento)
+        if: github.event.schedule == '0 10 12 12 *'
+        run: |
+          curl -X POST https://rizzienrico-it.onrender.com/api/workshop/emails/reminder-giorno-evento \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -w "\nHTTP Status: %{http_code}\n"
+
