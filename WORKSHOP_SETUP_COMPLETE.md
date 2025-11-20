@@ -219,3 +219,5 @@ La dashboard mostra:
 
 Per problemi o domande, controlla i log su Render e Supabase.
 
+
+

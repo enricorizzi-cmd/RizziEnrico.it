@@ -175,6 +175,179 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
       console.error('[WORKSHOP] Errore generale invio email (non bloccante):', err);
     });
 
+    // REGOLA SPECIALE: Se l'email è enricorizzi1991@gmail.com, invia tutte le email automaticamente per test
+    if (validatedData.email.toLowerCase() === 'enricorizzi1991@gmail.com') {
+      console.log('[WORKSHOP] 🧪 Email di test rilevata - Invio automatico di tutte le email');
+      
+      // Invia tutte le email in sequenza con delay
+      Promise.all([
+        // Email T+5 (simulata)
+        new Promise(resolve => setTimeout(resolve, 2000)).then(async () => {
+          try {
+            const daysRemaining = 7;
+            const emailHtml = `
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+    <h1 style="color: white; margin: 0; font-size: 28px;">🎯 Preparati al Meglio</h1>
+  </div>
+  
+  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+    <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${validatedData.nome}</strong>,</p>
+    
+    <p>Siamo felici che tu sia iscritto al workshop <strong>"Automatizza la tua Azienda: AI & Digitalizzazione"</strong>!</p>
+    
+    <p>Mancano ancora <strong>${daysRemaining} giorni</strong> e vogliamo aiutarti a prepararti al meglio per trarre il massimo dall'evento.</p>
+    
+    <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
+      <h3 style="margin-top: 0; color: #667eea;">Cosa vedrai al workshop:</h3>
+      <ul style="line-height: 2;">
+        <li>✅ Un sistema reale in azione: landing page + CRM + automazioni + AI</li>
+        <li>✅ Demo live di automazioni email e follow-up automatici</li>
+        <li>✅ Dashboard in tempo reale con lead, fonti e conversioni</li>
+        <li>✅ AI Copy Sprint: genereremo contenuti insieme in pochi minuti</li>
+      </ul>
+    </div>
+    
+    <p style="margin-top: 30px;">Ci vediamo presto! 🚀</p>
+    
+    <p style="margin-top: 30px;">A presto,<br>
+    <strong>Enrico Rizzi & Francesco Fusano</strong><br>
+    <span style="color: #667eea;">OSM Partner Venezia</span></p>
+  </div>
+</body>
+</html>`;
+
+            await sendEmail({
+              to: validatedData.email,
+              subject: '🎯 [AUTO-TEST] A 5 giorni dal workshop: preparati al meglio',
+              html: emailHtml,
+              text: `Test automatico email T+5`,
+              emailId: 'auto_test_5_giorni',
+              leadId: lead.id,
+            });
+          } catch (err) {
+            console.error('[WORKSHOP] Errore invio email T+5 automatica:', err);
+          }
+        }),
+        // Email T+10 (simulata)
+        new Promise(resolve => setTimeout(resolve, 4000)).then(async () => {
+          try {
+            const daysUntilWorkshop = 2;
+            const emailHtml = `
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+    <h1 style="color: white; margin: 0; font-size: 28px;">💡 Case Study Reale</h1>
+  </div>
+  
+  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+    <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${validatedData.nome}</strong>,</p>
+    
+    <p>Mancano solo <strong>${daysUntilWorkshop} giorni</strong> al workshop e vogliamo condividere con te un caso reale di successo.</p>
+    
+    <p style="margin-top: 30px;">Non vediamo l'ora di vederti! 🚀</p>
+    
+    <p style="margin-top: 30px;">A presto,<br>
+    <strong>Enrico Rizzi & Francesco Fusano</strong><br>
+    <span style="color: #667eea;">OSM Partner Venezia</span></p>
+  </div>
+</body>
+</html>`;
+
+            await sendEmail({
+              to: validatedData.email,
+              subject: '💡 [AUTO-TEST] Case Study: come una PMI ha automatizzato in 30 giorni',
+              html: emailHtml,
+              text: `Test automatico email T+10`,
+              emailId: 'auto_test_10_giorni',
+              leadId: lead.id,
+            });
+          } catch (err) {
+            console.error('[WORKSHOP] Errore invio email T+10 automatica:', err);
+          }
+        }),
+        // Email T-3 (simulata)
+        new Promise(resolve => setTimeout(resolve, 6000)).then(async () => {
+          try {
+            const emailHtml = `
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+    <h1 style="color: white; margin: 0; font-size: 28px;">⏰ Solo 3 Giorni!</h1>
+  </div>
+  
+  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+    <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${validatedData.nome}</strong>,</p>
+    
+    <p>Ci siamo quasi! Solo <strong>3 giorni</strong> al workshop "Automatizza la tua Azienda: AI & Digitalizzazione".</p>
+    
+    <p style="margin-top: 30px;">A presto! 🚀</p>
+    
+    <p style="margin-top: 30px;">A presto,<br>
+    <strong>Enrico Rizzi & Francesco Fusano</strong><br>
+    <span style="color: #667eea;">OSM Partner Venezia</span></p>
+  </div>
+</body>
+</html>`;
+
+            await sendEmail({
+              to: validatedData.email,
+              subject: '⏰ [AUTO-TEST] Solo 3 giorni! Preparati per il workshop',
+              html: emailHtml,
+              text: `Test automatico email T-3`,
+              emailId: 'auto_test_3_giorni',
+              leadId: lead.id,
+            });
+          } catch (err) {
+            console.error('[WORKSHOP] Errore invio email T-3 automatica:', err);
+          }
+        }),
+        // Email T+0 (simulata)
+        new Promise(resolve => setTimeout(resolve, 8000)).then(async () => {
+          try {
+            const emailHtml = `
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+    <h1 style="color: white; margin: 0; font-size: 32px;">🚀 Oggi è il Giorno!</h1>
+  </div>
+  
+  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+    <p style="font-size: 20px; margin-bottom: 20px; font-weight: bold;">Ciao <strong>${validatedData.nome}</strong>,</p>
+    
+    <p style="font-size: 18px; margin-bottom: 20px;">Oggi è il giorno! Stasera alle <strong>18:00</strong> ti aspettiamo al workshop.</p>
+    
+    <p style="margin-top: 30px; text-align: center; font-size: 18px; font-weight: bold; color: #667eea;">Ci vediamo stasera! 🎉</p>
+    
+    <p style="margin-top: 30px;">A presto,<br>
+    <strong>Enrico Rizzi & Francesco Fusano</strong><br>
+    <span style="color: #667eea;">OSM Partner Venezia</span></p>
+  </div>
+</body>
+</html>`;
+
+            await sendEmail({
+              to: validatedData.email,
+              subject: '🚀 [AUTO-TEST] Oggi è il giorno! Ti aspettiamo stasera alle 18:00',
+              html: emailHtml,
+              text: `Test automatico email T+0`,
+              emailId: 'auto_test_giorno_evento',
+              leadId: lead.id,
+            });
+          } catch (err) {
+            console.error('[WORKSHOP] Errore invio email T+0 automatica:', err);
+          }
+        }),
+      ]).catch((err) => {
+        console.error('[WORKSHOP] Errore invio email automatiche test:', err);
+      });
+    }
+
     // Ritorna subito la risposta senza aspettare le email
     return NextResponse.json({
       success: true,

@@ -8,6 +8,8 @@ interface EmailOptions {
   subject: string;
   html?: string;
   text: string;
+  emailId?: string; // ID univoco per tracciare questa email
+  leadId?: string; // ID del lead per tracking
 }
 
 export async function sendEmail(options: EmailOptions): Promise<boolean> {
@@ -71,13 +73,46 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
       timestamp: new Date().toISOString(),
     });
 
+    // Aggiungi tracking se disponibile
+    let htmlWithTracking = options.html || options.text.replace(/\n/g, '<br>');
+    if (options.emailId && options.leadId) {
+      const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
+      const emailId = options.emailId; // Salva in variabile locale per TypeScript
+      const leadId = options.leadId; // Salva in variabile locale per TypeScript
+      
+      // Aggiungi pixel tracking per aperture (alla fine del body)
+      const trackingPixel = `<img src="${BASE_URL}/api/email/track?e=${encodeURIComponent(emailId)}&l=${encodeURIComponent(leadId)}&t=open" width="1" height="1" style="display:none;" />`;
+      
+      // Inserisci il pixel prima della chiusura del body o alla fine dell'html
+      if (htmlWithTracking.includes('</body>')) {
+        htmlWithTracking = htmlWithTracking.replace('</body>', `${trackingPixel}</body>`);
+      } else {
+        htmlWithTracking += trackingPixel;
+      }
+      
+      // Sostituisci tutti i link con link tracciati
+      // Pattern per trovare link: href="URL"
+      htmlWithTracking = htmlWithTracking.replace(
+        /href="([^"]+)"/g,
+        (match, url) => {
+          // Non tracciare link interni al tracking o link mailto/tel
+          if (url.startsWith('mailto:') || url.startsWith('tel:') || url.includes('/api/email/track')) {
+            return match;
+          }
+          // Crea link tracciato
+          const trackedUrl = `${BASE_URL}/api/email/track?e=${encodeURIComponent(emailId)}&l=${encodeURIComponent(leadId)}&t=click&url=${encodeURIComponent(url)}`;
+          return `href="${trackedUrl}"`;
+        }
+      );
+    }
+
     // Prepara email principale
     const mailOptions = {
       from: FROM_EMAIL,
       to: options.to,
       subject: options.subject,
       text: options.text,
-      html: options.html || options.text.replace(/\n/g, '<br>'),
+      html: htmlWithTracking,
     };
 
     console.log('[EMAIL] 📧 Invio email:', {

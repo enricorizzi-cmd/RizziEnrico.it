@@ -136,10 +136,28 @@ export default function WorkshopAdminDashboard() {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2 font-heading">
-            Dashboard Workshop 12 Dicembre
-          </h1>
-          <p className="text-gray-600">Gestione registrazioni e lead</p>
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h1 className="text-4xl font-bold mb-2 font-heading">
+                Dashboard Workshop 12 Dicembre
+              </h1>
+              <p className="text-gray-600">Gestione registrazioni e lead</p>
+            </div>
+            <div className="flex gap-4">
+              <a
+                href="/admin/workshop/analisi-email"
+                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold"
+              >
+                📧 Analisi Email
+              </a>
+              <a
+                href="/admin/test-maturita/analisi"
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+              >
+                📊 Analisi Test
+              </a>
+            </div>
+          </div>
         </div>
 
         {/* KPI Cards */}

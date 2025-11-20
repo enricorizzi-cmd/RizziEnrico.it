@@ -192,3 +192,5 @@ Prima di pubblicare il link del workshop:
 
 Tutto è pronto. Pubblica il link `/workshop-12-dicembre` e inizia a raccogliere iscrizioni!
 
+
+

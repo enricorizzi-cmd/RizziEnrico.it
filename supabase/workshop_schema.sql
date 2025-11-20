@@ -98,3 +98,5 @@ CREATE POLICY "Admin can view test maturita" ON test_maturita_digitale
 CREATE POLICY "Admin can update workshop leads" ON workshop_leads
   FOR UPDATE USING (false); -- Disabilitato, si usa service role key
 
+
+
