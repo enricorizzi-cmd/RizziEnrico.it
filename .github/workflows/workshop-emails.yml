@@ -4,10 +4,12 @@ on:
   schedule:
     # Email T+5 e T+10: ogni giorno alle 10:00 UTC (11:00 ora italiana in inverno, 12:00 in estate)
     - cron: '0 10 * * *'
-    # Email T-3: 9 dicembre 2024, 10:00 UTC
+    # Email T-3: 9 dicembre 2025, 10:00 UTC
     - cron: '0 10 9 12 *'
-    # Email T+0: 12 dicembre 2024, 10:00 UTC
+    # Email T+0: 12 dicembre 2025, 10:00 UTC
     - cron: '0 10 12 12 *'
+    # Email post-evento immediata: 12 dicembre 2025, 18:00 UTC (19:00 ora italiana)
+    - cron: '0 18 12 12 *'
   workflow_dispatch: # Permette esecuzione manuale
 
 jobs:
@@ -42,6 +44,14 @@ jobs:
         if: github.event.schedule == '0 10 12 12 *'
         run: |
           curl -X POST https://rizzienrico-it.onrender.com/api/workshop/emails/reminder-giorno-evento \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -w "\nHTTP Status: %{http_code}\n"
+      
+      - name: Send Email Post-Evento Immediata (19:00)
+        if: github.event.schedule == '0 18 12 12 *'
+        run: |
+          curl -X POST https://rizzienrico-it.onrender.com/api/workshop/emails/post-evento-bulk \
             -H "Authorization: Bearer ${{ secrets.CRON_SECRET_TOKEN }}" \
             -H "Content-Type: application/json" \
             -w "\nHTTP Status: %{http_code}\n"
