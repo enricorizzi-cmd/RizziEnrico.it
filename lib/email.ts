@@ -1,4 +1,5 @@
 const CONTACT_EMAIL = 'e.rizzi@osmpartnervenezia.it';
+const NOTIFICATION_EMAIL = 'enricorizzi1991@gmail.com';
 
 interface EmailOptions {
   to: string;
@@ -63,7 +64,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
       timestamp: new Date().toISOString(),
     });
 
-    // Prepara email
+    // Prepara email principale
     const mailOptions = {
       from: FROM_EMAIL,
       to: options.to,
@@ -79,7 +80,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
       timestamp: new Date().toISOString(),
     });
 
-    // Invia email
+    // Invia email principale all'utente
     const info = await transporter.sendMail(mailOptions);
 
     console.log('[EMAIL] ✅ Email inviata con successo:', {
@@ -89,6 +90,46 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
       timestamp: new Date().toISOString(),
       response: info.response,
     });
+
+    // Se l'email NON è già destinata a enricorizzi1991@gmail.com o a CONTACT_EMAIL,
+    // invia anche una copia di notifica a enricorizzi1991@gmail.com
+    const isNotificationEmail = options.to.toLowerCase() === NOTIFICATION_EMAIL.toLowerCase();
+    const isContactEmail = options.to.toLowerCase() === CONTACT_EMAIL.toLowerCase();
+    
+    if (!isNotificationEmail && !isContactEmail) {
+      // Attendi 500ms per evitare rate limit
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // Prepara email di notifica
+      const notificationSubject = `[NOTIFICA] ${options.subject} (destinata a: ${options.to})`;
+      const notificationText = `${options.text}\n\n---\n[NOTA AUTOMATICA] Questa è una copia dell'email inviata a: ${options.to}\nTimestamp: ${new Date().toLocaleString('it-IT')}`;
+      const notificationHtml = `${options.html || options.text.replace(/\n/g, '<br>')}<br><br><hr><p><small><strong>[NOTA AUTOMATICA]</strong> Questa è una copia dell'email inviata a: ${options.to}<br>Timestamp: ${new Date().toLocaleString('it-IT')}</small></p>`;
+
+      try {
+        const notificationInfo = await transporter.sendMail({
+          from: FROM_EMAIL,
+          to: NOTIFICATION_EMAIL,
+          subject: notificationSubject,
+          text: notificationText,
+          html: notificationHtml,
+        });
+
+        console.log('[EMAIL] ✅ Email di notifica inviata a enricorizzi1991@gmail.com:', {
+          messageId: notificationInfo.messageId,
+          originalTo: options.to,
+          notificationTo: NOTIFICATION_EMAIL,
+          timestamp: new Date().toISOString(),
+        });
+      } catch (notificationError: any) {
+        // Non bloccare se la notifica fallisce, l'email principale è già stata inviata
+        console.error('[EMAIL] ⚠️ Errore invio notifica (email principale già inviata):', {
+          message: notificationError?.message,
+          code: notificationError?.code,
+        });
+      }
+    } else {
+      console.log('[EMAIL] ℹ️ Email già destinata a notifica/contatto, skip copia notifica');
+    }
 
     return true;
   } catch (error: any) {
