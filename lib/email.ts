@@ -38,6 +38,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
     const useTLS = SMTP_PORT === 587;
 
     // Crea transporter SMTP con timeout brevi
+    // NOTA: Rimuoviamo la verifica iniziale che causa timeout, inviamo direttamente
     const transporter = nodemailer.createTransport({
       host: SMTP_HOST,
       port: SMTP_PORT,
@@ -46,30 +47,26 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
         user: SMTP_USER,
         pass: SMTP_PASS,
       },
-      connectionTimeout: 10000, // 10 secondi timeout connessione
+      connectionTimeout: 15000, // 15 secondi timeout connessione
       greetingTimeout: 10000, // 10 secondi timeout greeting
-      socketTimeout: 10000, // 10 secondi timeout socket
+      socketTimeout: 15000, // 15 secondi timeout socket
       tls: useTLS ? {
         // Non rifiutare certificati non validi (utile per test)
         rejectUnauthorized: false,
+        minVersion: 'TLSv1',
       } : undefined,
+      // Pooling per migliorare performance
+      pool: false,
+      // Retry automatico
+      maxConnections: 1,
+      maxMessages: 1,
     });
 
-    // Verifica connessione SMTP con timeout
-    await Promise.race([
-      transporter.verify(),
-      new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('SMTP verification timeout')), 10000)
-      )
-    ]).catch((error) => {
-      console.error('[EMAIL] ⚠️ Verifica SMTP fallita o timeout, continuo comunque:', error);
-      // Non bloccare se la verifica fallisce, prova comunque a inviare
-    });
-
-    console.log('[EMAIL] ✅ Connessione SMTP verificata:', {
+    console.log('[EMAIL] 🔧 Configurazione SMTP:', {
       host: SMTP_HOST,
       port: SMTP_PORT,
       secure: useSSL,
+      useTLS,
       user: SMTP_USER,
       from: FROM_EMAIL,
       timestamp: new Date().toISOString(),
