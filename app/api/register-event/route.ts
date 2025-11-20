@@ -3,7 +3,6 @@ import { eventRegistrationSchema } from '@/lib/validators';
 import { createServerClient } from '@/lib/supabase';
 import { sendEmail } from '@/lib/email';
 
-const CONTACT_EMAIL = 'e.rizzi@osmpartnervenezia.it';
 const NOTIFICATION_EMAIL = 'enricorizzi1991@gmail.com';
 
 export async function POST(request: NextRequest) {
@@ -45,19 +44,12 @@ Telefono: ${validatedData.phone || 'Non specificato'}
 Evento: ${validatedData.event_slug}
 ID Registrazione: ${registrationId}`;
 
-    // Invia email a CONTACT_EMAIL e NOTIFICATION_EMAIL
-    await Promise.all([
-      sendEmail({
-        to: CONTACT_EMAIL,
-        subject: emailSubject,
-        text: emailText,
-      }),
-      sendEmail({
-        to: NOTIFICATION_EMAIL,
-        subject: emailSubject,
-        text: emailText,
-      }),
-    ]);
+    // Invia email solo a NOTIFICATION_EMAIL
+    await sendEmail({
+      to: NOTIFICATION_EMAIL,
+      subject: emailSubject,
+      text: emailText,
+    });
 
     // Invia email di conferma all'utente
     if (validatedData.email) {

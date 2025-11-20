@@ -4,7 +4,6 @@ import { createServerClient } from '@/lib/supabase';
 import { sendEmail } from '@/lib/email';
 import { generateICS, generateGoogleCalendarUrl, generateMapsUrl } from '@/lib/calendar';
 
-const CONTACT_EMAIL = 'e.rizzi@osmpartnervenezia.it';
 const NOTIFICATION_EMAIL = 'enricorizzi1991@gmail.com';
 const WORKSHOP_DATE = 'Venerdì 12 dicembre 2025';
 const WORKSHOP_TIME = 'dalle ore 17.00 (accettazione dalle ore 16.30)';
@@ -210,24 +209,14 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
 
 📊 Dashboard: ${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/admin/workshop`;
 
-        return Promise.all([
-          sendEmail({
-            to: CONTACT_EMAIL,
-            subject: emailSubject,
-            text: emailText,
-          }).catch((err) => {
-            console.error('[WORKSHOP] Errore invio email CONTACT_EMAIL (non bloccante):', err);
-            return false;
-          }),
-          sendEmail({
-            to: NOTIFICATION_EMAIL,
-            subject: emailSubject,
-            text: emailText,
-          }).catch((err) => {
-            console.error('[WORKSHOP] Errore invio email NOTIFICATION_EMAIL (non bloccante):', err);
-            return false;
-          }),
-        ]);
+        return sendEmail({
+          to: NOTIFICATION_EMAIL,
+          subject: emailSubject,
+          text: emailText,
+        }).catch((err) => {
+          console.error('[WORKSHOP] Errore invio email NOTIFICATION_EMAIL (non bloccante):', err);
+          return false;
+        });
       })
     ]).catch((err) => {
       console.error('[WORKSHOP] Errore generale invio email (non bloccante):', err);
