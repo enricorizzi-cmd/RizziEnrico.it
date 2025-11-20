@@ -425,6 +425,187 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
             console.error('[WORKSHOP] Errore invio email T+0 automatica:', err);
           }
         }),
+        // Email Post-Immediata (simulata)
+        new Promise(resolve => setTimeout(resolve, 10000)).then(async () => {
+          try {
+            const CALENDLY_CHECKUP_URL = process.env.NEXT_PUBLIC_CALENDLY_CHECKUP_URL || 'https://calendly.com/enricorizzi/check-up-gratuito-in-azienda';
+            const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
+            
+            const emailHtml = `
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+    <h1 style="color: white; margin: 0; font-size: 28px;">🎉 Grazie!</h1>
+  </div>
+  
+  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+    <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${validatedData.nome}</strong>,</p>
+    
+    <p>Grazie per essere stato al workshop "Automatizza la tua Azienda: AI & Digitalizzazione"!</p>
+    
+    <p>Speriamo che tu abbia trovato utili gli spunti e le demo che abbiamo condiviso.</p>
+    
+    <h3 style="color: #667eea; margin-top: 30px;">📦 Materiali Promessi</h3>
+    <ul style="line-height: 2;">
+      <li><a href="${BASE_URL}/download/starter-kit-digitalizzazione" style="color: #667eea; font-weight: bold;">Starter Kit: Checklist Digitalizzazione PMI</a> (PDF)</li>
+      <li><a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test di Maturità Digitale</a> (se non l'hai ancora compilato)</li>
+    </ul>
+    
+    <div style="background: #e7f3ff; border-left: 4px solid #2196F3; padding: 15px; margin: 20px 0; border-radius: 4px;">
+      <p style="margin: 0;"><strong>🚀 Prossimo Passo:</strong> Vuoi applicare subito quello che hai visto? Prenota un <a href="${CALENDLY_CHECKUP_URL}" style="color: #667eea; font-weight: bold;">Check-up Digitale Gratuito</a> e scopri come possiamo aiutarti a digitalizzare la tua azienda.</p>
+    </div>
+    
+    <p style="margin-top: 30px;">A presto,<br>
+    <strong>Enrico Rizzi & Francesco Fusano</strong><br>
+    <span style="color: #667eea;">OSM Partner Venezia</span></p>
+  </div>
+</body>
+</html>`;
+
+            await sendEmail({
+              to: validatedData.email,
+              subject: '🎉 [AUTO-TEST] Grazie per essere stato al workshop!',
+              html: emailHtml,
+              text: `Test automatico email post-immediata`,
+              emailId: 'auto_test_post_immediata',
+              leadId: lead.id,
+            });
+
+            // Aggiorna metadata per tracciare email inviata
+            const { data: currentLead } = await supabase
+              .from('workshop_leads')
+              .select('metadata')
+              .eq('id', lead.id)
+              .single();
+            
+            if (currentLead) {
+              const metadata = (currentLead.metadata as any) || {};
+              metadata.email_post_immediata_sent = new Date().toISOString();
+              // Nota: post-evento usa 'immediate' ma dashboard cerca 'post_immediata'
+              await supabase
+                .from('workshop_leads')
+                .update({ metadata })
+                .eq('id', lead.id);
+            }
+          } catch (err) {
+            console.error('[WORKSHOP] Errore invio email post-immediata automatica:', err);
+          }
+        }),
+        // Email Post-24h (simulata)
+        new Promise(resolve => setTimeout(resolve, 12000)).then(async () => {
+          try {
+            const CALENDLY_CHECKUP_URL = process.env.NEXT_PUBLIC_CALENDLY_CHECKUP_URL || 'https://calendly.com/enricorizzi/check-up-gratuito-in-azienda';
+            const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
+            
+            const emailHtml = `
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div style="background: #f9f9f9; padding: 30px; border-radius: 10px;">
+    <p style="font-size: 18px;">Ciao <strong>${validatedData.nome}</strong>,</p>
+    
+    <p>Come va con l'applicazione di quello che hai visto al workshop?</p>
+    
+    <p>Se non l'hai ancora fatto, ti ricordiamo di scaricare lo <a href="${BASE_URL}/download/starter-kit-digitalizzazione" style="color: #667eea; font-weight: bold;">Starter Kit</a> e compilare il <a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test di Maturità Digitale</a>.</p>
+    
+    <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px;">
+      <p style="margin: 0;"><strong>💡 Ricorda:</strong> Le condizioni speciali workshop scadono tra 7 giorni. Se vuoi approfittarne, prenota il tuo <a href="${CALENDLY_CHECKUP_URL}" style="color: #667eea; font-weight: bold;">Check-up Digitale Gratuito</a>.</p>
+    </div>
+    
+    <p>A presto,<br>
+    <strong>Enrico Rizzi & Francesco Fusano</strong><br>
+    OSM Partner Venezia</p>
+  </div>
+</body>
+</html>`;
+
+            await sendEmail({
+              to: validatedData.email,
+              subject: '💡 [AUTO-TEST] Hai già scaricato lo Starter Kit?',
+              html: emailHtml,
+              text: `Test automatico email post-24h`,
+              emailId: 'auto_test_post_24h',
+              leadId: lead.id,
+            });
+
+            // Aggiorna metadata per tracciare email inviata
+            const { data: currentLead } = await supabase
+              .from('workshop_leads')
+              .select('metadata')
+              .eq('id', lead.id)
+              .single();
+            
+            if (currentLead) {
+              const metadata = (currentLead.metadata as any) || {};
+              metadata.email_post_24h_sent = new Date().toISOString();
+              await supabase
+                .from('workshop_leads')
+                .update({ metadata })
+                .eq('id', lead.id);
+            }
+          } catch (err) {
+            console.error('[WORKSHOP] Errore invio email post-24h automatica:', err);
+          }
+        }),
+        // Email Post-48h (simulata)
+        new Promise(resolve => setTimeout(resolve, 14000)).then(async () => {
+          try {
+            const CALENDLY_CHECKUP_URL = process.env.NEXT_PUBLIC_CALENDLY_CHECKUP_URL || 'https://calendly.com/enricorizzi/check-up-gratuito-in-azienda';
+            const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
+            
+            const emailHtml = `
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div style="background: #f9f9f9; padding: 30px; border-radius: 10px;">
+    <p style="font-size: 18px;">Ciao <strong>${validatedData.nome}</strong>,</p>
+    
+    <p>Ultimi giorni per approfittare delle condizioni speciali workshop!</p>
+    
+    <p>Se vuoi applicare subito quello che hai visto e ottenere un supporto personalizzato, prenota il tuo <a href="${CALENDLY_CHECKUP_URL}" style="color: #667eea; font-weight: bold;">Check-up Digitale Gratuito</a>.</p>
+    
+    <div style="background: #f8d7da; border-left: 4px solid #dc3545; padding: 15px; margin: 20px 0; border-radius: 4px;">
+      <p style="margin: 0;"><strong>⏰ Ultima chiamata:</strong> Le condizioni speciali scadono tra 5 giorni. Non perdere questa opportunità!</p>
+    </div>
+    
+    <p>Ricorda anche di scaricare lo <a href="${BASE_URL}/download/starter-kit-digitalizzazione" style="color: #667eea; font-weight: bold;">Starter Kit</a> se non l'hai ancora fatto.</p>
+    
+    <p>A presto,<br>
+    <strong>Enrico Rizzi & Francesco Fusano</strong><br>
+    OSM Partner Venezia</p>
+  </div>
+</body>
+</html>`;
+
+            await sendEmail({
+              to: validatedData.email,
+              subject: '⏰ [AUTO-TEST] Ultimi giorni condizioni speciali workshop',
+              html: emailHtml,
+              text: `Test automatico email post-48h`,
+              emailId: 'auto_test_post_48h',
+              leadId: lead.id,
+            });
+
+            // Aggiorna metadata per tracciare email inviata
+            const { data: currentLead } = await supabase
+              .from('workshop_leads')
+              .select('metadata')
+              .eq('id', lead.id)
+              .single();
+            
+            if (currentLead) {
+              const metadata = (currentLead.metadata as any) || {};
+              metadata.email_post_48h_sent = new Date().toISOString();
+              await supabase
+                .from('workshop_leads')
+                .update({ metadata })
+                .eq('id', lead.id);
+            }
+          } catch (err) {
+            console.error('[WORKSHOP] Errore invio email post-48h automatica:', err);
+          }
+        }),
       ]).catch((err) => {
         console.error('[WORKSHOP] Errore invio email automatiche test:', err);
       });
