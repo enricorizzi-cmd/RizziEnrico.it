@@ -52,6 +52,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Verifica configurazione SMTP prima di preparare l'email
+    const SMTP_CONFIGURED = !!(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS);
+    console.log('[WORKSHOP] 🔍 Verifica configurazione SMTP:', {
+      SMTP_HOST: process.env.SMTP_HOST ? '✅ configurato' : '❌ mancante',
+      SMTP_USER: process.env.SMTP_USER ? '✅ configurato' : '❌ mancante',
+      SMTP_PASS: process.env.SMTP_PASS ? '✅ configurato' : '❌ mancante',
+      SMTP_PORT: process.env.SMTP_PORT || '587 (default)',
+      FROM_EMAIL: process.env.FROM_EMAIL || 'info@rizzienrico.it (default)',
+      configured: SMTP_CONFIGURED,
+    });
+    
+    if (!SMTP_CONFIGURED) {
+      console.error('[WORKSHOP] ⚠️ ATTENZIONE: Configurazione SMTP incompleta! L\'email non verrà inviata.');
+    }
+
     // Email di conferma al partecipante (PRIMA, così se fallisce il fallback arriva comunque)
     const confirmEmailHtml = `
 <!DOCTYPE html>
@@ -161,6 +176,12 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
 
     // Invia email in modo asincrono (non bloccare la risposta)
     // Le email vengono inviate in background, se falliscono non blocca la risposta
+    console.log('[WORKSHOP] 📧 Preparazione invio email conferma:', {
+      to: validatedData.email,
+      leadId: lead.id,
+      timestamp: new Date().toISOString(),
+    });
+    
     Promise.all([
       sendEmail({
         to: validatedData.email,
@@ -170,24 +191,45 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
         emailId: 'email_conferma_iscrizione',
         leadId: lead.id,
         unsubscribeUrl: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/unsubscribe?email=${encodeURIComponent(validatedData.email)}&lead=${encodeURIComponent(lead.id)}`,
-      }).then(async () => {
-        // Aggiorna metadata per tracciare email conferma inviata
-        const { data: currentLead } = await supabase
-          .from('workshop_leads')
-          .select('metadata')
-          .eq('id', lead.id)
-          .single();
-        
-        if (currentLead) {
-          const metadata = (currentLead.metadata as any) || {};
-          metadata.email_conferma_iscrizione_sent = new Date().toISOString();
-          await supabase
+      }).then(async (success) => {
+        if (success) {
+          console.log('[WORKSHOP] ✅ Email conferma inviata con successo:', {
+            to: validatedData.email,
+            leadId: lead.id,
+            timestamp: new Date().toISOString(),
+          });
+          
+          // Aggiorna metadata per tracciare email conferma inviata
+          const { data: currentLead } = await supabase
             .from('workshop_leads')
-            .update({ metadata })
-            .eq('id', lead.id);
+            .select('metadata')
+            .eq('id', lead.id)
+            .single();
+          
+          if (currentLead) {
+            const metadata = (currentLead.metadata as any) || {};
+            metadata.email_conferma_iscrizione_sent = new Date().toISOString();
+            await supabase
+              .from('workshop_leads')
+              .update({ metadata })
+              .eq('id', lead.id);
+          }
+        } else {
+          console.error('[WORKSHOP] ❌ Email conferma NON inviata (sendEmail ha ritornato false):', {
+            to: validatedData.email,
+            leadId: lead.id,
+            timestamp: new Date().toISOString(),
+          });
         }
       }).catch((err) => {
-        console.error('[WORKSHOP] Errore invio email conferma (non bloccante):', err);
+        console.error('[WORKSHOP] ❌ Errore invio email conferma (non bloccante):', {
+          error: err,
+          message: err?.message,
+          stack: err?.stack,
+          to: validatedData.email,
+          leadId: lead.id,
+          timestamp: new Date().toISOString(),
+        });
         return false;
       }),
       new Promise(resolve => setTimeout(resolve, 1000)).then(() => {
