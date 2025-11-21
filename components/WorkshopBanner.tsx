@@ -57,15 +57,15 @@ export default function WorkshopBanner() {
         href="/workshop-12-dicembre"
         className="block w-full bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 group"
       >
-        <div className="container mx-auto px-4 lg:px-8 py-3">
-          <div className="flex items-center justify-between gap-4">
+        <div className="container mx-auto px-3 sm:px-4 lg:px-8 py-2.5 sm:py-3">
+          <div className="flex items-start sm:items-center justify-between gap-2 sm:gap-4">
             {/* Contenuto principale */}
-            <div className="flex items-center gap-4 flex-1 min-w-0">
+            <div className="flex items-start sm:items-center gap-2 sm:gap-4 flex-1 min-w-0">
               {/* Icona animata */}
-              <div className="flex-shrink-0">
+              <div className="flex-shrink-0 pt-0.5 sm:pt-0">
                 <div className="relative">
-                  <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-xl animate-pulse">🎯</span>
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-base sm:text-xl animate-pulse">🎯</span>
                   </div>
                   {/* Pulsazione esterna */}
                   <div className="absolute inset-0 rounded-full bg-white/30 animate-ping opacity-75"></div>
@@ -74,31 +74,38 @@ export default function WorkshopBanner() {
 
               {/* Testo */}
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="font-bold text-sm md:text-base whitespace-nowrap">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                  <span className="font-bold text-xs sm:text-sm md:text-base whitespace-nowrap">
                     Workshop Esclusivo OSM
                   </span>
                   <span className="hidden sm:inline text-sm opacity-90">
                     •
                   </span>
-                  <span className="text-sm md:text-base opacity-90 truncate">
+                  <span className="text-xs sm:text-sm md:text-base opacity-90 line-clamp-1 sm:truncate">
                     Automatizza la tua Azienda: AI & Digitalizzazione
                   </span>
                 </div>
-                <div className="flex items-center gap-2 mt-1 text-xs md:text-sm opacity-80">
-                  <span>📅 Venerdì 12 dicembre 2025</span>
-                  <span>•</span>
-                  <span>🕐 dalle ore 17.00</span>
-                  <span>•</span>
-                  <span className="hidden md:inline">📍 OSM Venezia</span>
+                <div className="flex flex-wrap items-center gap-1 sm:gap-2 mt-0.5 sm:mt-1 text-[10px] sm:text-xs md:text-sm opacity-80">
+                  <span className="whitespace-nowrap">📅 Venerdì 12 dicembre 2025</span>
+                  <span className="hidden sm:inline">•</span>
+                  <span className="whitespace-nowrap">🕐 dalle ore 17.00</span>
+                  <span className="hidden md:inline">•</span>
+                  <span className="hidden md:inline whitespace-nowrap">📍 OSM Venezia</span>
                 </div>
               </div>
 
               {/* CTA Button */}
-              <div className="flex-shrink-0">
-                <div className="bg-white text-purple-600 px-4 py-2 rounded-lg font-semibold text-sm md:text-base whitespace-nowrap group-hover:bg-purple-50 transition-colors duration-300 shadow-md">
+              <div className="flex-shrink-0 hidden sm:block">
+                <div className="bg-white text-purple-600 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm md:text-base whitespace-nowrap group-hover:bg-purple-50 transition-colors duration-300 shadow-md">
                   Iscriviti Ora →
                 </div>
+              </div>
+            </div>
+
+            {/* CTA Button Mobile - mostrato solo su mobile */}
+            <div className="flex-shrink-0 sm:hidden order-last">
+              <div className="bg-white text-purple-600 px-2.5 py-1.5 rounded-lg font-semibold text-[10px] whitespace-nowrap group-hover:bg-purple-50 transition-colors duration-300 shadow-md">
+                Iscriviti →
               </div>
             </div>
 
@@ -109,11 +116,11 @@ export default function WorkshopBanner() {
                 e.stopPropagation();
                 handleDismiss();
               }}
-              className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/20 transition-colors duration-200 opacity-70 hover:opacity-100"
+              className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full hover:bg-white/20 transition-colors duration-200 opacity-70 hover:opacity-100 mt-0.5 sm:mt-0"
               aria-label="Chiudi banner"
             >
               <svg
-                className="w-5 h-5"
+                className="w-4 h-4 sm:w-5 sm:h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
