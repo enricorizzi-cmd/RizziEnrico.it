@@ -1,62 +1,50 @@
+'use client';
+
 import Link from 'next/link';
-import Accordion from '@/components/Accordion';
+import SectionTitle from '@/components/SectionTitle';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export default function HomeLocalSEO() {
+    const { ref, isVisible } = useScrollAnimation();
+
     return (
-        <section className="py-16 bg-[var(--color-card)]">
+        <section className="py-16 bg-[var(--color-bg-secondary)] border-t border-[var(--color-line)] overflow-hidden">
             <div className="container mx-auto px-4 lg:px-8">
-                <div className="max-w-4xl mx-auto">
-                    <h2 className="font-heading text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-4 text-center">
-                        Consulente Aziendale Padova, Venezia, Rovigo: Dove Opero
-                    </h2>
-                    <p className="text-lg text-[var(--color-subtext)] mb-6 text-center">
-                        Opero in Veneto con focus su Venezia, Padova e Rovigo. Conosco le dinamiche locali delle aziende familiari del territorio e ti aiuto a migliorare organizzazione e risultati concreti.
-                    </p>
-                    <ul className="space-y-3 mb-8 max-w-2xl mx-auto">
-                        <li className="flex items-start gap-3 text-[var(--color-text)]">
-                            <svg className="w-5 h-5 text-[var(--color-primary)] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                            </svg>
-                            <span>Incontri in presenza (Venezia-Padova-Rovigo)</span>
-                        </li>
-                        <li className="flex items-start gap-3 text-[var(--color-text)]">
-                            <svg className="w-5 h-5 text-[var(--color-primary)] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                            </svg>
-                            <span>Check-up gratuito: 60' Zoom o 90' in presenza</span>
-                        </li>
-                        <li className="flex items-start gap-3 text-[var(--color-text)]">
-                            <svg className="w-5 h-5 text-[var(--color-primary)] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                            </svg>
-                            <span>Esperienza su manifatturiero, servizi, commercio</span>
-                        </li>
-                    </ul>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 max-w-3xl mx-auto">
-                        <Link href="/consulenza-pmi-venezia" className="bg-white rounded-[var(--radius-card)] p-4 border border-[var(--color-line)] hover:shadow-md transition-shadow text-center">
-                            <h3 className="font-heading font-semibold text-[var(--color-text)] mb-2">Consulenza PMI Venezia</h3>
-                            <p className="text-sm text-[var(--color-subtext)]">Servizi per aziende veneziane</p>
-                        </Link>
-                        <Link href="/consulenza-pmi-padova" className="bg-white rounded-[var(--radius-card)] p-4 border border-[var(--color-line)] hover:shadow-md transition-shadow text-center">
-                            <h3 className="font-heading font-semibold text-[var(--color-text)] mb-2">Consulenza PMI Padova</h3>
-                            <p className="text-sm text-[var(--color-subtext)]">Servizi per aziende padovane</p>
-                        </Link>
-                        <Link href="/consulenza-pmi-rovigo" className="bg-white rounded-[var(--radius-card)] p-4 border border-[var(--color-line)] hover:shadow-md transition-shadow text-center">
-                            <h3 className="font-heading font-semibold text-[var(--color-text)] mb-2">Consulenza PMI Rovigo</h3>
-                            <p className="text-sm text-[var(--color-subtext)]">Servizi per aziende rodigine</p>
+                <SectionTitle
+                    title="Consulenza Aziendale Vicino a Te"
+                    description="Opero direttamente nelle province di Venezia, Padova e Rovigo per garantire presenza e supporto costante."
+                    centered
+                />
+                <div
+                    ref={ref}
+                    className={`grid grid-cols-1 md:grid-cols-3 gap-8 text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
+                >
+                    <div className="p-8 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+                        <h3 className="font-heading text-xl font-bold mb-4 text-[var(--color-primary)]">Venezia</h3>
+                        <p className="text-[var(--color-subtext)] mb-4">
+                            Consulenza per PMI a Mestre, Mirano, Chioggia, San Donà di Piave.
+                        </p>
+                        <Link href="/consulenza-pmi-venezia" className="text-[var(--color-primary)] font-semibold hover:underline inline-flex items-center gap-1">
+                            Consulente Venezia <span>→</span>
                         </Link>
                     </div>
-                    <div className="bg-white rounded-[var(--radius-card)] p-6 border border-[var(--color-line)] max-w-2xl mx-auto">
-                        <Accordion items={[
-                            {
-                                question: 'Fate interventi anche fuori regione?',
-                                answer: 'Sì, su valutazione.',
-                            },
-                            {
-                                question: 'Quanto tempo serve per iniziare?',
-                                answer: 'Dopo il check-up, calendario e piano.',
-                            },
-                        ]} />
+                    <div className="p-8 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+                        <h3 className="font-heading text-xl font-bold mb-4 text-[var(--color-primary)]">Padova</h3>
+                        <p className="text-[var(--color-subtext)] mb-4">
+                            Supporto aziende a Padova, Albignasego, Selvazzano, Cittadella.
+                        </p>
+                        <Link href="/consulenza-pmi-padova" className="text-[var(--color-primary)] font-semibold hover:underline inline-flex items-center gap-1">
+                            Consulente Padova <span>→</span>
+                        </Link>
+                    </div>
+                    <div className="p-8 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+                        <h3 className="font-heading text-xl font-bold mb-4 text-[var(--color-primary)]">Rovigo</h3>
+                        <p className="text-[var(--color-subtext)] mb-4">
+                            Interventi a Rovigo, Adria, Porto Viro, Occhiobello.
+                        </p>
+                        <Link href="/consulenza-pmi-rovigo" className="text-[var(--color-primary)] font-semibold hover:underline inline-flex items-center gap-1">
+                            Consulente Rovigo <span>→</span>
+                        </Link>
                     </div>
                 </div>
             </div>

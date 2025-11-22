@@ -1,47 +1,58 @@
+'use client';
+
 import SectionTitle from '@/components/SectionTitle';
-import Testimonial from '@/components/Testimonial';
+import Card from '@/components/Card';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export default function HomeTestimonials() {
+    const { ref, isVisible } = useScrollAnimation();
+
     return (
-        <section className="py-16 bg-white">
+        <section className="py-20 bg-white overflow-hidden">
             <div className="container mx-auto px-4 lg:px-8">
                 <SectionTitle
-                    title="Testimonianze: Cosa Dicono i Clienti che Hanno Implementato il Metodo"
-                    description="PMI venete che hanno ottenuto risultati concreti con organizzazione, KPI e metodo strutturato."
+                    title="Cosa Dicono gli Imprenditori Veneti"
+                    description="Risultati concreti ottenuti da chi ha scelto di mettere ordine nella propria azienda."
                     centered
                 />
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                <div
+                    ref={ref}
+                    className={`grid grid-cols-1 md:grid-cols-3 gap-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
+                >
                     {[
                         {
-                            quote: 'Prima rincorrevamo le urgenze. Con ruoli chiari, riunioni a KPI (Indicatori Chiave di Prestazione) e un cruscotto semplice, le consegne sono puntuali e il team sa cosa contare e quando.',
-                            authorName: 'Direttore Commerciale',
-                            role: 'Distribuzione ricambi',
-                            location: 'Padova',
-                            result: '+25% fatturato, -30% tempi consegna',
+                            quote: "Finalmente ho capito dove perdevo margini. In 6 mesi abbiamo recuperato il 15% di redditività.",
+                            author: "Marco B.",
+                            role: "Titolare Metalmeccanica, Padova",
+                            rating: 5
                         },
                         {
-                            quote: 'La pianificazione settimanale e i KPI di efficienza ci hanno tolto il caos. Oggi sappiamo dove intervenire ogni lunedì mattina.',
-                            authorName: 'Responsabile Produzione',
-                            role: 'Alimentare',
-                            location: 'Venezia',
-                            result: 'Efficienza +20%, tempi morti -40%',
+                            quote: "I miei dipendenti ora sanno esattamente cosa fare. Meno errori, clima migliore, più produttività.",
+                            author: "Elena R.",
+                            role: "CEO Servizi, Venezia",
+                            rating: 5
                         },
                         {
-                            quote: 'Il passaggio generazionale non è più un tabù: mansionari, obiettivi e riunioni brevi ci hanno dato continuità e risultati.',
-                            authorName: 'Amministratore',
-                            role: 'Lattoneria & Coperture',
-                            location: 'Rovigo',
-                            result: 'Continuità operativa garantita',
-                        },
-                        {
-                            quote: 'Agenda interventi, priorità e feedback post-servizio: tempi morti giù e più soddisfazione clienti. Finalmente misuriamo la qualità.',
-                            authorName: 'Service Manager',
-                            role: 'Impianti clima/refrigerazione',
-                            location: 'Padova',
-                            result: 'Soddisfazione clienti +15%',
-                        },
+                            quote: "Il controllo di gestione mi ha salvato. Prima navigavo a vista, ora guido con i numeri.",
+                            author: "Luca T.",
+                            role: "Imprenditore Edile, Rovigo",
+                            rating: 5
+                        }
                     ].map((testimonial, index) => (
-                        <Testimonial key={index} {...testimonial} />
+                        <Card
+                            key={index}
+                            title={testimonial.author}
+                            variant="default"
+                            className="premium-card-hover h-full bg-[var(--color-bg-secondary)] border-none"
+                        >
+                            <div className="flex text-[var(--color-warning)] mb-4 text-lg">
+                                {'★'.repeat(testimonial.rating)}
+                            </div>
+                            <p className="italic text-[var(--color-text-light)] mb-6 text-lg leading-relaxed">"{testimonial.quote}"</p>
+                            <div className="mt-auto pt-4 border-t border-[var(--color-line)]/50">
+                                <p className="text-sm font-semibold text-[var(--color-subtext)] uppercase tracking-wide">{testimonial.role}</p>
+                            </div>
+                        </Card>
                     ))}
                 </div>
             </div>

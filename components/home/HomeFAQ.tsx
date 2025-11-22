@@ -1,42 +1,46 @@
+'use client';
+
 import SectionTitle from '@/components/SectionTitle';
-import Accordion from '@/components/Accordion';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export default function HomeFAQ() {
+    const { ref, isVisible } = useScrollAnimation();
+
     return (
-        <section className="py-16 bg-white">
+        <section className="py-20 bg-white overflow-hidden">
             <div className="container mx-auto px-4 lg:px-8">
                 <SectionTitle
                     title="Domande Frequenti"
-                    description="Risposte alle domande più comuni sulla consulenza PMI"
+                    description="Dubbi? Ecco le risposte alle domande più comuni degli imprenditori."
                     centered
                 />
-                <div className="max-w-3xl mx-auto">
-                    <Accordion items={[
+                <div
+                    ref={ref}
+                    className={`max-w-3xl mx-auto space-y-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
+                >
+                    {[
                         {
-                            question: 'Quanto costa una consulenza aziendale per PMI venete?',
-                            answer: 'I miei interventi partono a partire da 700€. Il primo check-up di 60 minuti su Zoom o 90 minuti in presenza è gratuito.'
+                            q: "Quanto costa la consulenza?",
+                            a: "Dipende dalle tue esigenze. Offro pacchetti a partire da 700€/mese, ma tutto inizia con un check-up gratuito per capire cosa ti serve davvero."
                         },
                         {
-                            question: 'Come posso aumentare il fatturato della mia azienda in Veneto?',
-                            answer: 'Lavoriamo su organizzazione, KPI e controllo di gestione. In 90 giorni mettiamo ordine su ruoli e numeri, in 6 mesi vediamo risultati concreti su fatturato, marginalità e tempi di consegna.'
+                            q: "Lavori solo in presenza?",
+                            a: "Lavoro sia in presenza (Venezia, Padova, Rovigo) che da remoto. Molti clienti apprezzano la flessibilità delle sessioni Zoom per i check periodici."
                         },
                         {
-                            question: 'Come può una PMI veneta migliorare la produttività dei dipendenti senza assumere altre persone?',
-                            answer: 'Definiamo mansionari chiari, introduciamo KPI di produttività e riunioni brevi a numeri. In questo modo ogni reparto sa cosa deve fare, cosa misurare e con quale obiettivo. I dipendenti sanno cosa fare e perché, aumentando naturalmente la produttività.'
+                            q: "In quanto tempo vedrò i risultati?",
+                            a: "Dipende dall'obiettivo. L'organizzazione migliora in 90 giorni. I numeri (fatturato/margini) solitamente mostrano trend positivi entro 6 mesi di lavoro costante."
                         },
                         {
-                            question: 'Fate consulenza anche per aziende familiari venete?',
-                            answer: 'Sì, ho particolare esperienza con aziende familiari venete. Ti aiuto a gestire meglio il personale, organizzare i processi e, se necessario, gestire il passaggio generazionale. Il metodo si adatta perfettamente alle specificità delle aziende familiari.'
-                        },
-                        {
-                            question: 'Consulente aziendale Padova, Venezia, Rovigo: fate interventi anche fuori Veneto?',
-                            answer: 'Opero principalmente in Veneto (Venezia, Padova, Rovigo) ma posso valutare interventi in altre regioni del Nord Italia su valutazione caso per caso.'
-                        },
-                        {
-                            question: 'Quanto tempo serve per vedere risultati concreti?',
-                            answer: 'In 90 giorni mettiamo ordine con ruoli chiari, controllo di gestione e processi definiti. In 6 mesi vedi i numeri concreti: aumento fatturato, miglioramento produttività dipendenti, organizzazione efficace. Ogni intervento è personalizzato, quindi i tempi possono variare in base alla complessità della tua azienda.'
+                            q: "Il metodo OSM funziona per la mia azienda?",
+                            a: "Il metodo è universale perché si basa sulle persone, non solo sul settore. Ho lavorato con metalmeccanica, servizi, edilizia, commercio: i principi di gestione sono gli stessi."
                         }
-                    ]} />
+                    ].map((faq, index) => (
+                        <div key={index} className="bg-[var(--color-bg-secondary)] rounded-xl p-6 hover:shadow-md transition-all duration-300">
+                            <h3 className="font-bold text-lg mb-3 text-[var(--color-text)]">{faq.q}</h3>
+                            <p className="text-[var(--color-subtext)] leading-relaxed">{faq.a}</p>
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>

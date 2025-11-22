@@ -6,29 +6,29 @@
   --color-primary: #A72868;
   --color-primary-dark: #8a2055;
   --color-primary-light: #d44d8c;
-  
+
   --color-text: #1F2A37;
   --color-text-light: #4B5563;
   --color-subtext: #6B7280;
-  
+
   --color-bg: #FFFFFF;
   --color-bg-secondary: #F9FAFB;
   --color-card: #FFFFFF;
   --color-card-hover: #F8FAFC;
-  
+
   --color-line: #E5E7EB;
   --color-success: #16A34A;
   --color-warning: #F59E0B;
   --color-error: #DC2626;
-  
+
   /* Glassmorphism */
   --glass-bg: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(255, 255, 255, 0.5);
   --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
-  
+
   /* Workshop Banner */
   --workshop-banner-height: 4rem;
-  
+
   /* Spacing */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
@@ -38,12 +38,12 @@
   --spacing-xl: 32px;
   --spacing-2xl: 48px;
   --spacing-3xl: 64px;
-  
+
   /* Border Radius */
   --radius-base: 8px;
   --radius-card: 16px;
   --radius-pill: 9999px;
-  
+
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -55,29 +55,29 @@
   --color-primary: #A72868;
   --color-primary-dark: #8a2055;
   --color-primary-light: #d44d8c;
-  
+
   --color-text: #1F2A37;
   --color-text-light: #4B5563;
   --color-subtext: #6B7280;
-  
+
   --color-bg: #FFFFFF;
   --color-bg-secondary: #F9FAFB;
   --color-card: #FFFFFF;
-  
+
   --color-line: #E5E7EB;
   --color-success: #16A34A;
   --color-warning: #F59E0B;
   --color-error: #DC2626;
-  
+
   --font-heading: 'Montserrat', sans-serif;
   --font-body: 'Inter', sans-serif;
-  
+
   --breakpoint-sm: 640px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
   --breakpoint-2xl: 1536px;
-  
+
   --radius-card: 16px;
 }
 
@@ -91,7 +91,8 @@
 }
 
 /* Prevent horizontal scroll on mobile */
-html, body {
+html,
+body {
   overflow-x: hidden;
   max-width: 100vw;
 }
@@ -100,7 +101,8 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-body);
-  font-size: 16px; /* 16px minimo per evitare zoom su iOS */
+  font-size: 16px;
+  /* 16px minimo per evitare zoom su iOS */
   line-height: 24px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -114,7 +116,12 @@ body {
   }
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.2;
@@ -193,20 +200,26 @@ button.inline-button {
 
 /* Mobile-specific adjustments */
 @media (max-width: 767px) {
+
   /* Ensure container doesn't overflow */
   .container {
     padding-left: 1rem;
     padding-right: 1rem;
   }
-  
+
   /* Prevent text from being too small */
-  p, span, div {
+  p,
+  span,
+  div {
     font-size: inherit;
   }
-  
+
   /* Ensure inputs are readable */
-  input, textarea, select {
-    font-size: 16px; /* Prevents iOS zoom */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+    /* Prevents iOS zoom */
     min-height: 44px;
   }
 }
@@ -237,22 +250,29 @@ button.inline-button {
 
 /* Workshop Page Animations */
 @keyframes blob {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translate(0, 0) scale(1);
   }
+
   33% {
     transform: translate(30px, -50px) scale(1.1);
   }
+
   66% {
     transform: translate(-20px, 20px) scale(0.9);
   }
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0) translateX(0);
     opacity: 0.3;
   }
+
   50% {
     transform: translateY(-20px) translateX(10px);
     opacity: 0.6;
@@ -260,9 +280,12 @@ button.inline-button {
 }
 
 @keyframes gradient-shift {
-  0%, 100% {
+
+  0%,
+  100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -273,6 +296,7 @@ button.inline-button {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -284,6 +308,7 @@ button.inline-button {
     opacity: 0;
     transform: translateY(-30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -351,6 +376,7 @@ body.workshop-banner-visible main {
   0% {
     transform: translateX(-100%);
   }
+
   100% {
     transform: translateX(100%);
   }
@@ -358,4 +384,123 @@ body.workshop-banner-visible main {
 
 .animate-progress-bar {
   animation: progress-bar 3s ease-in-out infinite;
+}
+
+/* Aurora Background Utilities */
+.aurora-bg {
+  background-color: #ffffff;
+  background-image:
+    radial-gradient(at 0% 0%, rgba(167, 40, 104, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(212, 77, 140, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(167, 40, 104, 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(212, 77, 140, 0.1) 0px, transparent 50%);
+  background-size: 120% 120%;
+  animation: aurora-shift 15s ease infinite alternate;
+}
+
+@keyframes aurora-shift {
+  0% {
+    background-position: 0% 0%;
+  }
+
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+/* Text Gradients */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Bento Grid Utilities */
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, auto);
+  }
+
+  .bento-span-2 {
+    grid-column: span 2;
+  }
+
+  .bento-row-2 {
+    grid-row: span 2;
+  }
+}
+
+/* Premium Card Hover */
+.premium-card-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
+  border-color: rgba(167, 40, 104, 0.3);
+}
+
+/* Scroll Animations */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Blob Animation Enhanced */
+@keyframes blob-float {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.animate-blob-float {
+  animation: blob-float 10s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
 }

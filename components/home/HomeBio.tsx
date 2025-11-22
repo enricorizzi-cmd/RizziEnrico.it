@@ -1,71 +1,56 @@
+'use client';
+
+import Image from 'next/image';
 import Link from 'next/link';
-import ProfilePhoto from '@/components/ProfilePhoto';
-import OSMBadge from '@/components/OSMBadge';
 import CTA from '@/components/CTA';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export default function HomeBio() {
-    return (
-        <section className="py-16 bg-white">
-            <div className="container mx-auto px-4 lg:px-8">
-                <div className="max-w-4xl mx-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-                        {/* Foto */}
-                        <div className="md:col-span-1">
-                            <div className="relative inline-block mx-auto md:mx-0">
-                                <ProfilePhoto src="/enrico-rizzi.jpg" size="md" alt="Enrico Rizzi consulente OSM PMI Veneto" />
-                                {/* Badge OSM discreto */}
-                                <div className="absolute -bottom-2 -right-2 bg-white rounded-lg px-2 py-1 shadow-sm border border-[var(--color-line)]">
-                                    <div className="flex items-center gap-1.5">
-                                        <span className="text-[9px] text-[var(--color-subtext)] font-medium">Partner</span>
-                                        <OSMBadge variant="small" useImage={true} />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    const { ref, isVisible } = useScrollAnimation();
 
-                        {/* Testo */}
-                        <div className="md:col-span-2 text-center md:text-left">
-                            <h2 className="font-heading text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-4">
-                                Enrico Rizzi
-                            </h2>
-                            <p className="text-lg md:text-xl text-[var(--color-subtext)] mb-4">
-                                Consulente OSM per PMI del Veneto
-                            </p>
-                            <p className="text-[var(--color-text)] mb-6 leading-relaxed">
-                                <strong>Da oltre 10 anni lavoro dentro e a fianco delle PMI venete</strong>: prima nell'azienda di famiglia, oggi come <strong>consulente aziendale senior OSM Partner Venezia–Rovigo</strong>.
-                            </p>
-                            <p className="text-[var(--color-text)] mb-6 leading-relaxed">
-                                Aiuto imprenditori di <strong>Venezia, Padova e Rovigo</strong> a mettere ordine in ruoli, KPI e processi <strong>e a sfruttare la digitalizzazione in modo semplice</strong>: cruscotti, strumenti online e automazioni che il team può davvero usare tutti i giorni.
-                            </p>
-                            <p className="text-[var(--color-text)] mb-6 leading-relaxed">
-                                <strong>Risultato concreto:</strong> Nel 2024 ho aiutato un'azienda manifatturiera
-                                di Padova ad <strong>aumentare significativamente il fatturato</strong> migliorando la produttività dei dipendenti,
-                                ottimizzando la rete vendita e implementando un sistema di controllo di gestione efficace.
-                            </p>
-                            <div className="flex items-center justify-center md:justify-start gap-4 flex-wrap">
-                                <CTA href="/chi-sono" variant="primary">
-                                    La mia storia →
-                                </CTA>
-                                <CTA href="/contatti" variant="secondary">
-                                    Contattami →
-                                </CTA>
-                                <div className="flex items-center gap-2 text-sm text-[var(--color-subtext)]">
-                                    <span>Partner</span>
-                                    <OSMBadge variant="footer" useImage={true} />
-                                </div>
-                            </div>
-                            <div className="mt-6 text-center md:text-left">
-                                <p className="text-sm text-[var(--color-subtext)]">
-                                    Scopri anche: <Link href="/servizi" className="text-[var(--color-primary)] hover:underline font-semibold" title="Servizi di consulenza PMI">servizi</Link>, <Link href="/metodo" className="text-[var(--color-primary)] hover:underline font-semibold" title="Metodo OSM">metodo</Link> e <Link href="/case-study" className="text-[var(--color-primary)] hover:underline font-semibold" title="Case study PMI">case study</Link>.
-                                </p>
+    return (
+        <section className="py-20 bg-white overflow-hidden">
+            <div className="container mx-auto px-4 lg:px-8">
+                <div
+                    ref={ref}
+                    className={`flex flex-col lg:flex-row items-center gap-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
+                >
+                    <div className="lg:w-1/2">
+                        <div className="relative">
+                            <div className="absolute -top-4 -left-4 w-24 h-24 bg-[var(--color-primary)]/10 rounded-full z-0"></div>
+                            <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-[var(--color-warning)]/10 rounded-full z-0"></div>
+                            <div className="relative rounded-[2rem] overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500">
+                                <Image
+                                    src="/enrico-rizzi-bio.jpg"
+                                    alt="Enrico Rizzi Consulente Aziendale"
+                                    width={600}
+                                    height={600}
+                                    className="w-full h-auto object-cover"
+                                />
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="text-center mt-12">
-                    <CTA href="/contatti" variant="primary" size="large">
-                        Vuoi Risultati Simili? Contattami Ora →
-                    </CTA>
+                    <div className="lg:w-1/2">
+                        <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6 text-[var(--color-text)]">
+                            Chi è Enrico Rizzi
+                        </h2>
+                        <p className="text-lg text-[var(--color-subtext)] mb-6 leading-relaxed">
+                            Da oltre 10 anni affianco gli imprenditori veneti nella crescita delle loro aziende.
+                            Non sono un teorico: vengo dal mondo delle PMI e conosco le sfide quotidiane che affronti.
+                        </p>
+                        <p className="text-lg text-[var(--color-subtext)] mb-8 leading-relaxed">
+                            Come partner OSM (Open Source Management), porto in azienda un metodo collaudato su migliaia di casi di successo,
+                            adattandolo alla tua realtà specifica. Il mio obiettivo è renderti autonomo, non dipendente dalla mia consulenza.
+                        </p>
+                        <div className="flex flex-wrap gap-4">
+                            <CTA href="/chi-sono" variant="primary" size="large" className="shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
+                                Leggi la mia storia →
+                            </CTA>
+                            <CTA href="/contatti" variant="secondary" size="large">
+                                Parliamone a voce →
+                            </CTA>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
