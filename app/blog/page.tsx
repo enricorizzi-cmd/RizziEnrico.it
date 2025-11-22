@@ -1,12 +1,9 @@
-import { generateMetadata } from '@/lib/seo';
-import SectionTitle from '@/components/SectionTitle';
-import Card from '@/components/Card';
+'use client';
 
-export const metadata = generateMetadata({
-  title: 'Blog consulenza PMI – Guide pratiche su KPI, organizzazione e processi | Enrico Rizzi',
-  description: 'Articoli pratici per PMI su KPI, controllo di gestione, mansionari, riunioni efficaci e crescita organizzata. Guide concrete per imprenditori e manager che vogliono gestire l\'azienda con numeri e metodo.',
-  path: '/blog',
-});
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import Hero from '@/components/Hero';
+import Card from '@/components/Card';
+import CTA from '@/components/CTA';
 
 // Mock data - in produzione da Supabase
 const posts = [
@@ -37,51 +34,92 @@ const posts = [
 ];
 
 export default function BlogPage() {
-  return (
-    <div className="py-16 bg-[var(--color-card)] min-h-screen">
-      <div className="container mx-auto px-4 lg:px-8">
-        {/* Hero */}
-        <div className="text-center mb-12">
-          <h1 className="font-heading text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-4">
-            Blog Consulenza PMI: Guide Pratiche su KPI e Organizzazione
-          </h1>
-          <p className="text-xl text-[var(--color-subtext)] max-w-3xl mx-auto">
-            Articoli pratici su organizzazione aziendale, KPI, processi e crescita per PMI.
-          </p>
-        </div>
+  const { ref, isVisible } = useScrollAnimation();
 
-        {/* Lista Post */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {posts.map((post) => (
-            <Card
-              key={post.slug}
-              title={post.title}
-              variant="blog"
-              href={`/blog/${post.slug}`}
-            >
-              <p className="mb-4 text-sm">{post.excerpt}</p>
-              <div className="flex flex-wrap gap-2 mb-2">
-                {post.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-2 py-1 bg-[var(--color-primary)]/10 text-[var(--color-primary)] rounded text-xs font-medium"
-                  >
-                    {tag}
-                  </span>
-                ))}
+  return (
+    <>
+      <Hero
+        h1="Blog Consulenza PMI"
+        subtitle="Guide pratiche su KPI, organizzazione e processi. Strumenti concreti per imprenditori che vogliono gestire l'azienda con i numeri."
+        badge="Blog"
+        primaryCTA={{
+          text: 'Iscriviti alla Newsletter',
+          href: '#newsletter',
+        }}
+        image="/enrico-rizzi.jpg" // Placeholder
+      />
+
+      <div className="py-20 bg-[var(--color-bg-secondary)] min-h-screen">
+        <div className="container mx-auto px-4 lg:px-8">
+
+          {/* Intro */}
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <p className="text-xl text-[var(--color-subtext)]">
+              Non solo teoria: qui trovi guide operative, template e casi studio per applicare subito il metodo nella tua azienda.
+            </p>
+          </div>
+
+          {/* Lista Post */}
+          <div
+            ref={ref}
+            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
+          >
+            {posts.map((post) => (
+              <Card
+                key={post.slug}
+                title={post.title}
+                variant="blog"
+                href={`/blog/${post.slug}`}
+                className="premium-card-hover h-full bg-white border border-[var(--color-line)]"
+              >
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-2 py-1 bg-[var(--color-primary)]/10 text-[var(--color-primary)] rounded text-xs font-bold uppercase tracking-wide"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <p className="mb-6 text-[var(--color-subtext)] text-sm leading-relaxed">{post.excerpt}</p>
+                <div className="mt-auto pt-4 border-t border-[var(--color-line)]/50 flex items-center justify-between text-xs text-[var(--color-subtext)]">
+                  <span>{new Date(post.publishedAt).toLocaleDateString('it-IT', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                  <span className="font-medium text-[var(--color-primary)]">Leggi tutto →</span>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          {/* Newsletter Box */}
+          <div id="newsletter" className="max-w-4xl mx-auto bg-[var(--color-primary)] rounded-[2rem] p-12 text-center text-white shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-20 pointer-events-none">
+              <div className="absolute -top-24 -left-24 w-96 h-96 bg-white rounded-full blur-3xl mix-blend-overlay"></div>
+              <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-white rounded-full blur-3xl mix-blend-overlay"></div>
+            </div>
+
+            <div className="relative z-10">
+              <h2 className="font-heading text-2xl font-bold mb-4">
+                Resta aggiornato
+              </h2>
+              <p className="mb-8 opacity-90 max-w-lg mx-auto">
+                Ricevi ogni mese consigli pratici su gestione aziendale, KPI e organizzazione. Niente spam, solo contenuti utili.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+                <input
+                  type="email"
+                  placeholder="La tua email aziendale"
+                  className="px-6 py-3 rounded-lg text-[var(--color-text)] w-full focus:outline-none focus:ring-2 focus:ring-white/50"
+                />
+                <button className="px-8 py-3 bg-white text-[var(--color-primary)] font-bold rounded-lg hover:bg-gray-100 transition-colors shadow-lg">
+                  Iscriviti
+                </button>
               </div>
-              <div className="text-xs text-[var(--color-subtext)]">
-                {new Date(post.publishedAt).toLocaleDateString('it-IT', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </div>
-            </Card>
-          ))}
+            </div>
+          </div>
+
         </div>
       </div>
-    </div>
+    </>
   );
 }
-

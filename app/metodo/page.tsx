@@ -1,39 +1,12 @@
-import { generateMetadata } from '@/lib/seo';
+'use client';
+
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import Hero from '@/components/Hero';
 import SectionTitle from '@/components/SectionTitle';
-import Steps from '@/components/Steps';
-import Accordion from '@/components/Accordion';
 import CTA from '@/components/CTA';
-import IPBadge from '@/components/IPBadge';
+import Accordion from '@/components/Accordion';
+import Link from 'next/link';
 import Card from '@/components/Card';
-import JSONLD from '@/components/JSONLD';
-
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
-
-// BreadcrumbList schema per pagina metodo
-const breadcrumbSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Home',
-      item: baseUrl,
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Metodo',
-      item: `${baseUrl}/metodo`,
-    },
-  ],
-};
-
-export const metadata = generateMetadata({
-  title: 'Metodo consulenza PMI in 5 step – Da caos a organizzazione con KPI e digitalizzazione | Enrico Rizzi',
-  description: 'Metodo consulenza PMI in 5 step: Chi, Numeri, Processi, Persone, Espansione. Da azienda reattiva a organizzata e orientata ai risultati, con ruoli, KPI, riunioni strutturate e digitalizzazione pratica. Pensato per PMI venete e aziende familiari.',
-  path: '/metodo',
-});
 
 const steps = [
   {
@@ -45,6 +18,7 @@ const steps = [
       'Eliminati sovrapposizioni e conflitti di responsabilità',
       'Mansionari aggiornati e allineati agli obiettivi',
     ],
+    icon: '👥'
   },
   {
     number: 2,
@@ -56,6 +30,7 @@ const steps = [
       'Alert automatici su scostamenti critici',
       'Riunioni mensili basate sui numeri, non su opinioni',
     ],
+    icon: '📊'
   },
   {
     number: 3,
@@ -67,6 +42,7 @@ const steps = [
       'Riduzione tempi morti e attese',
       'Migliore coordinamento tra reparti',
     ],
+    icon: '⚙️'
   },
   {
     number: 4,
@@ -78,20 +54,7 @@ const steps = [
       'Leadership più efficace e coinvolgente',
       'Riduzione turnover',
     ],
-    iprofile: {
-      title: 'i-Profile: dal potenziale al ruolo',
-      description: 'Utilizzo i-Profile per mappare attitudini, individuare potenziale e prendere decisioni basate sui dati su collocazione nel ruolo, sviluppo e selezione.',
-      benefits: [
-        'Mappatura attitudinale del team',
-        'Persona giusta al posto giusto',
-        'Piani sviluppo personalizzati',
-        'Screening selezione mirato',
-      ],
-      cta: {
-        text: 'Scopri i-Profile',
-        href: '/i-profile',
-      },
-    },
+    icon: '🎓'
   },
   {
     number: 5,
@@ -103,6 +66,7 @@ const steps = [
       'Partnership strategiche sul territorio Veneto',
       'Scalabilità del modello organizzativo',
     ],
+    icon: '🚀'
   },
 ];
 
@@ -129,90 +93,107 @@ const faqs = [
   },
 ];
 
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((faq) => ({
-    '@type': 'Question',
-    name: faq.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: faq.answer,
-    },
-  })),
-};
-
 export default function MetodoPage() {
+  const { ref, isVisible } = useScrollAnimation();
+
   return (
     <>
-      <JSONLD data={faqSchema} />
-      <JSONLD data={breadcrumbSchema} />
-      
-      {/* Hero */}
-      <section className="bg-gradient-to-b from-[var(--color-primary)] to-[var(--color-primary)]/90 text-white py-16 md:py-24">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Metodo Consulenza PMI: 5 Step per Organizzare la Tua Azienda
-            </h1>
-            <p className="text-xl md:text-2xl opacity-95">
-              Da caos a organizzazione: un percorso strutturato che porta risultati misurabili
-            </p>
-          </div>
-        </div>
-      </section>
+      <Hero
+        h1="Metodo Consulenza PMI"
+        subtitle="5 Step per Organizzare la Tua Azienda. Da caos a organizzazione: un percorso strutturato che porta risultati misurabili."
+        badge="Metodo"
+        primaryCTA={{
+          text: 'Check-up Gratuito',
+          href: '/contatti',
+        }}
+        image="/enrico-rizzi.jpg" // Placeholder
+      />
 
       {/* Steps */}
-      <section className="py-16 bg-white">
+      <section className="py-20 bg-white overflow-hidden">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <SectionTitle
               title="I 5 Step del Metodo"
               description="Un percorso sequenziale che trasforma la tua PMI da reattiva a organizzata e orientata ai risultati."
               centered
             />
-            <Steps steps={steps} />
+
+            <div className="space-y-12 mt-16">
+              {steps.map((step, index) => (
+                <div
+                  key={index}
+                  className={`flex flex-col md:flex-row gap-8 items-start p-8 rounded-[2rem] border border-[var(--color-line)] bg-[var(--color-bg-secondary)] hover:shadow-lg transition-all duration-500 group reveal-on-scroll is-visible`}
+                >
+                  <div className="flex-shrink-0">
+                    <div className="w-16 h-16 rounded-2xl bg-[var(--color-primary)] text-white flex items-center justify-center text-3xl font-bold shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      {step.number}
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <h3 className="font-heading text-2xl font-bold text-[var(--color-text)]">
+                        {step.title}
+                      </h3>
+                      <span className="text-2xl">{step.icon}</span>
+                    </div>
+                    <p className="text-lg text-[var(--color-subtext)] mb-6 leading-relaxed">
+                      {step.description}
+                    </p>
+                    <div className="bg-white rounded-xl p-6 border border-[var(--color-line)]/50">
+                      <h4 className="font-bold text-[var(--color-primary)] mb-3 text-sm uppercase tracking-wide">Benefici:</h4>
+                      <ul className="space-y-2">
+                        {step.benefits.map((benefit, i) => (
+                          <li key={i} className="flex items-start gap-3 text-[var(--color-text)]">
+                            <span className="text-[var(--color-success)] font-bold">✓</span>
+                            <span>{benefit}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Digitalizzazione: lo strato trasversale */}
-      <section className="py-16 bg-white">
+      {/* Digitalizzazione */}
+      <section className="py-20 bg-[var(--color-bg-secondary)] overflow-hidden">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-6 text-center">
+          <div
+            ref={ref}
+            className={`max-w-4xl mx-auto glass-panel p-10 rounded-[2rem] transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
+          >
+            <h2 className="font-heading text-3xl font-bold text-[var(--color-text)] mb-6 text-center">
               Digitalizzazione: lo strato che rende scalabile il metodo
             </h2>
             <div className="prose prose-lg max-w-none text-[var(--color-text)] leading-relaxed">
-              <p className="mb-4">
+              <p className="mb-6 text-center text-lg">
                 In tutti e 5 gli step lavoriamo anche sulla <strong>digitalizzazione pratica della tua PMI</strong>.
+                Non si tratta di "fare il gestionale nuovo", ma di rendere i processi fluidi.
               </p>
-              <p className="mb-4">
-                Non si tratta di "fare il gestionale nuovo" e basta, ma di:
-              </p>
-              <ul className="space-y-3 mb-6">
-                <li className="flex items-start gap-3">
-                  <span className="text-[var(--color-primary)] font-bold mt-1">•</span>
-                  <span>trasformare i <strong>mansionari</strong> in check-list e flussi gestibili con strumenti digitali semplici (foglio condiviso, CRM, task manager);</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-[var(--color-primary)] font-bold mt-1">•</span>
-                  <span>rendere le <strong>riunioni a KPI</strong> più veloci con dashboard aggiornate automaticamente;</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-[var(--color-primary)] font-bold mt-1">•</span>
-                  <span>ridurre inserimenti doppi e passaggi a voce usando <strong>automazioni</strong> (es. passaggio dati da Excel a gestionale, da form online a CRM);</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-[var(--color-primary)] font-bold mt-1">•</span>
-                  <span>fare in modo che ogni persona abbia <strong>gli strumenti digitali giusti</strong> per il proprio ruolo, senza stravolgere tutto in una volta.</span>
-                </li>
-              </ul>
-              <p className="mb-6">
-                La digitalizzazione non è un progetto a parte, ma il modo in cui rendiamo stabile e scalabile il lavoro fatto su organizzazione, numeri, processi e persone.
-              </p>
-              <div className="text-center mt-8">
-                <CTA href="/digitalizzazione-pmi-ai" variant="primary">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="bg-white/50 p-6 rounded-xl border border-white/60">
+                  <h4 className="font-bold text-[var(--color-primary)] mb-2">Mansionari Digitali</h4>
+                  <p className="text-sm">Check-list e flussi gestibili con strumenti semplici.</p>
+                </div>
+                <div className="bg-white/50 p-6 rounded-xl border border-white/60">
+                  <h4 className="font-bold text-[var(--color-primary)] mb-2">Dashboard KPI</h4>
+                  <p className="text-sm">Riunioni più veloci con dati aggiornati automaticamente.</p>
+                </div>
+                <div className="bg-white/50 p-6 rounded-xl border border-white/60">
+                  <h4 className="font-bold text-[var(--color-primary)] mb-2">Automazioni</h4>
+                  <p className="text-sm">Riduzione errori e lavori ripetitivi.</p>
+                </div>
+                <div className="bg-white/50 p-6 rounded-xl border border-white/60">
+                  <h4 className="font-bold text-[var(--color-primary)] mb-2">Strumenti Giusti</h4>
+                  <p className="text-sm">Ogni ruolo ha il suo tool, senza stravolgimenti.</p>
+                </div>
+              </div>
+              <div className="text-center">
+                <CTA href="/digitalizzazione-pmi-ai" variant="primary" className="shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
                   Scopri di più su Digitalizzazione & AI →
                 </CTA>
               </div>
@@ -221,51 +202,48 @@ export default function MetodoPage() {
         </div>
       </section>
 
-      {/* Cosa ottieni - Summary */}
-      <section className="py-16 bg-[var(--color-card)]">
+      {/* Cosa ottieni */}
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <SectionTitle
-              title="Cosa ottieni"
-              description="Risultati concreti misurabili entro 6 mesi"
-              centered
-            />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-              {[
-                {
-                  title: '90 giorni',
-                  description: 'Ordine organizzativo completo',
-                  icon: '📋',
-                },
-                {
-                  title: '6 mesi',
-                  description: 'Risultati numerici visibili nei KPI',
-                  icon: '📊',
-                },
-                {
-                  title: 'Autonomia',
-                  description: 'Sistema che funziona senza la mia presenza costante',
-                  icon: '🎯',
-                },
-              ].map((item, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-[var(--radius-card)] p-6 text-center border border-[var(--color-line)]"
-                >
-                  <div className="text-4xl mb-4">{item.icon}</div>
-                  <h3 className="font-heading text-xl font-bold text-[var(--color-text)] mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-[var(--color-subtext)]">{item.description}</p>
-                </div>
-              ))}
-            </div>
+          <SectionTitle
+            title="Cosa ottieni"
+            description="Risultati concreti misurabili entro 6 mesi"
+            centered
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 max-w-5xl mx-auto">
+            {[
+              {
+                title: '90 giorni',
+                description: 'Ordine organizzativo completo',
+                icon: '📋',
+              },
+              {
+                title: '6 mesi',
+                description: 'Risultati numerici visibili nei KPI',
+                icon: '📊',
+              },
+              {
+                title: 'Autonomia',
+                description: 'Sistema che funziona senza la mia presenza costante',
+                icon: '🎯',
+              },
+            ].map((item, index) => (
+              <Card
+                key={index}
+                title={item.title}
+                variant="default"
+                className="text-center premium-card-hover h-full"
+              >
+                <div className="text-5xl mb-6">{item.icon}</div>
+                <p className="text-[var(--color-subtext)] text-lg">{item.description}</p>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="py-16 bg-white">
+      <section className="py-20 bg-[var(--color-bg-secondary)]">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-3xl mx-auto">
             <SectionTitle
@@ -273,26 +251,10 @@ export default function MetodoPage() {
               description="Risposte alle domande più comuni sul metodo"
               centered
             />
-            <Accordion items={faqs} className="mt-8" />
+            <Accordion items={faqs} className="mt-8 bg-white rounded-[var(--radius-card)] shadow-sm border border-[var(--color-line)] p-6" />
           </div>
         </div>
       </section>
-
-      {/* CTA Sticky laterale - solo desktop */}
-      <div className="hidden lg:block fixed right-8 bottom-8 z-40">
-        <div className="bg-white rounded-[var(--radius-card)] p-6 shadow-lg border border-[var(--color-line)] max-w-xs">
-          <h3 className="font-heading font-bold text-lg text-[var(--color-text)] mb-3">
-            Pronto a iniziare?
-          </h3>
-          <p className="text-sm text-[var(--color-subtext)] mb-4">
-            Prenota il Check-up gratuito: 60' via Zoom oppure 90' in presenza (Venezia-Padova-Rovigo)
-          </p>
-          <CTA href="/contatti" variant="primary" size="base" className="w-full">
-            Prenota ora →
-          </CTA>
-        </div>
-      </div>
     </>
   );
 }
-

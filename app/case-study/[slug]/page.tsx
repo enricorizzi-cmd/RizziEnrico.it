@@ -1,9 +1,12 @@
+'use client';
+
 import { notFound } from 'next/navigation';
 import { generateMetadata as generateSEOMetadata } from '@/lib/seo';
 import SectionTitle from '@/components/SectionTitle';
 import Testimonial from '@/components/Testimonial';
 import CTA from '@/components/CTA';
 import ClientKPIChart from '@/components/ClientKPIChart';
+import Link from 'next/link';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -36,7 +39,7 @@ const cases = {
     results: [
       '+42% fatturato in 6 mesi',
       '-25% tempi di consegna medi',
-      'Riunioni mensili basate su KPI (prima: riunioni caotiche)',
+      'Riunioni mensili basate su KPI',
       'Riduzione conflitti tra reparti del 60%',
     ],
     testimonial: {
@@ -70,7 +73,7 @@ const cases = {
       }],
     },
     results: [
-      'Transizione completata senza interruzioni operative',
+      'Transizione completata senza interruzioni',
       '-75% turnover in 6 mesi',
       'Team allineato al nuovo management',
       'Processi documentati e replicabili',
@@ -107,9 +110,9 @@ const cases = {
     },
     results: [
       '+35% fatturato in 12 mesi',
-      'Lead tracking funzionante (prima: zero)',
+      'Lead tracking funzionante',
       'Conversion rate migliorato del 40%',
-      'Marketing ROI misurabile e positivo',
+      'Marketing ROI misurabile',
     ],
     testimonial: {
       quote: 'Prima vendevamo "a caso". Ora abbiamo una pipeline chiara, obiettivi misurabili, marketing che funziona. Il team è più motivato e i risultati si vedono.',
@@ -142,8 +145,8 @@ const cases = {
       }],
     },
     results: [
-      'Processo stabile e prevedibile (prima: urgenze continue)',
-      '+28% puntualità consegne in 6 mesi',
+      'Processo stabile e prevedibile',
+      '+28% puntualità consegne',
       'Riduzione "fuoco da spegnere" del 70%',
       'Riunioni efficaci: da 2 ore a 45 minuti',
     ],
@@ -180,7 +183,7 @@ const cases = {
     results: [
       'Pianificazione stabile (prima: reattiva)',
       '-45% scarti in 6 mesi',
-      'Decisioni basate su numeri (prima: "sensazione")',
+      'Decisioni basate su numeri',
       'Efficienza linee monitorata e migliorata',
     ],
     testimonial: {
@@ -292,106 +295,122 @@ export default async function CaseDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="py-16 bg-white min-h-screen">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="mb-12">
-            <div className="flex gap-3 mb-4">
-              <span className="px-3 py-1 bg-[var(--color-primary)]/10 text-[var(--color-primary)] rounded text-sm font-medium">
+    <div className="bg-white min-h-screen">
+      {/* Header Premium */}
+      <div className="bg-[var(--color-bg-secondary)] py-20 border-b border-[var(--color-line)]/50">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <Link href="/case-study" className="text-[var(--color-primary)] font-semibold hover:underline mb-6 inline-block">
+              ← Torna ai Case Study
+            </Link>
+            <div className="flex gap-3 mb-6">
+              <span className="px-3 py-1 bg-[var(--color-primary)] text-white rounded-full text-sm font-bold uppercase tracking-wide shadow-sm">
                 {caseItem.sector}
               </span>
-              <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded text-sm">
+              <span className="px-3 py-1 bg-white text-[var(--color-text)] border border-[var(--color-line)] rounded-full text-sm font-medium">
                 {caseItem.size}
               </span>
             </div>
-            <h1 className="font-heading text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-4">
+            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--color-text)] mb-6 leading-tight">
               {caseItem.title}
             </h1>
-          </div>
-
-          {/* Contesto */}
-          <section className="mb-12">
-            <h2 className="font-heading text-2xl font-bold text-[var(--color-text)] mb-4">
-              Contesto
-            </h2>
-            <p className="text-lg text-[var(--color-subtext)] leading-relaxed whitespace-pre-line">
+            <p className="text-xl text-[var(--color-subtext)] leading-relaxed max-w-3xl">
               {caseItem.context}
             </p>
-          </section>
+          </div>
+        </div>
+      </div>
 
-          {/* Problema */}
-          <section className="mb-12 bg-red-50 border-l-4 border-red-500 p-6 rounded-lg">
-            <h2 className="font-heading text-2xl font-bold text-red-900 mb-4">
-              Il Problema
-            </h2>
-            <p className="text-red-800 leading-relaxed whitespace-pre-line">
-              {caseItem.problem}
-            </p>
-          </section>
+      <div className="container mx-auto px-4 lg:px-8 py-16">
+        <div className="max-w-4xl mx-auto">
 
-          {/* Intervento */}
-          <section className="mb-12 bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg">
-            <h2 className="font-heading text-2xl font-bold text-blue-900 mb-4">
-              L'Intervento
-            </h2>
-            <p className="text-blue-800 leading-relaxed whitespace-pre-line">
-              {caseItem.intervention}
-            </p>
-          </section>
+          {/* Grid Problema/Soluzione */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <div className="bg-red-50/50 rounded-[2rem] p-8 border border-red-100">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-xl">⚠️</div>
+                <h2 className="font-heading text-2xl font-bold text-red-900">
+                  Il Problema
+                </h2>
+              </div>
+              <p className="text-red-900/80 leading-relaxed whitespace-pre-line text-lg">
+                {caseItem.problem}
+              </p>
+            </div>
+
+            <div className="bg-blue-50/50 rounded-[2rem] p-8 border border-blue-100">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-xl">🛠️</div>
+                <h2 className="font-heading text-2xl font-bold text-blue-900">
+                  L'Intervento
+                </h2>
+              </div>
+              <p className="text-blue-900/80 leading-relaxed whitespace-pre-line text-lg">
+                {caseItem.intervention}
+              </p>
+            </div>
+          </div>
 
           {/* KPI Prima/Dopo */}
-          <section className="mb-12">
-            <SectionTitle title="KPI: Prima vs Dopo" centered />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="font-semibold text-red-700 mb-4">Prima</h3>
+          <section className="mb-20">
+            <SectionTitle title="I Numeri Parlano" description="Risultati misurabili ottenuti grazie al metodo." centered />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+              <div className="bg-white p-6 rounded-2xl border border-[var(--color-line)] shadow-sm">
+                <h3 className="font-bold text-red-600 mb-4 text-center uppercase tracking-wide text-sm">Prima dell'intervento</h3>
                 <ClientKPIChart data={caseItem.kpiBefore} />
               </div>
-              <div>
-                <h3 className="font-semibold text-green-700 mb-4">Dopo</h3>
+              <div className="bg-white p-6 rounded-2xl border border-[var(--color-line)] shadow-sm ring-2 ring-green-500/20">
+                <h3 className="font-bold text-green-600 mb-4 text-center uppercase tracking-wide text-sm">Dopo l'intervento</h3>
                 <ClientKPIChart data={caseItem.kpiAfter} />
               </div>
             </div>
           </section>
 
-          {/* Risultati */}
-          <section className="mb-12 bg-green-50 border-l-4 border-green-500 p-6 rounded-lg">
-            <h2 className="font-heading text-2xl font-bold text-green-900 mb-4">
-              Risultati Ottenuti
+          {/* Risultati - Bento Style */}
+          <section className="mb-20">
+            <h2 className="font-heading text-3xl font-bold text-[var(--color-text)] mb-8 text-center">
+              Risultati Concreti
             </h2>
-            <ul className="space-y-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {caseItem.results.map((result, index) => (
-                <li key={index} className="flex items-start gap-2 text-green-800">
-                  <svg className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span className="font-semibold">{result}</span>
-                </li>
+                <div key={index} className="flex items-center gap-4 bg-[var(--color-bg-secondary)] p-6 rounded-xl border border-[var(--color-line)]/50">
+                  <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <span className="font-bold text-[var(--color-text)] text-lg">{result}</span>
+                </div>
               ))}
-            </ul>
+            </div>
           </section>
 
           {/* Testimonianza */}
-          <section className="mb-12">
+          <section className="mb-20">
             <Testimonial {...caseItem.testimonial} />
           </section>
 
           {/* CTA */}
-          <section className="bg-[var(--color-primary)] text-white rounded-[var(--radius-card)] p-8 text-center">
-            <h2 className="font-heading text-2xl font-bold mb-4">
-              Vuoi risultati simili?
-            </h2>
-            <p className="mb-6 opacity-90">
-              Prenota una diagnosi gratuita e scopri come possiamo applicare il metodo alla tua PMI.
-            </p>
-            <CTA href="/contatti" variant="secondary" size="large" className="bg-white text-[var(--color-primary)] hover:bg-gray-100">
-              Prenota diagnosi 30' →
-            </CTA>
+          <section className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] text-white rounded-[2rem] p-12 text-center shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-20 pointer-events-none">
+              <div className="absolute -top-24 -left-24 w-96 h-96 bg-white rounded-full blur-3xl mix-blend-overlay"></div>
+              <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-white rounded-full blur-3xl mix-blend-overlay"></div>
+            </div>
+
+            <div className="relative z-10">
+              <h2 className="font-heading text-3xl font-bold mb-4">
+                Vuoi ottenere risultati simili?
+              </h2>
+              <p className="mb-8 opacity-90 text-lg max-w-2xl mx-auto">
+                Ogni azienda è diversa, ma il metodo è universale. Prenota una diagnosi gratuita e scopri come applicarlo alla tua realtà.
+              </p>
+              <CTA href="/contatti" variant="secondary" size="large" className="bg-white text-[var(--color-primary)] hover:bg-gray-100 border-none shadow-lg hover:shadow-xl hover:-translate-y-1">
+                Prenota diagnosi 30' →
+              </CTA>
+            </div>
           </section>
         </div>
       </div>
     </div>
   );
 }
-
