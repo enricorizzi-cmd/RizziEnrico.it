@@ -23,7 +23,7 @@ export default function Card({
   className = '',
   variant = 'default',
 }: CardProps) {
-  const baseClasses = 'bg-[var(--color-card)] rounded-[var(--radius-card)] overflow-hidden transition-all hover:shadow-md border border-[var(--color-line)]';
+  const baseClasses = 'bg-white/90 backdrop-blur-sm rounded-[var(--radius-card)] overflow-hidden transition-all duration-300 hover:shadow-xl border border-[var(--color-line)] hover:border-[var(--color-primary)]/20 hover:-translate-y-1';
 
   const content = (
     <>

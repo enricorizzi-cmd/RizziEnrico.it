@@ -26,12 +26,12 @@ export default function CTA({
     });
   };
 
-  const baseClasses = 'inline-flex items-center justify-center font-semibold rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-offset-2';
-  
+  const baseClasses = 'inline-flex items-center justify-center font-semibold rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95';
+
   const variantClasses = {
-    primary: 'bg-[var(--color-primary)] text-white hover:opacity-90 focus:ring-[var(--color-primary)]',
-    secondary: 'bg-transparent border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white focus:ring-[var(--color-primary)]',
-    link: 'text-[var(--color-primary)] hover:underline',
+    primary: 'bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-[var(--color-primary)]',
+    secondary: 'bg-white border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white shadow-sm hover:shadow-md hover:-translate-y-0.5 focus:ring-[var(--color-primary)]',
+    link: 'text-[var(--color-primary)] hover:underline hover:text-[var(--color-primary-dark)]',
   };
 
   const sizeClasses = {

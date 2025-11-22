@@ -17,7 +17,7 @@ export default function SectionTitle({
         {title}
       </h2>
       {description && (
-        <p className="text-lg text-[var(--color-subtext)] max-w-3xl">
+        <p className={`text-lg text-[var(--color-subtext)] max-w-3xl ${centered ? 'mx-auto' : ''}`}>
           {description}
         </p>
       )}
