@@ -1156,10 +1156,10 @@ export default function TestMaturitaDigitalePage() {
               width={150}
               height={45}
               className="object-contain opacity-80 hover:opacity-100 transition-opacity"
-              loading="eager"
+              loading="lazy"
               quality={90}
               sizes="150px"
-              priority
+              style={{ width: 'auto', height: 'auto' }}
             />
           </div>
 

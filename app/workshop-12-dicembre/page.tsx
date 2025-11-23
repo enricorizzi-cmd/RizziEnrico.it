@@ -13,6 +13,7 @@ export default function WorkshopPage() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef<HTMLDivElement>(null);
+  const successRef = useRef<HTMLDivElement>(null);
 
   const {
     register,
@@ -38,6 +39,20 @@ export default function WorkshopPage() {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  // Scroll automatico al riquadro di successo quando appare
+  useEffect(() => {
+    if (submitSuccess && successRef.current) {
+      // Piccolo delay per permettere il rendering
+      setTimeout(() => {
+        successRef.current?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start',
+          inline: 'nearest'
+        });
+      }, 100);
+    }
+  }, [submitSuccess]);
 
   // Scroll animations
   useEffect(() => {
@@ -79,11 +94,6 @@ export default function WorkshopPage() {
 
       setSubmitSuccess(true);
       reset();
-
-      // Scroll to success message
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 100);
     } catch (error: any) {
       setSubmitError(error.message || 'Errore durante la registrazione. Riprova.');
     } finally {
@@ -151,9 +161,10 @@ export default function WorkshopPage() {
               width={120}
               height={36}
               className="object-contain opacity-80 hover:opacity-100 transition-opacity"
-              loading="eager"
+              loading="lazy"
               quality={90}
               sizes="120px"
+              style={{ width: 'auto', height: 'auto' }}
             />
           </div>
 
@@ -165,14 +176,14 @@ export default function WorkshopPage() {
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 font-heading animate-fade-in-up">
-              AI in Azienda:
+              Più Tempo, Più organizzazione,
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-[length:200%_auto] animate-gradient-text">
-                Più Tempo, Più Clienti, Meno Sprechi
+                meno stress: AI in Azienda
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-6 max-w-3xl mx-auto animate-fade-in-up animation-delay-200">
-              Metti l'AI a lavorare per te: elimina il lavoro ripetitivo, acquisisci nuovi clienti con processi e flussi automatici, e migliora l'organizzazione in azienda.
+              Metti l'AI a lavorare per te e la tua azienda: un esercito di assistenti digitali che elimina il lavoro ripetitivo, mette ordine in azienda e fa sentire tutta la squadra finalmente più serena.
             </p>
             <ul className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto text-left space-y-3 animate-fade-in-up animation-delay-250">
               <li className="flex items-start gap-3">
@@ -181,7 +192,7 @@ export default function WorkshopPage() {
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-purple-600 font-bold mt-1">✓</span>
-                <span>Acquisisci nuovi clienti con AI applicata a marketing e vendite</span>
+                <span>Metti ordine in procedure, mail, riunioni e documenti</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-purple-600 font-bold mt-1">✓</span>
@@ -221,7 +232,7 @@ export default function WorkshopPage() {
 
       {/* Success Message */}
       {submitSuccess && (
-        <div className="container mx-auto px-4 mb-8 animate-fade-in-down">
+        <div ref={successRef} className="container mx-auto px-4 mb-8 animate-fade-in-down scroll-mt-24">
           <div className="max-w-2xl mx-auto bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-300 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-green-200 rounded-full -mr-16 -mt-16 opacity-20"></div>
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-emerald-200 rounded-full -ml-12 -mb-12 opacity-20"></div>
@@ -733,7 +744,7 @@ export default function WorkshopPage() {
 
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Qual è oggi il principale problema che senti sulla digitalizzazione/marketing nella tua azienda? *
+                    Qual è oggi il principale problema che senti sulla digitalizzazione nella tua azienda? *
                   </label>
                   <textarea
                     {...register('problema')}

@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
     // Ridotte dimensioni per risparmiare memoria
     deviceSizes: [640, 750, 828, 1080, 1200],
     imageSizes: [16, 32, 48, 64, 96, 128],
+    qualities: [75, 90], // Aggiunta qualità 90 per le immagini che la richiedono
     minimumCacheTTL: 31536000, // 1 anno per immagini statiche
     // Permetti immagini locali non ottimizzate se necessario
     unoptimized: false,

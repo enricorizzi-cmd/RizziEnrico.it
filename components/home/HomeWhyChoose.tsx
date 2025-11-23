@@ -72,9 +72,9 @@ export default function HomeWhyChoose() {
                 <div className="text-4xl mb-4">{point.icon}</div>
                 <p className="text-sm leading-relaxed opacity-80">{point.description}</p>
                 <p className="text-sm mt-4">
-                  <Link href="/chi-sono" className="text-[var(--color-primary)] hover:underline font-semibold" title="Scopri chi è Enrico Rizzi e la sua esperienza con PMI venete">
+                  <span className="text-[var(--color-primary)] font-semibold" title="Scopri chi è Enrico Rizzi e la sua esperienza con PMI venete">
                     Scopri di più su Enrico Rizzi →
-                  </Link>
+                  </span>
                 </p>
               </Card>
             ))}
