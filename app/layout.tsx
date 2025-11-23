@@ -45,11 +45,13 @@ export const metadata: Metadata = {
   manifest: '/manifest.webmanifest',
 };
 
+import ScrollProgress from '@/components/ui/ScrollProgress';
+
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="it">
       <head>

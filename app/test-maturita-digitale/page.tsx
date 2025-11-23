@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import { testMaturitaFormSchema, testMaturitaSchema, type TestMaturitaFormInput, type TestMaturitaInput } from '@/lib/validators';
+import MagneticButton from '@/components/ui/MagneticButton';
 
 interface Question {
   id: string;
@@ -19,34 +20,34 @@ const questions: Question[] = [
   { id: 'q1', categoria: 'Raccolta Dati & CRM', domanda: 'Hai un posto unico dove finiscono tutti i nominativi dei contatti (lead, clienti, fornitori)?', tipo: 'si_no', peso: 3 },
   { id: 'q2', categoria: 'Raccolta Dati & CRM', domanda: 'Sai sempre chi ti ha contattato, quando e da dove?', tipo: 'si_no', peso: 2 },
   { id: 'q3', categoria: 'Raccolta Dati & CRM', domanda: 'Hai un sistema per classificare i lead in base alla loro qualità?', tipo: 'si_no', peso: 2 },
-  
+
   // Automazioni base
   { id: 'q4', categoria: 'Automazioni Base', domanda: 'Hai almeno 1 automazione che parte quando qualcuno compila un form sul tuo sito?', tipo: 'si_no', peso: 3 },
   { id: 'q5', categoria: 'Automazioni Base', domanda: 'Hai email automatiche di benvenuto per nuovi clienti?', tipo: 'si_no', peso: 2 },
   { id: 'q6', categoria: 'Automazioni Base', domanda: 'Hai reminder automatici per follow-up con i lead?', tipo: 'si_no', peso: 2 },
-  
+
   // Presenza online
   { id: 'q7', categoria: 'Presenza Online', domanda: 'Il tuo sito web è ottimizzato per mobile?', tipo: 'si_no', peso: 2 },
   { id: 'q8', categoria: 'Presenza Online', domanda: 'Hai un Google Business Profile aggiornato con recensioni?', tipo: 'si_no', peso: 2 },
   { id: 'q9', categoria: 'Presenza Online', domanda: 'Hai almeno 1 landing page dedicata per campagne specifiche?', tipo: 'si_no', peso: 2 },
-  
+
   // KPI & Dashboard
   { id: 'q10', categoria: 'KPI & Dashboard', domanda: 'Monitori almeno 3 KPI digitali (lead, conversioni, traffico)?', tipo: 'si_no', peso: 3 },
   { id: 'q11', categoria: 'KPI & Dashboard', domanda: 'Hai una dashboard dove vedi i numeri principali in tempo reale?', tipo: 'si_no', peso: 2 },
   { id: 'q12', categoria: 'KPI & Dashboard', domanda: 'Sai da dove arrivano i tuoi migliori clienti?', tipo: 'si_no', peso: 2 },
-  
+
   // Uso dell'IA (Marketing)
   { id: 'q13', categoria: 'Uso dell\'IA', domanda: 'Usi l\'AI per generare contenuti (post, email, copy)?', tipo: 'si_no', peso: 2 },
   { id: 'q14', categoria: 'Uso dell\'IA', domanda: 'Hai provato almeno 1 tool AI per analizzare dati aziendali?', tipo: 'si_no', peso: 2 },
   { id: 'q15', categoria: 'Uso dell\'IA', domanda: 'Hai template AI pronti per le attività ripetitive?', tipo: 'si_no', peso: 2 },
-  
+
   // Digitalizzazione Aziendale
   { id: 'q16', categoria: 'Digitalizzazione Aziendale', domanda: 'Hai digitalizzato almeno il 50% dei processi amministrativi (fatturazione, ordini, preventivi)?', tipo: 'si_no', peso: 3 },
   { id: 'q17', categoria: 'Digitalizzazione Aziendale', domanda: 'I tuoi dipendenti possono accedere a documenti e informazioni aziendali da remoto?', tipo: 'si_no', peso: 2 },
   { id: 'q18', categoria: 'Digitalizzazione Aziendale', domanda: 'Hai un sistema di gestione documentale digitale (archiviazione, ricerca, condivisione)?', tipo: 'si_no', peso: 3 },
   { id: 'q19', categoria: 'Digitalizzazione Aziendale', domanda: 'I processi di approvazione (ordini, spese, ferie) sono digitalizzati?', tipo: 'si_no', peso: 2 },
   { id: 'q20', categoria: 'Digitalizzazione Aziendale', domanda: 'Hai integrato i sistemi aziendali (ERP, CRM, contabilità) per evitare doppia digitazione?', tipo: 'si_no', peso: 3 },
-  
+
   // AI nei Processi Operativi
   { id: 'q21', categoria: 'AI nei Processi Operativi', domanda: 'Usi l\'AI per automatizzare analisi di dati operativi (produzione, scorte, qualità)?', tipo: 'si_no', peso: 3 },
   { id: 'q22', categoria: 'AI nei Processi Operativi', domanda: 'Hai implementato AI per ottimizzare processi produttivi o logistici?', tipo: 'si_no', peso: 3 },
@@ -119,7 +120,7 @@ export default function TestMaturitaDigitalePage() {
     questions.forEach((q) => {
       const answer = answers[q.id];
       const category = q.categoria;
-      
+
       if (!scoresPerCategory[category]) {
         scoresPerCategory[category] = 0;
       }
@@ -133,7 +134,7 @@ export default function TestMaturitaDigitalePage() {
     });
 
     const percentage = (totalScore / maxScore) * 100;
-    
+
     let livello = 'Iniziale';
     if (percentage >= 80) livello = 'Eccellente';
     else if (percentage >= 60) livello = 'Avanzato';
@@ -141,13 +142,13 @@ export default function TestMaturitaDigitalePage() {
     else if (percentage >= 20) livello = 'Base';
 
     const raccomandazioni: string[] = [];
-    
+
     Object.entries(scoresPerCategory).forEach(([category, score]) => {
       const categoryMax = questions
         .filter((q) => q.categoria === category)
         .reduce((sum, q) => sum + q.peso, 0);
       const categoryPercentage = (score / categoryMax) * 100;
-      
+
       if (categoryPercentage < 50) {
         raccomandazioni.push(`Migliora ${category}: hai completato solo il ${categoryPercentage.toFixed(0)}% delle attività`);
       }
@@ -224,7 +225,7 @@ export default function TestMaturitaDigitalePage() {
               priority
             />
           </div>
-          
+
           <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12">
             <h1 className="text-4xl font-bold mb-6 text-center font-heading">
               Test di Maturità Digitale
@@ -282,12 +283,14 @@ export default function TestMaturitaDigitalePage() {
                 />
               </div>
 
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all"
-              >
-                Inizia il Test
-              </button>
+              <MagneticButton className="w-full">
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all"
+                >
+                  Inizia il Test
+                </button>
+              </MagneticButton>
             </form>
           </div>
         </div>
@@ -326,13 +329,12 @@ export default function TestMaturitaDigitalePage() {
               {currentPageQuestions.map((question, index) => (
                 <div
                   key={question.id}
-                  className={`bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-l-4 ${
-                    answers[question.id] === true
-                      ? 'border-l-green-500 bg-green-50/20'
-                      : answers[question.id] === false
+                  className={`bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-l-4 ${answers[question.id] === true
+                    ? 'border-l-green-500 bg-green-50/20'
+                    : answers[question.id] === false
                       ? 'border-l-red-500 bg-red-50/20'
                       : 'border-l-purple-500'
-                  }`}
+                    }`}
                 >
                   <div className="p-4">
                     {/* Question Number & Category */}
@@ -342,21 +344,20 @@ export default function TestMaturitaDigitalePage() {
                       </span>
                       <span className="text-xs text-gray-500 font-medium">{question.categoria}</span>
                     </div>
-                    
+
                     {/* Question Text */}
                     <h3 className="text-sm font-semibold text-gray-800 mb-3 leading-snug">
                       {question.domanda}
                     </h3>
-                    
+
                     {/* Answer Buttons */}
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleAnswer(question.id, true)}
-                        className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 transform hover:scale-[1.02] ${
-                          answers[question.id] === true
-                            ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-md'
-                            : 'bg-gray-50 hover:bg-green-50 text-gray-700 border border-gray-200 hover:border-green-300'
-                        }`}
+                        className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 transform hover:scale-[1.02] ${answers[question.id] === true
+                          ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-md'
+                          : 'bg-gray-50 hover:bg-green-50 text-gray-700 border border-gray-200 hover:border-green-300'
+                          }`}
                       >
                         <span className="flex items-center justify-center gap-1.5">
                           <span className="text-base">✓</span>
@@ -365,11 +366,10 @@ export default function TestMaturitaDigitalePage() {
                       </button>
                       <button
                         onClick={() => handleAnswer(question.id, false)}
-                        className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 transform hover:scale-[1.02] ${
-                          answers[question.id] === false
-                            ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-md'
-                            : 'bg-gray-50 hover:bg-red-50 text-gray-700 border border-gray-200 hover:border-red-300'
-                        }`}
+                        className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 transform hover:scale-[1.02] ${answers[question.id] === false
+                          ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-md'
+                          : 'bg-gray-50 hover:bg-red-50 text-gray-700 border border-gray-200 hover:border-red-300'
+                          }`}
                       >
                         <span className="flex items-center justify-center gap-1.5">
                           <span className="text-base">✗</span>
@@ -387,24 +387,22 @@ export default function TestMaturitaDigitalePage() {
               <button
                 onClick={goToPreviousPage}
                 disabled={isFirstPage}
-                className={`px-5 py-2.5 rounded-lg font-medium transition-all duration-200 ${
-                  isFirstPage
-                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:shadow-md transform hover:scale-[1.02]'
-                }`}
+                className={`px-5 py-2.5 rounded-lg font-medium transition-all duration-200 ${isFirstPage
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:shadow-md transform hover:scale-[1.02]'
+                  }`}
               >
                 ← Indietro
               </button>
-              
+
               {isLastPage ? (
                 <button
                   onClick={submitTest}
                   disabled={isSubmitting || !allQuestionsAnswered}
-                  className={`px-6 py-2.5 rounded-lg font-semibold transition-all duration-200 ${
-                    isSubmitting || !allQuestionsAnswered
-                      ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 shadow-md hover:shadow-lg transform hover:scale-[1.02]'
-                  }`}
+                  className={`px-6 py-2.5 rounded-lg font-semibold transition-all duration-200 ${isSubmitting || !allQuestionsAnswered
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 shadow-md hover:shadow-lg transform hover:scale-[1.02]'
+                    }`}
                 >
                   {isSubmitting ? (
                     <span className="flex items-center gap-2">
@@ -419,11 +417,10 @@ export default function TestMaturitaDigitalePage() {
                 <button
                   onClick={goToNextPage}
                   disabled={!allCurrentPageQuestionsAnswered}
-                  className={`px-6 py-2.5 rounded-lg font-semibold transition-all duration-200 ${
-                    !allCurrentPageQuestionsAnswered
-                      ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 shadow-md hover:shadow-lg transform hover:scale-[1.02]'
-                  }`}
+                  className={`px-6 py-2.5 rounded-lg font-semibold transition-all duration-200 ${!allCurrentPageQuestionsAnswered
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 shadow-md hover:shadow-lg transform hover:scale-[1.02]'
+                    }`}
                 >
                   Successivo →
                 </button>
@@ -466,7 +463,7 @@ export default function TestMaturitaDigitalePage() {
                     .filter((q) => q.categoria === category)
                     .reduce((sum, q) => sum + q.peso, 0);
                   const percentage = (score / categoryMax) * 100;
-                  
+
                   return (
                     <div key={category}>
                       <div className="flex justify-between mb-2">
@@ -477,13 +474,12 @@ export default function TestMaturitaDigitalePage() {
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-2">
                         <div
-                          className={`h-2 rounded-full transition-all ${
-                            percentage >= 70
-                              ? 'bg-green-500'
-                              : percentage >= 40
+                          className={`h-2 rounded-full transition-all ${percentage >= 70
+                            ? 'bg-green-500'
+                            : percentage >= 40
                               ? 'bg-yellow-500'
                               : 'bg-red-500'
-                          }`}
+                            }`}
                           style={{ width: `${percentage}%` }}
                         ></div>
                       </div>
@@ -516,12 +512,14 @@ export default function TestMaturitaDigitalePage() {
               <p className="mb-6">
                 Prenota un Check-up Digitale Gratuito e scopri come possiamo aiutarti
               </p>
-              <a
-                href={process.env.NEXT_PUBLIC_CALENDLY_CHECKUP_URL || 'https://calendly.com/enricorizzi/check-up-gratuito-in-azienda'}
-                className="inline-block bg-white text-purple-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-all"
-              >
-                Prenota Check-up Gratuito
-              </a>
+              <MagneticButton>
+                <a
+                  href={process.env.NEXT_PUBLIC_CALENDLY_CHECKUP_URL || 'https://calendly.com/enricorizzi/check-up-gratuito-in-azienda'}
+                  className="inline-block bg-white text-purple-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-all"
+                >
+                  Prenota Check-up Gratuito
+                </a>
+              </MagneticButton>
             </div>
           </div>
         </div>

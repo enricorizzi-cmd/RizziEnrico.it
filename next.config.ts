@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   // CRITICO: Standalone output riduce drasticamente l'uso di memoria
   output: 'standalone',
-  
+
   images: {
     formats: ['image/avif', 'image/webp'],
     // Ridotte dimensioni per risparmiare memoria
@@ -23,12 +23,12 @@ const nextConfig: NextConfig = {
   compress: true, // Abilita compressione gzip
   poweredByHeader: false, // Rimuove header X-Powered-By per sicurezza
   reactStrictMode: true,
-  
+
   // Nota: swcMinify è rimosso in Next.js 16 - SWC è ora il default
-  
+
   // Limita memoria per server components
   serverExternalPackages: ['sharp', 'canvas'],
-  
+
   experimental: {
     optimizePackageImports: ['react-chartjs-2', 'chart.js', '@supabase/supabase-js', 'date-fns', 'react-markdown'],
     // Ottimizzazioni memoria
@@ -38,7 +38,7 @@ const nextConfig: NextConfig = {
     // Ottimizza bundle size riducendo JavaScript inutilizzato
     optimizeCss: true,
   },
-  
+
   // Configurazione compilatore per evitare transpilazione JavaScript legacy
   compiler: {
     // Rimuove console.log in produzione (opzionale, migliora performance)
@@ -46,11 +46,11 @@ const nextConfig: NextConfig = {
       exclude: ['error', 'warn'],
     } : false,
   },
-  
+
   // Target moderno per evitare polyfill non necessari
   // Next.js 16 usa automaticamente target moderno, ma possiamo essere espliciti
   // Nota: Questo è gestito automaticamente da Next.js 16, ma lo documentiamo
-  
+
   // Ottimizzazioni aggiuntive per ridurre memoria
   onDemandEntries: {
     maxInactiveAge: 25 * 1000, // Ridotto da default 60s a 25s

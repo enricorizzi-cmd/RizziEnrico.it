@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import { workshopRegistrationSchema, type WorkshopRegistrationInput } from '@/lib/validators';
+import MagneticButton from '@/components/ui/MagneticButton';
 
 export default function WorkshopPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -78,7 +79,7 @@ export default function WorkshopPage() {
 
       setSubmitSuccess(true);
       reset();
-      
+
       // Scroll to success message
       setTimeout(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -94,7 +95,7 @@ export default function WorkshopPage() {
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div 
+        <div
           className="absolute w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"
           style={{
             top: `${mousePosition.y * 0.5}%`,
@@ -102,7 +103,7 @@ export default function WorkshopPage() {
             animationDelay: '0s',
           }}
         ></div>
-        <div 
+        <div
           className="absolute w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"
           style={{
             top: `${100 - mousePosition.y * 0.5}%`,
@@ -110,7 +111,7 @@ export default function WorkshopPage() {
             animationDelay: '2s',
           }}
         ></div>
-        <div 
+        <div
           className="absolute w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"
           style={{
             bottom: `${mousePosition.y * 0.3}%`,
@@ -124,7 +125,7 @@ export default function WorkshopPage() {
       <section ref={heroRef} className="relative overflow-hidden pt-24 pb-16 lg:pt-32 lg:pb-24 z-10">
         {/* Gradient Overlay with Animation */}
         <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-blue-600/10 to-purple-600/10 animate-gradient-shift"></div>
-        
+
         {/* Floating Particles */}
         <div className="absolute inset-0 overflow-hidden">
           {[...Array(20)].map((_, i) => (
@@ -155,7 +156,7 @@ export default function WorkshopPage() {
               sizes="120px"
             />
           </div>
-          
+
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-block mb-6 animate-fade-in-down">
               <span className="px-6 py-3 bg-white/80 backdrop-blur-sm text-purple-700 rounded-full text-sm font-semibold shadow-lg border border-purple-200/50 hover:scale-105 transition-transform duration-300 inline-flex items-center gap-2">
@@ -174,12 +175,14 @@ export default function WorkshopPage() {
               Da imprenditori per imprenditori. Scopri come trasformare il caos digitale in processi automatici che funzionano davvero.
             </p>
             <div className="mb-8 animate-fade-in-up animation-delay-300">
-              <a
-                href="#registrazione"
-                className="inline-block bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 px-8 rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
-              >
-                Iscriviti Ora →
-              </a>
+              <MagneticButton>
+                <a
+                  href="#registrazione"
+                  className="inline-block bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 px-8 rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                >
+                  Iscriviti Ora →
+                </a>
+              </MagneticButton>
             </div>
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in-up animation-delay-400">
               <div className="group text-center sm:text-left bg-white/60 backdrop-blur-sm px-6 py-4 rounded-2xl shadow-lg border border-purple-200/50 hover:scale-105 hover:shadow-xl transition-all duration-300">
@@ -215,8 +218,8 @@ export default function WorkshopPage() {
                 </p>
                 <div className="mt-4 p-4 bg-white/60 backdrop-blur-sm rounded-xl border border-green-200">
                   <p className="text-green-800 font-semibold mb-2">🎯 Prossimo passo:</p>
-                  <a 
-                    href="/test-maturita-digitale" 
+                  <a
+                    href="/test-maturita-digitale"
                     className="inline-flex items-center gap-2 text-green-700 hover:text-green-800 font-semibold underline hover:gap-3 transition-all duration-300"
                   >
                     Compila il Test di Maturità Digitale
@@ -284,26 +287,26 @@ export default function WorkshopPage() {
                   gradient: 'from-pink-500 to-pink-600',
                 },
               ].map((item, idx) => (
-                <div 
-                  key={idx} 
+                <div
+                  key={idx}
                   className="group scroll-animate p-8 bg-white rounded-2xl border-2 border-gray-100 hover:border-purple-300 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden"
                   style={{ animationDelay: `${idx * 100}ms` }}
                 >
                   {/* Animated Background Gradient */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
-                  
+
                   {/* Icon with Animation */}
                   <div className="relative z-10 mb-6">
                     <div className="inline-block p-4 bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                       <span className="text-4xl block group-hover:scale-110 transition-transform duration-300">{item.icon}</span>
                     </div>
                   </div>
-                  
+
                   <h3 className="text-xl font-bold mb-3 text-gray-900 relative z-10 group-hover:text-purple-600 transition-colors duration-300">
                     {item.title}
                   </h3>
                   <p className="text-gray-600 relative z-10 leading-relaxed">{item.desc}</p>
-                  
+
                   {/* Decorative Corner */}
                   <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-purple-100 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
@@ -378,7 +381,7 @@ export default function WorkshopPage() {
             </h2>
             <div className="bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-2xl shadow-xl border border-purple-100/50 mb-8 hover:shadow-2xl transition-all duration-500">
               <p className="text-xl text-gray-700 mb-6 max-w-2xl mx-auto leading-relaxed">
-                Questo workshop è condotto da <strong className="text-purple-600">Enrico Rizzi</strong> e <strong className="text-blue-600">Francesco Fusano</strong>, 
+                Questo workshop è condotto da <strong className="text-purple-600">Enrico Rizzi</strong> e <strong className="text-blue-600">Francesco Fusano</strong>,
                 esperti OSM che hanno trasformato decine di PMI venete.
               </p>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -410,7 +413,7 @@ export default function WorkshopPage() {
             backgroundSize: '40px 40px',
           }}></div>
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl mx-auto">
             <div className="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12 border-2 border-white/20 hover:shadow-[0_20px_60px_rgba(0,0,0,0.3)] transition-all duration-500 scroll-animate">
@@ -459,12 +462,12 @@ export default function WorkshopPage() {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Email *
                   </label>
-                    <input
-                      {...register('email')}
-                      type="email"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
-                      placeholder="mario.rossi@azienda.it"
-                    />
+                  <input
+                    {...register('email')}
+                    type="email"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
+                    placeholder="mario.rossi@azienda.it"
+                  />
                   {errors.email && (
                     <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
                   )}
@@ -474,12 +477,12 @@ export default function WorkshopPage() {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Telefono *
                   </label>
-                    <input
-                      {...register('telefono')}
-                      type="tel"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
-                      placeholder="347 123 4567"
-                    />
+                  <input
+                    {...register('telefono')}
+                    type="tel"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
+                    placeholder="347 123 4567"
+                  />
                   {errors.telefono && (
                     <p className="text-red-500 text-sm mt-1">{errors.telefono.message}</p>
                   )}
@@ -489,12 +492,12 @@ export default function WorkshopPage() {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Azienda *
                   </label>
-                    <input
-                      {...register('azienda')}
-                      type="text"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
-                      placeholder="Nome della tua azienda"
-                    />
+                  <input
+                    {...register('azienda')}
+                    type="text"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
+                    placeholder="Nome della tua azienda"
+                  />
                   {errors.azienda && (
                     <p className="text-red-500 text-sm mt-1">{errors.azienda.message}</p>
                   )}
@@ -504,12 +507,12 @@ export default function WorkshopPage() {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Ruolo *
                   </label>
-                    <input
-                      {...register('ruolo')}
-                      type="text"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
-                      placeholder="Titolare, Direttore, Responsabile..."
-                    />
+                  <input
+                    {...register('ruolo')}
+                    type="text"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
+                    placeholder="Titolare, Direttore, Responsabile..."
+                  />
                   {errors.ruolo && (
                     <p className="text-red-500 text-sm mt-1">{errors.ruolo.message}</p>
                   )}
@@ -519,12 +522,12 @@ export default function WorkshopPage() {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Provincia *
                   </label>
-                    <input
-                      {...register('provincia')}
-                      type="text"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
-                      placeholder="Venezia, Padova, Rovigo..."
-                    />
+                  <input
+                    {...register('provincia')}
+                    type="text"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
+                    placeholder="Venezia, Padova, Rovigo..."
+                  />
                   {errors.provincia && (
                     <p className="text-red-500 text-sm mt-1">{errors.provincia.message}</p>
                   )}
@@ -534,10 +537,10 @@ export default function WorkshopPage() {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Come hai saputo del workshop? *
                   </label>
-                    <select
-                      {...register('fonte')}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
-                    >
+                  <select
+                    {...register('fonte')}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
+                  >
                     <option value="BNI">BNI</option>
                     <option value="OSM">OSM</option>
                     <option value="Social">Social Media</option>
@@ -553,43 +556,45 @@ export default function WorkshopPage() {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Qual è oggi il principale problema che senti sulla digitalizzazione/marketing nella tua azienda? *
                   </label>
-                    <textarea
-                      {...register('problema')}
-                      rows={4}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm resize-none"
-                      placeholder="Descrivi brevemente..."
-                    />
-                    {errors.problema && (
-                      <p className="text-red-500 text-sm mt-1">{errors.problema.message}</p>
-                    )}
+                  <textarea
+                    {...register('problema')}
+                    rows={4}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm resize-none"
+                    placeholder="Descrivi brevemente..."
+                  />
+                  {errors.problema && (
+                    <p className="text-red-500 text-sm mt-1">{errors.problema.message}</p>
+                  )}
                 </div>
 
                 <input type="hidden" {...register('evento')} />
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="group relative w-full bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-[length:200%_auto] text-white font-bold py-5 px-8 rounded-xl hover:shadow-2xl transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed text-lg overflow-hidden hover:scale-[1.02] animate-gradient-shift"
-                >
-                  <span className="relative z-10 flex items-center justify-center gap-2">
-                    {isSubmitting ? (
-                      <>
-                        <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Registrazione in corso...
-                      </>
-                    ) : (
-                      <>
-                        <span className="text-2xl group-hover:scale-125 transition-transform duration-300">🎯</span>
-                        Iscriviti Gratis
-                        <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
-                      </>
-                    )}
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-700 via-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                </button>
+                <MagneticButton className="w-full">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="group relative w-full bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-[length:200%_auto] text-white font-bold py-5 px-8 rounded-xl hover:shadow-2xl transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed text-lg overflow-hidden hover:scale-[1.02] animate-gradient-shift"
+                  >
+                    <span className="relative z-10 flex items-center justify-center gap-2">
+                      {isSubmitting ? (
+                        <>
+                          <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Registrazione in corso...
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-2xl group-hover:scale-125 transition-transform duration-300">🎯</span>
+                          Iscriviti Gratis
+                          <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
+                        </>
+                      )}
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-700 via-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  </button>
+                </MagneticButton>
 
                 <p className="text-center text-sm text-gray-500">
                   Cliccando su "Iscriviti Gratis" accetti di ricevere comunicazioni relative al workshop.

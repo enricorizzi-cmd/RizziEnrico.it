@@ -172,26 +172,33 @@ export default function WorkshopAdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen bg-[var(--color-background)] py-8 relative overflow-hidden">
+      {/* Aurora Background */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-purple-400/20 blur-[100px] animate-blob" />
+        <div className="absolute top-[20%] right-[-10%] w-[30%] h-[30%] rounded-full bg-blue-400/20 blur-[100px] animate-blob animation-delay-2000" />
+        <div className="absolute bottom-[-10%] left-[20%] w-[30%] h-[30%] rounded-full bg-indigo-400/20 blur-[100px] animate-blob animation-delay-4000" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div>
-              <h1 className="text-4xl font-bold mb-2 font-heading">
+              <h1 className="text-4xl font-bold mb-2 font-heading text-[var(--color-text)]">
                 Dashboard Workshop 12 Dicembre
               </h1>
-              <p className="text-gray-600">Gestione registrazioni e lead</p>
+              <p className="text-[var(--color-subtext)]">Gestione registrazioni e lead</p>
             </div>
             <div className="flex gap-4">
               <a
                 href="/admin/workshop/analisi-email"
-                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold"
+                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold shadow-lg hover:shadow-purple-500/30"
               >
                 📧 Analisi Email
               </a>
               <a
                 href="/admin/test-maturita/analisi"
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-lg hover:shadow-blue-500/30"
               >
                 📊 Analisi Test
               </a>
@@ -202,23 +209,23 @@ export default function WorkshopAdminDashboard() {
         {/* KPI Cards */}
         {stats && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white p-6 rounded-lg shadow">
-              <div className="text-3xl font-bold text-purple-600">{stats.totale_iscritti}</div>
-              <div className="text-gray-600">Totale Iscritti</div>
+            <div className="glass p-6 rounded-[var(--radius-card)] border border-[var(--color-line)]">
+              <div className="text-3xl font-bold text-purple-600 mb-1">{stats.totale_iscritti}</div>
+              <div className="text-[var(--color-subtext)] text-sm font-medium uppercase tracking-wide">Totale Iscritti</div>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <div className="text-3xl font-bold text-green-600">{stats.presenti}</div>
-              <div className="text-gray-600">Presenti</div>
+            <div className="glass p-6 rounded-[var(--radius-card)] border border-[var(--color-line)]">
+              <div className="text-3xl font-bold text-green-600 mb-1">{stats.presenti}</div>
+              <div className="text-[var(--color-subtext)] text-sm font-medium uppercase tracking-wide">Presenti</div>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <div className="text-3xl font-bold text-blue-600">
+            <div className="glass p-6 rounded-[var(--radius-card)] border border-[var(--color-line)]">
+              <div className="text-3xl font-bold text-blue-600 mb-1">
                 {stats.tasso_presenza.toFixed(1)}%
               </div>
-              <div className="text-gray-600">Tasso Presenza</div>
+              <div className="text-[var(--color-subtext)] text-sm font-medium uppercase tracking-wide">Tasso Presenza</div>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <div className="text-3xl font-bold text-orange-600">{stats.totale_chiamate}</div>
-              <div className="text-gray-600">Totale Chiamate</div>
+            <div className="glass p-6 rounded-[var(--radius-card)] border border-[var(--color-line)]">
+              <div className="text-3xl font-bold text-orange-600 mb-1">{stats.totale_chiamate}</div>
+              <div className="text-[var(--color-subtext)] text-sm font-medium uppercase tracking-wide">Totale Chiamate</div>
             </div>
           </div>
         )}
@@ -228,8 +235,8 @@ export default function WorkshopAdminDashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             {/* Grafico a Torta - Lead per Fonte */}
             {stats.per_fonte && Object.keys(stats.per_fonte).length > 0 && (
-              <div className="bg-white p-6 rounded-lg shadow">
-                <h2 className="text-xl font-bold mb-4">Lead per Fonte</h2>
+              <div className="glass p-6 rounded-[var(--radius-card)] border border-[var(--color-line)]">
+                <h2 className="text-xl font-bold mb-4 font-heading text-[var(--color-text)]">Lead per Fonte</h2>
                 <div className="h-64">
                   <Pie
                     data={{
@@ -262,6 +269,7 @@ export default function WorkshopAdminDashboard() {
                       plugins: {
                         legend: {
                           position: 'bottom',
+                          labels: { color: '#4B5563' }
                         },
                       },
                     }}
@@ -272,12 +280,12 @@ export default function WorkshopAdminDashboard() {
 
             {/* Grafico a Barre - Lead per Stato */}
             {stats.per_stato && Object.keys(stats.per_stato).length > 0 && (
-              <div className="bg-white p-6 rounded-lg shadow">
-                <h2 className="text-xl font-bold mb-4">Lead per Stato</h2>
+              <div className="glass p-6 rounded-[var(--radius-card)] border border-[var(--color-line)]">
+                <h2 className="text-xl font-bold mb-4 font-heading text-[var(--color-text)]">Lead per Stato</h2>
                 <div className="h-64">
                   <Bar
                     data={{
-                      labels: Object.keys(stats.per_stato).map((s) => 
+                      labels: Object.keys(stats.per_stato).map((s) =>
                         s.charAt(0).toUpperCase() + s.slice(1).replace(/_/g, ' ')
                       ),
                       datasets: [
@@ -303,8 +311,20 @@ export default function WorkshopAdminDashboard() {
                           beginAtZero: true,
                           ticks: {
                             stepSize: 1,
+                            color: '#6B7280'
                           },
+                          grid: {
+                            color: 'rgba(0,0,0,0.05)'
+                          }
                         },
+                        x: {
+                          ticks: {
+                            color: '#6B7280'
+                          },
+                          grid: {
+                            display: false
+                          }
+                        }
                       },
                     }}
                   />
@@ -316,19 +336,19 @@ export default function WorkshopAdminDashboard() {
 
         {/* Riquadro Insight AI */}
         <div className="mb-8">
-          <div className="bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 rounded-xl shadow-lg p-6 border border-purple-200">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="bg-gradient-to-br from-purple-600 to-indigo-600 p-3 rounded-lg">
+          <div className="bg-gradient-to-br from-purple-50/90 via-blue-50/90 to-indigo-50/90 backdrop-blur-md rounded-[var(--radius-card)] shadow-lg p-6 border border-purple-200/50">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-4">
+                <div className="bg-gradient-to-br from-purple-600 to-indigo-600 p-3 rounded-xl shadow-lg shadow-purple-500/20">
                   <span className="text-2xl">🤖</span>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-800">Insight AI - Analisi Problemi</h2>
+                  <h2 className="text-2xl font-bold text-gray-800 font-heading">Insight AI - Analisi Problemi</h2>
                   <p className="text-sm text-gray-600">Analisi intelligente dei problemi segnalati dagli iscritti</p>
                 </div>
               </div>
               {loadingInsights && (
-                <div className="text-sm text-gray-500">Analizzando...</div>
+                <div className="text-sm text-purple-600 font-medium animate-pulse">Analizzando...</div>
               )}
             </div>
 
@@ -336,10 +356,12 @@ export default function WorkshopAdminDashboard() {
               <div className="space-y-6">
                 {/* Sintesi */}
                 {insights.sintesi && (
-                  <div className="bg-white rounded-lg p-4 border-l-4 border-purple-600">
-                    <h3 className="font-semibold text-gray-800 mb-2">📋 Sintesi</h3>
-                    <p className="text-gray-700">{insights.sintesi}</p>
-                    <div className="mt-2 text-sm text-gray-500">
+                  <div className="bg-white/80 backdrop-blur-sm rounded-lg p-5 border-l-4 border-purple-600 shadow-sm">
+                    <h3 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
+                      <span>📋</span> Sintesi
+                    </h3>
+                    <p className="text-gray-700 leading-relaxed">{insights.sintesi}</p>
+                    <div className="mt-3 text-xs font-medium text-gray-500 uppercase tracking-wide">
                       {insights.totale_problemi} problemi analizzati
                     </div>
                   </div>
@@ -347,42 +369,42 @@ export default function WorkshopAdminDashboard() {
 
                 {/* Problemi Principali */}
                 {insights.problemi_principali && insights.problemi_principali.length > 0 && (
-                  <div className="bg-white rounded-lg p-4">
-                    <h3 className="font-semibold text-gray-800 mb-4">🎯 Problemi Principali</h3>
+                  <div className="bg-white/60 backdrop-blur-sm rounded-lg p-5 border border-white/50">
+                    <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                      <span>🎯</span> Problemi Principali
+                    </h3>
                     <div className="space-y-3">
                       {insights.problemi_principali.slice(0, 5).map((problema, index) => (
                         <div
                           key={index}
-                          className={`p-3 rounded-lg border-l-4 ${
-                            problema.priorita === 'alta'
-                              ? 'bg-red-50 border-red-500'
+                          className={`p-4 rounded-lg border-l-4 transition-all hover:shadow-md ${problema.priorita === 'alta'
+                              ? 'bg-red-50/80 border-red-500'
                               : problema.priorita === 'media'
-                              ? 'bg-yellow-50 border-yellow-500'
-                              : 'bg-blue-50 border-blue-500'
-                          }`}
+                                ? 'bg-yellow-50/80 border-yellow-500'
+                                : 'bg-blue-50/80 border-blue-500'
+                            }`}
                         >
                           <div className="flex items-start justify-between">
                             <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-1">
-                                <span className="text-xs font-semibold px-2 py-1 rounded bg-white">
+                              <div className="flex items-center gap-2 mb-2">
+                                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded bg-white/80 shadow-sm">
                                   {problema.categoria}
                                 </span>
-                                <span className={`text-xs font-semibold px-2 py-1 rounded ${
-                                  problema.priorita === 'alta'
+                                <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded shadow-sm ${problema.priorita === 'alta'
                                     ? 'bg-red-100 text-red-700'
                                     : problema.priorita === 'media'
-                                    ? 'bg-yellow-100 text-yellow-700'
-                                    : 'bg-blue-100 text-blue-700'
-                                }`}>
-                                  {problema.priorita.toUpperCase()}
+                                      ? 'bg-yellow-100 text-yellow-700'
+                                      : 'bg-blue-100 text-blue-700'
+                                  }`}>
+                                  {problema.priorita}
                                 </span>
-                                <span className="text-xs text-gray-500">
-                                  {problema.frequenza} {problema.frequenza === 1 ? 'volta' : 'volte'}
+                                <span className="text-xs text-gray-500 font-medium ml-auto">
+                                  {problema.frequenza} {problema.frequenza === 1 ? 'segnalazione' : 'segnalazioni'}
                                 </span>
                               </div>
                               <p className="text-gray-800 font-medium">{problema.problema}</p>
                               {problema.rilevanza && (
-                                <p className="text-sm text-gray-600 mt-1">{problema.rilevanza}</p>
+                                <p className="text-sm text-gray-600 mt-2 italic border-t border-gray-200/50 pt-2">{problema.rilevanza}</p>
                               )}
                             </div>
                           </div>
@@ -394,29 +416,31 @@ export default function WorkshopAdminDashboard() {
 
                 {/* Categorie */}
                 {insights.categorie && insights.categorie.length > 0 && (
-                  <div className="bg-white rounded-lg p-4">
-                    <h3 className="font-semibold text-gray-800 mb-4">📁 Categorie</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="bg-white/60 backdrop-blur-sm rounded-lg p-5 border border-white/50">
+                    <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                      <span>📁</span> Categorie
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {insights.categorie.map((categoria, index) => (
                         <div
                           key={index}
-                          className="p-3 bg-gray-50 rounded-lg border border-gray-200"
+                          className="p-4 bg-gray-50/80 rounded-lg border border-gray-200/60 hover:border-purple-200 transition-colors"
                         >
-                          <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center justify-between mb-3">
                             <span className="font-semibold text-gray-800">{categoria.nome}</span>
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs font-medium text-gray-500 bg-white px-2 py-1 rounded border border-gray-100">
                               {categoria.frequenza} {categoria.frequenza === 1 ? 'problema' : 'problemi'}
                             </span>
                           </div>
-                          <ul className="text-sm text-gray-600 space-y-1">
+                          <ul className="text-sm text-gray-600 space-y-2">
                             {categoria.problemi.slice(0, 3).map((p, i) => (
-                              <li key={i} className="flex items-start">
-                                <span className="mr-2">•</span>
+                              <li key={i} className="flex items-start gap-2">
+                                <span className="text-purple-400 mt-1">•</span>
                                 <span className="flex-1">{p}</span>
                               </li>
                             ))}
                             {categoria.problemi.length > 3 && (
-                              <li className="text-xs text-gray-500">
+                              <li className="text-xs text-purple-600 font-medium pl-4">
                                 +{categoria.problemi.length - 3} altri
                               </li>
                             )}
@@ -429,12 +453,14 @@ export default function WorkshopAdminDashboard() {
 
                 {/* Raccomandazioni */}
                 {insights.raccomandazioni && insights.raccomandazioni.length > 0 && (
-                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
-                    <h3 className="font-semibold text-gray-800 mb-3">💡 Raccomandazioni</h3>
-                    <ul className="space-y-2">
+                  <div className="bg-gradient-to-r from-blue-50/90 to-indigo-50/90 rounded-lg p-5 border border-blue-200/60">
+                    <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                      <span>💡</span> Raccomandazioni Strategiche
+                    </h3>
+                    <ul className="space-y-3">
                       {insights.raccomandazioni.map((rec, index) => (
-                        <li key={index} className="flex items-start text-gray-700">
-                          <span className="mr-2 text-blue-600">→</span>
+                        <li key={index} className="flex items-start text-gray-700 bg-white/60 p-3 rounded-lg border border-blue-100/50">
+                          <span className="mr-3 text-blue-600 font-bold">→</span>
                           <span>{rec}</span>
                         </li>
                       ))}
@@ -443,16 +469,16 @@ export default function WorkshopAdminDashboard() {
                 )}
 
                 {(!insights.problemi_principali || insights.problemi_principali.length === 0) && (
-                  <div className="bg-white rounded-lg p-6 text-center text-gray-500">
-                    <p>Nessun problema segnalato ancora.</p>
-                    <p className="text-sm mt-2">I problemi verranno analizzati automaticamente quando disponibili.</p>
+                  <div className="bg-white/60 rounded-lg p-8 text-center text-gray-500">
+                    <p className="text-lg">Nessun problema segnalato ancora.</p>
+                    <p className="text-sm mt-2 opacity-75">I problemi verranno analizzati automaticamente quando disponibili.</p>
                   </div>
                 )}
               </div>
             )}
 
             {!insights && !loadingInsights && (
-              <div className="bg-white rounded-lg p-6 text-center text-gray-500">
+              <div className="bg-white/60 rounded-lg p-8 text-center text-gray-500">
                 <p>Caricamento insight...</p>
               </div>
             )}
@@ -460,14 +486,14 @@ export default function WorkshopAdminDashboard() {
         </div>
 
         {/* Filtri */}
-        <div className="bg-white p-6 rounded-lg shadow mb-8">
-          <div className="grid md:grid-cols-2 gap-4">
+        <div className="glass p-6 rounded-[var(--radius-card)] border border-[var(--color-line)] mb-8">
+          <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-semibold mb-2">Filtra per Stato</label>
+              <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Filtra per Stato</label>
               <select
                 value={filters.stato}
                 onChange={(e) => setFilters({ ...filters, stato: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white/80"
               >
                 <option value="tutti">Tutti</option>
                 <option value="nuovo">Nuovo</option>
@@ -482,11 +508,11 @@ export default function WorkshopAdminDashboard() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-semibold mb-2">Filtra per Fonte</label>
+              <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Filtra per Fonte</label>
               <select
                 value={filters.fonte}
                 onChange={(e) => setFilters({ ...filters, fonte: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white/80"
               >
                 <option value="tutti">Tutte</option>
                 <option value="BNI">BNI</option>
@@ -500,155 +526,170 @@ export default function WorkshopAdminDashboard() {
         </div>
 
         {/* Tabella Lead */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="glass rounded-[var(--radius-card)] border border-[var(--color-line)] overflow-hidden shadow-lg">
           <div className="overflow-x-auto">
             {leads.length === 0 ? (
-              <div className="p-8 text-center text-gray-500">
-                Nessun lead trovato con i filtri selezionati.
+              <div className="p-12 text-center text-gray-500">
+                <div className="text-4xl mb-4">🔍</div>
+                <p>Nessun lead trovato con i filtri selezionati.</p>
               </div>
             ) : (
               <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+                <thead className="bg-gray-50/80 backdrop-blur-sm">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
                       Nome / Azienda
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
                       Contatti
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
                       Fonte
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
                       Problema Segnalato
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
                       Note
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
                       Stato
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
                       Chiamate
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
                       Azioni
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white/40 divide-y divide-gray-200">
                   {leads.map((lead) => (
-                  <tr key={lead.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="font-medium text-gray-900">
-                        {lead.nome} {lead.cognome}
-                      </div>
-                      <div className="text-sm text-gray-500">{lead.azienda}</div>
-                      <div className="text-xs text-gray-400">{lead.ruolo}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{lead.email}</div>
-                      <div className="text-sm text-gray-500">{lead.telefono}</div>
-                      <div className="text-xs text-gray-400">{lead.provincia}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">
-                        {lead.fonte}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm text-gray-900 max-w-xs">
-                        {lead.problema ? (
-                          <span 
-                            className="block overflow-hidden text-ellipsis" 
-                            style={{ 
-                              display: '-webkit-box',
-                              WebkitLineClamp: 2,
-                              WebkitBoxOrient: 'vertical',
-                              maxHeight: '3em'
-                            }}
-                            title={lead.problema}
-                          >
-                            {lead.problema}
-                          </span>
-                        ) : (
-                          <span className="text-gray-400 italic">Nessun problema segnalato</span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-2">
-                        <div className="text-sm text-gray-900 max-w-xs flex-1">
-                          {lead.note ? (
-                            <span 
-                              className="block overflow-hidden text-ellipsis"
-                              style={{ 
-                                display: '-webkit-box',
-                                WebkitLineClamp: 2,
-                                WebkitBoxOrient: 'vertical',
-                                maxHeight: '3em'
-                              }}
-                              title={lead.note}
+                    <tr key={lead.id} className="hover:bg-purple-50/50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="font-bold text-gray-900">
+                          {lead.nome} {lead.cognome}
+                        </div>
+                        <div className="text-sm text-gray-600 font-medium">{lead.azienda}</div>
+                        <div className="text-xs text-gray-400 uppercase tracking-wide mt-1">{lead.ruolo}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900 flex items-center gap-2">
+                          <span>✉️</span> {lead.email}
+                        </div>
+                        <div className="text-sm text-gray-600 flex items-center gap-2 mt-1">
+                          <span>📱</span> {lead.telefono}
+                        </div>
+                        <div className="text-xs text-gray-400 mt-1 pl-6">{lead.provincia}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-3 py-1 text-xs font-bold rounded-full bg-purple-100 text-purple-700 border border-purple-200">
+                          {lead.fonte}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-sm text-gray-900 max-w-xs">
+                          {lead.problema ? (
+                            <div
+                              className="bg-red-50 p-2 rounded border border-red-100 text-xs text-red-800"
+                              title={lead.problema}
                             >
-                              {lead.note}
-                            </span>
+                              <span
+                                className="block overflow-hidden text-ellipsis"
+                                style={{
+                                  display: '-webkit-box',
+                                  WebkitLineClamp: 2,
+                                  WebkitBoxOrient: 'vertical',
+                                  maxHeight: '3em'
+                                }}
+                              >
+                                {lead.problema}
+                              </span>
+                            </div>
                           ) : (
-                            <span className="text-gray-400 italic">Nessuna nota</span>
+                            <span className="text-gray-400 italic text-xs">Nessun problema</span>
                           )}
                         </div>
-                        <button
-                          onClick={() => setEditingLead(lead)}
-                          className="text-purple-600 hover:text-purple-900 p-1"
-                          title="Modifica note"
-                        >
-                          ✏️
-                        </button>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <select
-                        value={lead.stato}
-                        onChange={(e) => updateLead(lead.id, { stato: e.target.value })}
-                        className="text-sm border rounded px-2 py-1"
-                      >
-                        <option value="nuovo">Nuovo</option>
-                        <option value="contattato">Contattato</option>
-                        <option value="confermato">Confermato</option>
-                        <option value="presente">Presente</option>
-                        <option value="no_show">No Show</option>
-                        <option value="non_interessato">Non Interessato</option>
-                        <option value="da_chiamare_per_checkup">Da Chiamare per Check-up</option>
-                        <option value="in_valutazione">In Valutazione</option>
-                        <option value="checkup_venduto">Check-up Venduto</option>
-                      </select>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium">{lead.numero_chiamate}</div>
-                      {lead.ultima_chiamata && (
-                        <div className="text-xs text-gray-500">
-                          {new Date(lead.ultima_chiamata).toLocaleDateString('it-IT')}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-start gap-2">
+                          <div className="text-sm text-gray-900 max-w-xs flex-1">
+                            {lead.note ? (
+                              <span
+                                className="block overflow-hidden text-ellipsis bg-yellow-50 p-2 rounded border border-yellow-100 text-xs text-yellow-800"
+                                style={{
+                                  display: '-webkit-box',
+                                  WebkitLineClamp: 2,
+                                  WebkitBoxOrient: 'vertical',
+                                  maxHeight: '3em'
+                                }}
+                                title={lead.note}
+                              >
+                                {lead.note}
+                              </span>
+                            ) : (
+                              <span className="text-gray-400 italic text-xs">Nessuna nota</span>
+                            )}
+                          </div>
+                          <button
+                            onClick={() => setEditingLead(lead)}
+                            className="text-gray-400 hover:text-purple-600 p-1 transition-colors"
+                            title="Modifica note"
+                          >
+                            ✏️
+                          </button>
                         </div>
-                      )}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => incrementCalls(lead)}
-                          className="text-blue-600 hover:text-blue-900"
-                          title="Incrementa chiamate"
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <select
+                          value={lead.stato}
+                          onChange={(e) => updateLead(lead.id, { stato: e.target.value })}
+                          className={`text-xs font-semibold border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500 outline-none cursor-pointer ${lead.stato === 'nuovo' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                              lead.stato === 'contattato' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
+                                lead.stato === 'confermato' ? 'bg-green-50 text-green-700 border-green-200' :
+                                  'bg-gray-50 text-gray-700 border-gray-200'
+                            }`}
                         >
-                          📞
-                        </button>
-                        <button
-                          onClick={() => markPresent(lead)}
-                          className="text-green-600 hover:text-green-900"
-                          title="Segna presente"
-                        >
-                          ✅
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
+                          <option value="nuovo">Nuovo</option>
+                          <option value="contattato">Contattato</option>
+                          <option value="confermato">Confermato</option>
+                          <option value="presente">Presente</option>
+                          <option value="no_show">No Show</option>
+                          <option value="non_interessato">Non Interessato</option>
+                          <option value="da_chiamare_per_checkup">Da Chiamare per Check-up</option>
+                          <option value="in_valutazione">In Valutazione</option>
+                          <option value="checkup_venduto">Check-up Venduto</option>
+                        </select>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-bold text-center w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
+                          {lead.numero_chiamate}
+                        </div>
+                        {lead.ultima_chiamata && (
+                          <div className="text-[10px] text-gray-500 text-center mt-1">
+                            {new Date(lead.ultima_chiamata).toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit' })}
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div className="flex gap-2 justify-center">
+                          <button
+                            onClick={() => incrementCalls(lead)}
+                            className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 hover:text-blue-800 flex items-center justify-center transition-colors"
+                            title="Incrementa chiamate"
+                          >
+                            📞
+                          </button>
+                          <button
+                            onClick={() => markPresent(lead)}
+                            className="w-8 h-8 rounded-full bg-green-50 text-green-600 hover:bg-green-100 hover:text-green-800 flex items-center justify-center transition-colors"
+                            title="Segna presente"
+                          >
+                            ✅
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
                   ))}
                 </tbody>
               </table>
@@ -658,28 +699,34 @@ export default function WorkshopAdminDashboard() {
 
         {/* Modal Note */}
         {editingLead && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg max-w-md w-full mx-4">
-              <h3 className="text-xl font-bold mb-4">
-                Note per {editingLead.nome} {editingLead.cognome}
-              </h3>
-              <textarea
-                value={editingLead.note || ''}
-                onChange={(e) => setEditingLead({ ...editingLead, note: e.target.value })}
-                rows={6}
-                className="w-full px-4 py-2 border rounded-lg mb-4"
-                placeholder="Aggiungi note..."
-              />
-              <div className="flex gap-4">
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-xl shadow-2xl max-w-md w-full overflow-hidden animate-fade-in-up">
+              <div className="p-6 border-b border-gray-100">
+                <h3 className="text-xl font-bold font-heading text-gray-900">
+                  Note per {editingLead.nome} {editingLead.cognome}
+                </h3>
+                <p className="text-sm text-gray-500 mt-1">{editingLead.azienda}</p>
+              </div>
+              <div className="p-6">
+                <textarea
+                  value={editingLead.note || ''}
+                  onChange={(e) => setEditingLead({ ...editingLead, note: e.target.value })}
+                  rows={6}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all resize-none"
+                  placeholder="Aggiungi note..."
+                  autoFocus
+                />
+              </div>
+              <div className="p-6 bg-gray-50 flex gap-4">
                 <button
                   onClick={() => updateLead(editingLead.id, { note: editingLead.note })}
-                  className="flex-1 bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700"
+                  className="flex-1 bg-purple-600 text-white py-2.5 rounded-lg hover:bg-purple-700 font-semibold shadow-lg hover:shadow-purple-500/30 transition-all"
                 >
-                  Salva
+                  Salva Note
                 </button>
                 <button
                   onClick={() => setEditingLead(null)}
-                  className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400"
+                  className="flex-1 bg-white text-gray-700 border border-gray-300 py-2.5 rounded-lg hover:bg-gray-50 font-semibold transition-all"
                 >
                   Annulla
                 </button>
