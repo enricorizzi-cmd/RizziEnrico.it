@@ -17,11 +17,11 @@ interface Question {
 }
 
 const questions: Question[] = [
-  // ===== SEZIONE 1: PROFILAZIONE AZIENDA (6 domande - NON s\u00ec/no) =====
+  // ===== SEZIONE 1: PROFILAZIONE AZIENDA (6 domande - peso 0) =====
   {
     id: 'q1',
     categoria: 'Profilazione',
-    domanda: 'Qual \u00e8 il tuo ruolo in azienda?',
+    domanda: 'Qual è il tuo ruolo in azienda?',
     tipo: 'select',
     peso: 0,
     opzioni: ['Titolare/Imprenditore', 'Socio/Partner', 'Direttore/Manager', 'Responsabile di funzione', 'Dipendente', 'Consulente esterno']
@@ -45,7 +45,7 @@ const questions: Question[] = [
   {
     id: 'q4',
     categoria: 'Profilazione',
-    domanda: 'Da quanti anni \u00e8 attiva l\'azienda?',
+    domanda: 'Da quanti anni è attiva l\'azienda?',
     tipo: 'select',
     peso: 0,
     opzioni: ['Meno di 2 anni (startup)', '2-5 anni', '6-15 anni', '16-30 anni', 'Oltre 30 anni']
@@ -53,7 +53,7 @@ const questions: Question[] = [
   {
     id: 'q5',
     categoria: 'Profilazione',
-    domanda: 'Qual \u00e8 l\'obiettivo principale per i prossimi 12 mesi?',
+    domanda: 'Qual è l\'obiettivo principale per i prossimi 12 mesi?',
     tipo: 'select',
     peso: 0,
     opzioni: ['Aumentare il fatturato', 'Migliorare i margini', 'Ridurre costi e sprechi', 'Organizzare meglio i processi', 'Far crescere il team', 'Scalare l\'azienda']
@@ -61,22 +61,23 @@ const questions: Question[] = [
   {
     id: 'q6',
     categoria: 'Profilazione',
-    domanda: 'Quanto tempo dedichi settimanalmente ad attivit\u00e0 operative ripetitive?',
+    domanda: 'Quanto tempo dedichi settimanalmente ad attività operative ripetitive?',
     tipo: 'select',
     peso: 0,
     opzioni: ['Meno di 5 ore', '5-10 ore', '10-20 ore', '20-30 ore', 'Oltre 30 ore']
   },
 
-  // ===== SEZIONE 2: ORGANIZZAZIONE & PROCESSI (8 domande) =====
+  // ===== SEZIONE 2: ORGANIZZAZIONE & PROCESSI (11 domande - +4 nuove, -1 diretta) =====
   { id: 'q7', categoria: 'Organizzazione & Processi', domanda: 'I tuoi collaboratori sanno sempre dove trovare procedure e documenti aziendali?', tipo: 'si_no', peso: 3 },
-  { id: 'q8', categoria: 'Organizzazione & Processi', domanda: 'Hai processi documentati per le attivit\u00e0 critiche dell\'azienda?', tipo: 'si_no', peso: 3 },
+  { id: 'q8', categoria: 'Organizzazione & Processi', domanda: 'Hai processi documentati per le attività critiche dell\'azienda?', tipo: 'si_no', peso: 3 },
+  // Q9 RIMOSSA (chiedeva direttamente colli)
   {
     id: 'q9',
     categoria: 'Organizzazione & Processi',
-    domanda: 'Se dovessi raddoppiare il fatturato domani, quali processi andrebbero in crisi per primi?',
+    domanda: 'Quanti processi critici hai documentato in modo completo?',
     tipo: 'select',
-    peso: 4, // COLLO DI BOTTIGLIA
-    opzioni: ['Produzione/Erogazione servizio', 'Gestione ordini/preventivi', 'Comunicazione con clienti', 'Coordinamento team', 'Gestione fornitori', 'Amministrazione/fatturazione', 'Nessuno, siamo pronti']
+    peso: 3,
+    opzioni: ['Nessuno', '1-3 processi', '4-7 processi', '8-15 processi', 'Oltre 15 processi']
   },
   {
     id: 'q10',
@@ -88,97 +89,208 @@ const questions: Question[] = [
   },
   { id: 'q11', categoria: 'Organizzazione & Processi', domanda: 'Le riunioni di team terminano sempre con un piano d\'azione chiaro?', tipo: 'si_no', peso: 2 },
   { id: 'q12', categoria: 'Organizzazione & Processi', domanda: 'Dedichi meno di 2 ore a settimana a coordinare il lavoro tra collaboratori?', tipo: 'si_no', peso: 3 },
-  { id: 'q13', categoria: 'Organizzazione & Processi', domanda: 'Perdi meno di 2 ore alla settimana in attivit\u00e0 ripetitive (mail standard, report, preventivi ripetitivi)?', tipo: 'si_no', peso: 3 },
+  { id: 'q13', categoria: 'Organizzazione & Processi', domanda: 'Perdi meno di 2 ore alla settimana in attività ripetitive (mail standard, report, preventivi ripetitivi)?', tipo: 'si_no', peso: 3 },
+  // Q14 RIMOSSA (chiedeva direttamente dipendenza)
   {
     id: 'q14',
     categoria: 'Organizzazione & Processi',
-    domanda: 'Se tu o una persona chiave fosse assente per un mese, l\'azienda andrebbe in difficolt\u00e0?',
+    domanda: 'L\'azienda funzionerebbe normalmente se fossi assente per una settimana?',
     tipo: 'select',
-    peso: 4, // COLLO DI BOTTIGLIA
-    opzioni: ['S\u00ec, bloccherebbe tutto', 'S\u00ec, rallentamenti importanti', 'Parzialmente, alcune aree soffrirebbero', 'No, siamo organizzati per continuare']
+    peso: 4,
+    opzioni: ['Sì, perfettamente', 'S con qualche difficoltà', 'No, rallentamenti importanti', 'No, bloccata totalmente']
+  },
+  {
+    id: 'q15',
+    categoria: 'Organizzazione & Processi',
+    domanda: 'Che percentuale dei processi aziendali può essere svolta da una sola persona specifica?',
+    tipo: 'select',
+    peso: 4,
+    opzioni: ['Meno del 20%', '20-40%', '40-60%', 'Oltre il 60%']
+  },
+  {
+    id: 'q16',
+    categoria: 'Organizzazione & Processi',
+    domanda: 'Chi prende le decisioni operative quotidiane in azienda?',
+    tipo: 'select',
+    peso: 3,
+    opzioni: ['Il team in autonomia', 'Manager con delega', 'Solo il titolare/founder', 'Misto caso per caso']
   },
 
-  // ===== SEZIONE 3: ACQUISIZIONE CLIENTI & MARKETING (7 domande) =====
-  { id: 'q15', categoria: 'Acquisizione Clienti', domanda: 'Hai un sistema automatico per raccogliere contatti dal sito?', tipo: 'si_no', peso: 3 },
-  { id: 'q16', categoria: 'Acquisizione Clienti', domanda: 'Sai esattamente quale canale ti porta pi\u00f9 clienti nuovi?', tipo: 'si_no', peso: 3 },
+  // ===== SEZIONE 3: ACQUISIZIONE CLIENTI (10 domande - +4 nuove, -1 trasformata) =====
+  { id: 'q17', categoria: 'Acquisizione Clienti', domanda: 'Hai un sistema automatico per raccogliere contatti dal sito?', tipo: 'si_no', peso: 3 },
+  { id: 'q18', categoria: 'Acquisizione Clienti', domanda: 'Sai esattamente quale canale ti porta più clienti nuovi?', tipo: 'si_no', peso: 3 },
   {
-    id: 'q17',
+    id: 'q19',
     categoria: 'Acquisizione Clienti',
     domanda: 'Quanti nuovi contatti/lead qualificati ricevi mediamente al mese?',
     tipo: 'select',
     peso: 2,
     opzioni: ['0-5', '6-15', '16-30', '31-50', 'Oltre 50']
   },
-  { id: 'q18', categoria: 'Acquisizione Clienti', domanda: 'I lead che arrivano vengono contattati entro 24 ore?', tipo: 'si_no', peso: 3 },
+  { id: 'q20', categoria: 'Acquisizione Clienti', domanda: 'I lead che arrivano vengono contattati entro 24 ore?', tipo: 'si_no', peso: 3 },
   {
-    id: 'q19',
+    id: 'q21',
     categoria: 'Acquisizione Clienti',
-    domanda: 'Se domani ti arrivassero 10x i lead attuali, saresti in grado di gestirli?',
+    domanda: 'Che percentuale di lead riceve una risposta entro la prima ora?',
     tipo: 'select',
-    peso: 4, // COLLO DI BOTTIGLIA / SCALABILIT\u00c0
-    opzioni: ['S\u00ec, facilmente', 'S\u00ec, con qualche difficolt\u00e0', 'No, andremmo in difficolt\u00e0', 'No, li perderemmo']
+    peso: 4,
+    opzioni: ['Meno del 10%', '10-30%', '30-60%', 'Oltre il 60%']
   },
-  { id: 'q20', categoria: 'Acquisizione Clienti', domanda: 'Dedichi meno di 1 ora a settimana a creare contenuti marketing (post, email, materiali)?', tipo: 'si_no', peso: 2 },
-  { id: 'q21', categoria: 'Acquisizione Clienti', domanda: 'Hai landing page dedicate per campagne specifiche?', tipo: 'si_no', peso: 2 },
-
-  // ===== SEZIONE 4: GESTIONE CLIENTI & VENDITE (7 domande) =====
-  { id: 'q22', categoria: 'Gestione Clienti', domanda: 'Hai un CRM dove registri tutti i contatti con clienti e prospect?', tipo: 'si_no', peso: 3 },
+  {
+    id: 'q22',
+    categoria: 'Acquisizione Clienti',
+    domanda: 'Hai un sistema automatico di reminder per follow-up dei lead?',
+    tipo: 'select',
+    peso: 3,
+    opzioni: ['Sì, completamente automatico', 'Sì, semi-automatico', 'No, tutto manuale', 'No, non facciamo follow-up sistematico']
+  },
   {
     id: 'q23',
+    categoria: 'Acquisizione Clienti',
+    domanda: 'Nell\'ultimo mese, quanti lead hai perso per incapacità di gestirli o per lentezza?',
+    tipo: 'select',
+    peso: 4,
+    opzioni: ['Nessuno', '1-5 lead', '6-15 lead', 'Oltre 15 lead']
+  },
+  { id: 'q24', categoria: 'Acquisizione Clienti', domanda: 'Dedichi meno di 1 ora a settimana a creare contenuti marketing (post, email, materiali)?', tipo: 'si_no', peso: 2 },
+  { id: 'q25', categoria: 'Acquisizione Clienti', domanda: 'Hai landing page dedicate per campagne specifiche?', tipo: 'si_no', peso: 2 },
+  {
+    id: 'q26',
+    categoria: 'Acquisizione Clienti',
+    domanda: 'Hai un sistema di lead scoring o prioritizzazione dei contatti?',
+    tipo: 'select',
+    peso: 3,
+    opzioni: ['Sì, automatico', 'Sì, manuale', 'No']
+  },
+
+  // ===== SEZIONE 4: GESTIONE CLIENTI (11 domande - +5 nuove, -1 trasformata) =====
+  { id: 'q27', categoria: 'Gestione Clienti', domanda: 'Hai un CRM dove registri tutti i contatti con clienti e prospect?', tipo: 'si_no', peso: 3 },
+  {
+    id: 'q28',
     categoria: 'Gestione Clienti',
     domanda: 'Quanto tempo ci vuole mediamente per preparare un preventivo complesso?',
     tipo: 'select',
-    peso: 2,
+    peso: 3,
     opzioni: ['Meno di 30 minuti', '30-60 minuti', '1-3 ore', '3-5 ore', 'Oltre 5 ore']
   },
-  { id: 'q24', categoria: 'Gestione Clienti', domanda: 'I clienti ricevono follow-up automatici dopo acquisto/richiesta?', tipo: 'si_no', peso: 2 },
-  { id: 'q25', categoria: 'Gestione Clienti', domanda: 'Sai quali clienti generano l\'80% del tuo fatturato?', tipo: 'si_no', peso: 3 },
-  { id: 'q26', categoria: 'Gestione Clienti', domanda: 'Riesci sempre a rispondere a richieste clienti entro 24 ore?', tipo: 'si_no', peso: 2 },
   {
-    id: 'q27',
+    id: 'q29',
     categoria: 'Gestione Clienti',
-    domanda: 'Se il volume di clienti triplicasse improvvisamente, il servizio clienti andrebbe in tilt?',
-    tipo: 'select',
-    peso: 4, // COLLO DI BOTTIGLIA / SCALABILIT\u00c0
-    opzioni: ['S\u00ec, collasserebbe', 'S\u00ec, forte rallentamento', 'Parzialmente, qualche ritardo', 'No, siamo scalabili']
+    domanda: 'Hai template automatici per preventivi ricorrenti o standard?',
+    tipo: 'si_no',
+    peso: 3
   },
-  { id: 'q28', categoria: 'Gestione Clienti', domanda: 'Hai un sistema per misurare la soddisfazione clienti?', tipo: 'si_no', peso: 2 },
-
-  // ===== SEZIONE 5: AI & AUTOMAZIONE (7 domande) =====
-  { id: 'q29', categoria: 'AI & Automazione', domanda: 'Usi l\'AI regolarmente per velocizzare attivit\u00e0 quotidiane (scrivere email, riassumere riunioni)?', tipo: 'si_no', peso: 3 },
-  { id: 'q30', categoria: 'AI & Automazione', domanda: 'Hai almeno UN processo completamente automatizzato (email conferma, reminder, report)?', tipo: 'si_no', peso: 3 },
-  { id: 'q31', categoria: 'AI & Automazione', domanda: 'L\'AI ti aiuta a creare contenuti marketing (post, copy, email)?', tipo: 'si_no', peso: 2 },
-  { id: 'q32', categoria: 'AI & Automazione', domanda: 'Hai template o prompt AI pronti per attivit\u00e0 ripetitive?', tipo: 'si_no', peso: 2 },
   {
-    id: 'q33',
+    id: 'q30',
+    categoria: 'Gestione Clienti',
+    domanda: 'Che percentuale dei preventivi richiede personalizzazione totale (da zero)?',
+    tipo: 'select',
+    peso: 3,
+    opzioni: ['Meno del 20%', '20-50%', '50-80%', 'Oltre 80%']
+  },
+  {
+    id: 'q31',
+    categoria: 'Gestione Clienti',
+    domanda: 'Il tuo CRM o sistema gestionale per preventivi è integrato automaticamente?',
+    tipo: 'select',
+    peso: 3,
+    opzioni: ['Sì, completamente integrato', 'Sì, ma inserimento manuale', 'Uso Excel', 'No, nessun sistema']
+  },
+  {
+    id: 'q32',
+    categoria: 'Gestione Clienti',
+    domanda: 'Come gestisci il follow-up dei preventivi non accettati?',
+    tipo: 'select',
+    peso: 3,
+    opzioni: ['Automatico con trigger', 'Semi-automatico', 'Manualmente', 'Non lo facciamo']
+  },
+  { id: 'q33', categoria: 'Gestione Clienti', domanda: 'I clienti ricevono follow-up automatici dopo acquisto/richiesta?', tipo: 'si_no', peso: 2 },
+  { id: 'q34', categoria: 'Gestione Clienti', domanda: 'Sai quali clienti generano l\'80% del tuo fatturato?', tipo: 'si_no', peso: 3 },
+  { id: 'q35', categoria: 'Gestione Clienti', domanda: 'Riesci sempre a rispondere a richieste clienti entro 24 ore?', tipo: 'si_no', peso: 2 },
+  {
+    id: 'q36',
+    categoria: 'Gestione Clienti',
+    domanda: 'Nell\'ultimo mese, quanti problemi di qualità del servizio hai avuto per sovraccarico?',
+    tipo: 'select',
+    peso: 4,
+    opzioni: ['Nessuno', '1-3 problemi', '4-10 problemi', 'Oltre 10 problemi']
+  },
+  { id: 'q37', categoria: 'Gestione Clienti', domanda: 'Hai un sistema per misurare la soddisfazione clienti?', tipo: 'si_no', peso: 2 },
+
+  // ===== SEZIONE 5: AI & AUTOMAZIONE (9 domande - +2 nuove) =====
+  { id: 'q38', categoria: 'AI & Automazione', domanda: 'Usi l\'AI regolarmente per velocizzare attività quotidiane (scrivere email, riassumere riunioni)?', tipo: 'si_no', peso: 3 },
+  { id: 'q39', categoria: 'AI & Automazione', domanda: 'Hai almeno UN processo completamente automatizzato (email conferma, reminder, report)?', tipo: 'si_no', peso: 3 },
+  {
+    id: 'q40',
+    categoria: 'AI & Automazione',
+    domanda: 'Quante automazioni attive hai oggi in azienda?',
+    tipo: 'select',
+    peso: 4,
+    opzioni: ['Nessuna', '1-2 automazioni', '3-5 automazioni', '6-10 automazioni', 'Oltre 10 automazioni']
+  },
+  { id: 'q41', categoria: 'AI & Automazione', domanda: 'L\'AI ti aiuta a creare contenuti marketing (post, copy, email)?', tipo: 'si_no', peso: 2 },
+  { id: 'q42', categoria: 'AI & Automazione', domanda: 'Hai template o prompt AI pronti per attività ripetitive?', tipo: 'si_no', peso: 2 },
+  {
+    id: 'q43',
     categoria: 'AI & Automazione',
     domanda: 'Quanti strumenti/software AI diversi hai provato per il lavoro?',
     tipo: 'select',
     peso: 2,
     opzioni: ['Nessuno', '1-2', '3-5', '6-10', 'Oltre 10']
   },
-  { id: 'q34', categoria: 'AI & Automazione', domanda: 'L\'azienda utilizza software gestionali integrati tra loro (evitando doppia digitazione)?', tipo: 'si_no', peso: 3 },
+  { id: 'q44', categoria: 'AI & Automazione', domanda: 'L\'azienda utilizza software gestionali integrati tra loro (evitando doppia digitazione)?', tipo: 'si_no', peso: 3 },
   {
-    id: 'q35',
+    id: 'q45',
     categoria: 'AI & Automazione',
-    domanda: 'Se dovessi automatizzare 1 processo domani, quale sceglieresti?',
+    domanda: 'I tuoi strumenti aziendali comunicano tra loro automaticamente?',
     tipo: 'select',
-    peso: 2,
-    opzioni: ['Email e comunicazioni', 'Preventivi/offerte', 'Report e analisi', 'Fatturazione/amministrazione', 'Customer care', 'Gestione ordini', 'Non so da dove iniziare']
+    peso: 3,
+    opzioni: ['Sì, completamente integrati', 'Parzialmente integrati', 'No, nessuna integrazione']
+  },
+  {
+    id: 'q46',
+    categoria: 'AI & Automazione',
+    domanda: 'Che percentuale di errori hai nei processi critici ogni mese?',
+    tipo: 'select',
+    peso: 3,
+    opzioni: ['Meno del 5%', '5-10%', '10-20%', 'Oltre il 20%']
   },
 
-  // ===== SEZIONE 6: DATI & MISURAZIONE (5 domande) =====
-  { id: 'q36', categoria: 'Dati & Misurazione', domanda: 'Monitori almeno 3 KPI chiave (lead, conversioni, margini) regolarmente?', tipo: 'si_no', peso: 3 },
-  { id: 'q37', categoria: 'Dati & Misurazione', domanda: 'Hai visibilit\u00e0 in tempo reale sui numeri chiave dell\'azienda?', tipo: 'si_no', peso: 3 },
-  { id: 'q38', categoria: 'Dati & Misurazione', domanda: 'Prendi decisioni importanti basandoti principalmente su dati concreti (vs sensazioni)?', tipo: 'si_no', peso: 2 },
-  { id: 'q39', categoria: 'Dati & Misurazione', domanda: 'Dedichi meno di 1 ora a settimana ad analizzare report e dati?', tipo: 'si_no', peso: 2 },
+  // ===== SEZIONE 6: DATI & MISURAZIONE (8 domande - +3 nuove) =====
+  { id: 'q47', categoria: 'Dati & Misurazione', domanda: 'Monitori almeno 3 KPI chiave (lead, conversioni, margini) regolarmente?', tipo: 'si_no', peso: 3 },
+  { id: 'q48', categoria: 'Dati & Misurazione', domanda: 'Hai visibilità in tempo reale sui numeri chiave dell\'azienda?', tipo: 'si_no', peso: 3 },
   {
-    id: 'q40',
+    id: 'q49',
     categoria: 'Dati & Misurazione',
-    domanda: 'Quali dati vorresti avere sempre a portata di mano ma non hai?',
+    domanda: 'Hai dashboard con KPI aggiornati automaticamente?',
+    tipo: 'select',
+    peso: 3,
+    opzioni: ['Sì, in tempo reale', 'Sì, aggiornamento settimanale', 'No, tutto manuale']
+  },
+  { id: 'q50', categoria: 'Dati & Misurazione', domanda: 'Prendi decisioni importanti basandoti principalmente su dati concreti (vs sensazioni)?', tipo: 'si_no', peso: 2 },
+  {
+    id: 'q51',
+    categoria: 'Dati & Misurazione',
+    domanda: 'Quante ore a settimana dedichi a cercare informazioni, documenti o dati?',
+    tipo: 'select',
+    peso: 3,
+    opzioni: ['Meno di 1 ora', '1-3 ore', '3-5 ore', '5-10 ore', 'Oltre 10 ore']
+  },
+  {
+    id: 'q52',
+    categoria: 'Dati & Misurazione',
+    domanda: 'Dove sono archiviate le informazioni aziendali critiche?',
+    tipo: 'select',
+    peso: 3,
+    opzioni: ['Sistema unico centralizzato', '2-3 sistemi diversi', 'Sparse in molti posti']
+  },
+  {
+    id: 'q53',
+    categoria: 'Dati & Misurazione',
+    domanda: 'Chi ha accesso alla dashboard KPI dell\'azienda?',
     tipo: 'select',
     peso: 2,
-    opzioni: ['Margini reali per prodotto/servizio', 'Tempo effettivo speso per progetto/cliente', 'Performance commerciale in tempo reale', 'Costi operativi dettagliati', 'Produttivit\u00e0 del team', 'Costi di acquisizione cliente', 'Nessuno, ho gi\u00e0 tutto']
+    opzioni: ['Tutto il team', 'Solo manager', 'Solo il titolare', 'Non abbiamo dashboard']
   },
 ];
 
