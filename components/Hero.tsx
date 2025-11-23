@@ -38,13 +38,6 @@ export default function Hero({
 
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-20 lg:py-32">
-      {/* Aurora Background */}
-      <div className="absolute inset-0 aurora-bg opacity-50 z-0"></div>
-
-      {/* Floating Blobs */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-[var(--color-primary)] rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob-float animation-delay-2000 z-0"></div>
-      <div className="absolute bottom-20 right-10 w-72 h-72 bg-[var(--color-primary-light)] rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob-float animation-delay-4000 z-0"></div>
-
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div
           ref={ref}

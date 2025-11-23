@@ -6,18 +6,6 @@ import Card from '@/components/Card';
 import CTA from '@/components/CTA';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
-export default function HomeServices() {
-    const { ref, isVisible } = useScrollAnimation();
-
-    return (
-        <section className="py-20 bg-[var(--color-card)] overflow-hidden">
-            <div className="container mx-auto px-4 lg:px-8">
-                <SectionTitle
-                    title="Servizi Consulenza Aziendale per Aziende Venete"
-                    description="Ti aiuto a migliorare la produttività, implementare controllo di gestione e organizzare meglio la tua azienda. Output concreti, tempistiche chiare, investimento trasparente."
-                    centered
-                />
-
                 <div
                     ref={ref}
                     className={`bento-grid transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
@@ -65,15 +53,15 @@ export default function HomeServices() {
                             title={service.title}
                             variant="service"
                             href={`/servizi/${service.slug}`}
-                            className={`${service.span} premium-card-hover h-full ${service.highlight ? 'border-[var(--color-primary)]/30 bg-white' : ''}`}
+                            className={`${service.span} glass-panel premium-card-hover h-full border-transparent hover:border-[var(--color-primary)]/30 group`}
                         >
                             <p className="text-sm mb-4 leading-relaxed opacity-80">{service.description}</p>
                             <p className="text-sm font-semibold text-[var(--color-success)] mb-4">{service.result}</p>
-                            <div className="flex items-center justify-between mt-auto pt-4 border-t border-[var(--color-line)]/50">
+                            <div className="flex items-center justify-between mt-auto pt-4 border-t border-[var(--color-line)]/50 group-hover:border-[var(--color-primary)]/20 transition-colors">
                                 <div className="text-lg font-bold text-[var(--color-primary)]">
                                     {service.price}
                                 </div>
-                                <Link href={`/servizi/${service.slug}`} className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] font-semibold text-sm">
+                                <Link href={`/servizi/${service.slug}`} className="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] font-semibold text-sm group-hover:translate-x-1 transition-transform">
                                     Dettagli →
                                 </Link>
                             </div>
@@ -96,7 +84,7 @@ export default function HomeServices() {
                         {' '}e analizziamo insieme le tue esigenze.
                     </p>
                 </div>
-            </div>
-        </section>
+            </div >
+        </section >
     );
 }

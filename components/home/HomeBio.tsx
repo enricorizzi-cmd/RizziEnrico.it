@@ -21,7 +21,7 @@ export default function HomeBio() {
                             <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-[var(--color-warning)]/10 rounded-full z-0"></div>
                             <div className="relative rounded-[2rem] overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500">
                                 <Image
-                                    src="/enrico-rizzi-bio.jpg"
+                                    src="/enrico-rizzi.jpg"
                                     alt="Enrico Rizzi Consulente Aziendale"
                                     width={600}
                                     height={600}
