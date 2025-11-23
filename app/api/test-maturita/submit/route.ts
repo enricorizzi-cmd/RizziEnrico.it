@@ -29,6 +29,16 @@ export async function POST(request: NextRequest) {
         punteggio_totale: body.punteggio_totale || 0,
         punteggio_per_categoria: body.punteggio_per_categoria || {},
         livello_maturita: body.livello_maturita || 'Iniziale',
+        livello_description: body.livello_description || null,
+        percentage: body.percentage || null,
+        diagnosi: body.diagnosi || null,
+        quick_wins: body.quick_wins || null,
+        piano_30_60_90: body.piano_30_60_90 || null,
+        roi_stimato: body.roi_stimato || null,
+        benchmark: body.benchmark || null,
+        roadmap_pilastri: body.roadmap_pilastri || null,
+        risorse_bonus: body.risorse_bonus || null,
+        next_steps: body.next_steps || null,
         raccomandazioni: body.raccomandazioni || [],
       })
       .select()
