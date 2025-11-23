@@ -11,45 +11,175 @@ interface Question {
   id: string;
   categoria: string;
   domanda: string;
-  tipo: 'si_no' | 'scala';
+  tipo: 'si_no' | 'scala' | 'select' | 'radio';
   peso: number;
+  opzioni?: string[]; // Per select e radio
 }
 
 const questions: Question[] = [
-  // PILASTRO 1: Organizzazione & Processi Interni (6 domande)
-  { id: 'q1', categoria: 'Organizzazione & Processi', domanda: 'I tuoi collaboratori sanno sempre dove trovare procedure, documenti e informazioni aziendali?', tipo: 'si_no', peso: 3 },
-  { id: 'q2', categoria: 'Organizzazione & Processi', domanda: 'Le riunioni di team terminano con un piano d\'azione chiaro e condiviso?', tipo: 'si_no', peso: 2 },
-  { id: 'q3', categoria: 'Organizzazione & Processi', domanda: 'Hai processi documentati per le attività principali (onboarding, gestione ordini, customer care)?', tipo: 'si_no', peso: 3 },
-  { id: 'q4', categoria: 'Organizzazione & Processi', domanda: 'I documenti aziendali (contratti, fatture, preventivi) sono tutti digitalizzati e facilmente reperibili?', tipo: 'si_no', peso: 2 },
-  { id: 'q5', categoria: 'Organizzazione & Processi', domanda: 'Perdi meno di 2 ore alla settimana in attività ripetitive (mail standard, report, preventivi ripetitivi)?', tipo: 'si_no', peso: 3 },
-  { id: 'q6', categoria: 'Organizzazione & Processi', domanda: 'Dedichi meno di 2 ore a settimana a coordinare il lavoro tra collaboratori?', tipo: 'si_no', peso: 2 },
+  // ===== SEZIONE 1: PROFILAZIONE AZIENDA (6 domande - NON s\u00ec/no) =====
+  {
+    id: 'q1',
+    categoria: 'Profilazione',
+    domanda: 'Qual \u00e8 il tuo ruolo in azienda?',
+    tipo: 'select',
+    peso: 0,
+    opzioni: ['Titolare/Imprenditore', 'Socio/Partner', 'Direttore/Manager', 'Responsabile di funzione', 'Dipendente', 'Consulente esterno']
+  },
+  {
+    id: 'q2',
+    categoria: 'Profilazione',
+    domanda: 'In che settore opera principalmente la tua azienda?',
+    tipo: 'select',
+    peso: 0,
+    opzioni: ['Produzione/Manifatturiero', 'Commercio/Retail', 'Servizi professionali', 'Servizi operativi', 'Ristorazione/Horeca', 'Edilizia/Costruzioni', 'Altro']
+  },
+  {
+    id: 'q3',
+    categoria: 'Profilazione',
+    domanda: 'Quanti collaboratori ha l\'azienda?',
+    tipo: 'select',
+    peso: 0,
+    opzioni: ['Solo io (ditta individuale)', '2-5 collaboratori', '6-15 collaboratori', '16-50 collaboratori', '51-100 collaboratori', 'Oltre 100 collaboratori']
+  },
+  {
+    id: 'q4',
+    categoria: 'Profilazione',
+    domanda: 'Da quanti anni \u00e8 attiva l\'azienda?',
+    tipo: 'select',
+    peso: 0,
+    opzioni: ['Meno di 2 anni (startup)', '2-5 anni', '6-15 anni', '16-30 anni', 'Oltre 30 anni']
+  },
+  {
+    id: 'q5',
+    categoria: 'Profilazione',
+    domanda: 'Qual \u00e8 l\'obiettivo principale per i prossimi 12 mesi?',
+    tipo: 'select',
+    peso: 0,
+    opzioni: ['Aumentare il fatturato', 'Migliorare i margini', 'Ridurre costi e sprechi', 'Organizzare meglio i processi', 'Far crescere il team', 'Scalare l\'azienda']
+  },
+  {
+    id: 'q6',
+    categoria: 'Profilazione',
+    domanda: 'Quanto tempo dedichi settimanalmente ad attivit\u00e0 operative ripetitive?',
+    tipo: 'select',
+    peso: 0,
+    opzioni: ['Meno di 5 ore', '5-10 ore', '10-20 ore', '20-30 ore', 'Oltre 30 ore']
+  },
 
-  // PILASTRO 2: Acquisizione Clienti & Marketing (5 domande)
-  { id: 'q7', categoria: 'Acquisizione Clienti', domanda: 'Hai un sistema per raccogliere contatti (lead) in modo automatico dal sito?', tipo: 'si_no', peso: 3 },
-  { id: 'q8', categoria: 'Acquisizione Clienti', domanda: 'Sai esattamente quale canale (Google, social, passaparola) ti porta più clienti nuovi?', tipo: 'si_no', peso: 3 },
-  { id: 'q9', categoria: 'Acquisizione Clienti', domanda: 'Hai landing page dedicate per campagne o servizi specifici?', tipo: 'si_no', peso: 2 },
-  { id: 'q10', categoria: 'Acquisizione Clienti', domanda: 'I lead che arrivano vengono contattati sistematicamente entro 24 ore?', tipo: 'si_no', peso: 3 },
-  { id: 'q11', categoria: 'Acquisizione Clienti', domanda: 'Dedichi meno di 1 ora a settimana a creare contenuti marketing (post, email, materiali)?', tipo: 'si_no', peso: 2 },
+  // ===== SEZIONE 2: ORGANIZZAZIONE & PROCESSI (8 domande) =====
+  { id: 'q7', categoria: 'Organizzazione & Processi', domanda: 'I tuoi collaboratori sanno sempre dove trovare procedure e documenti aziendali?', tipo: 'si_no', peso: 3 },
+  { id: 'q8', categoria: 'Organizzazione & Processi', domanda: 'Hai processi documentati per le attivit\u00e0 critiche dell\'azienda?', tipo: 'si_no', peso: 3 },
+  {
+    id: 'q9',
+    categoria: 'Organizzazione & Processi',
+    domanda: 'Se dovessi raddoppiare il fatturato domani, quali processi andrebbero in crisi per primi?',
+    tipo: 'select',
+    peso: 4, // COLLO DI BOTTIGLIA
+    opzioni: ['Produzione/Erogazione servizio', 'Gestione ordini/preventivi', 'Comunicazione con clienti', 'Coordinamento team', 'Gestione fornitori', 'Amministrazione/fatturazione', 'Nessuno, siamo pronti']
+  },
+  {
+    id: 'q10',
+    categoria: 'Organizzazione & Processi',
+    domanda: 'Quanto tempo ci vuole per formare un nuovo collaboratore?',
+    tipo: 'select',
+    peso: 3,
+    opzioni: ['Meno di 1 settimana', '1-2 settimane', '2-4 settimane', '1-3 mesi', 'Oltre 3 mesi']
+  },
+  { id: 'q11', categoria: 'Organizzazione & Processi', domanda: 'Le riunioni di team terminano sempre con un piano d\'azione chiaro?', tipo: 'si_no', peso: 2 },
+  { id: 'q12', categoria: 'Organizzazione & Processi', domanda: 'Dedichi meno di 2 ore a settimana a coordinare il lavoro tra collaboratori?', tipo: 'si_no', peso: 3 },
+  { id: 'q13', categoria: 'Organizzazione & Processi', domanda: 'Perdi meno di 2 ore alla settimana in attivit\u00e0 ripetitive (mail standard, report, preventivi ripetitivi)?', tipo: 'si_no', peso: 3 },
+  {
+    id: 'q14',
+    categoria: 'Organizzazione & Processi',
+    domanda: 'Se tu o una persona chiave fosse assente per un mese, l\'azienda andrebbe in difficolt\u00e0?',
+    tipo: 'select',
+    peso: 4, // COLLO DI BOTTIGLIA
+    opzioni: ['S\u00ec, bloccherebbe tutto', 'S\u00ec, rallentamenti importanti', 'Parzialmente, alcune aree soffrirebbero', 'No, siamo organizzati per continuare']
+  },
 
-  // PILASTRO 3: Gestione Clienti & Vendite (5 domande)
-  { id: 'q12', categoria: 'Gestione Clienti', domanda: 'Hai un CRM dove registri tutti i contatti con clienti e prospect?', tipo: 'si_no', peso: 3 },
-  { id: 'q13', categoria: 'Gestione Clienti', domanda: 'Prepari un preventivo in meno di 30 minuti?', tipo: 'si_no', peso: 2 },
-  { id: 'q14', categoria: 'Gestione Clienti', domanda: 'I clienti ricevono follow-up automatici dopo un acquisto o richiesta?', tipo: 'si_no', peso: 2 },
-  { id: 'q15', categoria: 'Gestione Clienti', domanda: 'Sai quali clienti generano l\'80% del tuo fatturato?', tipo: 'si_no', peso: 3 },
-  { id: 'q16', categoria: 'Gestione Clienti', domanda: 'Riesci sempre a rispondere a tutte le richieste clienti entro 24 ore?', tipo: 'si_no', peso: 2 },
+  // ===== SEZIONE 3: ACQUISIZIONE CLIENTI & MARKETING (7 domande) =====
+  { id: 'q15', categoria: 'Acquisizione Clienti', domanda: 'Hai un sistema automatico per raccogliere contatti dal sito?', tipo: 'si_no', peso: 3 },
+  { id: 'q16', categoria: 'Acquisizione Clienti', domanda: 'Sai esattamente quale canale ti porta pi\u00f9 clienti nuovi?', tipo: 'si_no', peso: 3 },
+  {
+    id: 'q17',
+    categoria: 'Acquisizione Clienti',
+    domanda: 'Quanti nuovi contatti/lead qualificati ricevi mediamente al mese?',
+    tipo: 'select',
+    peso: 2,
+    opzioni: ['0-5', '6-15', '16-30', '31-50', 'Oltre 50']
+  },
+  { id: 'q18', categoria: 'Acquisizione Clienti', domanda: 'I lead che arrivano vengono contattati entro 24 ore?', tipo: 'si_no', peso: 3 },
+  {
+    id: 'q19',
+    categoria: 'Acquisizione Clienti',
+    domanda: 'Se domani ti arrivassero 10x i lead attuali, saresti in grado di gestirli?',
+    tipo: 'select',
+    peso: 4, // COLLO DI BOTTIGLIA / SCALABILIT\u00c0
+    opzioni: ['S\u00ec, facilmente', 'S\u00ec, con qualche difficolt\u00e0', 'No, andremmo in difficolt\u00e0', 'No, li perderemmo']
+  },
+  { id: 'q20', categoria: 'Acquisizione Clienti', domanda: 'Dedichi meno di 1 ora a settimana a creare contenuti marketing (post, email, materiali)?', tipo: 'si_no', peso: 2 },
+  { id: 'q21', categoria: 'Acquisizione Clienti', domanda: 'Hai landing page dedicate per campagne specifiche?', tipo: 'si_no', peso: 2 },
 
-  // PILASTRO 4: AI & Automazione (5 domande)
-  { id: 'q17', categoria: 'AI & Automazione', domanda: 'Usi l\'AI regolarmente per velocizzare attività quotidiane (scrivere email, riassumere riunioni)?', tipo: 'si_no', peso: 3 },
-  { id: 'q18', categoria: 'AI & Automazione', domanda: 'Hai almeno UN processo completamente automatizzato (email conferma, reminder, report)?', tipo: 'si_no', peso: 3 },
-  { id: 'q19', categoria: 'AI & Automazione', domanda: 'L\'AI ti aiuta a creare contenuti marketing (post, copy, email)?', tipo: 'si_no', peso: 2 },
-  { id: 'q20', categoria: 'AI & Automazione', domanda: 'Hai template o prompt AI pronti per attività ripetitive?', tipo: 'si_no', peso: 2 },
-  { id: 'q21', categoria: 'AI & Automazione', domanda: 'Hai provato almeno 3 strumenti AI diversi per il lavoro?', tipo: 'si_no', peso: 2 },
+  // ===== SEZIONE 4: GESTIONE CLIENTI & VENDITE (7 domande) =====
+  { id: 'q22', categoria: 'Gestione Clienti', domanda: 'Hai un CRM dove registri tutti i contatti con clienti e prospect?', tipo: 'si_no', peso: 3 },
+  {
+    id: 'q23',
+    categoria: 'Gestione Clienti',
+    domanda: 'Quanto tempo ci vuole mediamente per preparare un preventivo complesso?',
+    tipo: 'select',
+    peso: 2,
+    opzioni: ['Meno di 30 minuti', '30-60 minuti', '1-3 ore', '3-5 ore', 'Oltre 5 ore']
+  },
+  { id: 'q24', categoria: 'Gestione Clienti', domanda: 'I clienti ricevono follow-up automatici dopo acquisto/richiesta?', tipo: 'si_no', peso: 2 },
+  { id: 'q25', categoria: 'Gestione Clienti', domanda: 'Sai quali clienti generano l\'80% del tuo fatturato?', tipo: 'si_no', peso: 3 },
+  { id: 'q26', categoria: 'Gestione Clienti', domanda: 'Riesci sempre a rispondere a richieste clienti entro 24 ore?', tipo: 'si_no', peso: 2 },
+  {
+    id: 'q27',
+    categoria: 'Gestione Clienti',
+    domanda: 'Se il volume di clienti triplicasse improvvisamente, il servizio clienti andrebbe in tilt?',
+    tipo: 'select',
+    peso: 4, // COLLO DI BOTTIGLIA / SCALABILIT\u00c0
+    opzioni: ['S\u00ec, collasserebbe', 'S\u00ec, forte rallentamento', 'Parzialmente, qualche ritardo', 'No, siamo scalabili']
+  },
+  { id: 'q28', categoria: 'Gestione Clienti', domanda: 'Hai un sistema per misurare la soddisfazione clienti?', tipo: 'si_no', peso: 2 },
 
-  // PILASTRO 5: Dati & Misurazione (4 domande)
-  { id: 'q22', categoria: 'Dati & Misurazione', domanda: 'Monitori almeno 3 KPI chiave (lead, conversioni, margini) regolarmente?', tipo: 'si_no', peso: 3 },
-  { id: 'q23', categoria: 'Dati & Misurazione', domanda: 'Hai visibilità in tempo reale sui numeri chiave dell\'azienda?', tipo: 'si_no', peso: 3 },
-  { id: 'q24', categoria: 'Dati & Misurazione', domanda: 'Prendi decisioni importanti basandoti principalmente su dati concreti (vs sensazioni)?', tipo: 'si_no', peso: 2 },
-  { id: 'q25', categoria: 'Dati & Misurazione', domanda: 'Dedichi meno di 1 ora a settimana ad analizzare report e dati?', tipo: 'si_no', peso: 2 },
+  // ===== SEZIONE 5: AI & AUTOMAZIONE (7 domande) =====
+  { id: 'q29', categoria: 'AI & Automazione', domanda: 'Usi l\'AI regolarmente per velocizzare attivit\u00e0 quotidiane (scrivere email, riassumere riunioni)?', tipo: 'si_no', peso: 3 },
+  { id: 'q30', categoria: 'AI & Automazione', domanda: 'Hai almeno UN processo completamente automatizzato (email conferma, reminder, report)?', tipo: 'si_no', peso: 3 },
+  { id: 'q31', categoria: 'AI & Automazione', domanda: 'L\'AI ti aiuta a creare contenuti marketing (post, copy, email)?', tipo: 'si_no', peso: 2 },
+  { id: 'q32', categoria: 'AI & Automazione', domanda: 'Hai template o prompt AI pronti per attivit\u00e0 ripetitive?', tipo: 'si_no', peso: 2 },
+  {
+    id: 'q33',
+    categoria: 'AI & Automazione',
+    domanda: 'Quanti strumenti/software AI diversi hai provato per il lavoro?',
+    tipo: 'select',
+    peso: 2,
+    opzioni: ['Nessuno', '1-2', '3-5', '6-10', 'Oltre 10']
+  },
+  { id: 'q34', categoria: 'AI & Automazione', domanda: 'L\'azienda utilizza software gestionali integrati tra loro (evitando doppia digitazione)?', tipo: 'si_no', peso: 3 },
+  {
+    id: 'q35',
+    categoria: 'AI & Automazione',
+    domanda: 'Se dovessi automatizzare 1 processo domani, quale sceglieresti?',
+    tipo: 'select',
+    peso: 2,
+    opzioni: ['Email e comunicazioni', 'Preventivi/offerte', 'Report e analisi', 'Fatturazione/amministrazione', 'Customer care', 'Gestione ordini', 'Non so da dove iniziare']
+  },
+
+  // ===== SEZIONE 6: DATI & MISURAZIONE (5 domande) =====
+  { id: 'q36', categoria: 'Dati & Misurazione', domanda: 'Monitori almeno 3 KPI chiave (lead, conversioni, margini) regolarmente?', tipo: 'si_no', peso: 3 },
+  { id: 'q37', categoria: 'Dati & Misurazione', domanda: 'Hai visibilit\u00e0 in tempo reale sui numeri chiave dell\'azienda?', tipo: 'si_no', peso: 3 },
+  { id: 'q38', categoria: 'Dati & Misurazione', domanda: 'Prendi decisioni importanti basandoti principalmente su dati concreti (vs sensazioni)?', tipo: 'si_no', peso: 2 },
+  { id: 'q39', categoria: 'Dati & Misurazione', domanda: 'Dedichi meno di 1 ora a settimana ad analizzare report e dati?', tipo: 'si_no', peso: 2 },
+  {
+    id: 'q40',
+    categoria: 'Dati & Misurazione',
+    domanda: 'Quali dati vorresti avere sempre a portata di mano ma non hai?',
+    tipo: 'select',
+    peso: 2,
+    opzioni: ['Margini reali per prodotto/servizio', 'Tempo effettivo speso per progetto/cliente', 'Performance commerciale in tempo reale', 'Costi operativi dettagliati', 'Produttivit\u00e0 del team', 'Costi di acquisizione cliente', 'Nessuno, ho gi\u00e0 tutto']
+  },
 ];
 
 const QUESTIONS_PER_PAGE = 5;
@@ -109,11 +239,24 @@ export default function TestMaturitaDigitalePage() {
   }, [currentPage, currentStep]);
 
   const calculateResults = () => {
+    // 1. ESTRAI PROFILAZIONE (peso 0)
+    const profilazione = {
+      ruolo: answers['q1'] || 'Non specificato',
+      settore: answers['q2'] || 'Non specificato',
+      collaboratori: answers['q3'] || 'Non specificato',
+      eta_azienda: answers['q4'] || 'Non specificato',
+      obiettivo_12_mesi: answers['q5'] || 'Non specificato',
+      tempo_ripetitivo: answers['q6'] || 'Non specificato'
+    };
+
+    // 2. CALCOLA SCORE SOLO PER DOMANDE CON PESO > 0
     const scoresPerCategory: Record<string, number> = {};
     let totalScore = 0;
     let maxScore = 0;
 
     questions.forEach((q) => {
+      if (q.peso === 0) return; // Skip profilazione
+
       const answer = answers[q.id];
       const category = q.categoria;
 
@@ -123,75 +266,182 @@ export default function TestMaturitaDigitalePage() {
 
       maxScore += q.peso;
 
-      if (answer === true || answer === 'si') {
+      // Score per sì/no
+      if (q.tipo === 'si_no' && answer === true) {
         scoresPerCategory[category] += q.peso;
         totalScore += q.peso;
       }
+
+      // Score per select/radio - valutiamo risposte positive
+      if ((q.tipo === 'select' || q.tipo === 'radio') && answer) {
+        // Risposte che indicano situazione positiva
+        const positiveAnswers = [
+          'Nessuno, siamo pronti',
+          'No, siamo organizzati per continuare',
+          'Sì, facilmente',
+          'No, siamo scalabili',
+          'Oltre 50',
+          'Meno di 1 settimana',
+          '1-2 settimane',
+          'Meno di 30 minuti',
+          '30-60 minuti',
+          '6-10',
+          'Oltre 10',
+          '3-5',
+          'Nessuno, ho già tutto'
+        ];
+
+        if (positiveAnswers.includes(answer)) {
+          scoresPerCategory[category] += q.peso;
+          totalScore += q.peso;
+        } else if (answer.includes('Parzialmente') || answer.includes('qualche difficoltà')) {
+          scoresPerCategory[category] += q.peso * 0.5; // Mezzo punteggio
+          totalScore += q.peso * 0.5;
+        }
+      }
     });
 
-    const percentage = (totalScore / maxScore) * 100;
+    const percentage = maxScore > 0 ? (totalScore / maxScore) * 100 : 0;
 
-    // Livello basato su score
-    let livello = 'Iniziale';
-    let livelloDescription = 'Primi Passi Digitali';
-    if (percentage >= 80) {
-      livello = 'Eccellente';
-      livelloDescription = 'Leader Digitale';
-    } else if (percentage >= 60) {
-      livello = 'Avanzato';
-      livelloDescription = 'Digitalmente Maturo';
-    } else if (percentage >= 40) {
-      livello = 'Intermedio';
-      livelloDescription = 'In Crescita';
-    } else if (percentage >= 20) {
-      livello = 'Base';
-      livelloDescription = 'Fondamenta Digitali';
-    }
-
-    // === 1. DIAGNOSI PERSONALIZZATA ===
-    const diagnosi = generateDiagnosi(percentage, scoresPerCategory, livelloDescription);
-
-    // === 2. QUICK WINS (3 azioni immediate) ===
-    const quickWins = generateQuickWins(scoresPerCategory, answers);
-
-    // === 3. PIANO 30-60-90 GIORNI ===
-    const piano306090 = generatePiano306090(percentage, scoresPerCategory);
-
-    // === 4. ROI STIMATO ===
-    const roiStimato = calculateROI(percentage, scoresPerCategory);
-
-    // === 5. BENCHMARK ===
-    const benchmark = generateBenchmark(scoresPerCategory);
-
-    // === 6. ROADMAP PER PILASTRO ===
-    const roadmapPilastri = generateRoadmapPilastri(scoresPerCategory);
-
-    // === 7. RISORSE BONUS ===
-    const risorseBonus = [
-      'Checklist "20 Processi Da Automatizzare"',
-      'Template Prompt AI per Email & Post',
-      'Guida "Come Scegliere un CRM in 5 Step"',
-      'Calcolatore ROI Digitalizzazione',
-      'Video "Dashboard KPI in 30 Minuti"'
-    ];
-
-    // === 8. NEXT STEPS ===
-    const nextSteps = {
-      immediato: 'Scarica il toolkit gratuito e applica i 3 Quick Wins',
-      settimana: 'Prenota Digital Checkup Gratuito (1h in azienda)',
-      mese: 'Workshop "AI in Azienda" - 12 Dicembre 2025'
+    // 3. IDENTIFICA COLLI DI BOTTIGLIA CRITICI
+    const colliBottiglia = {
+      q9_crescita_processo: answers['q9'] || 'Non risposto',
+      q14_dipendenza_persone: answers['q14'] || 'Non risposto',
+      q19_scalabilita_lead: answers['q19'] || 'Non risposto',
+      q27_scalabilita_clienti: answers['q27'] || 'Non risposto'
     };
 
-    // Raccomandazioni legacy (per compatibilità)
+    // Identifica il collo di bottiglia primario
+    let colloBottigliaPrimario = 'Non identificato';
+    if (colliBottiglia.q9_crescita_processo && colliBottiglia.q9_crescita_processo !== 'Nessuno, siamo pronti' && colliBottiglia.q9_crescita_processo !== 'Non risposto') {
+      colloBottigliaPrimario = colliBottiglia.q9_crescita_processo;
+    } else if (colliBottiglia.q14_dipendenza_persone && (colliBottiglia.q14_dipendenza_persone.includes('bloccherebbe') || colliBottiglia.q14_dipendenza_persone.includes('rallentamenti importanti'))) {
+      colloBottigliaPrimario = 'Dipendenza da persone chiave';
+    } else if (colliBottiglia.q19_scalabilita_lead && (colliBottiglia.q19_scalabilita_lead.includes('No') || colliBottiglia.q19_scalabilita_lead.includes('difficoltà'))) {
+      colloBottigliaPrimario = 'Gestione lead/acquisizione clienti';
+    } else if (colliBottiglia.q27_scalabilita_clienti && (colliBottiglia.q27_scalabilita_clienti.includes('collasserebbe') || colliBottiglia.q27_scalabilita_clienti.includes('rallentamento'))) {
+      colloBottigliaPrimario = 'Servizio clienti e gestione volumi';
+    }
+
+    // 4. CALCOLA CAPACITÀ DI CRESCITA STIMATA
+    let capacitaCrescita = '+100%+'; // Default ottimista
+    let readyForGrowth = true;
+
+    if (colliBottiglia.q9_crescita_processo !== 'Nessuno, siamo pronti') readyForGrowth = false;
+    if (colliBottiglia.q14_dipendenza_persone && colliBottiglia.q14_dipendenza_persone.includes('bloccherebbe')) readyForGrowth = false;
+    if (colliBottiglia.q19_scalabilita_lead && colliBottiglia.q19_scalabilita_lead.includes('perderemmo')) readyForGrowth = false;
+    if (colliBottiglia.q27_scalabilita_clienti && colliBottiglia.q27_scalabilita_clienti.includes('collasserebbe')) readyForGrowth = false;
+
+    if (!readyForGrowth) {
+      capacitaCrescita = '+30%';
+    } else if (percentage < 40) {
+      capacitaCrescita = '+60%';
+    }
+
+    // 5. LIVELLO E DESCRIZIONE
+    let livello = 'Iniziale';
+    let livelloDescription = 'Primi Passi - Fondamenta da Costruire';
+    if (percentage >= 80) {
+      livello = 'Eccellente';
+      livelloDescription = 'Leader Digitale - Best in Class';
+    } else if (percentage >= 60) {
+      livello = 'Avanzato';
+      livelloDescription = 'Digitalmente Maturo - Ottime Basi';
+    } else if (percentage >= 40) {
+      livello = 'Intermedio';
+      livelloDescription = 'In Crescita - Fondamenta da Consolidare';
+    } else if (percentage >= 20) {
+      livello = 'Base';
+      livelloDescription = 'Fondamenta Digitali - Buon Inizio';
+    }
+
+    // 6. DIAGNOSI PERSONALIZZATA (QUALITATIVA, NO €)
+    const diagnosi = {
+      livello: livelloDescription,
+      collo_bottiglia_primario: colloBottigliaPrimario,
+      capacita_crescita_attuale: capacitaCrescita,
+      opportunita: {
+        tempo_liberabile: percentage < 40 ? '10-15 ore/settimana' : percentage < 60 ? '6-10 ore/settimana' : '3-6 ore/settimana',
+        valore_tempo: percentage < 40 ? 'Molto Elevato' : percentage < 60 ? 'Elevato' : 'Significativo',
+        accelerazione_decisioni: percentage < 40 ? '50-70% più veloci' : percentage < 60 ? '30-50% più veloci' : '20-30% più veloci',
+        riduzione_errori: 'Significativa',
+        note_profilo: `Profilo: ${profilazione.settore} con ${profilazione.collaboratori}. Obiettivo: ${profilazione.obiettivo_12_mesi}`
+      }
+    };
+
+    // 7. PRIORITÀ D'AZIONE (vs Quick Wins - basato su colli di bottiglia)
+    const prioritaAzione = generatePrioritaAzione(colliBottiglia, scoresPerCategory, answers, profilazione);
+
+    // 8. ROADMAP SCALABILITÀ
+    const roadmapScalabilita = {
+      capacita_attuale: capacitaCrescita,
+      fase1: {
+        titolo: 'Risolvi Colli di Bottiglia Critici',
+        durata: '1-2 mesi',
+        target_crescita: '+60%',
+        azioni: colloBottigliaPrimario !== 'Non identificato'
+          ? [`Risolvi: ${colloBottigliaPrimario}`, 'Automatizza processi critici', 'Documenta procedure chiave']
+          : ['Digitalizza processi base', 'Implementa CRM', 'Automatizza comunicazioni']
+      },
+      fase2: {
+        titolo: 'Automatizza Processi Ripetitivi',
+        durata: '3-4 mesi',
+        target_crescita: '+100%',
+        azioni: ['AI per contenuti e comunicazioni', 'Dashboard KPI real-time', 'Integrazione sistemi']
+      },
+      fase3: {
+        titolo: 'Scala con AI e Automazione',
+        durata: '5-6 mesi',
+        target_crescita: '+200%+',
+        azioni: ['Processi completamente scalabili', 'AI avanzata operativa', 'Team autonomo e organizzato']
+      }
+    };
+
+    // 9. INVESTIMENTO SUGGERITO (QUALITATIVO, NO €)
+    const investimentoSuggerito = {
+      livello: percentage < 40 ? 'MEDIO-ALTO' : percentage < 60 ? 'MEDIO' : 'CONTENUTO',
+      descrizione: percentage < 40
+        ? 'Setup iniziale significativo ma con ritorni rapidi e tangibili'
+        : percentage < 60
+          ? 'Investimento mirato su processi specifici'
+          : 'Ottimizzazioni e fine-tuning',
+      tempi_rientro: percentage < 40 ? '4-8 mesi indicativo' : percentage < 60 ? '3-6 mesi indicativo' : '2-4 mesi indicativo',
+      note: 'I tempi sono indicativi e dipendono dall\'impegno e dalla priorità data all\'implementazione'
+    };
+
+    // 10. BENCHMARK SETTORE (personalizzato)
+    const benchmark = generateBenchmarkSettore(scoresPerCategory, profilazione.settore);
+
+    // 11. ROADMAP PER PILASTRO
+    const roadmapPilastri = generateRoadmapPilastri(scoresPerCategory, colloBottigliaPrimario);
+
+    // 12. RISORSE BONUS (personalizzate per profilo)
+    const risorseBonus = generateRisorseBonus(profilazione);
+
+    // 13. NEXT STEPS
+    const nextSteps = {
+      questa_settimana: [
+        'Scarica il toolkit specifico per il tuo settore',
+        colloBottigliaPrimario !== 'Non identificato' ? `Identifica soluzioni per: ${colloBottigliaPrimario}` : 'Rivedi i processi critici',
+        'Applica Priorità d\'Azione #1'
+      ],
+      entro_15_giorni: [
+        'Prenota Check-up Operativo Gratuito (1h in azienda)',
+        'Workshop "AI in Azienda" - 12 Dicembre 2025'
+      ]
+    };
+
+    // Raccomandazioni legacy
     const raccomandazioni: string[] = [];
     Object.entries(scoresPerCategory).forEach(([category, score]) => {
+      if (category === 'Profilazione') return;
       const categoryMax = questions
-        .filter((q) => q.categoria === category)
+        .filter((q) => q.categoria === category && q.peso > 0)
         .reduce((sum, q) => sum + q.peso, 0);
-      const categoryPercentage = (score / categoryMax) * 100;
+      const categoryPercentage = categoryMax > 0 ? (score / categoryMax) * 100 : 0;
 
       if (categoryPercentage < 50) {
-        raccomandazioni.push(`Migliora ${category}: hai completato solo il ${categoryPercentage.toFixed(0)}% delle attività`);
+        raccomandazioni.push(`Area di miglioramento prioritaria: ${category} (${categoryPercentage.toFixed(0)}% maturità)`);
       }
     });
 
@@ -201,163 +451,117 @@ export default function TestMaturitaDigitalePage() {
       livello_maturita: livello,
       livello_description: livelloDescription,
       percentage,
+      profilazione,
+      colli_bottiglia: colliBottiglia,
+      collo_bottiglia_primario: colloBottigliaPrimario,
+      capacita_crescita: capacitaCrescita,
       diagnosi,
-      quick_wins: quickWins,
-      piano_30_60_90: piano306090,
-      roi_stimato: roiStimato,
+      priorita_azione: prioritaAzione,
+      roadmap_scalabilita: roadmapScalabilita,
+      investimento_suggerito: investimentoSuggerito,
       benchmark,
       roadmap_pilastri: roadmapPilastri,
       risorse_bonus: risorseBonus,
       next_steps: nextSteps,
-      raccomandazioni, // Legacy
+      raccomandazioni,
     };
   };
 
-  // === HELPER FUNCTIONS PER OUTPUT PREMIUM ===
+  // === HELPER FUNCTIONS NUOVE ===
 
-  const generateDiagnosi = (percentage: number, scores: Record<string, number>, livelloDesc: string) => {
-    const oreLiberabili = Math.round(8 + (100 - percentage) * 0.12); // 8-20 ore
-    const costoOppMensile = oreLiberabili * 4 * 35; // €35/ora per 4 settimane
-    const leadIncrease = Math.round(20 + (100 - percentage) * 0.4); // 20-60%
+  const generatePrioritaAzione = (colli: any, scores: Record<string, number>, answers: Record<string, any>, profilo: any) => {
+    const priorita = [];
 
-    return {
-      livello: livelloDesc,
-      opportunita: {
-        ore_liberabili: `${oreLiberabili}-${oreLiberabili + 4} ore/settimana`,
-        costo_opportunita: `€${costoOppMensile.toLocaleString()}-€${(costoOppMensile + 500).toLocaleString()}/mese`,
-        lead_increase: `+${leadIncrease}% lead qualificati`,
-        errori_reduction: '60%'
-      }
-    };
-  };
-
-  const generateQuickWins = (scores: Record<string, number>, answers: Record<string, any>) => {
-    const wins = [];
-
-    // Quick Win 1: Automazione base
-    if (!answers['q18']) {
-      wins.push({
-        titolo: 'Automatizza Conferme Ordine/Richieste',
-        tempo_setup: '2 ore',
-        risparmio: '4 ore/settimana',
-        come: 'Template email automatiche con trigger'
+    // PRIORITÀ 1 - CRITICA: Basata su collo di bottiglia primario
+    if (colli.q9_crescita_processo && colli.q9_crescita_processo !== 'Nessuno, siamo pronti') {
+      priorita.push({
+        livello: 'CRITICA',
+        problema: `Area che andrebbe in crisi con crescita: ${colli.q9_crescita_processo}`,
+        azione: 'Digitalizza e automatizza questo processo',
+        tempo_implementazione: '2-3 settimane',
+        impatto: 'Elimina il collo di bottiglia principale',
+        come: 'Software gestionale + automazioni workflow'
       });
     }
 
-    // Quick Win 2: Lead acquisition
-    if (!answers['q7'] || !answers['q9']) {
-      wins.push({
-        titolo: 'Landing Page Servizio Principale',
-        tempo_setup: '3 ore',
-        impatto: '+15% conversioni',
-        come: 'Pagina focalizzata con form raccolta lead'
+    // PRIORITÀ 2 - ALTA: Dipendenza persone
+    if (colli.q14_dipendenza_persone && colli.q14_dipendenza_persone.includes('bloccherebbe')) {
+      priorita.push({
+        livello: 'ALTA',
+        problema: 'Dipendenza critica da persone chiave',
+        azione: 'Documenta processi e crea backup per ruoli chiave',
+        tempo_implementazione: '3-4 settimane',
+        impatto: 'Riduce rischio blocco operativo',
+        come: 'Procedure documentate + formazione incrociata'
       });
     }
 
-    // Quick Win 3: Organizzazione
-    if (!answers['q1'] || !answers['q4']) {
-      wins.push({
-        titolo: 'Centralizza Documenti Aziendali',
-        tempo_setup: '4 ore',
-        risparmio: '6 ore/settimana ricerche',
-        come: 'Google Drive strutturato + naming convention'
+    // PRIORITÀ 3 - MEDIA: Automazioni base
+    if (!answers['q30'] || answers['q30'] === false) {
+      priorita.push({
+        livello: 'MEDIA',
+        problema: 'Mancanza automazioni base',
+        azione: 'Implementa prima automazione (email/report)',
+        tempo_implementazione: '1-2 settimane',
+        impatto: 'Libera tempo immediato',
+        come: 'Email marketing automation o report automatici'
       });
     }
 
-    // Fallback se tutto già fatto
-    if (wins.length === 0) {
-      wins.push(
-        { titolo: 'Ottimizza CRM', tempo_setup: '2 ore', risparmio: '3 ore/settimana', come: 'Automazioni follow-up' },
-        { titolo: 'Dashboard KPI', tempo_setup: '3 ore', impatto: 'Decisioni 2x più veloci', come: 'Google Data Studio base' },
-        { titolo: 'AI per Contenuti', tempo_setup: '1 ora', risparmio: '5 ore/settimana', come: 'Template ChatGPT post/email' }
-      );
-    }
-
-    return wins.slice(0, 3);
+    return priorita.slice(0, 3); // Max 3 priorità
   };
 
-  const generatePiano306090 = (percentage: number, scores: Record<string, number>) => {
-    return {
-      mese1: {
-        focus: 'Fondamenta',
-        obiettivi: ['CRM base attivo', '2 automazioni email', 'Landing page pilota'],
-        target: '+20% efficienza'
-      },
-      mese2: {
-        focus: 'Accelerazione',
-        obiettivi: ['AI per contenuti marketing', 'Dashboard KPI real-time', 'Processo lead nurturing'],
-        target: '+10 lead qualificati/mese'
-      },
-      mese3: {
-        focus: 'Scala',
-        obiettivi: ['Chatbot FAQ clienti', 'Preventivi semi-automatizzati', '5 processi documentati'],
-        target: `-${Math.round(10 + percentage * 0.05)} ore lavoro ripetitivo/sett`
-      }
-    };
-  };
-
-  const calculateROI = (percentage: number, scores: Record<string, number>) => {
-    const oreLiberateSettimana = Math.round(8 + (100 - percentage) * 0.12);
-    const costoOraWorking = 35;
-    const risparmiAnnui = oreLiberateSettimana * 52 * costoOraWorking;
-    const maggioriVendite = Math.round(risparmiAnnui * 0.7); // 70% dei risparmi
-    const menoErrori = 3000;
-    const totaleBenefici = risparmiAnnui + maggioriVendite + menoErrori;
-    const investimento = 4000; // Medio
-    const roiPercentage = Math.round(((totaleBenefici - investimento) / investimento) * 100);
-    const paybackMesi = Math.round((investimento / (totaleBenefici / 12)) * 10) / 10;
-
-    return {
-      investimento: `€${investimento.toLocaleString()}`,
-      risparmi_annui: `€${risparmiAnnui.toLocaleString()}`,
-      maggiori_vendite: `€${maggioriVendite.toLocaleString()}`,
-      meno_errori: `€${menoErrori.toLocaleString()}`,
-      totale_benefici: `€${totaleBenefici.toLocaleString()}`,
-      roi_percentage: `${roiPercentage}%`,
-      payback_mesi: `${paybackMesi} mesi`
-    };
-  };
-
-  const generateBenchmark = (scores: Record<string, number>) => {
-    // Calcola percentuali per categoria
+  const generateBenchmarkSettore = (scores: Record<string, number>, settore: string) => {
     const benchmarkData: Record<string, any> = {};
 
     Object.entries(scores).forEach(([category, score]) => {
+      if (category === 'Profilazione') return;
+
       const categoryMax = questions
-        .filter((q) => q.categoria === category)
+        .filter((q) => q.categoria === category && q.peso > 0)
         .reduce((sum, q) => sum + q.peso, 0);
-      const yourScore = Math.round((score / categoryMax) * 100);
+      const yourScore = categoryMax > 0 ? Math.round((score / categoryMax) * 100) : 0;
 
       benchmarkData[category] = {
         tuo: yourScore,
-        media_settore: Math.min(yourScore + 15, 65), // Media settore leggermente più alta
-        top_10: Math.min(yourScore + 35, 90) // Top 10% significativamente più alto
+        media_settore: Math.min(yourScore + 12, 58), // Media settore
+        top_10: Math.min(yourScore + 28, 85) // Top 10%
       };
     });
+
+    benchmarkData.settore = settore;
+    benchmarkData.note = `Le aziende nel Top 10% del settore ${settore} gestiscono mediamente il 3x dei clienti con lo stesso team e crescono 2.5x più velocemente`;
 
     return benchmarkData;
   };
 
-  const generateRoadmapPilastri = (scores: Record<string, number>) => {
+  const generateRoadmapPilastri = (scores: Record<string, number>, colloPrimario: string) => {
     const roadmap: any[] = [];
 
     Object.entries(scores).forEach(([category, score]) => {
+      if (category === 'Profilazione') return;
+
       const categoryMax = questions
-        .filter((q) => q.categoria === category)
+        .filter((q) => q.categoria === category && q.peso > 0)
         .reduce((sum, q) => sum + q.peso, 0);
-      const percentage = Math.round((score / categoryMax) * 100);
+      const percentage = categoryMax > 0 ? Math.round((score / categoryMax) * 100) : 0;
 
       let priorita = 'BASSA';
       let icon = '✅';
-      if (percentage < 30) {
+      if (percentage < 25) {
         priorita = 'CRITICA';
         icon = '❌';
-      } else if (percentage < 50) {
+      } else if (percentage < 45) {
         priorita = 'ALTA';
         icon = '⚠️';
-      } else if (percentage < 70) {
+      } else if (percentage < 65) {
         priorita = 'MEDIA';
         icon = '⚡';
+      }
+
+      // Se il collo di bottiglia primario è in questa categoria, alza priorità
+      if (colloPrimario.toLowerCase().includes(category.toLowerCase()) && priorita !== 'CRITICA') {
+        priorita = 'ALTA';
       }
 
       roadmap.push({
@@ -365,27 +569,54 @@ export default function TestMaturitaDigitalePage() {
         punteggio: percentage,
         priorita,
         icon,
-        azioni: getAzioniPerPilastro(category, percentage)
+        azioni_consigliate: getAzioniPerPilastro(category, percentage, colloPrimario)
       });
     });
 
     // Ordina per priorità
-    return roadmap.sort((a, b) => {
-      const priorityOrder = { 'CRITICA': 0, 'ALTA': 1, 'MEDIA': 2, 'BASSA': 3 };
-      return priorityOrder[a.priorita as keyof typeof priorityOrder] - priorityOrder[b.priorita as keyof typeof priorityOrder];
-    });
+    const priorityOrder = { 'CRITICA': 0, 'ALTA': 1, 'MEDIA': 2, 'BASSA': 3 };
+    return roadmap.sort((a, b) =>
+      priorityOrder[a.priorita as keyof typeof priorityOrder] - priorityOrder[b.priorita as keyof typeof priorityOrder]
+    );
   };
 
-  const getAzioniPerPilastro = (category: string, percentage: number) => {
+  const getAzioniPerPilastro = (category: string, percentage: number, colloPrimario: string) => {
     const azioni: Record<string, string[]> = {
-      'Organizzazione & Processi': ['Documenta top 3 processi', 'Centralizza file', 'Automatizza report'],
-      'Acquisizione Clienti': ['Landing page', 'Form automatici', 'Contenuti AI'],
-      'Gestione Clienti': ['CRM attivo', 'Preventivi template', 'Follow-up automatici'],
-      'AI & Automazione': ['Formazione AI base', '1° automazione', 'Template prompt'],
-      'Dati & Misurazione': ['Dashboard real-time', 'Report automatici', 'KPI tracking']
+      'Organizzazione & Processi':
+        percentage < 40
+          ? ['Documenta top 5 processi critici', 'Digitalizza gestione documenti', 'Crea checklist operative']
+          : ['Automatizza report interni', 'Ottimizza workflow esistenti', 'Training team su processi'],
+      'Acquisizione Clienti':
+        percentage < 40
+          ? ['Implementa form lead automatici', 'Crea landing page pilota', 'Setup tracking sorgenti']
+          : ['Ottimizza conversione lead', 'Automatizza nurturing', 'A/B test campagne'],
+      'Gestione Clienti':
+        percentage < 40
+          ? ['Attiva CRM base', 'Template preventivi', 'Follow-up automatici post-vendita']
+          : ['Ottimizza pipeline vendite', 'Segmenta clientela', 'Upselling automatizzato'],
+      'AI & Automazione':
+        percentage < 40
+          ? ['Formazione AI essenziale team', 'Prima automazione processo', 'Template prompt base']
+          : ['AI avanzata per analisi', 'Automazioni multi-step', 'Integrazione AI nei processi'],
+      'Dati & Misurazione':
+        percentage < 40
+          ? ['Dashboard KPI essenziali', 'Report automatici settimanali', 'Definisci metriche chiave']
+          : ['Analytics predittiva', 'Data-driven decision making', 'Dashboard real-time avanzate']
     };
 
-    return azioni[category] || ['Migliora processi', 'Digitalizza workflow', 'Automatizza attività'];
+    return azioni[category] || ['Migliora processi esistenti', 'Digitalizza workflow', 'Automatizza task ripetitivi'];
+  };
+
+  const generateRisorseBonus = (profilo: any) => {
+    const risorse = [
+      `Checklist Colli di Bottiglia per ${profilo.settore}`,
+      `Template Processi Scalabili per aziende ${profilo.collaboratori}`,
+      'Guida AI: Da 0 a Operativo in 30 Giorni',
+      'Dashboard KPI Essenziali (template)',
+      'Calcolatore Capacità di Crescita'
+    ];
+
+    return risorse;
   };
 
   const submitTest = async () => {
@@ -410,10 +641,14 @@ export default function TestMaturitaDigitalePage() {
           livello_maturita: calculatedResults.livello_maturita,
           livello_description: calculatedResults.livello_description,
           percentage: calculatedResults.percentage,
+          profilazione: calculatedResults.profilazione,
+          colli_bottiglia: calculatedResults.colli_bottiglia,
+          collo_bottiglia_primario: calculatedResults.collo_bottiglia_primario,
+          capacita_crescita: calculatedResults.capacita_crescita,
           diagnosi: calculatedResults.diagnosi,
-          quick_wins: calculatedResults.quick_wins,
-          piano_30_60_90: calculatedResults.piano_30_60_90,
-          roi_stimato: calculatedResults.roi_stimato,
+          priorita_azione: calculatedResults.priorita_azione,
+          roadmap_scalabilita: calculatedResults.roadmap_scalabilita,
+          investimento_suggerito: calculatedResults.investimento_suggerito,
           benchmark: calculatedResults.benchmark,
           roadmap_pilastri: calculatedResults.roadmap_pilastri,
           risorse_bonus: calculatedResults.risorse_bonus,
@@ -462,10 +697,10 @@ export default function TestMaturitaDigitalePage() {
 
           <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12">
             <h1 className="text-4xl font-bold mb-6 text-center font-heading">
-              AI Readiness Scan
+              Check-up Digitale Aziendale
             </h1>
             <p className="text-center text-gray-600 mb-8 text-lg">
-              Scopri in 7 minuti come l'AI può liberare tempo, acquisire clienti e ridurre sprechi nella tua azienda
+              Scopri in 10 minuti il livello di digitalizzazione, i colli di bottiglia e la capacità di scala della tua azienda
             </p>
 
             <form onSubmit={handleSubmit(onSubmitForm, (errors) => {
@@ -560,60 +795,104 @@ export default function TestMaturitaDigitalePage() {
 
             {/* Questions for Current Page */}
             <div className="space-y-4 mb-6">
-              {currentPageQuestions.map((question, index) => (
-                <div
-                  key={question.id}
-                  className={`bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-l-4 ${answers[question.id] === true
-                    ? 'border-l-green-500 bg-green-50/20'
-                    : answers[question.id] === false
-                      ? 'border-l-red-500 bg-red-50/20'
+              {currentPageQuestions.map((question, index) => {
+                const answer = answers[question.id];
+                const isAnswered = answer !== undefined;
+
+                return (
+                  <div
+                    key={question.id}
+                    className={`bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-l-4 ${isAnswered
+                      ? 'border-l-green-500 bg-green-50/20'
                       : 'border-l-purple-500'
-                    }`}
-                >
-                  <div className="p-4">
-                    {/* Question Number & Category */}
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-xs font-bold text-purple-600 bg-purple-100 px-2 py-0.5 rounded">
-                        {currentPage * QUESTIONS_PER_PAGE + index + 1}
-                      </span>
-                      <span className="text-xs text-gray-500 font-medium">{question.categoria}</span>
-                    </div>
-
-                    {/* Question Text */}
-                    <h3 className="text-sm font-semibold text-gray-800 mb-3 leading-snug">
-                      {question.domanda}
-                    </h3>
-
-                    {/* Answer Buttons */}
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => handleAnswer(question.id, true)}
-                        className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 transform hover:scale-[1.02] ${answers[question.id] === true
-                          ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-md'
-                          : 'bg-gray-50 hover:bg-green-50 text-gray-700 border border-gray-200 hover:border-green-300'
-                          }`}
-                      >
-                        <span className="flex items-center justify-center gap-1.5">
-                          <span className="text-base">✓</span>
-                          <span>Sì</span>
+                      }`}
+                  >
+                    <div className="p-4">
+                      {/* Question Number & Category */}
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-xs font-bold text-purple-600 bg-purple-100 px-2 py-0.5 rounded">
+                          {currentPage * QUESTIONS_PER_PAGE + index + 1}
                         </span>
-                      </button>
-                      <button
-                        onClick={() => handleAnswer(question.id, false)}
-                        className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 transform hover:scale-[1.02] ${answers[question.id] === false
-                          ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-md'
-                          : 'bg-gray-50 hover:bg-red-50 text-gray-700 border border-gray-200 hover:border-red-300'
-                          }`}
-                      >
-                        <span className="flex items-center justify-center gap-1.5">
-                          <span className="text-base">✗</span>
-                          <span>No</span>
-                        </span>
-                      </button>
+                        <span className="text-xs text-gray-500 font-medium">{question.categoria}</span>
+                      </div>
+
+                      {/* Question Text */}
+                      <h3 className="text-sm font-semibold text-gray-800 mb-3 leading-snug">
+                        {question.domanda}
+                      </h3>
+
+                      {/* Answer Input - CONDIZIONALE  SUL TIPO */}
+                      {question.tipo === 'si_no' && (
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleAnswer(question.id, true)}
+                            className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 transform hover:scale-[1.02] ${answer === true
+                              ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-md'
+                              : 'bg-gray-50 hover:bg-green-50 text-gray-700 border border-gray-200 hover:border-green-300'
+                              }`}
+                          >
+                            <span className="flex items-center justify-center gap-1.5">
+                              <span className="text-base">✓</span>
+                              <span>Sì</span>
+                            </span>
+                          </button>
+                          <button
+                            onClick={() => handleAnswer(question.id, false)}
+                            className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 transform hover:scale-[1.02] ${answer === false
+                              ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-md'
+                              : 'bg-gray-50 hover:bg-red-50 text-gray-700 border border-gray-200 hover:border-red-300'
+                              }`}
+                          >
+                            <span className="flex items-center justify-center gap-1.5">
+                              <span className="text-base">✗</span>
+                              <span>No</span>
+                            </span>
+                          </button>
+                        </div>
+                      )}
+
+                      {question.tipo === 'select' && question.opzioni && (
+                        <select
+                          value={answer || ''}
+                          onChange={(e) => handleAnswer(question.id, e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm transition-all"
+                        >
+                          <option value="">-- Seleziona una risposta --</option>
+                          {question.opzioni.map((opzione, idx) => (
+                            <option key={idx} value={opzione}>
+                              {opzione}
+                            </option>
+                          ))}
+                        </select>
+                      )}
+
+                      {question.tipo === 'radio' && question.opzioni && (
+                        <div className="space-y-2">
+                          {question.opzioni.map((opzione, idx) => (
+                            <label
+                              key={idx}
+                              className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all ${answer === opzione
+                                ? 'border-purple-500 bg-purple-50'
+                                : 'border-gray-200 hover:border-purple-300 hover:bg-gray-50'
+                                }`}
+                            >
+                              <input
+                                type="radio"
+                                name={question.id}
+                                value={opzione}
+                                checked={answer === opzione}
+                                onChange={(e) => handleAnswer(question.id, e.target.value)}
+                                className="w-4 h-4 text-purple-600 focus:ring-purple-500"
+                              />
+                              <span className="text-sm text-gray-700">{opzione}</span>
+                            </label>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Navigation Buttons */}
@@ -673,7 +952,7 @@ export default function TestMaturitaDigitalePage() {
           <div className="max-w-3xl mx-auto">
             {/* Score Card */}
             <div className="bg-white rounded-xl shadow-xl p-8 mb-8 text-center">
-              <h2 className="text-3xl font-bold mb-4 font-heading">Il Tuo AI Readiness Score</h2>
+              <h2 className="text-3xl font-bold mb-4 font-heading">Il Tuo Check-up Score</h2>
               <div className="text-6xl font-bold mb-2 text-purple-600">
                 {results.percentage.toFixed(0)}%
               </div>
@@ -692,60 +971,98 @@ export default function TestMaturitaDigitalePage() {
           {/* 1. DIAGNOSI PERSONALIZZATA */}
           {results.diagnosi && (
             <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl shadow-lg p-8 mb-8 border border-purple-200">
-              <h3 className="text-2xl font-bold mb-4 font-heading text-purple-700">📍 Dove Sei Ora</h3>
-              <p className="text-lg font-semibold text-gray-800 mb-4">{results.diagnosi.livello}</p>
+              <h3 className="text-2xl font-bold mb-4 font-heading text-purple-700">📍 Diagnosi Completa</h3>
+              <p className="text-lg font-semibold text-gray-800 mb-6">{results.diagnosi.livello}</p>
 
-              <div className="bg-white rounded-lg p-6 mb-4">
-                <h4 className="font-bold text-lg mb-3 text-gray-900">💰 Opportunità Immediata:</h4>
+              {/* COLLO DI BOTTIGLIA PRIMARIO */}
+              {results.collo_bottiglia_primario && results.collo_bottiglia_primario !== 'Non identificato' && (
+                <div className="bg-red-50 border-2 border-red-300 rounded-lg p-6 mb-6">
+                  <h4 className="font-bold text-lg mb-2 text-red-800 flex items-center gap-2">
+                    ⚠️ COLLO DI BOTTIGLIA CRITICO IDENTIFICATO
+                  </h4>
+                  <p className="text-red-700 font-semibold text-xl mb-2">{results.collo_bottiglia_primario}</p>
+                  <p className="text-sm text-red-600">
+                    Questo è il punto che andrebbe in crisi per primo con una crescita rapida del business.
+                    <strong> Risolverlo è priorità assoluta.</strong>
+                  </p>
+                </div>
+              )}
+
+              {/* CAPACITÀ DI CRESCITA */}
+              <div className={`rounded-lg p-6 mb-4 ${results.capacita_crescita === '+30%' ? 'bg-orange-50 border-2 border-orange-300' : results.capacita_crescita === '+60%' ? 'bg-yellow-50 border-2 border-yellow-300' : 'bg-green-50 border-2 border-green-300'}`}>
+                <h4 className="font-bold text-lg mb-2 text-gray-900">📈 Capacità di Crescita Attuale</h4>
+                <div className="text-4xl font-bold mb-2" style={{ color: results.capacita_crescita === '+30%' ? '#f59e0b' : results.capacita_crescita === '+60%' ? '#eab308' : '#10b981' }}>
+                  {results.capacita_crescita}
+                </div>
+                <p className="text-sm text-gray-700">
+                  {results.capacita_crescita === '+30%' && 'Limitata da colli di bottiglia critici. Risolvili per sbloccare la crescita.'}
+                  {results.capacita_crescita === '+60%' && 'Buona, ma con margini di miglioramento significativi.'}
+                  {results.capacita_crescita.includes('100') && 'Eccellente! Sei pronto per scalare senza vincoli.'}
+                </p>
+              </div>
+
+              {/* OPPORTUNITÀ */}
+              <div className="bg-white rounded-lg p-6">
+                <h4 className="font-bold text-lg mb-3 text-gray-900">💰 Opportunità Immediate:</h4>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-green-50 p-4 rounded-lg">
                     <div className="text-sm text-gray-600 mb-1">Tempo Liberabile</div>
-                    <div className="text-xl font-bold text-green-700">{results.diagnosi.opportunita.ore_liberabili}</div>
+                    <div className="text-xl font-bold text-green-700">{results.diagnosi.opportunita.tempo_liberabile}</div>
+                    <div className="text-xs text-gray-600 mt-1">Valore: {results.diagnosi.opportunita.valore_tempo}</div>
                   </div>
                   <div className="bg-blue-50 p-4 rounded-lg">
-                    <div className="text-sm text-gray-600 mb-1">Valore Mensile</div>
-                    <div className="text-xl font-bold text-blue-700">{results.diagnosi.opportunita.costo_opportunita}</div>
+                    <div className="text-sm text-gray-600 mb-1">Accelerazione Decisioni</div>
+                    <div className="text-xl font-bold text-blue-700">{results.diagnosi.opportunita.accelerazione_decisioni}</div>
                   </div>
-                  <div className="bg-purple-50 p-4 rounded-lg">
-                    <div className="text-sm text-gray-600 mb-1">Più Lead</div>
-                    <div className="text-xl font-bold text-purple-700">{results.diagnosi.opportunita.lead_increase}</div>
-                  </div>
-                  <div className="bg-orange-50 p-4 rounded-lg">
-                    <div className="text-sm text-gray-600 mb-1">Meno Errori</div>
-                    <div className="text-xl font-bold text-orange-700">-{results.diagnosi.opportunita.errori_reduction}</div>
+                  <div className="bg-purple-50 p-4 rounded-lg md:col-span-2">
+                    <div className="text-sm text-gray-600 mb-1">Riduzione Errori</div>
+                    <div className="text-xl font-bold text-purple-700">{results.diagnosi.opportunita.riduzione_errori}</div>
                   </div>
                 </div>
+                {results.diagnosi.opportunita.note_profilo && (
+                  <p className="text-xs text-gray-500 mt-4 italic">{results.diagnosi.opportunita.note_profilo}</p>
+                )}
               </div>
             </div>
           )}
 
-          {/* 2. QUICK WINS */}
-          {results.quick_wins && results.quick_wins.length > 0 && (
+          {/* 2. PRIORITÀ D'AZIONE (vs Quick Wins) */}
+          {results.priorita_azione && results.priorita_azione.length > 0 && (
             <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-              <h3 className="text-2xl font-bold mb-6 font-heading text-gray-900">🎯 3 Azioni Da Fare QUESTA Settimana</h3>
+              <h3 className="text-2xl font-bold mb-6 font-heading text-gray-900">🎯 Priorità d'Azione (Ordine di Criticità)</h3>
               <div className="space-y-4">
-                {results.quick_wins.map((win: any, idx: number) => (
-                  <div key={idx} className="bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-lg border-l-4 border-green-500">
+                {results.priorita_azione.map((priorita: any, idx: number) => (
+                  <div key={idx} className={`p-6 rounded-lg border-l-4 ${priorita.livello === 'CRITICA' ? 'bg-red-50 border-red-500' :
+                    priorita.livello === 'ALTA' ? 'bg-orange-50 border-orange-500' :
+                      'bg-yellow-50 border-yellow-500'
+                    }`}>
                     <div className="flex items-start justify-between mb-3">
-                      <h4 className="text-lg font-bold text-gray-900">{idx + 1}. {win.titolo}</h4>
-                      <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                        ⏱️ {win.tempo_setup}
+                      <div>
+                        <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-2 ${priorita.livello === 'CRITICA' ? 'bg-red-600 text-white' :
+                          priorita.livello === 'ALTA' ? 'bg-orange-600 text-white' :
+                            'bg-yellow-600 text-white'
+                          }`}>
+                          {priorita.livello}
+                        </span>
+                        <h4 className="text-lg font-bold text-gray-900 mt-2">{idx + 1}. {priorita.azione}</h4>
+                      </div>
+                      <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold whitespace-nowrap ml-4">
+                        ⏱️ {priorita.tempo_implementazione}
                       </span>
                     </div>
-                    <div className="grid md:grid-cols-2 gap-3 mb-3">
-                      {win.risparmio && (
-                        <div className="text-sm">
-                          <span className="font-semibold text-green-700">💰 Risparmio:</span> {win.risparmio}
-                        </div>
-                      )}
-                      {win.impatto && (
-                        <div className="text-sm">
-                          <span className="font-semibold text-blue-700">📈 Impatto:</span> {win.impatto}
-                        </div>
-                      )}
+
+                    <div className="mb-3">
+                      <span className="font-semibold text-gray-700">🔴 Problema:</span>
+                      <p className="text-gray-800 mt-1">{priorita.problema}</p>
                     </div>
-                    <div className="text-sm text-gray-700">
-                      <span className="font-semibold">🔧 Come:</span> {win.come}
+
+                    <div className="grid md:grid-cols-2 gap-3 mb-3">
+                      <div className="text-sm">
+                        <span className="font-semibold text-green-700">📈 Impatto:</span> {priorita.impatto}
+                      </div>
+                      <div className="text-sm">
+                        <span className="font-semibold text-blue-700">🔧 Come:</span> {priorita.come}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -753,55 +1070,293 @@ export default function TestMaturitaDigitalePage() {
             </div>
           )}
 
-          {/* 3. ROI STIMATO */}
-          {results.roi_stimato && (
-            <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl shadow-lg p-8 mb-8 border-2 border-yellow-300">
-              <h3 className="text-2xl font-bold mb-6 font-heading text-orange-800">💰 ROI Stimato (Basato sulle Tue Risposte)</h3>
+          {/* 3. ROADMAP SCALABILITÀ */}
+          {results.roadmap_scalabilita && (
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-lg p-8 mb-8 border border-blue-300">
+              <h3 className="text-2xl font-bold mb-6 font-heading text-blue-800">📈 Roadmap per Sbloccare la Crescita</h3>
 
-              <div className="bg-white rounded-lg p-6 mb-4">
-                <div className="grid md:grid-cols-2 gap-6 mb-6">
-                  <div>
-                    <h4 className="text-sm font-semibold text-gray-600 mb-2">Investimento Setup (3 mesi)</h4>
-                    <div className="text-3xl font-bold text-gray-900">{results.roi_stimato.investimento}</div>
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-semibold text-gray-600 mb-2">Benefici Totali Annui</h4>
-                    <div className="text-3xl font-bold text-green-600">{results.roi_stimato.totale_benefici}</div>
-                  </div>
-                </div>
-
-                <div className="border-t pt-4 space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Tempo liberato:</span>
-                    <span className="font-semibold">{results.roi_stimato.risparmi_annui}/anno</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Maggiori vendite (stimate):</span>
-                    <span className="font-semibold">{results.roi_stimato.maggiori_vendite}/anno</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Meno errori:</span>
-                    <span className="font-semibold">{results.roi_stimato.meno_errori}/anno</span>
-                  </div>
-                </div>
+              <div className="bg-white rounded-lg p-4 mb-6">
+                <span className="text-sm text-gray-600">Capacità Attuale:</span>
+                <span className={`text-2xl font-bold ml-3 ${results.capacita_crescita === '+30%' ? 'text-orange-600' : results.capacita_crescita === '+60%' ? 'text-yellow-600' : 'text-green-600'}`}>
+                  {results.roadmap_scalabilita.capacita_attuale}
+                </span>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-green-100 p-4 rounded-lg text-center">
-                  <div className="text-sm text-green-800 mb-1">ROI Primo Anno</div>
-                  <div className="text-3xl font-bold text-green-700">{results.roi_stimato.roi_percentage}</div>
+              <div className="space-y-4">
+                {/* Fase 1 */}
+                <div className="bg-red-50 rounded-lg p-6 border-l-4 border-red-500">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="text-lg font-bold text-gray-900">{results.roadmap_scalabilita.fase1.titolo}</h4>
+                    <span className="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">{results.roadmap_scalabilita.fase1.durata}</span>
+                  </div>
+                  <div className="mb-3">
+                    <span className="text-sm font-semibold text-red-700">Target: {results.roadmap_scalabilita.fase1.target_crescita}</span>
+                  </div>
+                  <ul className="space-y-2">
+                    {results.roadmap_scalabilita.fase1.azioni.map((azione: string, idx: number) => (
+                      <li key={idx} className="text-sm text-gray-700 flex items-start">
+                        <span className="mr-2">•</span>
+                        <span>{azione}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="bg-blue-100 p-4 rounded-lg text-center">
-                  <div className="text-sm text-blue-800 mb-1">Payback Period</div>
-                  <div className="text-3xl font-bold text-blue-700">{results.roi_stimato.payback_mesi}</div>
+
+                {/* Fase 2 */}
+                <div className="bg-yellow-50 rounded-lg p-6 border-l-4 border-yellow-500">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="text-lg font-bold text-gray-900">{results.roadmap_scalabilita.fase2.titolo}</h4>
+                    <span className="bg-yellow-600 text-white px-3 py-1 rounded-full text-sm font-semibold">{results.roadmap_scalabilita.fase2.durata}</span>
+                  </div>
+                  <div className="mb-3">
+                    <span className="text-sm font-semibold text-yellow-700">Target: {results.roadmap_scalabilita.fase2.target_crescita}</span>
+                  </div>
+                  <ul className="space-y-2">
+                    {results.roadmap_scalabilita.fase2.azioni.map((azione: string, idx: number) => (
+                      <li key={idx} className="text-sm text-gray-700 flex items-start">
+                        <span className="mr-2">•</span>
+                        <span>{azione}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Fase 3 */}
+                <div className="bg-green-50 rounded-lg p-6 border-l-4 border-green-500">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="text-lg font-bold text-gray-900">{results.roadmap_scalabilita.fase3.titolo}</h4>
+                    <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold">{results.roadmap_scalabilita.fase3.durata}</span>
+                  </div>
+                  <div className="mb-3">
+                    <span className="text-sm font-semibold text-green-700">Target: {results.roadmap_scalabilita.fase3.target_crescita}</span>
+                  </div>
+                  <ul className="space-y-2">
+                    {results.roadmap_scalabilita.fase3.azioni.map((azione: string, idx: number) => (
+                      <li key={idx} className="text-sm text-gray-700 flex items-start">
+                        <span className="mr-2">•</span>
+                        <span>{azione}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>
           )}
 
-          {/* 4. Per Categoria */}
+          {/* 4. INVESTIMENTO SUGGERITO (QUALITATIVO) */}
+          {results.investimento_suggerito && (
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl shadow-lg p-8 mb-8 border-2 border-purple-300">
+              <h3 className="text-2xl font-bold mb-6 font-heading text-purple-800">💰 Investimento e Rientro Stimato</h3>
+
+              <div className="bg-white rounded-lg p-6 mb-4">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="text-sm font-semibold text-gray-600 mb-2">Livello Investimento</h4>
+                    <div className={`text-3xl font-bold ${results.investimento_suggerito.livello === 'MEDIO-ALTO' ? 'text-orange-600' : results.investimento_suggerito.livello === 'MEDIO' ? 'text-yellow-600' : 'text-green-600'}`}>
+                      {results.investimento_suggerito.livello}
+                    </div>
+                    <p className="text-sm text-gray-600 mt-2">{results.investimento_suggerito.descrizione}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-gray-600 mb-2">Tempi di Rientro</h4>
+                    <div className="text-3xl font-bold text-blue-600">{results.investimento_suggerito.tempi_rientro}</div>
+                    <p className="text-xs text-gray-500 mt-2 italic">{results.investimento_suggerito.note}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <p className="text-sm text-blue-800">
+                  <strong>💡 Nota:</strong> L'investimento include software, setup e formazione. I tempi dipendono dalla priorità che dai all'implementazione e dal livello di automazione desiderato.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* 5. BENCHMARK SETTORE PERSONALIZZATO */}
+          {results.benchmark && (
+            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+              <h3 className="text-2xl font-bold mb-6 font-heading">📊 Benchmark vs Settore</h3>
+              {results.benchmark.settore && (
+                <p className="text-sm text-gray-600 mb-6">
+                  Confronto nel settore: <strong>{results.benchmark.settore}</strong>
+                </p>
+              )}
+
+              <div className="space-y-6">
+                {Object.entries(results.benchmark).filter(([key]) => key !== 'settore' && key !== 'note').map(([category, data]: [string, any]) => (
+                  <div key={category} className="bg-gray-50 rounded-lg p-6">
+                    <h4 className="font-bold text-gray-900 mb-4">{category}</h4>
+                    <div className="grid grid-cols-3 gap-4 text-center">
+                      <div>
+                        <div className="text-xs text-gray-600 mb-2">Il Tuo Score</div>
+                        <div className="text-3xl font-bold text-purple-600">{data.tuo}%</div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-600 mb-2">Media Settore</div>
+                        <div className="text-3xl font-bold text-blue-600">{data.media_settore}%</div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-600 mb-2">Top 10%</div>
+                        <div className="text-3xl font-bold text-green-600">{data.top_10}%</div>
+                      </div>
+                    </div>
+
+                    {/* Visual bars */}
+                    <div className="mt-4 space-y-2">
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs w-20">Tu</span>
+                        <div className="flex-1 bg-gray-200 rounded-full h-2">
+                          <div className="bg-purple-600 h-2 rounded-full" style={{ width: `${data.tuo}%` }}></div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs w-20">Media</span>
+                        <div className="flex-1 bg-gray-200 rounded-full h-2">
+                          <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${data.media_settore}%` }}></div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs w-20">Top 10%</span>
+                        <div className="flex-1 bg-gray-200 rounded-full h-2">
+                          <div className="bg-green-600 h-2 rounded-full" style={{ width: `${data.top_10}%` }}></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {results.benchmark.note && (
+                <div className="bg-blue-50 p-4 rounded-lg mt-6">
+                  <p className="text-sm text-blue-800">
+                    <strong>💡 Insight:</strong> {results.benchmark.note}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* 6. ROADMAP PILASTRI CON PRIORITÀ */}
+          {results.roadmap_pilastri && results.roadmap_pilastri.length > 0 && (
+            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+              <h3 className="text-2xl font-bold mb-6 font-heading">🎯 Roadmap Priorità per Pilastro</h3>
+              <div className="space-y-4">
+                {results.roadmap_pilastri.map((pilastro: any, idx: number) => (
+                  <div key={idx} className={`rounded-lg p-6 border-l-4 ${pilastro.priorita === 'CRITICA' ? 'bg-red-50 border-red-500' :
+                      pilastro.priorita === 'ALTA' ? 'bg-orange-50 border-orange-500' :
+                        pilastro.priorita === 'MEDIA' ? 'bg-yellow-50 border-yellow-500' :
+                          'bg-green-50 border-green-500'
+                    }`}>
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">{pilastro.icon}</span>
+                        <div>
+                          <h4 className="font-bold text-gray-900">{pilastro.pilastro}</h4>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${pilastro.priorita === 'CRITICA' ? 'bg-red-600 text-white' :
+                                pilastro.priorita === 'ALTA' ? 'bg-orange-600 text-white' :
+                                  pilastro.priorita === 'MEDIA' ? 'bg-yellow-600 text-white' :
+                                    'bg-green-600 text-white'
+                              }`}>
+                              {pilastro.priorita}
+                            </span>
+                            <span className="text-sm text-gray-600">Score: {pilastro.punteggio}%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-4">
+                      <span className="text-sm font-semibold text-gray-700">Azioni consigliate:</span>
+                      <ul className="mt-2 space-y-1">
+                        {pilastro.azioni_consigliate && pilastro.azioni_consigliate.map((azione: string, azioneIdx: number) => (
+                          <li key={azioneIdx} className="text-sm text-gray-700 flex items-start">
+                            <span className="mr-2">✓</span>
+                            <span>{azione}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 7. RISORSE BONUS PERSONALIZZATE */}
+          {results.risorse_bonus && results.risorse_bonus.length > 0 && (
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl shadow-lg p-8 mb-8 border border-green-300">
+              <h3 className="text-2xl font-bold mb-6 font-heading text-green-800">🎁 Toolkit Gratuito Personalizzato</h3>
+              <p className="text-gray-700 mb-6">Risorse selezionate per il tuo profilo e settore:</p>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                {results.risorse_bonus.map((risorsa: string, idx: number) => (
+                  <div key={idx} className="bg-white rounded-lg p-4 border border-green-200 hover:border-green-400 transition-all hover:shadow-md">
+                    <div className="flex items-start gap-3">
+                      <span className="text-2xl">📄</span>
+                      <div>
+                        <p className="font-semibold text-gray-900">{risorsa}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 text-center">
+                <button className="bg-green-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-green-700 transition-all">
+                  📥 Scarica Toolkit Completo
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* 8. NEXT STEPS STRUTTURATI */}
+          {results.next_steps && (
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl shadow-lg p-8 mb-8 border-2 border-purple-300">
+              <h3 className="text-2xl font-bold mb-6 font-heading text-purple-800">🚀 I Tuoi Prossimi Passi</h3>
+
+              <div className="space-y-6">
+                {results.next_steps.questa_settimana && (
+                  <div className="bg-white rounded-lg p-6">
+                    <h4 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+                      <span className="text-2xl">⚡</span>
+                      Questa Settimana
+                    </h4>
+                    <ul className="space-y-2">
+                      {results.next_steps.questa_settimana.map((step: string, idx: number) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <span className="text-purple-600 font-bold mt-0.5">□</span>
+                          <span className="text-gray-700">{step}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {results.next_steps.entro_15_giorni && (
+                  <div className="bg-white rounded-lg p-6">
+                    <h4 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+                      <span className="text-2xl">📅</span>
+                      Entro 15 Giorni
+                    </h4>
+                    <ul className="space-y-3">
+                      {results.next_steps.entro_15_giorni.map((step: string, idx: number) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <span className="text-blue-600 font-bold mt-0.5">→</span>
+                          <span className="text-gray-700">{step}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* VECCHIA SEZIONE CATEGORIA (Mantieni per compatibilità) */}
           <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-            <h3 className="text-2xl font-bold mb-6 font-heading">📊 Punteggio per Pilastro</h3>
+            <h3 className="text-2xl font-bold mb-6 font-heading">📊 Dettaglio Score per Categoria</h3>
             <div className="space-y-4">
               {Object.entries(results.punteggio_per_categoria).map(([category, score]: [string, any]) => {
                 const categoryMax = questions
