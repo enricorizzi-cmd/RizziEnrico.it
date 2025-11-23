@@ -86,6 +86,7 @@ export default function WorkshopAdminDashboard() {
   const [editingLead, setEditingLead] = useState<WorkshopLead | null>(null);
   const [insights, setInsights] = useState<Insights | null>(null);
   const [loadingInsights, setLoadingInsights] = useState(false);
+  const [viewingProblema, setViewingProblema] = useState<string | null>(null);
 
   useEffect(() => {
     fetchLeads();
@@ -157,6 +158,12 @@ export default function WorkshopAdminDashboard() {
       numero_chiamate: lead.numero_chiamate + 1,
       ultima_chiamata: new Date().toISOString(),
     });
+    // Avvia la chiamata
+    window.location.href = `tel:${lead.telefono.replace(/\s/g, '')}`;
+  };
+
+  const confirmParticipation = (lead: WorkshopLead) => {
+    updateLead(lead.id, { stato: 'confermato' });
   };
 
   const markPresent = (lead: WorkshopLead) => {
@@ -334,6 +341,251 @@ export default function WorkshopAdminDashboard() {
           </div>
         )}
 
+        {/* Filtri */}
+        <div className="glass p-6 rounded-[var(--radius-card)] border border-[var(--color-line)] mb-8">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Filtra per Stato</label>
+              <select
+                value={filters.stato}
+                onChange={(e) => setFilters({ ...filters, stato: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white/80"
+              >
+                <option value="tutti">Tutti</option>
+                <option value="nuovo">Nuovo</option>
+                <option value="contattato">Contattato</option>
+                <option value="confermato">Confermato</option>
+                <option value="presente">Presente</option>
+                <option value="no_show">No Show</option>
+                <option value="non_interessato">Non Interessato</option>
+                <option value="da_chiamare_per_checkup">Da Chiamare per Check-up</option>
+                <option value="in_valutazione">In Valutazione</option>
+                <option value="checkup_venduto">Check-up Venduto</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Filtra per Fonte</label>
+              <select
+                value={filters.fonte}
+                onChange={(e) => setFilters({ ...filters, fonte: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white/80"
+              >
+                <option value="tutti">Tutte</option>
+                <option value="BNI">BNI</option>
+                <option value="OSM">OSM</option>
+                <option value="Social">Social</option>
+                <option value="Passaparola">Passaparola</option>
+                <option value="Altro">Altro</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Tabella Lead */}
+        <div className="glass rounded-[var(--radius-card)] border border-[var(--color-line)] overflow-hidden shadow-lg">
+          <div className="overflow-x-auto">
+            {leads.length === 0 ? (
+              <div className="p-12 text-center text-gray-500">
+                <div className="text-4xl mb-4">🔍</div>
+                <p>Nessun lead trovato con i filtri selezionati.</p>
+              </div>
+            ) : (
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50/80 backdrop-blur-sm">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                      Nome / Azienda
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                      Contatti
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                      Fonte
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                      Problema Segnalato
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                      Note
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                      Stato
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                      Chiamate
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                      Azioni
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white/40 divide-y divide-gray-200">
+                  {leads.map((lead) => (
+                    <tr key={lead.id} className="hover:bg-purple-50/50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="font-bold text-gray-900">
+                          {lead.nome} {lead.cognome}
+                        </div>
+                        <div className="text-sm text-gray-600 font-medium">{lead.azienda}</div>
+                        <div className="text-xs text-gray-400 uppercase tracking-wide mt-1">{lead.ruolo}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900 flex items-center gap-2">
+                          <a
+                            href={`mailto:${lead.email}?subject=Workshop Ai in Azienda del 12 Dicembre`}
+                            className="w-8 h-8 rounded-full bg-purple-50 text-purple-600 hover:bg-purple-100 hover:text-purple-800 flex items-center justify-center transition-colors"
+                            title="Invia email"
+                          >
+                            ✉️
+                          </a>
+                          <span>{lead.email}</span>
+                        </div>
+                        <div className="text-sm text-gray-600 flex items-center gap-2 mt-1">
+                          <a
+                            href={`https://wa.me/${lead.telefono.replace(/[^0-9]/g, '')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-8 h-8 rounded-full bg-green-50 text-green-600 hover:bg-green-100 hover:text-green-800 flex items-center justify-center transition-colors"
+                            title="Invia messaggio WhatsApp"
+                          >
+                            📱
+                          </a>
+                          <span>{lead.telefono}</span>
+                        </div>
+                        <div className="text-xs text-gray-400 mt-1 pl-6">{lead.provincia}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-3 py-1 text-xs font-bold rounded-full bg-purple-100 text-purple-700 border border-purple-200">
+                          {lead.fonte}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-sm text-gray-900 max-w-xs">
+                          {lead.problema ? (
+                            <div
+                              className="bg-red-50 p-2 rounded border border-red-100 text-xs text-red-800 cursor-pointer hover:bg-red-100 transition-colors"
+                              onClick={() => setViewingProblema(lead.problema || null)}
+                              title="Clicca per vedere il testo completo"
+                            >
+                              <span
+                                className="block overflow-hidden text-ellipsis"
+                                style={{
+                                  display: '-webkit-box',
+                                  WebkitLineClamp: 2,
+                                  WebkitBoxOrient: 'vertical',
+                                  maxHeight: '3em'
+                                }}
+                              >
+                                {lead.problema}
+                              </span>
+                            </div>
+                          ) : (
+                            <span className="text-gray-400 italic text-xs">Nessun problema</span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-start gap-2">
+                          <div className="text-sm text-gray-900 max-w-xs flex-1">
+                            {lead.note ? (
+                              <span
+                                className="block overflow-hidden text-ellipsis bg-yellow-50 p-2 rounded border border-yellow-100 text-xs text-yellow-800"
+                                style={{
+                                  display: '-webkit-box',
+                                  WebkitLineClamp: 2,
+                                  WebkitBoxOrient: 'vertical',
+                                  maxHeight: '3em'
+                                }}
+                                title={lead.note}
+                              >
+                                {lead.note}
+                              </span>
+                            ) : (
+                              <span className="text-gray-400 italic text-xs">Nessuna nota</span>
+                            )}
+                          </div>
+                          <button
+                            onClick={() => setEditingLead(lead)}
+                            className="text-gray-400 hover:text-purple-600 p-1 transition-colors"
+                            title="Modifica note"
+                          >
+                            ✏️
+                          </button>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <select
+                          value={lead.stato}
+                          onChange={(e) => updateLead(lead.id, { stato: e.target.value })}
+                          className={`text-xs font-semibold border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500 outline-none cursor-pointer ${lead.stato === 'nuovo' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                              lead.stato === 'contattato' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
+                                lead.stato === 'confermato' ? 'bg-green-50 text-green-700 border-green-200' :
+                                  'bg-gray-50 text-gray-700 border-gray-200'
+                            }`}
+                        >
+                          <option value="nuovo">Nuovo</option>
+                          <option value="contattato">Contattato</option>
+                          <option value="confermato">Confermato</option>
+                          <option value="presente">Presente</option>
+                          <option value="no_show">No Show</option>
+                          <option value="non_interessato">Non Interessato</option>
+                          <option value="da_chiamare_per_checkup">Da Chiamare per Check-up</option>
+                          <option value="in_valutazione">In Valutazione</option>
+                          <option value="checkup_venduto">Check-up Venduto</option>
+                        </select>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-bold text-center w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
+                          {lead.numero_chiamate}
+                        </div>
+                        {lead.ultima_chiamata && (
+                          <div className="text-[10px] text-gray-500 text-center mt-1">
+                            {new Date(lead.ultima_chiamata).toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit' })}
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div className="flex gap-2 justify-center items-center">
+                          <div className="flex flex-col items-center gap-1">
+                            <button
+                              onClick={() => incrementCalls(lead)}
+                              className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 hover:text-blue-800 flex items-center justify-center transition-colors"
+                              title="Chiama"
+                            >
+                              📞
+                            </button>
+                            <span className="text-[10px] text-gray-500">Chiama</span>
+                          </div>
+                          <div className="flex flex-col items-center gap-1">
+                            <button
+                              onClick={() => confirmParticipation(lead)}
+                              className="w-8 h-8 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 hover:text-indigo-800 flex items-center justify-center transition-colors"
+                              title="Conferma partecipazione"
+                            >
+                              ✓
+                            </button>
+                            <span className="text-[10px] text-gray-500">Conferma</span>
+                          </div>
+                          <div className="flex flex-col items-center gap-1">
+                            <button
+                              onClick={() => markPresent(lead)}
+                              className="w-8 h-8 rounded-full bg-green-50 text-green-600 hover:bg-green-100 hover:text-green-800 flex items-center justify-center transition-colors"
+                              title="Registra presenza"
+                            >
+                              ✅
+                            </button>
+                            <span className="text-[10px] text-gray-500">Presenza</span>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </div>
+
         {/* Riquadro Insight AI */}
         <div className="mb-8">
           <div className="bg-gradient-to-br from-purple-50/90 via-blue-50/90 to-indigo-50/90 backdrop-blur-md rounded-[var(--radius-card)] shadow-lg p-6 border border-purple-200/50">
@@ -485,218 +737,6 @@ export default function WorkshopAdminDashboard() {
           </div>
         </div>
 
-        {/* Filtri */}
-        <div className="glass p-6 rounded-[var(--radius-card)] border border-[var(--color-line)] mb-8">
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Filtra per Stato</label>
-              <select
-                value={filters.stato}
-                onChange={(e) => setFilters({ ...filters, stato: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white/80"
-              >
-                <option value="tutti">Tutti</option>
-                <option value="nuovo">Nuovo</option>
-                <option value="contattato">Contattato</option>
-                <option value="confermato">Confermato</option>
-                <option value="presente">Presente</option>
-                <option value="no_show">No Show</option>
-                <option value="non_interessato">Non Interessato</option>
-                <option value="da_chiamare_per_checkup">Da Chiamare per Check-up</option>
-                <option value="in_valutazione">In Valutazione</option>
-                <option value="checkup_venduto">Check-up Venduto</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Filtra per Fonte</label>
-              <select
-                value={filters.fonte}
-                onChange={(e) => setFilters({ ...filters, fonte: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white/80"
-              >
-                <option value="tutti">Tutte</option>
-                <option value="BNI">BNI</option>
-                <option value="OSM">OSM</option>
-                <option value="Social">Social</option>
-                <option value="Passaparola">Passaparola</option>
-                <option value="Altro">Altro</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Tabella Lead */}
-        <div className="glass rounded-[var(--radius-card)] border border-[var(--color-line)] overflow-hidden shadow-lg">
-          <div className="overflow-x-auto">
-            {leads.length === 0 ? (
-              <div className="p-12 text-center text-gray-500">
-                <div className="text-4xl mb-4">🔍</div>
-                <p>Nessun lead trovato con i filtri selezionati.</p>
-              </div>
-            ) : (
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50/80 backdrop-blur-sm">
-                  <tr>
-                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-                      Nome / Azienda
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-                      Contatti
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-                      Fonte
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-                      Problema Segnalato
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-                      Note
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-                      Stato
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-                      Chiamate
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-                      Azioni
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white/40 divide-y divide-gray-200">
-                  {leads.map((lead) => (
-                    <tr key={lead.id} className="hover:bg-purple-50/50 transition-colors">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="font-bold text-gray-900">
-                          {lead.nome} {lead.cognome}
-                        </div>
-                        <div className="text-sm text-gray-600 font-medium">{lead.azienda}</div>
-                        <div className="text-xs text-gray-400 uppercase tracking-wide mt-1">{lead.ruolo}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900 flex items-center gap-2">
-                          <span>✉️</span> {lead.email}
-                        </div>
-                        <div className="text-sm text-gray-600 flex items-center gap-2 mt-1">
-                          <span>📱</span> {lead.telefono}
-                        </div>
-                        <div className="text-xs text-gray-400 mt-1 pl-6">{lead.provincia}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-3 py-1 text-xs font-bold rounded-full bg-purple-100 text-purple-700 border border-purple-200">
-                          {lead.fonte}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="text-sm text-gray-900 max-w-xs">
-                          {lead.problema ? (
-                            <div
-                              className="bg-red-50 p-2 rounded border border-red-100 text-xs text-red-800"
-                              title={lead.problema}
-                            >
-                              <span
-                                className="block overflow-hidden text-ellipsis"
-                                style={{
-                                  display: '-webkit-box',
-                                  WebkitLineClamp: 2,
-                                  WebkitBoxOrient: 'vertical',
-                                  maxHeight: '3em'
-                                }}
-                              >
-                                {lead.problema}
-                              </span>
-                            </div>
-                          ) : (
-                            <span className="text-gray-400 italic text-xs">Nessun problema</span>
-                          )}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-start gap-2">
-                          <div className="text-sm text-gray-900 max-w-xs flex-1">
-                            {lead.note ? (
-                              <span
-                                className="block overflow-hidden text-ellipsis bg-yellow-50 p-2 rounded border border-yellow-100 text-xs text-yellow-800"
-                                style={{
-                                  display: '-webkit-box',
-                                  WebkitLineClamp: 2,
-                                  WebkitBoxOrient: 'vertical',
-                                  maxHeight: '3em'
-                                }}
-                                title={lead.note}
-                              >
-                                {lead.note}
-                              </span>
-                            ) : (
-                              <span className="text-gray-400 italic text-xs">Nessuna nota</span>
-                            )}
-                          </div>
-                          <button
-                            onClick={() => setEditingLead(lead)}
-                            className="text-gray-400 hover:text-purple-600 p-1 transition-colors"
-                            title="Modifica note"
-                          >
-                            ✏️
-                          </button>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <select
-                          value={lead.stato}
-                          onChange={(e) => updateLead(lead.id, { stato: e.target.value })}
-                          className={`text-xs font-semibold border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500 outline-none cursor-pointer ${lead.stato === 'nuovo' ? 'bg-blue-50 text-blue-700 border-blue-200' :
-                              lead.stato === 'contattato' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
-                                lead.stato === 'confermato' ? 'bg-green-50 text-green-700 border-green-200' :
-                                  'bg-gray-50 text-gray-700 border-gray-200'
-                            }`}
-                        >
-                          <option value="nuovo">Nuovo</option>
-                          <option value="contattato">Contattato</option>
-                          <option value="confermato">Confermato</option>
-                          <option value="presente">Presente</option>
-                          <option value="no_show">No Show</option>
-                          <option value="non_interessato">Non Interessato</option>
-                          <option value="da_chiamare_per_checkup">Da Chiamare per Check-up</option>
-                          <option value="in_valutazione">In Valutazione</option>
-                          <option value="checkup_venduto">Check-up Venduto</option>
-                        </select>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-bold text-center w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
-                          {lead.numero_chiamate}
-                        </div>
-                        {lead.ultima_chiamata && (
-                          <div className="text-[10px] text-gray-500 text-center mt-1">
-                            {new Date(lead.ultima_chiamata).toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit' })}
-                          </div>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <div className="flex gap-2 justify-center">
-                          <button
-                            onClick={() => incrementCalls(lead)}
-                            className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 hover:text-blue-800 flex items-center justify-center transition-colors"
-                            title="Incrementa chiamate"
-                          >
-                            📞
-                          </button>
-                          <button
-                            onClick={() => markPresent(lead)}
-                            className="w-8 h-8 rounded-full bg-green-50 text-green-600 hover:bg-green-100 hover:text-green-800 flex items-center justify-center transition-colors"
-                            title="Segna presente"
-                          >
-                            ✅
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </div>
-        </div>
-
         {/* Modal Note */}
         {editingLead && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
@@ -729,6 +769,32 @@ export default function WorkshopAdminDashboard() {
                   className="flex-1 bg-white text-gray-700 border border-gray-300 py-2.5 rounded-lg hover:bg-gray-50 font-semibold transition-all"
                 >
                   Annulla
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Modal Problema */}
+        {viewingProblema && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={() => setViewingProblema(null)}>
+            <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full overflow-hidden animate-fade-in-up" onClick={(e) => e.stopPropagation()}>
+              <div className="p-6 border-b border-gray-100">
+                <h3 className="text-xl font-bold font-heading text-gray-900">
+                  Problema Segnalato
+                </h3>
+              </div>
+              <div className="p-6">
+                <div className="bg-red-50 p-4 rounded-lg border border-red-100 text-sm text-red-800 whitespace-pre-wrap">
+                  {viewingProblema}
+                </div>
+              </div>
+              <div className="p-6 bg-gray-50 flex justify-end">
+                <button
+                  onClick={() => setViewingProblema(null)}
+                  className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-semibold shadow-lg hover:shadow-purple-500/30 transition-all"
+                >
+                  Chiudi
                 </button>
               </div>
             </div>

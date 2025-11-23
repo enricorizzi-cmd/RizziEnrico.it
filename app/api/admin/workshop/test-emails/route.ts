@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
     <p>Grazie per esserti iscritto al workshop:</p>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
-      <h2 style="margin-top: 0; color: #667eea;">"Automatizza la tua Azienda: AI & Digitalizzazione"</h2>
+      <h2 style="margin-top: 0; color: #667eea;">"Ai in Azienda"</h2>
       <p style="margin: 10px 0;"><strong>📅 Data:</strong> ${WORKSHOP_DATE}</p>
       <p style="margin: 10px 0;"><strong>🕐 Orario:</strong> ${WORKSHOP_TIME}</p>
       <p style="margin: 10px 0;"><strong>📍 Luogo:</strong> ${WORKSHOP_LOCATION}</p>
@@ -122,7 +122,7 @@ export async function POST(request: NextRequest) {
 
       const confirmEmailText = `Ciao ${lead.nome},
 
-Grazie per esserti iscritto al workshop "Automatizza la tua Azienda: AI & Digitalizzazione"!
+Grazie per esserti iscritto al workshop "Ai in Azienda"!
 
 📅 Data: ${WORKSHOP_DATE}
 🕐 Orario: ${WORKSHOP_TIME}
@@ -147,7 +147,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
 
       await sendEmail({
         to: TEST_EMAIL,
-        subject: '🎉 [TEST] Registrazione Workshop Confermata - Automatizza la tua Azienda',
+        subject: '🎉 [TEST] Registrazione Workshop Confermata - Ai in Azienda',
         html: confirmEmailHtml,
         text: confirmEmailText,
         emailId: 'test_conferma',
@@ -175,7 +175,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
-    <p>Siamo felici che tu sia iscritto al workshop <strong>"Automatizza la tua Azienda: AI & Digitalizzazione"</strong>!</p>
+    <p>Siamo felici che tu sia iscritto al workshop <strong>"Ai in Azienda"</strong>!</p>
     
     <p>Vogliamo aiutarti a prepararti al meglio per trarre il massimo dall'evento.</p>
     
@@ -298,7 +298,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
-    <p>Manca poco al workshop "Automatizza la tua Azienda: AI & Digitalizzazione".</p>
+    <p>Manca poco al workshop "Ai in Azienda".</p>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea; text-align: center;">
       <h2 style="margin-top: 0; color: #667eea; font-size: 32px;">📅 12 Dicembre 2024</h2>
@@ -356,7 +356,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 20px; margin-bottom: 20px; font-weight: bold;">Ciao <strong>${lead.nome}</strong>,</p>
     
-    <p style="font-size: 18px; margin-bottom: 20px;">Oggi è il giorno! Stasera alle <strong>18:00</strong> ti aspettiamo al workshop <strong>"Automatizza la tua Azienda: AI & Digitalizzazione"</strong>.</p>
+    <p style="font-size: 18px; margin-bottom: 20px;">Oggi è il giorno! Stasera alle <strong>18:00</strong> ti aspettiamo al workshop <strong>"Ai in Azienda"</strong>.</p>
     
     <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 8px; margin: 20px 0; text-align: center; color: white;">
       <h2 style="margin: 0; font-size: 28px;">📅 ${WORKSHOP_DATE}</h2>
@@ -406,7 +406,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
-    <p>Grazie per essere stato al workshop "Automatizza la tua Azienda: AI & Digitalizzazione"!</p>
+    <p>Grazie per essere stato al workshop "Ai in Azienda"!</p>
     
     <p>Speriamo che tu abbia trovato utili gli spunti e le demo che abbiamo condiviso.</p>
     

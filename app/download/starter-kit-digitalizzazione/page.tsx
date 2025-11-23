@@ -17,7 +17,7 @@ export default function StarterKitPage() {
             Starter Kit: Checklist Digitalizzazione PMI
           </h1>
           <p className="text-xl text-gray-600">
-            Workshop "Automatizza la tua Azienda: AI & Digitalizzazione"
+            Workshop "Ai in Azienda"
             <br />
             <span className="text-sm">Venerdì 12 dicembre 2025 - OSM Venezia - Via Sertorio Orsato 22, Venezia</span>
           </p>
@@ -192,7 +192,7 @@ export default function StarterKitPage() {
             per avere un'analisi dettagliata.
           </p>
           <p className="text-sm">
-            Workshop "Automatizza la tua Azienda: AI & Digitalizzazione"
+            Workshop "Ai in Azienda"
             <br />
             Enrico Rizzi & Francesco Fusano - OSM Partner Venezia
             <br />

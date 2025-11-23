@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 // Mappatura tipo email -> contenuto (oggetto e testo)
 const EMAIL_CONTENTS: Record<string, { subject: string; text: string }> = {
   'email_conferma_iscrizione_sent': {
-    subject: '🎉 Registrazione Workshop Confermata - Automatizza la tua Azienda',
+    subject: '🎉 Registrazione Workshop Confermata - Ai in Azienda',
     text: `Ciao [NOME],
 
 Grazie per esserti iscritto al workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda"!

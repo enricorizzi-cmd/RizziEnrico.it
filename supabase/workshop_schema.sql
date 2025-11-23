@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS workshop_leads (
   
   -- Fonte e problema
   fonte TEXT NOT NULL CHECK (fonte IN ('BNI', 'OSM', 'Social', 'Passaparola', 'Altro')),
-  problema TEXT, -- "Qual è oggi il principale problema che senti sulla digitalizzazione/marketing nella tua azienda?"
+  problema TEXT, -- "Qual è oggi il principale problema che senti sulla digitalizzazione nella tua azienda?"
   
   -- Stato del lead
   stato TEXT NOT NULL DEFAULT 'nuovo' CHECK (stato IN ('nuovo', 'contattato', 'confermato', 'presente', 'no_show', 'non_interessato', 'da_chiamare_per_checkup', 'in_valutazione', 'checkup_venduto')),
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS workshop_leads (
   
   -- Evento (per future estensioni)
   evento TEXT DEFAULT 'Workshop 12.12.2024',
-  campagna TEXT DEFAULT 'Automatizza la tua Azienda'
+  campagna TEXT DEFAULT 'Ai in Azienda'
 );
 
 -- Tabella test_maturita_digitale (risultati test)
