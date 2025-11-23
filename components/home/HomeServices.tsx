@@ -6,6 +6,18 @@ import Card from '@/components/Card';
 import CTA from '@/components/CTA';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
+export default function HomeServices() {
+    const { ref, isVisible } = useScrollAnimation();
+
+    return (
+        <section className="py-20 bg-[var(--color-bg-secondary)] relative overflow-hidden">
+            <div className="container mx-auto px-4 lg:px-8 relative z-10">
+                <SectionTitle
+                    title="Servizi Consulenza Aziendale per Aziende Venete"
+                    description="Ti aiuto a migliorare la produttività, implementare controllo di gestione e organizzare meglio la tua azienda. Output concreti, tempistiche chiare, investimento trasparente."
+                    centered
+                />
+
                 <div
                     ref={ref}
                     className={`bento-grid transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
@@ -84,7 +96,7 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
                         {' '}e analizziamo insieme le tue esigenze.
                     </p>
                 </div>
-            </div >
-        </section >
+            </div>
+        </section>
     );
 }
