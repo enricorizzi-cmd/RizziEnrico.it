@@ -31,14 +31,23 @@ export async function POST(request: NextRequest) {
         livello_maturita: body.livello_maturita || 'Iniziale',
         livello_description: body.livello_description || null,
         percentage: body.percentage || null,
+        // Campi premium v2.0
+        profilazione: body.profilazione || null,
+        colli_bottiglia: body.colli_bottiglia || null,
+        collo_bottiglia_primario: body.collo_bottiglia_primario || null,
+        capacita_crescita: body.capacita_crescita || null,
         diagnosi: body.diagnosi || null,
-        quick_wins: body.quick_wins || null,
-        piano_30_60_90: body.piano_30_60_90 || null,
-        roi_stimato: body.roi_stimato || null,
+        priorita_azione: body.priorita_azione || null,
+        roadmap_scalabilita: body.roadmap_scalabilita || null,
+        investimento_suggerito: body.investimento_suggerito || null,
         benchmark: body.benchmark || null,
         roadmap_pilastri: body.roadmap_pilastri || null,
         risorse_bonus: body.risorse_bonus || null,
         next_steps: body.next_steps || null,
+        // Campi legacy (per retrocompatibilità)
+        quick_wins: body.quick_wins || null,
+        piano_30_60_90: body.piano_30_60_90 || null,
+        roi_stimato: body.roi_stimato || null,
         raccomandazioni: body.raccomandazioni || [],
       })
       .select()
