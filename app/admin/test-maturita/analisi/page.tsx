@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Pie, Bar, Line, Doughnut } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -126,7 +127,7 @@ export default function TestMaturitaAnalyticsDashboard() {
     datasets: [
       {
         data: stats.summary.level_distribution.map(l => l.count),
-        backgroundColor: stats.summary.level_distribution.map(l => 
+        backgroundColor: stats.summary.level_distribution.map(l =>
           LEVEL_COLORS[l.level] || '#6b7280'
         ),
       },
@@ -182,9 +183,17 @@ export default function TestMaturitaAnalyticsDashboard() {
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">📊 Analisi Test Maturità Digitale</h1>
-          <p className="text-gray-600 mt-2">Dashboard completa con statistiche e insights</p>
+        <div className="mb-8 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">📊 Analisi Test Maturità Digitale</h1>
+            <p className="text-gray-600 mt-2">Dashboard completa con statistiche e insights</p>
+          </div>
+          <Link
+            href="/admin/test-maturita/archivio"
+            className="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors shadow-sm flex items-center gap-2"
+          >
+            📂 Vai all'Archivio Completo
+          </Link>
         </div>
 
         {/* Summary Cards */}
@@ -352,7 +361,7 @@ export default function TestMaturitaAnalyticsDashboard() {
                     beginAtZero: true,
                     max: 100,
                     ticks: {
-                      callback: function(value) {
+                      callback: function (value) {
                         return value + '%';
                       },
                     },
@@ -427,15 +436,14 @@ export default function TestMaturitaAnalyticsDashboard() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
                       <span
-                        className={`px-2 py-1 rounded font-semibold ${
-                          test.punteggio >= 80
-                            ? 'bg-green-100 text-green-800'
-                            : test.punteggio >= 60
+                        className={`px-2 py-1 rounded font-semibold ${test.punteggio >= 80
+                          ? 'bg-green-100 text-green-800'
+                          : test.punteggio >= 60
                             ? 'bg-blue-100 text-blue-800'
                             : test.punteggio >= 40
-                            ? 'bg-yellow-100 text-yellow-800'
-                            : 'bg-red-100 text-red-800'
-                        }`}
+                              ? 'bg-yellow-100 text-yellow-800'
+                              : 'bg-red-100 text-red-800'
+                          }`}
                       >
                         {test.punteggio}
                       </span>

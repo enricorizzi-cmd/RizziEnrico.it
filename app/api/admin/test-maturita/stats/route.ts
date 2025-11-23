@@ -56,10 +56,10 @@ export async function GET(request: NextRequest) {
 
       // Per categoria (usa punteggio_per_categoria dal DB)
       if (test.punteggio_per_categoria) {
-        const punteggiCategoria = typeof test.punteggio_per_categoria === 'string' 
-          ? JSON.parse(test.punteggio_per_categoria) 
+        const punteggiCategoria = typeof test.punteggio_per_categoria === 'string'
+          ? JSON.parse(test.punteggio_per_categoria)
           : test.punteggio_per_categoria;
-        
+
         if (punteggiCategoria && typeof punteggiCategoria === 'object') {
           Object.entries(punteggiCategoria).forEach(([category, score]: [string, any]) => {
             if (!byCategory[category]) {
@@ -84,14 +84,13 @@ export async function GET(request: NextRequest) {
     });
 
     // Calcola massimo possibile per ogni categoria (basato sulle domande)
+    // Calcola massimo possibile per ogni categoria (basato sulle domande del Test Premium)
     const categoryMaxScores: Record<string, number> = {
-      "Raccolta Dati & CRM": 7, // 3+2+2
-      "Automazioni Base": 7, // 3+2+2
-      "Presenza Online": 6, // 2+2+2
-      "KPI & Dashboard": 7, // 3+2+2
-      "Uso dell'IA": 6, // 2+2+2
-      "Digitalizzazione Aziendale": 13, // 3+2+3+2+3
-      "AI nei Processi Operativi": 13, // 3+3+2+2+3
+      "Organizzazione & Processi": 31,
+      "Acquisizione Clienti": 29,
+      "Gestione Clienti": 31,
+      "AI & Automazione": 25,
+      "Dati & Misurazione": 19,
     };
 
     // Calcola medie per categoria (converti in percentuale)

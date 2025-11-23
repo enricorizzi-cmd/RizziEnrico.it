@@ -196,6 +196,117 @@ export default function DettaglioTestPage() {
                             </div>
                         </div>
 
+                        {/* 1. DIAGNOSI PERSONALIZZATA */}
+                        {test.diagnosi && (
+                            <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl shadow-lg p-8 mb-8 border border-purple-200">
+                                <h3 className="text-2xl font-bold mb-4 font-heading text-purple-700">📍 Diagnosi Completa</h3>
+                                <p className="text-lg font-semibold text-gray-800 mb-6">{test.diagnosi.livello}</p>
+
+                                {/* COLLO DI BOTTIGLIA PRIMARIO */}
+                                {test.collo_bottiglia_primario && test.collo_bottiglia_primario !== 'Non identificato' && (
+                                    <div className="bg-red-50 border-2 border-red-300 rounded-lg p-6 mb-6">
+                                        <h4 className="font-bold text-lg mb-2 text-red-800 flex items-center gap-2">
+                                            ⚠️ COLLO DI BOTTIGLIA CRITICO IDENTIFICATO
+                                        </h4>
+                                        <p className="text-red-700 font-semibold text-xl mb-2">{test.collo_bottiglia_primario}</p>
+                                        <p className="text-sm text-red-600">
+                                            Questo è il punto che andrebbe in crisi per primo con una crescita rapida del business.
+                                            <strong> Risolverlo è priorità assoluta.</strong>
+                                        </p>
+                                    </div>
+                                )}
+
+                                {/* CAPACITÀ DI CRESCITA */}
+                                {test.capacita_crescita && (
+                                    <div className={`rounded-lg p-6 mb-4 ${test.capacita_crescita === '+30%' ? 'bg-orange-50 border-2 border-orange-300' : test.capacita_crescita === '+60%' ? 'bg-yellow-50 border-2 border-yellow-300' : 'bg-green-50 border-2 border-green-300'}`}>
+                                        <h4 className="font-bold text-lg mb-2 text-gray-900">📈 Capacità di Crescita Attuale</h4>
+                                        <div className="text-4xl font-bold mb-2" style={{ color: test.capacita_crescita === '+30%' ? '#f59e0b' : test.capacita_crescita === '+60%' ? '#eab308' : '#10b981' }}>
+                                            {test.capacita_crescita}
+                                        </div>
+                                        <p className="text-sm text-gray-700">
+                                            {test.capacita_crescita === '+30%' && 'Limitata da colli di bottiglia critici. Risolvili per sbloccare la crescita.'}
+                                            {test.capacita_crescita === '+60%' && 'Buona, ma con margini di miglioramento significativi.'}
+                                            {test.capacita_crescita.includes('100') && 'Eccellente! Sei pronto per scalare senza vincoli.'}
+                                        </p>
+                                    </div>
+                                )}
+
+                                {/* OPPORTUNITÀ */}
+                                {test.diagnosi.opportunita && (
+                                    <div className="bg-white rounded-lg p-6">
+                                        <h4 className="font-bold text-lg mb-3 text-gray-900">💰 Opportunità Immediate:</h4>
+                                        <div className="grid md:grid-cols-2 gap-4">
+                                            <div className="bg-green-50 p-4 rounded-lg">
+                                                <div className="text-sm text-gray-600 mb-1">Tempo Liberabile</div>
+                                                <div className="text-xl font-bold text-green-700">{test.diagnosi.opportunita.tempo_liberabile}</div>
+                                                <div className="text-xs text-gray-600 mt-1">Valore: {test.diagnosi.opportunita.valore_tempo}</div>
+                                            </div>
+                                            <div className="bg-blue-50 p-4 rounded-lg">
+                                                <div className="text-sm text-gray-600 mb-1">Accelerazione Decisioni</div>
+                                                <div className="text-xl font-bold text-blue-700">{test.diagnosi.opportunita.accelerazione_decisioni}</div>
+                                            </div>
+                                            <div className="bg-purple-50 p-4 rounded-lg md:col-span-2">
+                                                <div className="text-sm text-gray-600 mb-1">Riduzione Errori</div>
+                                                <div className="text-xl font-bold text-purple-700">{test.diagnosi.opportunita.riduzione_errori}</div>
+                                            </div>
+                                        </div>
+                                        {test.diagnosi.opportunita.note_profilo && (
+                                            <p className="text-xs text-gray-500 mt-4 italic">{test.diagnosi.opportunita.note_profilo}</p>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {/* 2. PRIORITÀ D'AZIONE (vs Quick Wins) */}
+                        {test.priorita_azione && test.priorita_azione.length > 0 && (
+                            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+                                <h3 className="text-2xl font-bold mb-6 font-heading text-gray-900">🎯 Priorità d'Azione (Ordine di Criticità)</h3>
+                                <div className="space-y-4">
+                                    {test.priorita_azione.map((priorita: any, idx: number) => (
+                                        <div key={idx} className={`p-6 rounded-lg border-l-4 ${priorita.livello === 'CRITICA' ? 'bg-red-50 border-red-500' :
+                                            priorita.livello === 'ALTA' ? 'bg-orange-50 border-orange-500' :
+                                                'bg-yellow-50 border-yellow-500'
+                                            }`}>
+                                            <div className="flex items-start justify-between mb-3">
+                                                <div>
+                                                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-2 ${priorita.livello === 'CRITICA' ? 'bg-red-600 text-white' :
+                                                        priorita.livello === 'ALTA' ? 'bg-orange-600 text-white' :
+                                                            'bg-yellow-600 text-white'
+                                                        }`}>
+                                                        {priorita.livello}
+                                                    </span>
+                                                    <h4 className="text-lg font-bold text-gray-900 mt-2">{idx + 1}. {priorita.azione}</h4>
+                                                </div>
+                                                <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold whitespace-nowrap ml-4">
+                                                    ⏱️ {priorita.tempo_implementazione}
+                                                </span>
+                                            </div>
+
+                                            <div className="mb-3">
+                                                <span className="font-semibold text-gray-700">🔴 Problema:</span>
+                                                <p className="text-gray-800 mt-1">{priorita.problema}</p>
+                                            </div>
+
+                                            <div className="grid md:grid-cols-2 gap-3 mb-3">
+                                                <div className="text-sm">
+                                                    <span className="font-semibold text-green-700">📈 Impatto:</span> {priorita.impatto}
+                                                </div>
+                                                <div className="text-sm">
+                                                    <span className="font-semibold text-blue-700">🔧 Come:</span> {priorita.come}
+                                                </div>
+                                            </div>
+
+                                            <div className="bg-white p-3 rounded border border-gray-200 text-sm">
+                                                <div className="mb-1"><span className="font-semibold">🛠️ Risorse:</span> {priorita.risorse}</div>
+                                                <div><span className="font-semibold">📊 KPI:</span> {priorita.kpi}</div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
                         {/* Roadmap */}
                         {test.roadmap_scalabilita && test.roadmap_scalabilita.fase1 && (
                             <div className="bg-white rounded-xl shadow-sm p-6">
