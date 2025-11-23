@@ -197,14 +197,14 @@ export default function DettaglioTestPage() {
                         </div>
 
                         {/* Roadmap */}
-                        {test.roadmap_scalabilita && (
+                        {test.roadmap_scalabilita && test.roadmap_scalabilita.fase1 && (
                             <div className="bg-white rounded-xl shadow-sm p-6">
                                 <h3 className="text-lg font-bold mb-4 text-green-700">🚀 Roadmap Scalabilità</h3>
                                 <div className="bg-green-50 p-4 rounded-lg border border-green-100">
                                     <h4 className="font-bold text-green-800 mb-2">Fase 1: {test.roadmap_scalabilita.fase1.titolo}</h4>
                                     <p className="text-sm text-green-700 mb-3">{test.roadmap_scalabilita.fase1.durata}</p>
                                     <ul className="list-disc list-inside text-sm text-green-800 space-y-1">
-                                        {test.roadmap_scalabilita.fase1.azioni.map((azione: string, idx: number) => (
+                                        {test.roadmap_scalabilita.fase1.azioni?.map((azione: string, idx: number) => (
                                             <li key={idx}>{azione}</li>
                                         ))}
                                     </ul>
