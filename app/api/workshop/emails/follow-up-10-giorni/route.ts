@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
     const expectedToken = process.env.CRON_SECRET_TOKEN;
-    
+
     if (!expectedToken || authHeader !== `Bearer ${expectedToken}`) {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -22,19 +22,19 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = createServerClient();
-    
+
     // Calcola la data di 10 giorni fa
     const tenDaysAgo = new Date();
     tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
     const tenDaysAgoStr = tenDaysAgo.toISOString().split('T')[0];
-    
+
     // Verifica se siamo troppo vicini all'evento o se è già passato
     const workshopDate = new Date('2025-12-12');
     workshopDate.setHours(17, 0, 0, 0); // Workshop dalle ore 17.00
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const daysUntilWorkshop = Math.ceil((workshopDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-    
+
     if (daysUntilWorkshop <= 0) {
       return NextResponse.json({
         success: true,
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
         errors: 0,
       });
     }
-    
+
     if (daysUntilWorkshop < 3) {
       return NextResponse.json({
         success: true,
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
         errors: 0,
       });
     }
-    
+
     // Trova tutti i lead iscritti 10 giorni fa
     const { data: leads, error } = await supabase
       .from('workshop_leads')
@@ -194,7 +194,7 @@ export async function POST(request: NextRequest) {
       <p style="margin: 5px 0;">
         <strong>Data:</strong> 
         <a href="${generateGoogleCalendarUrl({
-          title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
+          title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -202,18 +202,18 @@ export async function POST(request: NextRequest) {
         })}" style="color: #667eea; text-decoration: underline;">${WORKSHOP_DATE}</a>
         <span style="margin-left: 10px; font-size: 12px;">
           (<a href="data:text/calendar;charset=utf-8,${encodeURIComponent(generateICS({
-            title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
-            description: 'Workshop esclusivo OSM',
-            startDate: new Date('2025-12-12T17:00:00'),
-            endDate: new Date('2025-12-12T19:00:00'),
-            location: WORKSHOP_LOCATION,
-          }))}" download="workshop-12-dicembre.ics" style="color: #667eea; text-decoration: underline;">Aggiungi al calendario</a>)
+          title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
+          description: 'Workshop esclusivo OSM',
+          startDate: new Date('2025-12-12T17:00:00'),
+          endDate: new Date('2025-12-12T19:00:00'),
+          location: WORKSHOP_LOCATION,
+        }))}" download="workshop-12-dicembre.ics" style="color: #667eea; text-decoration: underline;">Aggiungi al calendario</a>)
         </span>
       </p>
       <p style="margin: 5px 0;">
         <strong>🕐 Orario:</strong> 
         <a href="${generateGoogleCalendarUrl({
-          title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
+          title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -312,7 +312,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
 ID Lead: ${lead.id}
 Data invio: ${new Date().toLocaleString('it-IT')}
 Giorni rimanenti: ${daysUntilWorkshop}`;
-            
+
             return sendEmail({
               to: NOTIFICATION_EMAIL,
               subject: `📧 Email 10 giorni inviata - ${lead.nome} ${lead.cognome}`,

@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
       FROM_EMAIL: process.env.FROM_EMAIL || 'info@rizzienrico.it (default)',
       configured: SMTP_CONFIGURED,
     });
-    
+
     if (!SMTP_CONFIGURED) {
       console.error('[WORKSHOP] ⚠️ ATTENZIONE: Configurazione SMTP incompleta! L\'email non verrà inviata.');
     }
@@ -88,35 +88,35 @@ export async function POST(request: NextRequest) {
     <p style="color: #1a1a1a;">Grazie per esserti iscritto al workshop:</p>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
-      <h2 style="margin-top: 0; color: #667eea;">"Automatizza la tua Azienda: AI & Digitalizzazione"</h2>
+      <h2 style="margin-top: 0; color: #667eea;  font-size: 32px;">"Più Tempo, Più organizzazione, meno stress: AI in Azienda"</h2>
       <p style="margin: 10px 0;">
         <strong>📅 Data:</strong> 
         <a href="${generateGoogleCalendarUrl({
-          title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
-          description: 'Workshop esclusivo OSM',
-          startDate: new Date('2025-12-12T17:00:00'),
-          endDate: new Date('2025-12-12T19:00:00'),
-          location: WORKSHOP_LOCATION,
-        })}" style="color: #667eea; text-decoration: underline;">${WORKSHOP_DATE}</a>
+      title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
+      description: 'Workshop esclusivo OSM',
+      startDate: new Date('2025-12-12T17:00:00'),
+      endDate: new Date('2025-12-12T19:00:00'),
+      location: WORKSHOP_LOCATION,
+    })}" style="color: #667eea; text-decoration: underline;">${WORKSHOP_DATE}</a>
         <span style="margin-left: 10px; font-size: 12px;">
           (<a href="data:text/calendar;charset=utf-8,${encodeURIComponent(generateICS({
-            title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
-            description: 'Workshop esclusivo OSM',
-            startDate: new Date('2025-12-12T17:00:00'),
-            endDate: new Date('2025-12-12T19:00:00'),
-            location: WORKSHOP_LOCATION,
-          }))}" download="workshop-12-dicembre.ics" style="color: #667eea; text-decoration: underline;">Aggiungi al calendario</a>)
+      title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
+      description: 'Workshop esclusivo OSM',
+      startDate: new Date('2025-12-12T17:00:00'),
+      endDate: new Date('2025-12-12T19:00:00'),
+      location: WORKSHOP_LOCATION,
+    }))}" download="workshop-12-dicembre.ics" style="color: #667eea; text-decoration: underline;">Aggiungi al calendario</a>)
         </span>
       </p>
       <p style="margin: 10px 0;">
         <strong>🕐 Orario:</strong> 
         <a href="${generateGoogleCalendarUrl({
-          title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
-          description: 'Workshop esclusivo OSM',
-          startDate: new Date('2025-12-12T17:00:00'),
-          endDate: new Date('2025-12-12T19:00:00'),
-          location: WORKSHOP_LOCATION,
-        })}" style="color: #667eea; text-decoration: underline;">${WORKSHOP_TIME}</a>
+      title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
+      description: 'Workshop esclusivo OSM',
+      startDate: new Date('2025-12-12T17:00:00'),
+      endDate: new Date('2025-12-12T19:00:00'),
+      location: WORKSHOP_LOCATION,
+    })}" style="color: #667eea; text-decoration: underline;">${WORKSHOP_TIME}</a>
       </p>
       <p style="margin: 10px 0;">
         <strong>📍 Luogo:</strong> 
@@ -181,7 +181,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
       leadId: lead.id,
       timestamp: new Date().toISOString(),
     });
-    
+
     Promise.all([
       sendEmail({
         to: validatedData.email,
@@ -198,14 +198,14 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
             leadId: lead.id,
             timestamp: new Date().toISOString(),
           });
-          
+
           // Aggiorna metadata per tracciare email conferma inviata
           const { data: currentLead } = await supabase
             .from('workshop_leads')
             .select('metadata')
             .eq('id', lead.id)
             .single();
-          
+
           if (currentLead) {
             const metadata = (currentLead.metadata as any) || {};
             metadata.email_conferma_iscrizione_sent = new Date().toISOString();
@@ -267,7 +267,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
     // REGOLA SPECIALE: Se l'email è enricorizzi1991@gmail.com, invia tutte le email automaticamente per test
     if (validatedData.email.toLowerCase() === 'enricorizzi1991@gmail.com') {
       console.log('[WORKSHOP] 🧪 Email di test rilevata - Invio automatico di tutte le email');
-      
+
       // Invia tutte le email in sequenza con delay
       Promise.all([
         // Email T+5 (simulata)
@@ -333,7 +333,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
               .select('metadata')
               .eq('id', lead.id)
               .single();
-            
+
             if (currentLead) {
               const metadata = (currentLead.metadata as any) || {};
               metadata.email_5_giorni_sent = new Date().toISOString();
@@ -469,7 +469,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
               .select('metadata')
               .eq('id', lead.id)
               .single();
-            
+
             if (currentLead) {
               const metadata = (currentLead.metadata as any) || {};
               metadata.email_10_giorni_sent = new Date().toISOString();
@@ -554,7 +554,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
               .select('metadata')
               .eq('id', lead.id)
               .single();
-            
+
             if (currentLead) {
               const metadata = (currentLead.metadata as any) || {};
               metadata.email_3_giorni_sent = new Date().toISOString();
@@ -611,7 +611,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
               .select('metadata')
               .eq('id', lead.id)
               .single();
-            
+
             if (currentLead) {
               const metadata = (currentLead.metadata as any) || {};
               metadata.email_giorno_evento_sent = new Date().toISOString();
@@ -629,7 +629,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
           try {
             const CALENDLY_CHECKUP_URL = process.env.NEXT_PUBLIC_CALENDLY_CHECKUP_URL || 'https://calendly.com/enricorizzi/check-up-gratuito-in-azienda';
             const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
-            
+
             const emailHtml = `
 <!DOCTYPE html>
 <html>
@@ -681,7 +681,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
               .select('metadata')
               .eq('id', lead.id)
               .single();
-            
+
             if (currentLead) {
               const metadata = (currentLead.metadata as any) || {};
               metadata.email_post_immediata_sent = new Date().toISOString();
@@ -700,7 +700,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
           try {
             const CALENDLY_CHECKUP_URL = process.env.NEXT_PUBLIC_CALENDLY_CHECKUP_URL || 'https://calendly.com/enricorizzi/check-up-gratuito-in-azienda';
             const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
-            
+
             const emailHtml = `
 <!DOCTYPE html>
 <html>
@@ -742,7 +742,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
               .select('metadata')
               .eq('id', lead.id)
               .single();
-            
+
             if (currentLead) {
               const metadata = (currentLead.metadata as any) || {};
               metadata.email_post_24h_sent = new Date().toISOString();
@@ -760,7 +760,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
           try {
             const CALENDLY_CHECKUP_URL = process.env.NEXT_PUBLIC_CALENDLY_CHECKUP_URL || 'https://calendly.com/enricorizzi/check-up-gratuito-in-azienda';
             const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
-            
+
             const emailHtml = `
 <!DOCTYPE html>
 <html>
@@ -804,7 +804,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
               .select('metadata')
               .eq('id', lead.id)
               .single();
-            
+
             if (currentLead) {
               const metadata = (currentLead.metadata as any) || {};
               metadata.email_post_48h_sent = new Date().toISOString();

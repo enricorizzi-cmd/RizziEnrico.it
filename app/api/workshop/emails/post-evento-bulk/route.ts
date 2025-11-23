@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
     const expectedToken = process.env.CRON_SECRET_TOKEN;
-    
+
     if (!expectedToken || authHeader !== `Bearer ${expectedToken}`) {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = createServerClient();
-    
+
     // Trova tutti i lead iscritti che non hanno ancora ricevuto l'email post-evento immediata
     const { data: leads, error } = await supabase
       .from('workshop_leads')
@@ -92,11 +92,11 @@ Errori: ${failed}
 
 Dettagli:
 ${results.map((r, i) => {
-  if (r.status === 'fulfilled') {
-    return `- ${leads[i].nome} ${leads[i].cognome} (${leads[i].email}): ${r.value.success ? '✅ Inviata' : `❌ Errore: ${r.value.error}`}`;
-  }
-  return `- ${leads[i].nome} ${leads[i].cognome} (${leads[i].email}): ❌ Errore: ${r.reason}`;
-}).join('\n')}`;
+      if (r.status === 'fulfilled') {
+        return `- ${leads[i].nome} ${leads[i].cognome} (${leads[i].email}): ${r.value.success ? '✅ Inviata' : `❌ Errore: ${r.value.error}`}`;
+      }
+      return `- ${leads[i].nome} ${leads[i].cognome} (${leads[i].email}): ❌ Errore: ${r.reason}`;
+    }).join('\n')}`;
 
     try {
       const { sendEmail } = await import('@/lib/email');
@@ -124,4 +124,3 @@ ${results.map((r, i) => {
     );
   }
 }
-

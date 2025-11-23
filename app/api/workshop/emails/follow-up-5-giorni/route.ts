@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
     const expectedToken = process.env.CRON_SECRET_TOKEN;
-    
+
     if (!expectedToken || authHeader !== `Bearer ${expectedToken}`) {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -22,12 +22,12 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = createServerClient();
-    
+
     // Calcola la data di 5 giorni fa
     const fiveDaysAgo = new Date();
     fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5);
     const fiveDaysAgoStr = fiveDaysAgo.toISOString().split('T')[0];
-    
+
     // Trova tutti i lead iscritti 5 giorni fa che non hanno già ricevuto questa email
     const { data: leads, error } = await supabase
       .from('workshop_leads')
@@ -112,7 +112,7 @@ export async function POST(request: NextRequest) {
   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
-    <p>Siamo felici che tu sia iscritto al workshop <strong>"Automatizza la tua Azienda: AI & Digitalizzazione"</strong>!</p>
+    <p>Siamo felici che tu sia iscritto al workshop <strong>"Più Tempo, Più organizzazione, meno stress: AI in Azienda"</strong>!</p>
     
     <p>Vogliamo aiutarti a prepararti al meglio per trarre il massimo dall'evento.</p>
     
@@ -141,7 +141,7 @@ export async function POST(request: NextRequest) {
       <p style="margin: 5px 0;">
         <strong>Data:</strong> 
         <a href="${generateGoogleCalendarUrl({
-          title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
+          title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -149,18 +149,18 @@ export async function POST(request: NextRequest) {
         })}" style="color: #667eea; text-decoration: underline;">${WORKSHOP_DATE}</a>
         <span style="margin-left: 10px; font-size: 12px;">
           (<a href="data:text/calendar;charset=utf-8,${encodeURIComponent(generateICS({
-            title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
-            description: 'Workshop esclusivo OSM',
-            startDate: new Date('2025-12-12T17:00:00'),
-            endDate: new Date('2025-12-12T19:00:00'),
-            location: WORKSHOP_LOCATION,
-          }))}" download="workshop-12-dicembre.ics" style="color: #667eea; text-decoration: underline;">Aggiungi al calendario</a>)
+          title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
+          description: 'Workshop esclusivo OSM',
+          startDate: new Date('2025-12-12T17:00:00'),
+          endDate: new Date('2025-12-12T19:00:00'),
+          location: WORKSHOP_LOCATION,
+        }))}" download="workshop-12-dicembre.ics" style="color: #667eea; text-decoration: underline;">Aggiungi al calendario</a>)
         </span>
       </p>
       <p style="margin: 5px 0;">
         <strong>🕐 Orario:</strong> 
         <a href="${generateGoogleCalendarUrl({
-          title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
+          title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -188,7 +188,7 @@ export async function POST(request: NextRequest) {
 
         const emailText = `Ciao ${lead.nome},
 
-Siamo felici che tu sia iscritto al workshop "Automatizza la tua Azienda: AI & Digitalizzazione"!
+Siamo felici che tu sia iscritto al workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda"!
 
 Vogliamo aiutarti a prepararti al meglio per trarre il massimo dall'evento.
 
@@ -233,7 +233,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
 ID Lead: ${lead.id}
 Data invio: ${new Date().toLocaleString('it-IT')}
 Giorni rimanenti: ${daysRemaining}`;
-            
+
             return sendEmail({
               to: NOTIFICATION_EMAIL,
               subject: `📧 Email 5 giorni inviata - ${lead.nome} ${lead.cognome}`,

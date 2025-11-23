@@ -6,7 +6,7 @@ const EMAIL_CONTENTS: Record<string, { subject: string; text: string }> = {
     subject: '🎉 Registrazione Workshop Confermata - Automatizza la tua Azienda',
     text: `Ciao [NOME],
 
-Grazie per esserti iscritto al workshop "Automatizza la tua Azienda: AI & Digitalizzazione"!
+Grazie per esserti iscritto al workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda"!
 
 📅 Data: Venerdì 12 dicembre 2025
 🕐 Orario: dalle ore 17.00 (accettazione dalle ore 16.30)
@@ -33,7 +33,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`,
     subject: '🎯 Preparati al meglio per il workshop',
     text: `Ciao [NOME],
 
-Siamo felici che tu sia iscritto al workshop "Automatizza la tua Azienda: AI & Digitalizzazione"!
+Siamo felici che tu sia iscritto al workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda"!
 
 Vogliamo aiutarti a prepararti al meglio per trarre il massimo dall'evento.
 
@@ -113,7 +113,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`,
     subject: '📋 Preparati per il workshop',
     text: `Ciao [NOME],
 
-Manca poco al workshop "Automatizza la tua Azienda: AI & Digitalizzazione".
+Manca poco al workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda".
 
 📅 Dettagli Evento:
 Data: Venerdì 12 dicembre 2025
@@ -140,7 +140,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`,
     subject: '🚀 Oggi è il giorno! Ti aspettiamo dalle ore 17.00',
     text: `Ciao [NOME],
 
-Oggi è il giorno del workshop "Automatizza la tua Azienda: AI & Digitalizzazione"!
+Oggi è il giorno del workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda"!
 
 Ti aspettiamo dalle ore 17.00 (accettazione dalle ore 16.30) presso:
 OSM Venezia - Via Sertorio Orsato 22, Venezia
@@ -157,7 +157,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`,
     subject: '🎉 Grazie per essere stato al workshop!',
     text: `Ciao [NOME],
 
-Grazie per essere stato al workshop "Automatizza la tua Azienda: AI & Digitalizzazione"!
+Grazie per essere stato al workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda"!
 
 Speriamo che tu abbia trovato utili gli spunti e le demo che abbiamo condiviso.
 

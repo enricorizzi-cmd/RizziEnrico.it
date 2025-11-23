@@ -34,7 +34,7 @@ const emailTemplates: EmailTemplate[] = [
   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
-    <p>Grazie per essere stato al workshop "Automatizza la tua Azienda: AI & Digitalizzazione"!</p>
+    <p>Grazie per essere stato al workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda"!</p>
     
     <p>Speriamo che tu abbia trovato utili gli spunti e le demo che abbiamo condiviso.</p>
     
@@ -60,7 +60,7 @@ const emailTemplates: EmailTemplate[] = [
 </html>`,
     text: (lead) => `Ciao ${lead.nome},
 
-Grazie per essere stato al workshop "Automatizza la tua Azienda: AI & Digitalizzazione"!
+Grazie per essere stato al workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda"!
 
 Speriamo che tu abbia trovato utili gli spunti e le demo che abbiamo condiviso.
 
@@ -177,7 +177,7 @@ export async function POST(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
     const expectedToken = process.env.CRON_SECRET_TOKEN;
-    
+
     if (!expectedToken || authHeader !== `Bearer ${expectedToken}`) {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -238,7 +238,7 @@ Oggetto: ${template.subject}
 
 ID Lead: ${lead.id}
 Data invio: ${new Date().toLocaleString('it-IT')}`;
-        
+
         return sendEmail({
           to: NOTIFICATION_EMAIL,
           subject: `📧 Email post-evento inviata - ${lead.nome} ${lead.cognome} (${emailType})`,
@@ -253,10 +253,10 @@ Data invio: ${new Date().toLocaleString('it-IT')}`;
     // Aggiorna metadata per tracciare email inviate
     const metadata = (lead.metadata as any) || {};
     // Mappa emailType ai nomi usati nella dashboard
-    const metadataKey = emailType === 'immediate' ? 'email_post_immediata_sent' 
-                      : emailType === '24h' ? 'email_post_24h_sent'
-                      : emailType === '48h' ? 'email_post_48h_sent'
-                      : `email_${emailType}_sent`;
+    const metadataKey = emailType === 'immediate' ? 'email_post_immediata_sent'
+      : emailType === '24h' ? 'email_post_24h_sent'
+        : emailType === '48h' ? 'email_post_48h_sent'
+          : `email_${emailType}_sent`;
     metadata[metadataKey] = new Date().toISOString();
 
     await supabase

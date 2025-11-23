@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
     const expectedToken = process.env.CRON_SECRET_TOKEN;
-    
+
     if (!expectedToken || authHeader !== `Bearer ${expectedToken}`) {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -22,12 +22,12 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = createServerClient();
-    
+
     // Verifica se oggi è 3 giorni prima del workshop (9 dicembre)
     const today = new Date();
     const workshopDate = new Date('2025-12-12');
     const daysUntilWorkshop = Math.ceil((workshopDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-    
+
     if (daysUntilWorkshop !== 3) {
       return NextResponse.json({
         message: `Non sono 3 giorni prima del workshop. Giorni rimanenti: ${daysUntilWorkshop}`,
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
         errors: 0,
       });
     }
-    
+
     // Trova tutti gli iscritti
     const { data: leads, error } = await supabase
       .from('workshop_leads')
@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
-    <p>Il workshop "Automatizza la tua Azienda: AI & Digitalizzazione" si avvicina!</p>
+    <p>Il workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda" si avvicina!</p>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea; text-align: center;">
       <h2 style="margin-top: 0; color: #667eea; font-size: 32px;">📅 ${WORKSHOP_DATE}</h2>
@@ -130,7 +130,7 @@ export async function POST(request: NextRequest) {
       <p style="margin: 5px 0;">
         <strong>Data:</strong> 
         <a href="${generateGoogleCalendarUrl({
-          title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
+          title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -138,18 +138,18 @@ export async function POST(request: NextRequest) {
         })}" style="color: #667eea; text-decoration: underline;">${WORKSHOP_DATE}</a>
         <span style="margin-left: 10px; font-size: 12px;">
           (<a href="data:text/calendar;charset=utf-8,${encodeURIComponent(generateICS({
-            title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
-            description: 'Workshop esclusivo OSM',
-            startDate: new Date('2025-12-12T17:00:00'),
-            endDate: new Date('2025-12-12T19:00:00'),
-            location: WORKSHOP_LOCATION,
-          }))}" download="workshop-12-dicembre.ics" style="color: #667eea; text-decoration: underline;">Aggiungi al calendario</a>)
+          title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
+          description: 'Workshop esclusivo OSM',
+          startDate: new Date('2025-12-12T17:00:00'),
+          endDate: new Date('2025-12-12T19:00:00'),
+          location: WORKSHOP_LOCATION,
+        }))}" download="workshop-12-dicembre.ics" style="color: #667eea; text-decoration: underline;">Aggiungi al calendario</a>)
         </span>
       </p>
       <p style="margin: 5px 0;">
         <strong>🕐 Orario:</strong> 
         <a href="${generateGoogleCalendarUrl({
-          title: 'Automatizza la tua Azienda: AI & Digitalizzazione',
+          title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -177,7 +177,7 @@ export async function POST(request: NextRequest) {
 
         const emailText = `Ciao ${lead.nome},
 
-Il workshop "Automatizza la tua Azienda: AI & Digitalizzazione" si avvicina!
+Il workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda" si avvicina!
 
 📅 ${WORKSHOP_DATE} - 🕐 ${WORKSHOP_TIME}
 
@@ -231,7 +231,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
             
 ID Lead: ${lead.id}
 Data invio: ${new Date().toLocaleString('it-IT')}`;
-            
+
             return sendEmail({
               to: NOTIFICATION_EMAIL,
               subject: `📧 Email 3 giorni inviata - ${lead.nome} ${lead.cognome}`,

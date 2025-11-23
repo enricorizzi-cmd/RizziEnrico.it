@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     // Verifica autorizzazione (puoi aggiungere un token segreto)
     const authHeader = request.headers.get('authorization');
     const expectedToken = process.env.CRON_SECRET_TOKEN;
-    
+
     if (!expectedToken || authHeader !== `Bearer ${expectedToken}`) {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
     <p>Ti ricordiamo che <strong>domani</strong> si terrà il workshop:</p>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
-      <h2 style="margin-top: 0; color: #667eea;">"Automatizza la tua Azienda: AI & Digitalizzazione"</h2>
+      <h2 style="margin-top: 0; color: #667eea;">"Più Tempo, Più organizzazione, meno stress: AI in Azienda"</h2>
       <p style="margin: 10px 0;"><strong>📅 Data:</strong> ${WORKSHOP_DATE}</p>
       <p style="margin: 10px 0;"><strong>🕐 Orario:</strong> ${WORKSHOP_TIME}</p>
       <p style="margin: 10px 0;"><strong>📍 Luogo:</strong> ${WORKSHOP_LOCATION}</p>
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
 
         const emailText = `Ciao ${lead.nome},
 
-Ti ricordiamo che DOMANI si terrà il workshop "Automatizza la tua Azienda: AI & Digitalizzazione"!
+Ti ricordiamo che DOMANI si terrà il workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda"!
 
 📅 Data: ${WORKSHOP_DATE}
 🕐 Orario: ${WORKSHOP_TIME}
@@ -146,7 +146,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
             
 ID Lead: ${lead.id}
 Data invio: ${new Date().toLocaleString('it-IT')}`;
-            
+
             return sendEmail({
               to: NOTIFICATION_EMAIL,
               subject: `📅 Promemoria workshop inviato - ${lead.nome} ${lead.cognome}`,

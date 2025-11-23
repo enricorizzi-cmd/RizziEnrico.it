@@ -47,11 +47,10 @@ export default function WorkshopBanner() {
 
   return (
     <div
-      className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-700 ease-out ${
-        isVisible
+      className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-700 ease-out ${isVisible
           ? 'translate-y-0 opacity-100 workshop-banner-visible'
           : '-translate-y-full opacity-0 pointer-events-none'
-      }`}
+        }`}
     >
       <Link
         href="/workshop-12-dicembre"
@@ -82,13 +81,13 @@ export default function WorkshopBanner() {
                     •
                   </span>
                   <span className="text-xs sm:text-sm md:text-base opacity-90 line-clamp-1 sm:truncate">
-                    Automatizza la tua Azienda: AI & Digitalizzazione
+                    Più Tempo, Più organizzazione, meno stress: AI in Azienda
                   </span>
                 </div>
                 <div className="flex flex-wrap items-center gap-1 sm:gap-2 mt-0.5 sm:mt-1 text-[10px] sm:text-xs md:text-sm opacity-80">
                   <span className="whitespace-nowrap">📅 Venerdì 12 dicembre 2025</span>
                   <span className="hidden sm:inline">•</span>
-                  <span className="whitespace-nowrap">🕐 dalle ore 17.00</span>
+                  <span className="whitespace-nowrap">🕐 16:30 - 19:00</span>
                   <span className="hidden md:inline">•</span>
                   <span className="hidden md:inline whitespace-nowrap">📍 OSM Venezia</span>
                 </div>

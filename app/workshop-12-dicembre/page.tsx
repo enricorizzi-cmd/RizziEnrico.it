@@ -165,22 +165,40 @@ export default function WorkshopPage() {
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 font-heading animate-fade-in-up">
-              Automatizza la tua Azienda:
+              Più Tempo, Più organizzazione,
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-[length:200%_auto] animate-gradient-text">
-                AI & Digitalizzazione
+                meno stress: AI in Azienda
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
-              Da imprenditori per imprenditori. Scopri come trasformare il caos digitale in processi automatici che funzionano davvero.
+            <p className="text-xl md:text-2xl text-gray-600 mb-6 max-w-3xl mx-auto animate-fade-in-up animation-delay-200">
+              Metti l'AI a lavorare per te e la tua azienda: un esercito di assistenti digitali che elimina il lavoro ripetitivo, mette ordine in azienda e fa sentire tutta la squadra finalmente più serena.
             </p>
+            <ul className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto text-left space-y-3 animate-fade-in-up animation-delay-250">
+              <li className="flex items-start gap-3">
+                <span className="text-purple-600 font-bold mt-1">✓</span>
+                <span>Libera ore di lavoro ogni settimana dalle attività ripetitive</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-purple-600 font-bold mt-1">✓</span>
+                <span>Metti ordine in procedure, mail, riunioni e documenti</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-purple-600 font-bold mt-1">✓</span>
+                <span>Migliora la velocità e la qualità delle comunicazioni</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-purple-600 font-bold mt-1">✓</span>
+                <span>Trasforma l'AI in una valida alleata</span>
+              </li>
+            </ul>
             <div className="mb-8 animate-fade-in-up animation-delay-300">
               <MagneticButton>
                 <a
                   href="#registrazione"
                   className="inline-block bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 px-8 rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                 >
-                  Iscriviti Ora →
+                  Riserva il tuo posto →
                 </a>
               </MagneticButton>
             </div>
@@ -191,8 +209,8 @@ export default function WorkshopPage() {
               </div>
               <div className="hidden sm:block w-px h-12 bg-gradient-to-b from-transparent via-purple-300 to-transparent"></div>
               <div className="group text-center sm:text-left bg-white/60 backdrop-blur-sm px-6 py-4 rounded-2xl shadow-lg border border-blue-200/50 hover:scale-105 hover:shadow-xl transition-all duration-300">
-                <div className="text-lg font-bold text-blue-600 group-hover:scale-110 transition-transform">inizio ore 17.00</div>
-                <div className="text-sm text-gray-600">registrazione dalle ore 16.30</div>
+                <div className="text-lg font-bold text-blue-600 group-hover:scale-110 transition-transform">16:30 - 19:00</div>
+                <div className="text-sm text-gray-600">accoglienza dalle 16:30 - inizio 17:00</div>
                 <div className="text-sm text-gray-600 mt-1">OSM Venezia</div>
                 <div className="text-xs text-gray-500 mt-1">Via Sertorio Orsato 22, Venezia</div>
               </div>
@@ -250,67 +268,185 @@ export default function WorkshopPage() {
         </div>
       )}
 
+      {/* Perché questo Workshop */}
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white relative z-10">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 font-heading scroll-animate">
+              <span className="relative inline-block">
+                Per imprenditori che non vogliono "studiare AI", ma farla lavorare per loro
+                <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full"></span>
+              </span>
+            </h2>
+
+            <div className="bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-2xl shadow-xl border border-purple-100/50 mb-8 scroll-animate">
+              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+                Se sei un imprenditore o un manager di PMI è probabile che la situazione, oggi, sia più o meno così:
+              </p>
+
+              <ul className="space-y-3 mb-8 text-gray-700">
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 font-bold mt-1">✗</span>
+                  <span>stessi dati scritti 3 volte in sistemi diversi;</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 font-bold mt-1">✗</span>
+                  <span>informazioni sparse tra mail, WhatsApp, Excel, Drive e gestionali;</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 font-bold mt-1">✗</span>
+                  <span>clienti che chiedono, sollecitano, richiamano;</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 font-bold mt-1">✗</span>
+                  <span>collaboratori sempre incasinati, tra mille urgenze e poco ordine.</span>
+                </li>
+              </ul>
+
+              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+                Nel frattempo, tutti parlano di intelligenza artificiale e qualcuno la usa ma non ne vedi ancora i benefici.<br />
+                Qualcuno la teme, qualcuno ci gioca. Pochissimi la stanno usando davvero per automatizzare:
+              </p>
+
+              <ul className="space-y-3 mb-8 text-gray-700 pl-6">
+                <li>• togliere lavoro inutile alle persone,</li>
+                <li>• organizzare meglio il lavoro,</li>
+                <li>• ridurre lo stress e i picchi di sovraccarico.</li>
+              </ul>
+
+              <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-xl border-l-4 border-purple-600">
+                <p className="text-lg text-gray-800 font-semibold">
+                  Questo workshop serve esattamente a questo: farti vedere, dal vivo, come l'AI può diventare una squadra di assistenti invisibili che lavora per te, per il tuo team e per i tuoi clienti.
+                </p>
+              </div>
+            </div>
+
+            {/* CTA Button */}
+            <div className="text-center">
+              <a
+                href="#registrazione"
+                className="inline-block bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 px-8 rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                Riserva il tuo posto →
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Cosa Imparerai */}
       <section className="py-20 bg-white relative z-10">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 font-heading scroll-animate">
               <span className="relative inline-block">
-                Cosa Imparerai
+                Cosa succede durante il workshop
                 <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full"></span>
               </span>
             </h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              {[
-                {
-                  icon: '🎯',
-                  title: 'Sistema Concreto',
-                  desc: 'Vedrai un sistema reale (landing + CRM + automazioni + AI) che raccoglie, ordina e segue i lead. Lead marketing automation, automazioni di processi e creazione di strumenti personalizzati e dedicati su misura dell\'azienda.',
-                  gradient: 'from-purple-500 to-purple-600',
-                },
-                {
-                  icon: '🤖',
-                  title: 'Automazioni Efficaci',
-                  desc: 'Scoprirai come automatizzare email, reminder e follow-up senza bisogno di IT interno. Oltre a questa demo ci saranno indicazioni su come dare comandi efficaci alle AI.',
-                  gradient: 'from-blue-500 to-blue-600',
-                },
-                {
-                  icon: '📊',
-                  title: 'Dashboard Live',
-                  desc: 'Imparerai a vedere i numeri in tempo reale: lead, fonti, conversioni, presenze.',
-                  gradient: 'from-indigo-500 to-indigo-600',
-                },
-                {
-                  icon: '✨',
-                  title: 'AI Copy Sprint',
-                  desc: 'Demo live: generiamo titoli, post, email e script in pochi minuti con l\'AI.',
-                  gradient: 'from-pink-500 to-pink-600',
-                },
-              ].map((item, idx) => (
-                <div
-                  key={idx}
-                  className="group scroll-animate p-8 bg-white rounded-2xl border-2 border-gray-100 hover:border-purple-300 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden"
-                  style={{ animationDelay: `${idx * 100}ms` }}
-                >
-                  {/* Animated Background Gradient */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
-
-                  {/* Icon with Animation */}
-                  <div className="relative z-10 mb-6">
-                    <div className="inline-block p-4 bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-                      <span className="text-4xl block group-hover:scale-110 transition-transform duration-300">{item.icon}</span>
+            <p className="text-lg text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+              Durante le 2 ore affronteremo in modo pratico 3 fronti:
+            </p>
+            <div className="space-y-8">
+              {/* AI per l'organizzazione interna */}
+              <div className="group scroll-animate p-8 bg-white rounded-2xl border-2 border-purple-100 hover:border-purple-300 shadow-lg hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-purple-600 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <span className="text-2xl">🧠</span>
                     </div>
+                    <h3 className="text-2xl font-bold text-purple-600 mt-2">AI per l'organizzazione interna</h3>
                   </div>
-
-                  <h3 className="text-xl font-bold mb-3 text-gray-900 relative z-10 group-hover:text-purple-600 transition-colors duration-300">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-600 relative z-10 leading-relaxed">{item.desc}</p>
-
-                  {/* Decorative Corner */}
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-purple-100 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <p className="text-gray-700 mb-4">Vedrai come usare l'AI per:</p>
+                  <ul className="space-y-2 text-gray-700">
+                    <li className="flex items-start gap-3">
+                      <span className="text-purple-600 font-bold mt-1">✓</span>
+                      <span>riassumere mail e riunioni in piani d'azione chiari,</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-purple-600 font-bold mt-1">✓</span>
+                      <span>creare assistenti che spiegano procedure interne,</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-purple-600 font-bold mt-1">✓</span>
+                      <span>mettere ordine in documenti, idee, task.</span>
+                    </li>
+                  </ul>
                 </div>
-              ))}
+              </div>
+
+              {/* AI per la relazione con i clienti */}
+              <div className="group scroll-animate p-8 bg-white rounded-2xl border-2 border-blue-100 hover:border-blue-300 shadow-lg hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-blue-600 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <span className="text-2xl">🤝</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-blue-600 mt-2">AI per la relazione con i clienti</h3>
+                  </div>
+                  <p className="text-gray-700 mb-4">Lavoreremo su casi reali (mail, preventivi, richieste) per:</p>
+                  <ul className="space-y-2 text-gray-700">
+                    <li className="flex items-start gap-3">
+                      <span className="text-blue-600 font-bold mt-1">✓</span>
+                      <span>generare bozze di risposta più veloci e più chiare,</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-blue-600 font-bold mt-1">✓</span>
+                      <span>migliorare la velocità dei preventivi e dei follow-up,</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-blue-600 font-bold mt-1">✓</span>
+                      <span>creare contenuti utili (mini-guide, FAQ, spiegazioni) senza perdere ore.</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Il tuo "AI Action Plan" personalizzato */}
+              <div className="group scroll-animate p-8 bg-white rounded-2xl border-2 border-indigo-100 hover:border-indigo-300 shadow-lg hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-indigo-600 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <span className="text-2xl">🎯</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-indigo-600 mt-2">Il tuo "AI Action Plan" personalizzato</h3>
+                  </div>
+                  <p className="text-gray-700 mb-4">Uscirai con:</p>
+                  <ul className="space-y-2 text-gray-700">
+                    <li className="flex items-start gap-3">
+                      <span className="text-indigo-600 font-bold mt-1">✓</span>
+                      <span>una lista di attività che puoi da subito delegare all'AI,</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-indigo-600 font-bold mt-1">✓</span>
+                      <span>le aree interne dove introdurre i primi "assistenti digitali",</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-indigo-600 font-bold mt-1">✓</span>
+                      <span>un'idea chiara di dove l'AI può liberare più tempo nella tua azienda.</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-12 bg-gradient-to-r from-yellow-50 to-amber-50 p-6 rounded-xl border-l-4 border-yellow-500 scroll-animate">
+              <p className="text-gray-800 text-center font-semibold">
+                💡 Durante il workshop useremo l'AI live sui casi proposti dai partecipanti: niente teoria astratta, ma applicazioni reali su problemi reali.
+              </p>
+            </div>
+
+            {/* CTA Button */}
+            <div className="text-center mt-12">
+              <a
+                href="#registrazione"
+                className="inline-block bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 px-8 rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                Riserva il tuo posto →
+              </a>
             </div>
           </div>
         </div>
@@ -326,20 +462,23 @@ export default function WorkshopPage() {
                 <div className="relative z-10">
                   <h3 className="text-2xl font-bold mb-6 text-green-700 font-heading flex items-center gap-3">
                     <span className="text-3xl group-hover:scale-125 transition-transform duration-300">✅</span>
-                    Per Chi È
+                    Per chi è pensato
                   </h3>
-                  <ul className="space-y-4 text-gray-700">
-                    {[
-                      'PMI che vogliono creare continuità e autonomia',
-                      'Imprenditori che vogliono mettere ordine nella digitalizzazione',
-                      'Chi cerca soluzioni concrete, non teoria',
-                      'Chi vuole vedere risultati step by step',
-                    ].map((item, idx) => (
-                      <li key={idx} className="flex items-start group/item">
-                        <span className="text-green-500 mr-3 text-xl group-hover/item:scale-125 transition-transform duration-300">•</span>
-                        <span className="group-hover/item:text-green-700 transition-colors duration-300">{item}</span>
-                      </li>
-                    ))}
+                  <p className="text-gray-700 mb-4 leading-relaxed">
+                    Il workshop è pensato per:
+                  </p>
+                  <p className="text-lg font-semibold text-gray-800 mb-4">
+                    Imprenditori e manager di PMI che vogliono più tempo e più organizzazione
+                  </p>
+                  <p className="text-gray-700 mb-4">
+                    Non servono competenze tecniche o informatiche particolari.
+                  </p>
+                  <p className="text-gray-700 mb-2">
+                    Serve solo la voglia di:
+                  </p>
+                  <ul className="space-y-2 text-gray-700 pl-4">
+                    <li>• capire dove l'AI può dare una mano,</li>
+                    <li>• iniziare a usarla davvero, non solo sentirne parlare.</li>
                   </ul>
                 </div>
               </div>
@@ -399,6 +538,46 @@ export default function WorkshopPage() {
                 decoding="async"
               />
               <span>OSM Partner Venezia</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* E dopo il workshop? */}
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white relative z-10">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 font-heading scroll-animate">
+              <span className="relative inline-block">
+                E dopo il workshop?
+                <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full"></span>
+              </span>
+            </h2>
+
+            <div className="bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-2xl shadow-xl border border-purple-100/50 mb-8 scroll-animate">
+              <p className="text-lg text-gray-700 mb-8 text-center leading-relaxed">
+                Questo workshop è il punto di partenza.
+              </p>
+
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-xl border-l-4 border-blue-600">
+                <h3 className="text-2xl font-bold text-blue-700 mb-4 flex items-center gap-3">
+                  <span className="text-3xl">🔍</span>
+                  Digital Checkup
+                </h3>
+                <p className="text-gray-800 text-lg">
+                  Per chi vorrà fare un passo in più, a fine evento avrai la possibilità di fissare: <strong>1 giornata in azienda</strong> per mappare in profondità processi, lacune e opportunità di digitalizzazione, con un piano chiaro di intervento.
+                </p>
+              </div>
+            </div>
+
+            {/* CTA Button */}
+            <div className="text-center">
+              <a
+                href="#registrazione"
+                className="inline-block bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 px-8 rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                Riserva il tuo posto →
+              </a>
             </div>
           </div>
         </div>
