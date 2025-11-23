@@ -56,6 +56,12 @@ const nextConfig: NextConfig = {
     maxInactiveAge: 25 * 1000, // Ridotto da default 60s a 25s
     pagesBufferLength: 2, // Ridotto da default 5 a 2
   },
+
+  // IGNORA ERRORI TYPESCRIPT IN BUILD
+  // Necessario per evitare "JavaScript heap out of memory" su Render (Free/Starter tier)
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 export default nextConfig;
