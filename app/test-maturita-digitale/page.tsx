@@ -697,7 +697,7 @@ export default function TestMaturitaDigitalePage() {
 
           <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12">
             <h1 className="text-4xl font-bold mb-6 text-center font-heading">
-              Check-up Digitale Aziendale
+              Test Digitalizzazione Aziendale
             </h1>
             <p className="text-center text-gray-600 mb-8 text-lg">
               Scopri in 10 minuti il livello di digitalizzazione, i colli di bottiglia e la capacità di scala della tua azienda
@@ -1244,9 +1244,9 @@ export default function TestMaturitaDigitalePage() {
               <div className="space-y-4">
                 {results.roadmap_pilastri.map((pilastro: any, idx: number) => (
                   <div key={idx} className={`rounded-lg p-6 border-l-4 ${pilastro.priorita === 'CRITICA' ? 'bg-red-50 border-red-500' :
-                      pilastro.priorita === 'ALTA' ? 'bg-orange-50 border-orange-500' :
-                        pilastro.priorita === 'MEDIA' ? 'bg-yellow-50 border-yellow-500' :
-                          'bg-green-50 border-green-500'
+                    pilastro.priorita === 'ALTA' ? 'bg-orange-50 border-orange-500' :
+                      pilastro.priorita === 'MEDIA' ? 'bg-yellow-50 border-yellow-500' :
+                        'bg-green-50 border-green-500'
                     }`}>
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
@@ -1255,9 +1255,9 @@ export default function TestMaturitaDigitalePage() {
                           <h4 className="font-bold text-gray-900">{pilastro.pilastro}</h4>
                           <div className="flex items-center gap-2 mt-1">
                             <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${pilastro.priorita === 'CRITICA' ? 'bg-red-600 text-white' :
-                                pilastro.priorita === 'ALTA' ? 'bg-orange-600 text-white' :
-                                  pilastro.priorita === 'MEDIA' ? 'bg-yellow-600 text-white' :
-                                    'bg-green-600 text-white'
+                              pilastro.priorita === 'ALTA' ? 'bg-orange-600 text-white' :
+                                pilastro.priorita === 'MEDIA' ? 'bg-yellow-600 text-white' :
+                                  'bg-green-600 text-white'
                               }`}>
                               {pilastro.priorita}
                             </span>

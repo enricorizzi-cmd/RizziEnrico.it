@@ -37,7 +37,7 @@ export default function StarterKitPage() {
             1. Raccolta Dati & CRM
           </h2>
           <p className="text-gray-600 mb-4">
-            Il primo passo è mettere ordine nei dati: sapere chi sono i tuoi contatti, da dove arrivano, 
+            Il primo passo è mettere ordine nei dati: sapere chi sono i tuoi contatti, da dove arrivano,
             e come seguirli.
           </p>
           <ul className="space-y-3">
@@ -187,7 +187,7 @@ export default function StarterKitPage() {
           <p className="mb-4">
             <strong>Prossimo Passo:</strong> Compila il{' '}
             <a href="/test-maturita-digitale" className="text-purple-600 underline">
-              Test di Maturità Digitale
+              Test Digitalizzazione Aziendale
             </a>{' '}
             per avere un'analisi dettagliata.
           </p>
