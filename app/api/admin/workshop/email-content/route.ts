@@ -6,7 +6,7 @@ const EMAIL_CONTENTS: Record<string, { subject: string; text: string }> = {
     subject: '🎉 Registrazione Workshop Confermata - Ai in Azienda',
     text: `Ciao [NOME],
 
-Grazie per esserti iscritto al workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda"!
+Grazie per esserti iscritto al workshop "AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi"!
 
 📅 Data: Venerdì 12 dicembre 2025
 🕐 Orario: dalle ore 17.00 (accettazione dalle ore 16.30)
@@ -33,7 +33,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`,
     subject: '🎯 Preparati al meglio per il workshop',
     text: `Ciao [NOME],
 
-Siamo felici che tu sia iscritto al workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda"!
+Siamo felici che tu sia iscritto al workshop "AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi"!
 
 Vogliamo aiutarti a prepararti al meglio per trarre il massimo dall'evento.
 
@@ -113,7 +113,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`,
     subject: '📋 Preparati per il workshop',
     text: `Ciao [NOME],
 
-Manca poco al workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda".
+Manca poco al workshop "AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi".
 
 📅 Dettagli Evento:
 Data: Venerdì 12 dicembre 2025
@@ -140,7 +140,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`,
     subject: '🚀 Oggi è il giorno! Ti aspettiamo dalle ore 17.00',
     text: `Ciao [NOME],
 
-Oggi è il giorno del workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda"!
+Oggi è il giorno del workshop "AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi"!
 
 Ti aspettiamo dalle ore 17.00 (accettazione dalle ore 16.30) presso:
 OSM Venezia - Via Sertorio Orsato 22, Venezia
@@ -157,7 +157,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`,
     subject: '🎉 Grazie per essere stato al workshop!',
     text: `Ciao [NOME],
 
-Grazie per essere stato al workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda"!
+Grazie per essere stato al workshop "AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi"!
 
 Speriamo che tu abbia trovato utili gli spunti e le demo che abbiamo condiviso.
 

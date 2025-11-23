@@ -88,12 +88,12 @@ export async function POST(request: NextRequest) {
   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 20px; margin-bottom: 20px; font-weight: bold;">Ciao <strong>${lead.nome}</strong>,</p>
     
-    <p style="font-size: 18px; margin-bottom: 20px;">Oggi è il giorno! Ti aspettiamo al workshop <strong>"Più Tempo, Più organizzazione, meno stress: AI in Azienda"</strong> <strong>dalle ore 17.00</strong> (accettazione dalle ore 16.30).</p>
+    <p style="font-size: 18px; margin-bottom: 20px;">Oggi è il giorno! Ti aspettiamo al workshop <strong>"AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi"</strong> <strong>dalle ore 17.00</strong> (accettazione dalle ore 16.30).</p>
     
     <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 8px; margin: 20px 0; text-align: center; color: white;">
       <h2 style="margin: 0; font-size: 28px;">
         <a href="${generateGoogleCalendarUrl({
-          title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
+          title: 'AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
         })}" style="color: white; text-decoration: underline;">📅 ${WORKSHOP_DATE}</a>
         <span style="margin-left: 10px; font-size: 12px;">
           (<a href="data:text/calendar;charset=utf-8,${encodeURIComponent(generateICS({
-          title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
+          title: 'AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
       </h2>
       <p style="margin: 10px 0 0 0; font-size: 24px;">
         <a href="${generateGoogleCalendarUrl({
-          title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
+          title: 'AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -167,7 +167,7 @@ export async function POST(request: NextRequest) {
 
 🚀 OGGI È IL GIORNO!
 
-Ti aspettiamo al workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda" dalle ore 17.00 (accettazione dalle ore 16.30).
+Ti aspettiamo al workshop "AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi" dalle ore 17.00 (accettazione dalle ore 16.30).
 
 📅 ${WORKSHOP_DATE} - 🕐 ${WORKSHOP_TIME}
 📍 ${WORKSHOP_LOCATION}

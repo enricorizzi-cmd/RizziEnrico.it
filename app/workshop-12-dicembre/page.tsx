@@ -165,14 +165,14 @@ export default function WorkshopPage() {
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 font-heading animate-fade-in-up">
-              Più Tempo, Più organizzazione,
+              AI in Azienda:
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-[length:200%_auto] animate-gradient-text">
-                meno stress: AI in Azienda
+                Più Tempo, Più Clienti, Meno Sprechi
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-6 max-w-3xl mx-auto animate-fade-in-up animation-delay-200">
-              Metti l'AI a lavorare per te e la tua azienda: un esercito di assistenti digitali che elimina il lavoro ripetitivo, mette ordine in azienda e fa sentire tutta la squadra finalmente più serena.
+              Metti l'AI a lavorare per te: elimina il lavoro ripetitivo, acquisisci nuovi clienti con processi e flussi automatici, e migliora l'organizzazione in azienda.
             </p>
             <ul className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto text-left space-y-3 animate-fade-in-up animation-delay-250">
               <li className="flex items-start gap-3">
@@ -181,7 +181,7 @@ export default function WorkshopPage() {
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-purple-600 font-bold mt-1">✓</span>
-                <span>Metti ordine in procedure, mail, riunioni e documenti</span>
+                <span>Acquisisci nuovi clienti con AI applicata a marketing e vendite</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-purple-600 font-bold mt-1">✓</span>

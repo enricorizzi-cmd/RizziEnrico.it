@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
-    <p>Il workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda" si avvicina!</p>
+    <p>Il workshop "AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi" si avvicina!</p>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea; text-align: center;">
       <h2 style="margin-top: 0; color: #667eea; font-size: 32px;">📅 ${WORKSHOP_DATE}</h2>
@@ -130,7 +130,7 @@ export async function POST(request: NextRequest) {
       <p style="margin: 5px 0;">
         <strong>Data:</strong> 
         <a href="${generateGoogleCalendarUrl({
-          title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
+          title: 'AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -138,7 +138,7 @@ export async function POST(request: NextRequest) {
         })}" style="color: #667eea; text-decoration: underline;">${WORKSHOP_DATE}</a>
         <span style="margin-left: 10px; font-size: 12px;">
           (<a href="data:text/calendar;charset=utf-8,${encodeURIComponent(generateICS({
-          title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
+          title: 'AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
       <p style="margin: 5px 0;">
         <strong>🕐 Orario:</strong> 
         <a href="${generateGoogleCalendarUrl({
-          title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
+          title: 'AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -177,7 +177,7 @@ export async function POST(request: NextRequest) {
 
         const emailText = `Ciao ${lead.nome},
 
-Il workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda" si avvicina!
+Il workshop "AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi" si avvicina!
 
 📅 ${WORKSHOP_DATE} - 🕐 ${WORKSHOP_TIME}
 

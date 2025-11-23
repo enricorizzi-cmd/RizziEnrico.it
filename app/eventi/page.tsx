@@ -102,8 +102,8 @@ const events: Array<{
     // Workshop 12 Dicembre - Evento evidenziato
     {
       slug: 'workshop-12-dicembre',
-      title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
-      description: 'Metti l\'AI a lavorare per te e la tua azienda: un esercito di assistenti digitali che elimina il lavoro ripetitivo, mette ordine in azienda e fa sentire tutta la squadra finalmente più serena.',
+      title: 'AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi',
+      description: 'Metti l\'AI a lavorare per te: elimina il lavoro ripetitivo, acquisisci nuovi clienti con processi e flussi automatici, e migliora l\'organizzazione in azienda.',
       dateStart: new Date('2025-12-12T17:00:00'),
       dateEnd: new Date('2025-12-12T19:00:00'),
       locationName: 'OSM Venezia',

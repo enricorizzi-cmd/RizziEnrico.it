@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
     <p>Ti ricordiamo che <strong>domani</strong> si terrà il workshop:</p>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
-      <h2 style="margin-top: 0; color: #667eea;">"Più Tempo, Più organizzazione, meno stress: AI in Azienda"</h2>
+      <h2 style="margin-top: 0; color: #667eea;">"AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi"</h2>
       <p style="margin: 10px 0;"><strong>📅 Data:</strong> ${WORKSHOP_DATE}</p>
       <p style="margin: 10px 0;"><strong>🕐 Orario:</strong> ${WORKSHOP_TIME}</p>
       <p style="margin: 10px 0;"><strong>📍 Luogo:</strong> ${WORKSHOP_LOCATION}</p>
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
 
         const emailText = `Ciao ${lead.nome},
 
-Ti ricordiamo che DOMANI si terrà il workshop "Più Tempo, Più organizzazione, meno stress: AI in Azienda"!
+Ti ricordiamo che DOMANI si terrà il workshop "AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi"!
 
 📅 Data: ${WORKSHOP_DATE}
 🕐 Orario: ${WORKSHOP_TIME}

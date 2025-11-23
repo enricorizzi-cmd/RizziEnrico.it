@@ -88,11 +88,11 @@ export async function POST(request: NextRequest) {
     <p style="color: #1a1a1a;">Grazie per esserti iscritto al workshop:</p>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
-      <h2 style="margin-top: 0; color: #667eea;  font-size: 32px;">"Più Tempo, Più organizzazione, meno stress: AI in Azienda"</h2>
+      <h2 style="margin-top: 0; color: #667eea;  font-size: 32px;">"AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi"</h2>
       <p style="margin: 10px 0;">
         <strong>📅 Data:</strong> 
         <a href="${generateGoogleCalendarUrl({
-      title: 'Più Tempo, Più organizzazione, meno stress: AI in Azienda',
+      title: 'AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi',
       description: 'Workshop esclusivo OSM',
       startDate: new Date('2025-12-12T17:00:00'),
       endDate: new Date('2025-12-12T19:00:00'),
