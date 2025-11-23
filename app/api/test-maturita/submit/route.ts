@@ -66,8 +66,24 @@ export async function POST(request: NextRequest) {
     const livelloMaturita = body.livello_maturita || 'Iniziale';
     const punteggioPerCategoria = body.punteggio_per_categoria || {};
     const raccomandazioni = body.raccomandazioni || [];
+    const radarChartImage = body.radar_chart_image;
+    const colliIdentificati = body.colli_identificati || [];
+    const roadmapScalabilita = body.roadmap_scalabilita;
+    const diagnosi = body.diagnosi;
 
-    // Email con risultati all'utente
+    // Preparazione allegati
+    const attachments = [];
+    if (radarChartImage) {
+      const base64Data = radarChartImage.replace(/^data:image\/png;base64,/, "");
+      attachments.push({
+        filename: 'radar-chart.png',
+        content: base64Data,
+        encoding: 'base64',
+        cid: 'radar-chart-image'
+      });
+    }
+
+    // Email con risultati all'utente - TEMPLATE PREMIUM
     const userEmailHtml = `
 <!DOCTYPE html>
 <html>
@@ -75,101 +91,124 @@ export async function POST(request: NextRequest) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-    <h1 style="color: white; margin: 0; font-size: 28px;">📊 Risultati Test di Maturità Digitale</h1>
+<body style="font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 0; background-color: #f4f4f5;">
+  
+  <!-- HEADER -->
+  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; text-align: center; border-radius: 0 0 20px 20px;">
+    <h1 style="color: white; margin: 0; font-size: 24px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;">Test Digitalizzazione Aziendale</h1>
+    <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 16px;">Report Ufficiale dei Risultati</p>
   </div>
   
-  <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
-    <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${validatedData.nome}</strong>,</p>
+  <div style="padding: 20px;">
     
-    <p>Grazie per aver completato il Test di Maturità Digitale!</p>
-    
-    <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea; text-align: center;">
-      <h2 style="margin-top: 0; color: #667eea;">Il Tuo Livello di Maturità</h2>
-      <div style="font-size: 48px; font-weight: bold; color: #667eea; margin: 10px 0;">
-        ${percentage.toFixed(0)}%
-      </div>
-      <div style="font-size: 24px; font-weight: semibold; color: #333; margin-bottom: 10px;">
-        ${livelloMaturita}
-      </div>
-    </div>
-    
-    <h3 style="color: #667eea; margin-top: 30px;">Punteggio per Categoria:</h3>
-    ${Object.entries(punteggioPerCategoria).map(([category, score]: [string, any]) => {
-      // Calcola max per categoria (semplificato, dovresti passare anche questo)
-      const categoryMax = 10; // Placeholder
-      const percentage = (score / categoryMax) * 100;
-      return `
-        <div style="margin: 15px 0;">
-          <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-            <span style="font-weight: semibold;">${category}</span>
-            <span style="color: #666;">${score} / ${categoryMax} (${percentage.toFixed(0)}%)</span>
-          </div>
-          <div style="width: 100%; background: #e0e0e0; border-radius: 4px; height: 8px;">
-            <div style="background: ${percentage >= 70 ? '#4caf50' : percentage >= 40 ? '#ff9800' : '#f44336'}; height: 8px; border-radius: 4px; width: ${percentage}%;"></div>
-          </div>
+    <!-- INTRO -->
+    <div style="background: white; padding: 30px; border-radius: 16px; margin-top: -30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+      <p style="font-size: 18px; margin-bottom: 20px; color: #4b5563;">Ciao <strong>${validatedData.nome}</strong>,</p>
+      <p style="color: #4b5563;">Ecco l'analisi completa della maturità digitale della tua azienda. Abbiamo analizzato le tue risposte per identificare i punti di forza e, soprattutto, i colli di bottiglia che stanno frenando la tua crescita.</p>
+      
+      <!-- SCORE CARD -->
+      <div style="text-align: center; margin: 30px 0; padding: 20px; background: #f3f4f6; border-radius: 12px;">
+        <p style="margin: 0; font-size: 14px; text-transform: uppercase; color: #6b7280; font-weight: 600;">Il Tuo Digital Score</p>
+        <div style="font-size: 56px; font-weight: 800; color: #7c3aed; line-height: 1;">${percentage.toFixed(0)}%</div>
+        <div style="font-size: 20px; font-weight: 600; color: #4b5563; margin-top: 5px;">${livelloMaturita}</div>
+        <div style="margin-top: 15px; height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden;">
+          <div style="width: ${percentage}%; height: 100%; background: linear-gradient(90deg, #7c3aed, #2563eb);"></div>
         </div>
-      `;
-    }).join('')}
-    
-    ${raccomandazioni.length > 0 ? `
-      <div style="background: #e3f2fd; border-left: 4px solid #2196f3; padding: 15px; margin: 20px 0; border-radius: 4px;">
-        <h3 style="margin-top: 0; color: #1976d2;">💡 Raccomandazioni</h3>
-        <ul style="margin: 0; padding-left: 20px;">
-          ${raccomandazioni.map((rec: string) => `<li style="margin: 5px 0;">${rec}</li>`).join('')}
-        </ul>
       </div>
-    ` : ''}
-    
-    <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px;">
-      <p style="margin: 0;"><strong>💡 Prossimo passo:</strong> Prenota un Check-up Digitale Gratuito per scoprire come migliorare la tua maturità digitale.</p>
+
+      <!-- RADAR CHART -->
+      ${radarChartImage ? `
+      <div style="text-align: center; margin: 30px 0;">
+        <h3 style="color: #1f2937; font-size: 18px; margin-bottom: 15px;">📊 La Tua Mappa Digitale</h3>
+        <img src="cid:radar-chart-image" alt="Radar Chart Risultati" style="width: 100%; max-width: 500px; height: auto; border-radius: 8px; border: 1px solid #e5e7eb;">
+        <p style="font-size: 12px; color: #6b7280; margin-top: 10px;">Confronto: Tuo Score (Viola) vs Media Settore (Blu) vs Top 10% (Verde)</p>
+      </div>
+      ` : ''}
+
+      <!-- DIAGNOSI & COLLI DI BOTTIGLIA -->
+      <div style="margin: 40px 0;">
+        <h3 style="color: #1f2937; font-size: 20px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 20px;">🚫 Colli di Bottiglia Identificati</h3>
+        
+        ${colliIdentificati.length > 0 ? colliIdentificati.map((collo: any) => `
+        <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 20px; margin-bottom: 15px; border-radius: 0 8px 8px 0;">
+          <div style="display: flex; align-items: center; margin-bottom: 8px;">
+            <span style="background: #ef4444; color: white; font-size: 10px; font-weight: bold; padding: 2px 8px; border-radius: 10px; margin-right: 10px;">${collo.severity}</span>
+            <strong style="color: #991b1b; font-size: 16px;">${collo.specifico}</strong>
+          </div>
+          <p style="margin: 0; color: #7f1d1d; font-size: 14px;">${collo.raccomandazioni[0]}</p>
+        </div>
+        `).join('') : '<p>Nessun collo di bottiglia critico identificato.</p>'}
+      </div>
+
+      <!-- ROADMAP SCALABILITÀ -->
+      ${roadmapScalabilita ? `
+      <div style="margin: 40px 0;">
+        <h3 style="color: #1f2937; font-size: 20px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 20px;">🚀 Roadmap di Scalabilità</h3>
+        
+        <div style="background: #f0fdf4; padding: 20px; border-radius: 12px; border: 1px solid #bbf7d0;">
+          <h4 style="margin: 0 0 10px 0; color: #166534;">Fase 1: ${roadmapScalabilita.fase1.titolo}</h4>
+          <p style="margin: 0 0 15px 0; font-size: 14px; color: #15803d;">Durata stimata: ${roadmapScalabilita.fase1.durata}</p>
+          <ul style="margin: 0; padding-left: 20px; color: #14532d;">
+            ${roadmapScalabilita.fase1.azioni.map((azione: string) => `<li style="margin-bottom: 5px;">${azione}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+      ` : ''}
+
+      <!-- CTA -->
+      <div style="background: #fffbeb; border: 1px solid #fcd34d; padding: 25px; border-radius: 12px; margin: 40px 0; text-align: center;">
+        <h3 style="margin: 0 0 10px 0; color: #92400e;">Vuoi implementare questo piano?</h3>
+        <p style="margin: 0 0 20px 0; color: #b45309; font-size: 14px;">Prenota una sessione strategica gratuita di 45 minuti per analizzare questi risultati insieme.</p>
+        <a href="${process.env.NEXT_PUBLIC_CALENDLY_CHECKUP_URL || 'https://calendly.com/enricorizzi/check-up-gratuito-in-azienda'}" style="display: inline-block; background: #d97706; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">Prenota Check-up Gratuito</a>
+      </div>
+
+      <p style="margin-top: 30px; font-size: 14px; color: #6b7280; text-align: center;">
+        A presto,<br>
+        <strong>Enrico Rizzi</strong><br>
+        OSM Partner Venezia
+      </p>
     </div>
     
-    <div style="text-align: center; margin: 30px 0;">
-      <a href="${process.env.NEXT_PUBLIC_CALENDLY_CHECKUP_URL || 'https://calendly.com/enricorizzi/check-up-gratuito-in-azienda'}" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold;">Prenota Check-up Gratuito</a>
+    <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #9ca3af;">
+      &copy; ${new Date().getFullYear()} Enrico Rizzi. Tutti i diritti riservati.
     </div>
-    
-    <p style="margin-top: 30px;">A presto,<br>
-    <strong>Enrico Rizzi</strong><br>
-    <span style="color: #667eea;">OSM Partner Venezia</span></p>
   </div>
 </body>
 </html>`;
 
     const userEmailText = `Ciao ${validatedData.nome},
 
-Grazie per aver completato il Test di Maturità Digitale!
+Ecco i risultati del tuo Test Digitalizzazione Aziendale.
 
-Il Tuo Livello di Maturità: ${percentage.toFixed(0)}% - ${livelloMaturita}
+IL TUO SCORE: ${percentage.toFixed(0)}% - ${livelloMaturita}
 
-Punteggio per Categoria:
-${Object.entries(punteggioPerCategoria).map(([category, score]: [string, any]) => `- ${category}: ${score} punti`).join('\n')}
+COLLI DI BOTTIGLIA IDENTIFICATI:
+${colliIdentificati.map((c: any) => `- [${c.severity}] ${c.specifico}: ${c.raccomandazioni[0]}`).join('\n')}
 
-${raccomandazioni.length > 0 ? `\nRaccomandazioni:\n${raccomandazioni.map((rec: string) => `- ${rec}`).join('\n')}\n` : ''}
+ROADMAP SCALABILITÀ - FASE 1:
+${roadmapScalabilita?.fase1.titolo} (${roadmapScalabilita?.fase1.durata})
+${roadmapScalabilita?.fase1.azioni.map((a: string) => `- ${a}`).join('\n')}
 
-💡 Prossimo passo: Prenota un Check-up Digitale Gratuito per scoprire come migliorare la tua maturità digitale.
-
+Prenota il tuo Check-up Gratuito qui:
 ${process.env.NEXT_PUBLIC_CALENDLY_CHECKUP_URL || 'https://calendly.com/enricorizzi/check-up-gratuito-in-azienda'}
 
 A presto,
-Enrico Rizzi
-OSM Partner Venezia`;
+Enrico Rizzi`;
 
     // Invia email in modo asincrono (non bloccare la risposta)
-    // Le email vengono inviate in background, se falliscono non blocca la risposta
     Promise.all([
       validatedData.email ? sendEmail({
         to: validatedData.email,
-        subject: `📊 Risultati Test di Maturità Digitale - ${livelloMaturita}`,
+        subject: `📊 Il Tuo Report Digitalizzazione Aziendale - ${livelloMaturita}`,
         html: userEmailHtml,
         text: userEmailText,
+        attachments: attachments
       }).catch((err) => {
         console.error('[TEST] Errore invio email utente (non bloccante):', err);
         return false;
       }) : Promise.resolve(true),
       new Promise(resolve => setTimeout(resolve, 500)).then(() => {
-        const notificationText = `Nuova compilazione Test di Maturità Digitale:
+        const notificationText = `Nuova compilazione Test Digitalizzazione Aziendale:
 
 📋 Dati compilatore:
 Nome: ${validatedData.nome} ${validatedData.cognome}
@@ -179,19 +218,14 @@ ${validatedData.azienda ? `Azienda: ${validatedData.azienda}` : ''}
 📊 Risultati:
 Livello: ${livelloMaturita}
 Punteggio: ${percentage.toFixed(0)}%
-Punteggio totale: ${body.punteggio_totale || 0}
-
-Punteggio per Categoria:
-${Object.entries(punteggioPerCategoria).map(([category, score]: [string, any]) => `- ${category}: ${score}`).join('\n')}
-
-${raccomandazioni.length > 0 ? `\nRaccomandazioni:\n${raccomandazioni.map((rec: string) => `- ${rec}`).join('\n')}\n` : ''}
+Collo Primario: ${body.collo_bottiglia_primario}
 
 ID Test: ${data.id}
 Data compilazione: ${new Date().toLocaleString('it-IT')}`;
 
         return sendEmail({
           to: NOTIFICATION_EMAIL,
-          subject: `📊 Nuova compilazione Test Maturità Digitale - ${validatedData.nome} ${validatedData.cognome} (${livelloMaturita})`,
+          subject: `🔔 LEAD TEST: ${validatedData.nome} ${validatedData.cognome} (${percentage.toFixed(0)}%)`,
           text: notificationText,
         }).catch((err) => {
           console.error('[TEST] Errore invio email notifica (non bloccante):', err);

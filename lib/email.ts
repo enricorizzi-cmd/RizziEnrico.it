@@ -11,6 +11,7 @@ interface EmailOptions {
   emailId?: string; // ID univoco per tracciare questa email
   leadId?: string; // ID del lead per tracking
   unsubscribeUrl?: string; // URL per disiscrizione (opzionale, ma consigliato per email massive)
+  attachments?: any[]; // Allegati opzionali
 }
 
 export async function sendEmail(options: EmailOptions): Promise<boolean> {
@@ -80,17 +81,17 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
       const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
       const emailId = options.emailId; // Salva in variabile locale per TypeScript
       const leadId = options.leadId; // Salva in variabile locale per TypeScript
-      
+
       // Aggiungi pixel tracking per aperture (alla fine del body)
       const trackingPixel = `<img src="${BASE_URL}/api/email/track?e=${encodeURIComponent(emailId)}&l=${encodeURIComponent(leadId)}&t=open" width="1" height="1" style="display:none;" alt="" />`;
-      
+
       // Inserisci il pixel prima della chiusura del body o alla fine dell'html
       if (htmlWithTracking.includes('</body>')) {
         htmlWithTracking = htmlWithTracking.replace('</body>', `${trackingPixel}</body>`);
       } else {
         htmlWithTracking += trackingPixel;
       }
-      
+
       // Sostituisci tutti i link con link tracciati
       // Pattern per trovare link: href="URL"
       htmlWithTracking = htmlWithTracking.replace(
@@ -109,7 +110,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
 
     // Prepara headers per migliorare deliverability
     const headers: Record<string, string> = {};
-    
+
     // Aggiungi List-Unsubscribe header (richiesto per email massive)
     if (options.unsubscribeUrl) {
       headers['List-Unsubscribe'] = `<${options.unsubscribeUrl}>`;
@@ -130,6 +131,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
       text: options.text,
       html: htmlWithTracking,
       headers,
+      attachments: options.attachments,
     };
 
     console.log('[EMAIL] 📧 Invio email:', {
@@ -142,7 +144,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
     // Invia email principale all'utente con timeout
     const info = await Promise.race([
       transporter.sendMail(mailOptions),
-      new Promise((_, reject) => 
+      new Promise((_, reject) =>
         setTimeout(() => reject(new Error('SMTP send timeout')), 15000)
       )
     ]) as any;

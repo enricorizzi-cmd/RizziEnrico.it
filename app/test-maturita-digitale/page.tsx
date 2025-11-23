@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import { testMaturitaFormSchema, testMaturitaSchema, type TestMaturitaFormInput, type TestMaturitaInput } from '@/lib/validators';
 import MagneticButton from '@/components/ui/MagneticButton';
+import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Legend } from 'recharts';
 
 interface Question {
   id: string;
@@ -296,13 +297,19 @@ const questions: Question[] = [
 
 const QUESTIONS_PER_PAGE = 5;
 
+import { toPng } from 'html-to-image';
+
+// ... (existing imports)
+
 export default function TestMaturitaDigitalePage() {
   const [currentStep, setCurrentStep] = useState<'form' | 'questions' | 'results'>('form');
   const [currentPage, setCurrentPage] = useState(0);
   const [answers, setAnswers] = useState<Record<string, any>>({});
   const [results, setResults] = useState<any>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isGeneratingReport, setIsGeneratingReport] = useState(false);
   const [formData, setFormData] = useState<TestMaturitaFormInput | null>(null);
+  const chartRef = useRef<HTMLDivElement>(null);
 
   const {
     register,
@@ -388,26 +395,38 @@ export default function TestMaturitaDigitalePage() {
       if ((q.tipo === 'select' || q.tipo === 'radio') && answer) {
         // Risposte che indicano situazione positiva
         const positiveAnswers = [
-          'Nessuno, siamo pronti',
-          'No, siamo organizzati per continuare',
-          'Sì, facilmente',
-          'No, siamo scalabili',
-          'Oltre 50',
+          'Sì, perfettamente',
+          'Oltre 15 processi',
+          '8-15 processi',
           'Meno di 1 settimana',
           '1-2 settimane',
+          'Il team in autonomia',
+          'Oltre il 60%',
+          'Sì, completamente automatico',
+          'Nessuno',
+          'Meno del 10%',
+          'Sì, automatico',
           'Meno di 30 minuti',
           '30-60 minuti',
-          '6-10',
-          'Oltre 10',
-          '3-5',
-          'Nessuno, ho già tutto'
+          'Sì, completamente integrato',
+          'Automatico con trigger',
+          'Oltre 10 automazioni',
+          '6-10 automazioni',
+          'Sì, completamente integrati',
+          'Meno del 5%',
+          'Sì, in tempo reale',
+          'Meno di 1 ora',
+          'Sistema unico centralizzato',
+          'Tutto il team',
+          'Oltre 50',
+          '31-50'
         ];
 
-        if (positiveAnswers.includes(answer)) {
+        if (positiveAnswers.some(pa => answer.includes(pa) || pa.includes(answer))) {
           scoresPerCategory[category] += q.peso;
           totalScore += q.peso;
-        } else if (answer.includes('Parzialmente') || answer.includes('qualche difficoltà')) {
-          scoresPerCategory[category] += q.peso * 0.5; // Mezzo punteggio
+        } else if (answer.includes('Parzialmente') || answer.includes('qualche difficoltà') || answer.includes('Semi')) {
+          scoresPerCategory[category] += q.peso * 0.5;
           totalScore += q.peso * 0.5;
         }
       }
@@ -415,38 +434,44 @@ export default function TestMaturitaDigitalePage() {
 
     const percentage = maxScore > 0 ? (totalScore / maxScore) * 100 : 0;
 
-    // 3. IDENTIFICA COLLI DI BOTTIGLIA CRITICI
-    const colliBottiglia = {
-      q9_crescita_processo: answers['q9'] || 'Non risposto',
-      q14_dipendenza_persone: answers['q14'] || 'Non risposto',
-      q19_scalabilita_lead: answers['q19'] || 'Non risposto',
-      q27_scalabilita_clienti: answers['q27'] || 'Non risposto'
-    };
+    // 3. ANALISI PATTERN INTELLIGENTE - IDENTIFICA COLLI SENZA CHIEDERE DIRETTAMENTE
+    const patternPreventivazione = analizzaPreventivazionePattern(answers);
+    const patternLead = analizzaLeadManagement(answers);
+    const patternProcessi = analizzaProcessiManuali(answers, profilazione);
+    const patternDipendenza = analizzaDipendenzaPersone(answers);
+    const patternDati = analizzaOrganizzazioneDati(answers);
+    const patternQualita = analizzaControlloQualita(answers);
 
-    // Identifica il collo di bottiglia primario
-    let colloBottigliaPrimario = 'Non identificato';
-    if (colliBottiglia.q9_crescita_processo && colliBottiglia.q9_crescita_processo !== 'Nessuno, siamo pronti' && colliBottiglia.q9_crescita_processo !== 'Non risposto') {
-      colloBottigliaPrimario = colliBottiglia.q9_crescita_processo;
-    } else if (colliBottiglia.q14_dipendenza_persone && (colliBottiglia.q14_dipendenza_persone.includes('bloccherebbe') || colliBottiglia.q14_dipendenza_persone.includes('rallentamenti importanti'))) {
-      colloBottigliaPrimario = 'Dipendenza da persone chiave';
-    } else if (colliBottiglia.q19_scalabilita_lead && (colliBottiglia.q19_scalabilita_lead.includes('No') || colliBottiglia.q19_scalabilita_lead.includes('difficoltà'))) {
-      colloBottigliaPrimario = 'Gestione lead/acquisizione clienti';
-    } else if (colliBottiglia.q27_scalabilita_clienti && (colliBottiglia.q27_scalabilita_clienti.includes('collasserebbe') || colliBottiglia.q27_scalabilita_clienti.includes('rallentamento'))) {
-      colloBottigliaPrimario = 'Servizio clienti e gestione volumi';
-    }
+    // Raccogli tutti i pattern con score >= 5
+    const allPatterns = [
+      patternPreventivazione,
+      patternLead,
+      patternProcessi,
+      patternDipendenza,
+      patternDati,
+      patternQualita
+    ].filter(p => p.score >= 5);
 
-    // 4. CALCOLA CAPACITÀ DI CRESCITA STIMATA
-    let capacitaCrescita = '+100%+'; // Default ottimista
-    let readyForGrowth = true;
+    // Ordina per severity e score
+    const severityOrder = { 'CRITICO': 0, 'ALTO': 1, 'MEDIO': 2 };
+    allPatterns.sort((a, b) => {
+      const severityDiff = severityOrder[a.severity as keyof typeof severityOrder] - severityOrder[b.severity as keyof typeof severityOrder];
+      if (severityDiff !== 0) return severityDiff;
+      return b.score - a.score;
+    });
 
-    if (colliBottiglia.q9_crescita_processo !== 'Nessuno, siamo pronti') readyForGrowth = false;
-    if (colliBottiglia.q14_dipendenza_persone && colliBottiglia.q14_dipendenza_persone.includes('bloccherebbe')) readyForGrowth = false;
-    if (colliBottiglia.q19_scalabilita_lead && colliBottiglia.q19_scalabilita_lead.includes('perderemmo')) readyForGrowth = false;
-    if (colliBottiglia.q27_scalabilita_clienti && colliBottiglia.q27_scalabilita_clienti.includes('collasserebbe')) readyForGrowth = false;
+    // Prendi top 3 colli identificati
+    const colliIdentificati = allPatterns.slice(0, 3);
+    const colloPrimario = colliIdentificati[0]?.specifico || 'Non identificato';
 
-    if (!readyForGrowth) {
+    // 4. CALCOLA CAPACITÀ DI CRESCITA STIMATA (basata su colli reali)
+    let capacitaCrescita = '+100%+';
+    const hasColliCritici = colliIdentificati.some(c => c.severity === 'CRITICO');
+    const hasColliAlti = colliIdentificati.some(c => c.severity === 'ALTO');
+
+    if (hasColliCritici || colliIdentificati.length >= 3) {
       capacitaCrescita = '+30%';
-    } else if (percentage < 40) {
+    } else if (hasColliAlti || percentage < 40) {
       capacitaCrescita = '+60%';
     }
 
@@ -470,19 +495,26 @@ export default function TestMaturitaDigitalePage() {
     // 6. DIAGNOSI PERSONALIZZATA (QUALITATIVA, NO €)
     const diagnosi = {
       livello: livelloDescription,
-      collo_bottiglia_primario: colloBottigliaPrimario,
+      collo_bottiglia_primario: colloPrimario,
       capacita_crescita_attuale: capacitaCrescita,
       opportunita: {
         tempo_liberabile: percentage < 40 ? '10-15 ore/settimana' : percentage < 60 ? '6-10 ore/settimana' : '3-6 ore/settimana',
         valore_tempo: percentage < 40 ? 'Molto Elevato' : percentage < 60 ? 'Elevato' : 'Significativo',
         accelerazione_decisioni: percentage < 40 ? '50-70% più veloci' : percentage < 60 ? '30-50% più veloci' : '20-30% più veloci',
-        riduzione_errori: 'Significativa',
+        riduzione_errori: patternQualita.score >= 5 ? 'Molto Significativa (errori >10%)' : 'Significativa',
         note_profilo: `Profilo: ${profilazione.settore} con ${profilazione.collaboratori}. Obiettivo: ${profilazione.obiettivo_12_mesi}`
       }
     };
 
-    // 7. PRIORITÀ D'AZIONE (vs Quick Wins - basato su colli di bottiglia)
-    const prioritaAzione = generatePrioritaAzione(colliBottiglia, scoresPerCategory, answers, profilazione);
+    // 7. PRIORITÀ D'AZIONE (basate su colli REALI identificati)
+    const prioritaAzione = colliIdentificati.map(collo => ({
+      livello: collo.severity,
+      problema: collo.specifico,
+      azione: collo.raccomandazioni[0],
+      tempo_implementazione: collo.severity === 'CRITICO' ? '2-3 settimane' : collo.severity === 'ALTO' ? '3-4 settimane' : '4-6 settimane',
+      impatto: collo.severity === 'CRITICO' ? 'Elimina blocco crescita' : collo.severity === 'ALTO' ? 'Accelera operatività 2x' : 'Migliora efficienza',
+      come: collo.raccomandazioni[1] || collo.raccomandazioni[0]
+    }));
 
     // 8. ROADMAP SCALABILITÀ
     const roadmapScalabilita = {
@@ -491,8 +523,8 @@ export default function TestMaturitaDigitalePage() {
         titolo: 'Risolvi Colli di Bottiglia Critici',
         durata: '1-2 mesi',
         target_crescita: '+60%',
-        azioni: colloBottigliaPrimario !== 'Non identificato'
-          ? [`Risolvi: ${colloBottigliaPrimario}`, 'Automatizza processi critici', 'Documenta procedure chiave']
+        azioni: colloPrimario !== 'Non identificato'
+          ? [`Risolvi: ${colloPrimario}`, ...colliIdentificati.slice(0, 2).map(c => c.raccomandazioni[0])]
           : ['Digitalizza processi base', 'Implementa CRM', 'Automatizza comunicazioni']
       },
       fase2: {
@@ -525,7 +557,7 @@ export default function TestMaturitaDigitalePage() {
     const benchmark = generateBenchmarkSettore(scoresPerCategory, profilazione.settore);
 
     // 11. ROADMAP PER PILASTRO
-    const roadmapPilastri = generateRoadmapPilastri(scoresPerCategory, colloBottigliaPrimario);
+    const roadmapPilastri = generateRoadmapPilastri(scoresPerCategory, colloPrimario);
 
     // 12. RISORSE BONUS (personalizzate per profilo)
     const risorseBonus = generateRisorseBonus(profilazione);
@@ -534,7 +566,7 @@ export default function TestMaturitaDigitalePage() {
     const nextSteps = {
       questa_settimana: [
         'Scarica il toolkit specifico per il tuo settore',
-        colloBottigliaPrimario !== 'Non identificato' ? `Identifica soluzioni per: ${colloBottigliaPrimario}` : 'Rivedi i processi critici',
+        colloPrimario !== 'Non identificato' ? `Identifica soluzioni per: ${colloPrimario}` : 'Rivedi i processi critici',
         'Applica Priorità d\'Azione #1'
       ],
       entro_15_giorni: [
@@ -564,8 +596,9 @@ export default function TestMaturitaDigitalePage() {
       livello_description: livelloDescription,
       percentage,
       profilazione,
-      colli_bottiglia: colliBottiglia,
-      collo_bottiglia_primario: colloBottigliaPrimario,
+      colli_bottiglia: {}, // Ora derivati da pattern
+      collo_bottiglia_primario: colloPrimario,
+      colli_identificati: colliIdentificati, // NUOVO: array completo colli
       capacita_crescita: capacitaCrescita,
       diagnosi,
       priorita_azione: prioritaAzione,
@@ -576,6 +609,304 @@ export default function TestMaturitaDigitalePage() {
       risorse_bonus: risorseBonus,
       next_steps: nextSteps,
       raccomandazioni,
+    };
+  };
+
+  // === 6 FUNZIONI PATTERN ANALYSIS INTELLIGENTE ===
+
+  const analizzaPreventivazionePattern = (ans: Record<string, any>) => {
+    let score = 0;
+    const indicatori: string[] = [];
+
+    // Q28: Tempo preventivo
+    if (['3-5 ore', 'Oltre 5 ore'].includes(ans.q28)) {
+      score += 3;
+      indicatori.push(`Tempo preventivo eccessivo: ${ans.q28}`);
+    } else if (['1-3 ore'].includes(ans.q28)) {
+      score += 1;
+    }
+
+    // Q29: Template automatici
+    if (ans.q29 === false) {
+      score += 2;
+      indicatori.push('Nessun template automatico per preventivi');
+    }
+
+    // Q30: % personalizzazione
+    if (['Oltre 80%', '50-80%'].includes(ans.q30)) {
+      score += 2;
+      indicatori.push(`Alta personalizzazione richiesta: ${ans.q30}`);
+    }
+
+    // Q31: CRM integrato
+    if (['Uso Excel', 'No, nessun sistema'].includes(ans.q31)) {
+      score += 2;
+      indicatori.push('Nessun sistema gestionale integrato per preventivi');
+    }
+
+    // Q32: Follow-up preventivi
+    if (['Manualmente', 'Non lo facciamo'].includes(ans.q32)) {
+      score += 3;
+      indicatori.push(`Follow-up preventivi: ${ans.q32}`);
+    }
+
+    const raccomandazioni = score >= 8
+      ? ['Implementare CRM con template preventivi automatici', 'Creare libreria componenti preventivi riutilizzabili', 'Automatizzare follow-up con trigger temporali']
+      : score >= 5
+        ? ['Standardizzare preventivi comuni con template', 'Integrare sistema CRM base', 'Automatizzare follow-up base']
+        : ['Ottimizzare template esistenti', 'Migliorare integrazione CRM'];
+
+    return {
+      area: 'Commerciale',
+      specifico: score >= 8 ? 'Sistema Preventivazione Completamente Manuale' : score >= 5 ? 'Processo Preventivazione Inefficiente' : 'Preventivazione Migliorabile',
+      severity: (score >= 8 ? 'CRITICO' : score >= 5 ? 'ALTO' : 'MEDIO') as 'CRITICO' | 'ALTO' | 'MEDIO',
+      score,
+      indicatori,
+      raccomandazioni
+    };
+  };
+
+  const analizzaLeadManagement = (ans: Record<string, any>) => {
+    let score = 0;
+    const indicatori: string[] = [];
+
+    // Q20: Contatto entro 24h
+    if (ans.q20 === false) {
+      score += 2;
+      indicatori.push('Lead non contattati entro 24h');
+    }
+
+    // Q21: % risposta <1h
+    if (['Meno del 10%', '10-30%'].includes(ans.q21)) {
+      score += 3;
+      indicatori.push(`Solo ${ans.q21} lead ricevono risposta rapida`);
+    }
+
+    // Q22: Sistema reminder
+    if (['No, tutto manuale', 'No, non facciamo follow-up sistematico'].includes(ans.q22)) {
+      score += 2;
+      indicatori.push('Nessun sistema automatico di follow-up');
+    }
+
+    // Q23: Lead persi
+    if (['6-15 lead', 'Oltre 15 lead'].includes(ans.q23)) {
+      score += 3;
+      indicatori.push(`Lead persi per lentezza: ${ans.q23}`);
+    }
+
+    // Q26: Lead scoring
+    if (ans.q26 === 'No') {
+      score += 2;
+      indicatori.push('Nessun sistema di prioritizzazione lead');
+    }
+
+    const raccomandazioni = score >= 7
+      ? ['Setup sistema CRM con notifiche immediate', 'Automatizzare primo contatto entro 1h', 'Implementare lead scoring automatico']
+      : score >= 4
+        ? ['Migliorare velocità risposta lead', 'Sistema reminder follow-up', 'Template risposte rapide']
+        : ['Ottimizzare processo esistente'];
+
+    return {
+      area: 'Acquisizione',
+      specifico: score >= 7 ? 'Gestione Lead con Perdita Opportunità' : score >= 4 ? 'Follow-up Lead da Migliorare' : 'Lead Management Accettabile',
+      severity: (score >= 7 ? 'CRITICO' : score >= 4 ? 'ALTO' : 'MEDIO') as 'CRITICO' | 'ALTO' | 'MEDIO',
+      score,
+      indicatori,
+      raccomandazioni
+    };
+  };
+
+  const analizzaProcessiManuali = (ans: Record<string, any>, prof: any) => {
+    let score = 0;
+    const indicatori: string[] = [];
+
+    // Q6: Tempo ripetitivo (profilazione)
+    if (['20-30 ore', 'Oltre 30 ore'].includes(prof.tempo_ripetitivo)) {
+      score += 3;
+      indicatori.push(`Tempo eccessivo attività ripetitive: ${prof.tempo_ripetitivo}`);
+    } else if (['10-20 ore'].includes(prof.tempo_ripetitivo)) {
+      score += 1;
+    }
+
+    // Q13: Tempo ripetitive <2h
+    if (ans.q13 === false) {
+      score += 2;
+      indicatori.push('Oltre 2h/settimana perse in attività ripetitive');
+    }
+
+    // Q39: Presenza automazioni
+    if (ans.q39 === false) {
+      score += 3;
+      indicatori.push('Nessun processo automatizzato presente');
+    }
+
+    // Q40: Numero automazioni
+    if (['Nessuna', '1-2 automazioni'].includes(ans.q40)) {
+      score += 2;
+      indicatori.push(`Automazioni insufficienti: ${ans.q40}`);
+    }
+
+    // Q44: Software integrati
+    if (ans.q44 === false) {
+      score += 2;
+      indicatori.push('Software non integrati (doppia digitazione)');
+    }
+
+    const raccomandazioni = score >= 6
+      ? ['Automatizzare processi ripetitivi critici', 'Integrare software gestionali', 'Eliminare doppia digitazione']
+      : score >= 3
+        ? ['Implementare prime automazioni', 'Collegare strumenti esistenti', 'Template per attività frequenti']
+        : ['Ottimizzare workflow esistenti'];
+
+    return {
+      area: 'Organizzazione',
+      specifico: score >= 6 ? 'Dipendenza Totale da Processi Manuali' : score >= 3 ? 'Automazione Insufficiente' : 'Processi Discreti',
+      severity: (score >= 6 ? 'CRITICO' : score >= 3 ? 'ALTO' : 'MEDIO') as 'CRITICO' | 'ALTO' | 'MEDIO',
+      score,
+      indicatori,
+      raccomandazioni
+    };
+  };
+
+  const analizzaDipendenzaPersone = (ans: Record<string, any>) => {
+    let score = 0;
+    const indicatori: string[] = [];
+
+    // Q14: Azienda funziona senza te
+    if (['No, bloccata totalmente', 'No, rallentamenti importanti'].includes(ans.q14)) {
+      score += 4;
+      indicatori.push(`Azienda non autonoma: ${ans.q14}`);
+    } else if (ans.q14 === 'Sì con qualche difficoltà') {
+      score += 2;
+    }
+
+    // Q15: % processi solo 1 persona
+    if (['Oltre il 60%', '40-60%'].includes(ans.q15)) {
+      score += 3;
+      indicatori.push(`${ans.q15} processi dipende da 1 persona`);
+    }
+
+    // Q16: Chi decide
+    if (ans.q16 === 'Solo il titolare/founder') {
+      score += 2;
+      indicatori.push('Decisioni centralizzate totalmente');
+    }
+
+    // Q8: Processi documentati
+    if (ans.q8 === false) {
+      score += 2;
+      indicatori.push('Nessun processo documentato');
+    }
+
+    // Q9: Numero processi documentati
+    if (['Nessuno', '1-3 processi'].includes(ans.q9)) {
+      score += 2;
+      indicatori.push(`Documentazione scarsa: ${ans.q9}`);
+    }
+
+    const raccomandazioni = score >= 8
+      ? ['Documentare TUTTI i processi critici immediatamente', 'Formare backup per ruoli chiave', 'Delegare decisioni operative al team']
+      : score >= 5
+        ? ['Documentare top 5 processi', 'Formazione incrociata team', 'Delega parziale decisioni']
+        : ['Migliorare documentazione esistente'];
+
+    return {
+      area: 'Organizzazione',
+      specifico: score >= 8 ? 'Dipendenza Totale da Founder/Figure Chiave' : score >= 5 ? 'Forte Dipendenza da Persone Chiave' : 'Dipendenza Moderata',
+      severity: (score >= 8 ? 'CRITICO' : score >= 5 ? 'ALTO' : 'MEDIO') as 'CRITICO' | 'ALTO' | 'MEDIO',
+      score,
+      indicatori,
+      raccomandazioni
+    };
+  };
+
+  const analizzaOrganizzazioneDati = (ans: Record<string, any>) => {
+    let score = 0;
+    const indicatori: string[] = [];
+
+    // Q51: Ore cercare info
+    if (['5-10 ore', 'Oltre 10 ore'].includes(ans.q51)) {
+      score += 3;
+      indicatori.push(`Tempo eccessivo ricerca dati: ${ans.q51}/settimana`);
+    } else if (['3-5 ore'].includes(ans.q51)) {
+      score += 1;
+    }
+
+    // Q52: Dove info
+    if (ans.q52 === 'Sparse in molti posti') {
+      score += 3;
+      indicatori.push('Informazioni completamente disorganizzate');
+    } else if (ans.q52 === '2-3 sistemi diversi') {
+      score += 1;
+    }
+
+    // Q48: Visibilità real-time
+    if (ans.q48 === false) {
+      score += 2;
+      indicatori.push('Nessuna visibilità real-time su numeri chiave');
+    }
+
+    // Q49: Dashboard automatiche
+    if (ans.q49 === 'No, tutto manuale') {
+      score += 2;
+      indicatori.push('Nessuna dashboard automatica');
+    }
+
+    // Q47: KPI monitoring
+    if (ans.q47 === false) {
+      score += 2;
+      indicatori.push('KPI chiave non monitorati');
+    }
+
+    const raccomandazioni = score >= 7
+      ? ['Centralizzare TUTTE le informazioni in sistema unico', 'Implementare dashboard real-time', 'Eliminare sistemi ridondanti']
+      : score >= 4
+        ? ['Ridurre sistemi da 3+ a 1-2', 'Dashboard KPI essenziali', 'Organizzare archivio documenti']
+        : ['Ottimizzare accesso dati esistenti'];
+
+    return {
+      area: 'Dati',
+      specifico: score >= 7 ? 'Caos Informativo Totale' : score >= 4 ? 'Disorganizzazione Significativa Dati' : 'Dati Migliorabili',
+      severity: (score >= 7 ? 'CRITICO' : score >= 4 ? 'ALTO' : 'MEDIO') as 'CRITICO' | 'ALTO' | 'MEDIO',
+      score,
+      indicatori,
+      raccomandazioni
+    };
+  };
+
+  const analizzaControlloQualita = (ans: Record<string, any>) => {
+    let score = 0;
+    const indicatori: string[] = [];
+
+    // Q36: Problemi qualità
+    if (['4-10 problemi', 'Oltre 10 problemi'].includes(ans.q36)) {
+      score += 3;
+      indicatori.push(`Problemi qualità frequenti: ${ans.q36}/mese`);
+    } else if (ans.q36 === '1-3 problemi') {
+      score += 1;
+    }
+
+    // Q46: % errori
+    if (['10-20%', 'Oltre il 20%'].includes(ans.q46)) {
+      score += 3;
+      indicatori.push(`Tasso errori elevato: ${ans.q46}`);
+    } else if (ans.q46 === '5-10%') {
+      score += 1;
+    }
+
+    const raccomandazioni = score >= 5
+      ? ['Implementare checklist processi critici', 'Sistema validazioni automatiche', 'Controllo qualità sistematico']
+      : score >= 3
+        ? ['Checklist processi principali', 'Ridurre errori con automazione', 'Monitoraggio quality']
+        : ['Mantenere standard qualità'];
+
+    return {
+      area: 'Qualità',
+      specifico: score >= 5 ? 'Controllo Qualità Inadeguato' : score >= 3 ? 'Qualità da Migliorare' : 'Qualità Accettabile',
+      severity: (score >= 5 ? 'CRITICO' : score >= 3 ? 'ALTO' : 'MEDIO') as 'CRITICO' | 'ALTO' | 'MEDIO',
+      score,
+      indicatori,
+      raccomandazioni
     };
   };
 
@@ -731,57 +1062,82 @@ export default function TestMaturitaDigitalePage() {
     return risorse;
   };
 
-  const submitTest = async () => {
+  const submitTest = () => {
     setIsSubmitting(true);
     const calculatedResults = calculateResults();
     setResults(calculatedResults);
-
-    try {
-      // Salva risultati con dati del form iniziale
-      const formValues = formData || getValues();
-      const response = await fetch('/api/test-maturita/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nome: formValues.nome,
-          cognome: formValues.cognome,
-          email: formValues.email,
-          azienda: formValues.azienda,
-          risposte: answers,
-          punteggio_totale: calculatedResults.punteggio_totale,
-          punteggio_per_categoria: calculatedResults.punteggio_per_categoria,
-          livello_maturita: calculatedResults.livello_maturita,
-          livello_description: calculatedResults.livello_description,
-          percentage: calculatedResults.percentage,
-          profilazione: calculatedResults.profilazione,
-          colli_bottiglia: calculatedResults.colli_bottiglia,
-          collo_bottiglia_primario: calculatedResults.collo_bottiglia_primario,
-          capacita_crescita: calculatedResults.capacita_crescita,
-          diagnosi: calculatedResults.diagnosi,
-          priorita_azione: calculatedResults.priorita_azione,
-          roadmap_scalabilita: calculatedResults.roadmap_scalabilita,
-          investimento_suggerito: calculatedResults.investimento_suggerito,
-          benchmark: calculatedResults.benchmark,
-          roadmap_pilastri: calculatedResults.roadmap_pilastri,
-          risorse_bonus: calculatedResults.risorse_bonus,
-          next_steps: calculatedResults.next_steps,
-          raccomandazioni: calculatedResults.raccomandazioni,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('Error saving test:', errorData);
-        // Mostra risultati comunque anche se il salvataggio fallisce
-      }
-    } catch (error) {
-      console.error('Error saving test:', error);
-      // Mostra risultati comunque anche se c'è un errore
-    } finally {
-      setIsSubmitting(false);
-      setCurrentStep('results');
-    }
+    setCurrentStep('results');
+    setIsGeneratingReport(true);
   };
+
+  useEffect(() => {
+    const generateAndSaveReport = async () => {
+      if (isGeneratingReport && results && chartRef.current) {
+        try {
+          // Attendi rendering del grafico
+          await new Promise(resolve => setTimeout(resolve, 1500));
+
+          // Cattura immagine grafico
+          let radarChartBase64 = null;
+          try {
+            radarChartBase64 = await toPng(chartRef.current, {
+              quality: 0.95,
+              backgroundColor: '#ffffff',
+              pixelRatio: 2 // Alta risoluzione
+            });
+          } catch (e) {
+            console.error('Error generating chart image:', e);
+          }
+
+          // Salva risultati e invia email
+          const formValues = formData || getValues();
+          const response = await fetch('/api/test-maturita/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              nome: formValues.nome,
+              cognome: formValues.cognome,
+              email: formValues.email,
+              azienda: formValues.azienda,
+              risposte: answers,
+              punteggio_totale: results.punteggio_totale,
+              punteggio_per_categoria: results.punteggio_per_categoria,
+              livello_maturita: results.livello_maturita,
+              livello_description: results.livello_description,
+              percentage: results.percentage,
+              profilazione: results.profilazione,
+              colli_bottiglia: results.colli_bottiglia,
+              collo_bottiglia_primario: results.collo_bottiglia_primario,
+              colli_identificati: results.colli_identificati,
+              capacita_crescita: results.capacita_crescita,
+              diagnosi: results.diagnosi,
+              priorita_azione: results.priorita_azione,
+              roadmap_scalabilita: results.roadmap_scalabilita,
+              investimento_suggerito: results.investimento_suggerito,
+              benchmark: results.benchmark,
+              roadmap_pilastri: results.roadmap_pilastri,
+              risorse_bonus: results.risorse_bonus,
+              next_steps: results.next_steps,
+              raccomandazioni: results.raccomandazioni,
+              radar_chart_image: radarChartBase64 // NUOVO CAMPO
+            }),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            console.error('Error saving test:', errorData);
+          }
+        } catch (error) {
+          console.error('Error in report generation process:', error);
+        } finally {
+          setIsGeneratingReport(false);
+          setIsSubmitting(false);
+        }
+      }
+    };
+
+    generateAndSaveReport();
+  }, [isGeneratingReport, results]);
 
   const allCurrentPageQuestionsAnswered = currentPageQuestions.every((q) => answers[q.id] !== undefined);
   const allQuestionsAnswered = questions.every((q) => answers[q.id] !== undefined);
@@ -1059,7 +1415,23 @@ export default function TestMaturitaDigitalePage() {
 
   if (currentStep === 'results' && results) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 py-16">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 py-16 relative">
+        {/* Loading Overlay per Generazione Report */}
+        {isGeneratingReport && (
+          <div className="fixed inset-0 bg-white/90 z-50 flex flex-col items-center justify-center backdrop-blur-sm">
+            <div className="text-6xl mb-6 animate-bounce">📊</div>
+            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600 mb-4 text-center">
+              Stiamo generando il tuo Report Premium...
+            </h2>
+            <p className="text-gray-600 text-lg mb-8 text-center max-w-md">
+              Analisi delle risposte, calcolo dei benchmark di settore e creazione del piano d'azione personalizzato.
+            </p>
+            <div className="w-64 h-3 bg-gray-200 rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-purple-600 to-blue-600 animate-progress-indeterminate"></div>
+            </div>
+          </div>
+        )}
+
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             {/* Score Card */}
@@ -1076,6 +1448,107 @@ export default function TestMaturitaDigitalePage() {
                   className="bg-gradient-to-r from-purple-600 to-blue-600 h-4 rounded-full transition-all"
                   style={{ width: `${results.percentage}%` }}
                 ></div>
+              </div>
+            </div>
+          </div>
+
+          {/* RADAR CHART PREMIUM - Analisi 6 Pilastri */}
+          <div className="max-w-3xl mx-auto mb-8">
+            <div className="bg-white rounded-xl shadow-xl p-8">
+              <h3 className="text-2xl font-bold mb-2 font-heading text-center text-purple-800">📊 Analisi Radar - 6 Pilastri</h3>
+              <p className="text-center text-gray-600 mb-6">Confronto tra il tuo score, la media di settore e il top 10%</p>
+
+              <div ref={chartRef} className="w-full bg-white p-4 rounded-xl" style={{ height: '500px' }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <RadarChart data={(() => {
+                    // Prepara dati radar
+                    const radarData: any[] = [];
+                    Object.entries(results.punteggio_per_categoria).forEach(([category, score]: [string, any]) => {
+                      if (category === 'Profilazione') return;
+
+                      const categoryMax = questions
+                        .filter((q) => q.categoria === category && q.peso > 0)
+                        .reduce((sum, q) => sum + q.peso, 0);
+                      const yourScore = categoryMax > 0 ? Math.round((score / categoryMax) * 100) : 0;
+
+                      // Benchmark semplificati
+                      const mediaSettore = Math.min(Math.max(yourScore + 8, 45), 65);
+                      const top10 = Math.min(Math.max(yourScore + 20, 70), 90);
+
+                      radarData.push({
+                        area: category.replace(' & ', '\n'),
+                        tuo: yourScore,
+                        media: mediaSettore,
+                        top10: top10
+                      });
+                    });
+                    return radarData;
+                  })()}>
+                    <PolarGrid stroke="#e5e7eb" strokeWidth={1} />
+                    <PolarAngleAxis
+                      dataKey="area"
+                      tick={{ fill: '#374151', fontSize: 12, fontWeight: 600 }}
+                      tickLine={false}
+                    />
+                    <PolarRadiusAxis
+                      angle={90}
+                      domain={[0, 100]}
+                      tick={{ fill: '#9ca3af', fontSize: 11 }}
+                      tickCount={6}
+                    />
+
+                    {/* Top 10% - Verde */}
+                    <Radar
+                      name="Top 10%"
+                      dataKey="top10"
+                      stroke="#10b981"
+                      fill="transparent"
+                      strokeWidth={2}
+                      strokeDasharray="3 3"
+                    />
+
+                    {/* Media Settore - Blu */}
+                    <Radar
+                      name="Media Settore"
+                      dataKey="media"
+                      stroke="#60a5fa"
+                      fill="transparent"
+                      strokeWidth={2}
+                      strokeDasharray="5 5"
+                    />
+
+                    {/* Il Tuo Score - Viola */}
+                    <Radar
+                      name="Il Tuo Score"
+                      dataKey="tuo"
+                      stroke="#8b5cf6"
+                      fill="#8b5cf6"
+                      fillOpacity={0.25}
+                      strokeWidth={3}
+                    />
+
+                    <Legend
+                      wrapperStyle={{ paddingTop: 10 }}
+                      iconType="line"
+                      formatter={(value) => <span style={{ color: '#374151', fontWeight: 600, fontSize: '14px' }}>{value}</span>}
+                    />
+                  </RadarChart>
+                </ResponsiveContainer>
+              </div>
+
+              <div className="mt-6 grid grid-cols-3 gap-4 text-center">
+                <div className="bg-purple-50 p-3 rounded-lg">
+                  <div className="text-sm text-gray-600 mb-1">Il Tuo Score</div>
+                  <div className="text-2xl font-bold text-purple-600">{results.percentage.toFixed(0)}%</div>
+                </div>
+                <div className="bg-blue-50 p-3 rounded-lg">
+                  <div className="text-sm text-gray-600 mb-1">Media {results.profilazione.settore}</div>
+                  <div className="text-2xl font-bold text-blue-600">~52%</div>
+                </div>
+                <div className="bg-green-50 p-3 rounded-lg">
+                  <div className="text-sm text-gray-600 mb-1">Top 10%</div>
+                  <div className="text-2xl font-bold text-green-600">~78%</div>
+                </div>
               </div>
             </div>
           </div>
