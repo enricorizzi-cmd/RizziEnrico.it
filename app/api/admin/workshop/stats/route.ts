@@ -49,9 +49,14 @@ export async function GET(request: NextRequest) {
 
     const totaleChiamate = chiamateData?.reduce((sum, lead) => sum + (lead.numero_chiamate || 0), 0) || 0;
 
-    // Tasso presenza: presenti / totale iscritti
-    const tassoPresenza = totaleIscritti && totaleIscritti > 0 
-      ? ((presenti || 0) / totaleIscritti) * 100 
+    // Tasso conferme: confermati / totale iscritti
+    const tassoConferme = totaleIscritti && totaleIscritti > 0 
+      ? ((confermati || 0) / totaleIscritti) * 100 
+      : 0;
+
+    // Tasso presenza: presenti / confermati (non più presenti / totale iscritti)
+    const tassoPresenza = confermati && confermati > 0 
+      ? ((presenti || 0) / confermati) * 100 
       : 0;
 
     return NextResponse.json({
@@ -61,6 +66,7 @@ export async function GET(request: NextRequest) {
       presenti: presenti || 0,
       confermati: confermati || 0,
       tasso_presenza: tassoPresenza,
+      tasso_conferme: tassoConferme,
       totale_chiamate: totaleChiamate,
     });
   } catch (error) {

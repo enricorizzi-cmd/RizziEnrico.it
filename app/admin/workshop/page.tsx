@@ -48,6 +48,7 @@ interface DashboardStats {
   per_stato: Record<string, number>;
   presenti: number;
   tasso_presenza: number;
+  tasso_conferme: number;
   totale_chiamate: number;
   confermati: number;
 }
@@ -215,10 +216,20 @@ export default function WorkshopAdminDashboard() {
 
         {/* KPI Cards */}
         {stats && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
             <div className="glass p-6 rounded-[var(--radius-card)] border border-[var(--color-line)]">
               <div className="text-3xl font-bold text-purple-600 mb-1">{stats.totale_iscritti}</div>
               <div className="text-[var(--color-subtext)] text-sm font-medium uppercase tracking-wide">Totale Iscritti</div>
+            </div>
+            <div className="glass p-6 rounded-[var(--radius-card)] border border-[var(--color-line)]">
+              <div className="text-3xl font-bold text-indigo-600 mb-1">{stats.confermati}</div>
+              <div className="text-[var(--color-subtext)] text-sm font-medium uppercase tracking-wide">Confermati</div>
+            </div>
+            <div className="glass p-6 rounded-[var(--radius-card)] border border-[var(--color-line)]">
+              <div className="text-3xl font-bold text-cyan-600 mb-1">
+                {stats.tasso_conferme.toFixed(1)}%
+              </div>
+              <div className="text-[var(--color-subtext)] text-sm font-medium uppercase tracking-wide">Tasso Conferme</div>
             </div>
             <div className="glass p-6 rounded-[var(--radius-card)] border border-[var(--color-line)]">
               <div className="text-3xl font-bold text-green-600 mb-1">{stats.presenti}</div>
