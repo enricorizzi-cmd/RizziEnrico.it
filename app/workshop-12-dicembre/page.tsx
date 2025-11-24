@@ -132,7 +132,7 @@ export default function WorkshopPage() {
       </div>
 
       {/* Hero Section */}
-      <section ref={heroRef} className="relative overflow-hidden pt-24 pb-16 lg:pt-32 lg:pb-24 z-10">
+      <section ref={heroRef} className="relative overflow-hidden pt-12 pb-16 lg:pt-16 lg:pb-24 z-10">
         {/* Gradient Overlay with Animation */}
         <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-blue-600/10 to-purple-600/10 animate-gradient-shift"></div>
 
@@ -154,7 +154,7 @@ export default function WorkshopPage() {
 
         <div className="container mx-auto px-4 relative z-10">
           {/* OSM Logo - Posizionato in alto a destra */}
-          <div className="flex justify-end mb-6">
+          <div className="flex justify-end mb-4">
             <Image
               src="/logo-osm-partner.png"
               alt="Open Source Management Partner"
@@ -169,7 +169,7 @@ export default function WorkshopPage() {
           </div>
 
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-block mb-6 animate-fade-in-down">
+            <div className="inline-block mb-4 animate-fade-in-down">
               <span className="px-6 py-3 bg-white/80 backdrop-blur-sm text-purple-700 rounded-full text-sm font-semibold shadow-lg border border-purple-200/50 hover:scale-105 transition-transform duration-300 inline-flex items-center gap-2">
                 <span className="animate-pulse">🎯</span>
                 INTELLIGENZA ARTIFICIALE IN AZIENDA
