@@ -61,20 +61,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Prepara risultati per email
+    // Prepara dati email
     const percentage = body.percentage || 0;
     const livelloMaturita = body.livello_maturita || 'Iniziale';
-    const punteggioPerCategoria = body.punteggio_per_categoria || {};
-    const raccomandazioni = body.raccomandazioni || [];
     const radarChartImage = body.radar_chart_image;
     const colliIdentificati = body.colli_identificati || [];
     const roadmapScalabilita = body.roadmap_scalabilita;
     const diagnosi = body.diagnosi;
+    const prioritaAzione = body.priorita_azione || [];
+    const capacitaCrescita = body.capacita_crescita || null;
+    const nextSteps = body.next_steps || null;
 
     // Preparazione allegati
     const attachments = [];
     if (radarChartImage) {
-      const base64Data = radarChartImage.replace(/^data:image\/png;base64,/, "");
+      const base64Data = radarChartImage.replace(/^data:\/image\/png;base64,/, "");
       attachments.push({
         filename: 'radar-chart.png',
         content: base64Data,
@@ -83,7 +84,7 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Email con risultati all'utente - TEMPLATE PREMIUM
+    // Email con risultati all'utente - TEMPLATE PREMIUM COMPATTO (70%)
     const userEmailHtml = `
 <!DOCTYPE html>
 <html>
@@ -116,40 +117,90 @@ export async function POST(request: NextRequest) {
         </div>
       </div>
 
-      <!-- RADAR CHART -->
+      <!-- RADAR CHART - 7 PILASTRI -->
       ${radarChartImage ? `
       <div style="text-align: center; margin: 30px 0;">
-        <h3 style="color: #1f2937; font-size: 18px; margin-bottom: 15px;">📊 La Tua Mappa Digitale</h3>
-        <img src="cid:radar-chart-image" alt="Radar Chart Risultati" style="width: 100%; max-width: 500px; height: auto; border-radius: 8px; border: 1px solid #e5e7eb;">
-        <p style="font-size: 12px; color: #6b7280; margin-top: 10px;">Confronto: Tuo Score (Viola) vs Media Settore (Blu) vs Top 10% (Verde)</p>
+        <h3 style="color: #7c3aed; font-size: 18px; margin-bottom: 10px; font-weight: 700;">📊 Analisi Radar - 7 Pilastri</h3>
+        <img src="cid:radar-chart-image" alt="Radar Chart 7 Pilastri" style="width: 100%; max-width: 500px; height: auto; border-radius: 8px; border: 1px solid #e5e7eb;">
+        <p style="font-size: 11px; color: #6b7280; margin-top: 8px;">Tuo Score (Viola) vs Media Settore (Blu) vs Top 10% (Verde)</p>
       </div>
       ` : ''}
 
-      <!-- DIAGNOSI & COLLI DI BOTTIGLIA -->
-      <div style="margin: 40px 0;">
-        <h3 style="color: #1f2937; font-size: 20px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 20px;">🚫 Colli di Bottiglia Identificati</h3>
-        
-        ${colliIdentificati.length > 0 ? colliIdentificati.map((collo: any) => `
-        <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 20px; margin-bottom: 15px; border-radius: 0 8px 8px 0;">
-          <div style="display: flex; align-items: center; margin-bottom: 8px;">
-            <span style="background: #ef4444; color: white; font-size: 10px; font-weight: bold; padding: 2px 8px; border-radius: 10px; margin-right: 10px;">${collo.severity}</span>
-            <strong style="color: #991b1b; font-size: 16px;">${collo.specifico}</strong>
-          </div>
-          <p style="margin: 0; color: #7f1d1d; font-size: 14px;">${collo.raccomandazioni[0]}</p>
+      <!-- DIAGNOSI + CAPACITÀ CRESCITA -->
+      ${diagnosi ? `
+      <div style="margin: 30px 0;">
+        <h3 style="color: #1f2937; font-size: 18px; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; margin-bottom: 15px;">📍 Diagnosi Personalizzata</h3>
+        <p style="color: #4b5563; font-size: 15px; line-height: 1.6;">${diagnosi.livello || ''}</p>
+        ${capacitaCrescita ? `
+        <div style="background: ${capacitaCrescita === '+30%' ? '#fff7ed' : capacitaCrescita === '+60%' ? '#fef9c3' : '#f0fdf4'}; border-left: 4px solid ${capacitaCrescita === '+30%' ? '#f97316' : capacitaCrescita === '+60%' ? '#eab308' : '#10b981'}; padding: 15px; border-radius: 0 8px 8px 0; margin-top: 15px;">
+          <strong style="color: #1f2937;">📈 Capacità di Crescita Attuale: <span style="font-size: 20px; color: ${capacitaCrescita === '+30%' ? '#ea580c' : capacitaCrescita === '+60%' ? '#ca8a04' : '#059669'};">${capacitaCrescita}</span></strong>
         </div>
-        `).join('') : '<p>Nessun collo di bottiglia critico identificato.</p>'}
+        ` : ''}
+      </div>
+      ` : ''}
+
+      <!-- TOP 3 COLLI DI BOTTIGLIA -->
+      <div style="margin: 30px 0;">
+        <h3 style="color: #1f2937; font-size: 18px; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; margin-bottom: 15px;">⚠️ TOP 3 COLLI DI BOTTIGLIA</h3>
+        
+        ${colliIdentificati.length > 0 ? colliIdentificati.slice(0, 3).map((collo: any, idx: number) => `
+        <div style="background: ${collo.severity === 'CRITICO' ? '#fef2f2' : collo.severity === 'ALTO' ? '#fff7ed' : '#fefce8'}; border-left: 4px solid ${collo.severity === 'CRITICO' ? '#ef4444' : collo.severity === 'ALTO' ? '#f97316' : '#eab308'}; padding: 15px; margin-bottom: 12px; border-radius: 0 8px 8px 0;">
+          <div style="margin-bottom: 8px;">
+            <span style="color: #6b7280; font-size: 16px; font-weight: 700; margin-right: 8px;">#${idx + 1}</span>
+            <span style="background: ${collo.severity === 'CRITICO' ? '#ef4444' : collo.severity === 'ALTO' ? '#f97316' : '#eab308'}; color: white; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 10px; margin-right: 8px;">${collo.severity}</span>
+          </div>
+          <strong style="color: #1f2937; font-size: 15px;">${collo.specifico}</strong>
+          <p style="margin: 8px 0 0 0; color: #4b5563; font-size: 13px;">✓ ${collo.raccomandazioni?.[0] || ''}</p>
+        </div>
+        `).join('') : '<p style="color: #6b7280;">Nessun collo critico identificato.</p>'}
       </div>
 
-      <!-- ROADMAP SCALABILITÀ -->
-      ${roadmapScalabilita ? `
-      <div style="margin: 40px 0;">
-        <h3 style="color: #1f2937; font-size: 20px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 20px;">🚀 Roadmap di Scalabilità</h3>
+      <!-- TOP 3 PRIORITÀ D'AZIONE -->
+      ${prioritaAzione.length > 0 ? `
+      <div style="margin: 30px 0;">
+        <h3 style="color: #1f2937; font-size: 18px; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; margin-bottom: 15px;">🎯 Priorità d'Azione</h3>
         
-        <div style="background: #f0fdf4; padding: 20px; border-radius: 12px; border: 1px solid #bbf7d0;">
-          <h4 style="margin: 0 0 10px 0; color: #166534;">Fase 1: ${roadmapScalabilita.fase1.titolo}</h4>
-          <p style="margin: 0 0 15px 0; font-size: 14px; color: #15803d;">Durata stimata: ${roadmapScalabilita.fase1.durata}</p>
-          <ul style="margin: 0; padding-left: 20px; color: #14532d;">
-            ${roadmapScalabilita.fase1.azioni.map((azione: string) => `<li style="margin-bottom: 5px;">${azione}</li>`).join('')}
+        ${prioritaAzione.slice(0, 3).map((priorita: any, idx: number) => `
+        <div style="background: ${priorita.livello === 'CRITICA' ? '#fef2f2' : priorita.livello === 'ALTA' ? '#fff7ed' : '#fefce8'}; padding: 15px; margin-bottom: 12px; border-radius: 8px; border: 1px solid ${priorita.livello === 'CRITICA' ? '#fecaca' : priorita.livello === 'ALTA' ? '#fed7aa' : '#fef08a'};">
+          <div style="margin-bottom: 8px;">
+            <span style="background: ${priorita.livello === 'CRITICA' ? '#dc2626' : priorita.livello === 'ALTA' ? '#ea580c' : '#ca8a04'}; color: white; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 10px; text-transform: uppercase;">${priorita.livello}</span>
+            <span style="background: #3b82f6; color: white; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 10px; margin-left: 6px;">⏱️ ${priorita.tempo_implementazione}</span>
+          </div>
+          <strong style="color: #1f2937; font-size: 14px;">${idx + 1}. ${priorita.azione}</strong>
+          <p style="margin: 6px 0 0 0; color: #6b7280; font-size: 12px;">📈 <strong>Impatto:</strong> ${priorita.impatto}</p>
+        </div>
+        `).join('')}
+      </div>
+      ` : ''}
+
+      <!-- ROADMAP SCALABILITÀ - 3 FASI -->
+      ${roadmapScalabilita ? `
+      <div style="margin: 30px 0;">
+        <h3 style="color: #1f2937; font-size: 18px; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; margin-bottom: 15px;">🚀 Roadmap Scalabilità (3 Fasi)</h3>
+        
+        ${['fase1', 'fase2', 'fase3'].map((fase, faseIdx) => roadmapScalabilita[fase] ? `
+        <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; border: 1px solid #bbf7d0; margin-bottom: 12px;">
+          <h4 style="margin: 0 0 8px 0; color: #166534; font-size: 15px;">Fase ${faseIdx + 1}: ${roadmapScalabilita[fase].titolo}</h4>
+          <p style="margin: 0 0 10px 0; font-size: 12px; color: #15803d;"><strong>Durata:</strong> ${roadmapScalabilita[fase].durata} | <strong>Target:</strong> ${roadmapScalabilita[fase].target_crescita}</p>
+          ${roadmapScalabilita[fase].azioni ? `
+          <ul style="margin: 0; padding-left: 18px; color: #14532d; font-size: 13px;">
+            ${roadmapScalabilita[fase].azioni.slice(0, 2).map((azione: string) => `<li style="margin-bottom: 4px;">${azione}</li>`).join('')}
+          </ul>
+          ` : ''}
+        </div>
+        ` : '').join('')}
+      </div>
+      ` : ''}
+
+      <!-- NEXT STEPS -->
+      ${nextSteps?.questa_settimana ? `
+      <div style="margin: 30px 0;">
+        <h3 style="color: #1f2937; font-size: 18px; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; margin-bottom: 15px;">🚀 I Tuoi Prossimi Passi</h3>
+        
+        <div style="background: #faf5ff; padding: 15px; border-radius: 8px; border: 1px solid #e9d5ff;">
+          <h4 style="margin: 0 0 10px 0; color: #7c3aed; font-size: 14px; font-weight: 700;">⚡ QUESTA SETTIMANA</h4>
+          <ul style="margin: 0; padding-left: 18px; color: #6b21a8; font-size: 13px;">
+            ${nextSteps.questa_settimana.slice(0, 3).map((step: string) => `<li style="margin-bottom: 4px;">${step}</li>`).join('')}
           </ul>
         </div>
       </div>
@@ -218,7 +269,9 @@ ${validatedData.azienda ? `Azienda: ${validatedData.azienda}` : ''}
 📊 Risultati:
 Livello: ${livelloMaturita}
 Punteggio: ${percentage.toFixed(0)}%
-Collo Primario: ${body.collo_bottiglia_primario}
+
+⚠️ TOP 3 COLLI DI BOTTIGLIA:
+${colliIdentificati.slice(0, 3).map((c: any, i: number) => `${i + 1}. [${c.severity}] ${c.specifico}`).join('\n')}
 
 ID Test: ${data.id}
 Data compilazione: ${new Date().toLocaleString('it-IT')}`;
