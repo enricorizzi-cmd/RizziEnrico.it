@@ -246,10 +246,11 @@ export default function IProfilePage() {
     <>
       <JSONLD data={serviceSchema} />
       <JSONLD data={faqSchema} />
-      
+
       <Hero
         h1="i-Profile: il tuo vantaggio competitivo nella scelta e crescita delle persone"
         subtitle="Misura attitudini, individua potenziale e prendi decisioni basate sui dati."
+        image="/images/i-profile-hero.jpg"
         primaryCTA={{
           text: 'Prenota i-Profile + Debrief',
           href: '/contatti',

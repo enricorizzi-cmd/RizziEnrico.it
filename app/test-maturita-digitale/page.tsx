@@ -89,8 +89,8 @@ const questions: Question[] = [
     opzioni: ['Circa 3 mesi', 'Circa 6 mesi', 'Un anno', 'Un anno e mezzo', 'Due anni', 'Più di due anni']
   },
   { id: 'q11', categoria: 'Organizzazione & Processi', domanda: 'Le riunioni di team terminano sempre con un piano d\'azione chiaro?', tipo: 'si_no', peso: 2 },
-  { id: 'q12', categoria: 'Organizzazione & Processi', domanda: 'Dedichi meno di 2 ore a settimana a coordinare il lavoro tra collaboratori?', tipo: 'si_no', peso: 3 },
-  { id: 'q13', categoria: 'Organizzazione & Processi', domanda: 'Perdi meno di 2 ore alla settimana in attività ripetitive (mail standard, report, preventivi ripetitivi)?', tipo: 'si_no', peso: 3 },
+  { id: 'q12', categoria: 'Organizzazione & Processi', domanda: 'Dedichi più di 2 ore a settimana a coordinare il lavoro tra collaboratori?', tipo: 'si_no', peso: 3 },
+  { id: 'q13', categoria: 'Organizzazione & Processi', domanda: 'Dedichi più di 2 ore alla settimana in attività ripetitive (mail standard, report, preventivi ripetitivi)?', tipo: 'si_no', peso: 3 },
   // Q14 RIMOSSA (chiedeva direttamente dipendenza)
   {
     id: 'q14',
@@ -165,7 +165,7 @@ const questions: Question[] = [
   {
     id: 'q26',
     categoria: 'Acquisizione Clienti',
-    domanda: 'Hai un sistema di lead scoring o prioritizzazione dei contatti?',
+    domanda: 'Hai un sistema per identificare la qualità dei lead che ricevi?',
     tipo: 'select',
     peso: 3,
     opzioni: ['Sì, automatico', 'Sì, manuale', 'No']
@@ -258,10 +258,10 @@ const questions: Question[] = [
   {
     id: 'q46',
     categoria: 'AI & Automazione',
-    domanda: 'Che percentuale di errori hai nei processi critici ogni mese?',
+    domanda: 'Quanti errori commetti mediamente nei processi critici (ordini, preventivi, fatturazione)?',
     tipo: 'select',
     peso: 3,
-    opzioni: ['Meno del 5%', '5-10%', '10-20%', 'Oltre il 20%']
+    opzioni: ['Quasi mai (meno di 1 al mese)', 'Pochi (1-3 al mese)', 'Diversi (4-10 al mese)', 'Molti (più di 10 al mese)']
   },
 
   // ===== SEZIONE 6: DATI & MISURAZIONE (8 domande - +3 nuove) =====
@@ -287,7 +287,7 @@ const questions: Question[] = [
   {
     id: 'q52',
     categoria: 'Dati & Misurazione',
-    domanda: 'Dove sono archiviate le informazioni aziendali critiche?',
+    domanda: 'Dove sono archiviate le documentazioni aziendali?',
     tipo: 'select',
     peso: 3,
     opzioni: ['Sistema unico centralizzato', '2-3 sistemi diversi', 'Sparse in molti posti']
@@ -305,7 +305,7 @@ const questions: Question[] = [
   {
     id: 'q54',
     categoria: 'Competenze & Strumenti',
-    domanda: 'Quanto tempo il tuo team dedica al data entry manuale (copiare dati da carta a PC o da un software all\'altro)?',
+    domanda: 'Quanto tempo dedica mediamente ogni persona del tuo team al data entry manuale (copiare dati da carta a PC o da un software all\'altro)?',
     tipo: 'select',
     peso: 4,
     opzioni: ['Meno di 2 ore/settimana', '2-5 ore/settimana', '5-10 ore/settimana', 'Oltre 10 ore/settimana']
@@ -346,7 +346,7 @@ const questions: Question[] = [
 
 const analizzaCompetenze = (answers: Record<string, any>) => {
   let score = 0;
-  let severity = 'MEDIO';
+  let severity = 'RISCHIO MEDIO';
 
   // Q56: Autonomia digitale
   const autonomia = answers['q56'];
@@ -362,8 +362,8 @@ const analizzaCompetenze = (answers: Record<string, any>) => {
   const hardware = answers['q58'];
   if (hardware === 'Sì, spesso perdiamo tempo per problemi tecnici') score += 3;
 
-  if (score >= 8) severity = 'CRITICO';
-  else if (score >= 5) severity = 'ALTO';
+  if (score >= 8) severity = 'RISCHIO CRITICO';
+  else if (score >= 5) severity = 'RISCHIO ALTO';
 
   return {
     specifico: 'Gap Competenze Digitali',
@@ -379,7 +379,7 @@ const analizzaCompetenze = (answers: Record<string, any>) => {
 
 const analizzaEfficienzaStrumenti = (answers: Record<string, any>) => {
   let score = 0;
-  let severity = 'MEDIO';
+  let severity = 'RISCHIO MEDIO';
 
   // Q54: Data Entry
   const dataEntry = answers['q54'];
@@ -394,8 +394,8 @@ const analizzaEfficienzaStrumenti = (answers: Record<string, any>) => {
   const integrazione = answers['q45'];
   if (integrazione === 'No, nessuna integrazione') score += 2;
 
-  if (score >= 8) severity = 'CRITICO';
-  else if (score >= 5) severity = 'ALTO';
+  if (score >= 8) severity = 'RISCHIO CRITICO';
+  else if (score >= 5) severity = 'RISCHIO ALTO';
 
   return {
     specifico: 'Inefficienza Operativa & Data Entry',
@@ -423,6 +423,7 @@ export default function TestMaturitaDigitalePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGeneratingReport, setIsGeneratingReport] = useState(false);
   const [formData, setFormData] = useState<TestMaturitaFormInput | null>(null);
+  const [saveStatus, setSaveStatus] = useState<{ type: 'success' | 'warning' | 'error' | null; message: string }>({ type: null, message: '' });
   const chartRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -500,9 +501,21 @@ export default function TestMaturitaDigitalePage() {
       maxScore += q.peso;
 
       // Score per sì/no
-      if (q.tipo === 'si_no' && answer === true) {
-        scoresPerCategory[category] += q.peso;
-        totalScore += q.peso;
+      // Q12 e Q13 hanno logica invertita: "più di 2 ore" è negativo, quindi "No" (false) dà punti
+      if (q.tipo === 'si_no') {
+        if (q.id === 'q12' || q.id === 'q13') {
+          // Per queste domande, "No" (false) significa che NON dedica più di 2 ore = positivo
+          if (answer === false) {
+            scoresPerCategory[category] += q.peso;
+            totalScore += q.peso;
+          }
+        } else {
+          // Per tutte le altre domande si_no, "Sì" (true) dà punti
+          if (answer === true) {
+            scoresPerCategory[category] += q.peso;
+            totalScore += q.peso;
+          }
+        }
       }
 
       // Score per select/radio - valutiamo risposte positive
@@ -583,7 +596,7 @@ export default function TestMaturitaDigitalePage() {
     ].filter(p => p.score >= 5);
 
     // Ordina per severity e score
-    const severityOrder = { 'CRITICO': 0, 'ALTO': 1, 'MEDIO': 2 };
+    const severityOrder = { 'RISCHIO CRITICO': 0, 'RISCHIO ALTO': 1, 'RISCHIO MEDIO': 2 };
     allPatterns.sort((a, b) => {
       const severityDiff = severityOrder[a.severity as keyof typeof severityOrder] - severityOrder[b.severity as keyof typeof severityOrder];
       if (severityDiff !== 0) return severityDiff;
@@ -593,8 +606,8 @@ export default function TestMaturitaDigitalePage() {
     // Prendi top 3 colli identificati
     const colliIdentificati = allPatterns.slice(0, 3);
     const colloPrimario = colliIdentificati[0]?.specifico || 'Non identificato';
-    const hasColliCritici = colliIdentificati.some(c => c.severity === 'CRITICO');
-    const hasColliAlti = colliIdentificati.some(c => c.severity === 'ALTO');
+    const hasColliCritici = colliIdentificati.some(c => c.severity === 'RISCHIO CRITICO');
+    const hasColliAlti = colliIdentificati.some(c => c.severity === 'RISCHIO ALTO');
 
     let capacitaCrescita = '+100%'; // Default value
     if (hasColliCritici || colliIdentificati.length >= 3) {
@@ -636,11 +649,11 @@ export default function TestMaturitaDigitalePage() {
 
     // 7. PRIORITÀ D'AZIONE (basate su colli REALI identificati)
     const prioritaAzione = colliIdentificati.map(collo => ({
-      livello: collo.severity,
+      livello: collo.severity === 'RISCHIO CRITICO' ? 'RISCHIO CRITICA' : collo.severity === 'RISCHIO ALTO' ? 'RISCHIO ALTA' : 'RISCHIO MEDIA',
       problema: collo.specifico,
       azione: collo.raccomandazioni[0],
-      tempo_implementazione: collo.severity === 'CRITICO' ? '2-3 settimane' : collo.severity === 'ALTO' ? '3-4 settimane' : '4-6 settimane',
-      impatto: collo.severity === 'CRITICO' ? 'Elimina blocco crescita' : collo.severity === 'ALTO' ? 'Accelera operatività 2x' : 'Migliora efficienza',
+      tempo_implementazione: collo.severity === 'RISCHIO CRITICO' ? '2-3 settimane' : collo.severity === 'RISCHIO ALTO' ? '3-4 settimane' : '4-6 settimane',
+      impatto: collo.severity === 'RISCHIO CRITICO' ? 'Elimina blocco crescita' : collo.severity === 'RISCHIO ALTO' ? 'Accelera operatività 2x' : 'Migliora efficienza',
       come: collo.raccomandazioni[1] || collo.raccomandazioni[0]
     }));
 
@@ -787,7 +800,7 @@ export default function TestMaturitaDigitalePage() {
     return {
       area: 'Commerciale',
       specifico: score >= 8 ? 'Sistema Preventivazione Completamente Manuale' : score >= 5 ? 'Processo Preventivazione Inefficiente' : 'Preventivazione Migliorabile',
-      severity: (score >= 8 ? 'CRITICO' : score >= 5 ? 'ALTO' : 'MEDIO') as 'CRITICO' | 'ALTO' | 'MEDIO',
+      severity: (score >= 8 ? 'RISCHIO CRITICO' : score >= 5 ? 'RISCHIO ALTO' : 'RISCHIO MEDIO') as 'RISCHIO CRITICO' | 'RISCHIO ALTO' | 'RISCHIO MEDIO',
       score,
       indicatori,
       raccomandazioni
@@ -856,8 +869,9 @@ export default function TestMaturitaDigitalePage() {
       score += 1;
     }
 
-    // Q13: Tempo ripetitive <2h
-    if (ans.q13 === false) {
+    // Q13: Tempo ripetitive >2h (logica invertita: "Sì" = dedica più di 2h = problema)
+    if (ans.q13 === true) {
+      // "Sì" significa che dedica più di 2 ore = problema (aggiunge score negativo)
       score += 2;
       indicatori.push('Oltre 2h/settimana perse in attività ripetitive');
     }
@@ -941,7 +955,7 @@ export default function TestMaturitaDigitalePage() {
     return {
       area: 'Organizzazione',
       specifico: score >= 8 ? 'Dipendenza Totale da Founder/Figure Chiave' : score >= 5 ? 'Forte Dipendenza da Persone Chiave' : 'Dipendenza Moderata',
-      severity: (score >= 8 ? 'CRITICO' : score >= 5 ? 'ALTO' : 'MEDIO') as 'CRITICO' | 'ALTO' | 'MEDIO',
+      severity: (score >= 8 ? 'RISCHIO CRITICO' : score >= 5 ? 'RISCHIO ALTO' : 'RISCHIO MEDIO') as 'RISCHIO CRITICO' | 'RISCHIO ALTO' | 'RISCHIO MEDIO',
       score,
       indicatori,
       raccomandazioni
@@ -1067,10 +1081,10 @@ export default function TestMaturitaDigitalePage() {
       });
     }
 
-    // PRIORITÀ 3 - MEDIA: Automazioni base
+    // PRIORITÀ 3 - RISCHIO MEDIA: Automazioni base
     if (!answers['q30'] || answers['q30'] === false) {
       priorita.push({
-        livello: 'MEDIA',
+        livello: 'RISCHIO MEDIA',
         problema: 'Mancanza automazioni base',
         azione: 'Implementa prima automazione (email/report)',
         tempo_implementazione: '1-2 settimane',
@@ -1120,19 +1134,19 @@ export default function TestMaturitaDigitalePage() {
       let priorita = 'BASSA';
       let icon = '✅';
       if (percentage < 25) {
-        priorita = 'CRITICA';
+        priorita = 'RISCHIO CRITICA';
         icon = '❌';
       } else if (percentage < 45) {
-        priorita = 'ALTA';
+        priorita = 'RISCHIO ALTA';
         icon = '⚠️';
       } else if (percentage < 65) {
-        priorita = 'MEDIA';
+        priorita = 'RISCHIO MEDIA';
         icon = '⚡';
       }
 
       // Se il collo di bottiglia primario è in questa categoria, alza priorità
-      if (colloPrimario.toLowerCase().includes(category.toLowerCase()) && priorita !== 'CRITICA') {
-        priorita = 'ALTA';
+      if (colloPrimario.toLowerCase().includes(category.toLowerCase()) && priorita !== 'RISCHIO CRITICA') {
+        priorita = 'RISCHIO ALTA';
       }
 
       roadmap.push({
@@ -1226,6 +1240,7 @@ export default function TestMaturitaDigitalePage() {
               nome: formValues.nome,
               cognome: formValues.cognome,
               email: formValues.email,
+              telefono: formValues.telefono,
               azienda: formValues.azienda,
               risposte: answers,
               punteggio_totale: results.punteggio_totale,
@@ -1254,9 +1269,34 @@ export default function TestMaturitaDigitalePage() {
           if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
             console.error('Error saving test:', errorData);
+            
+            // Mostra errore all'utente
+            setSaveStatus({
+              type: 'error',
+              message: errorData.details || errorData.error || 'Errore durante il salvataggio del test. I tuoi risultati sono stati visualizzati ma potrebbero non essere stati salvati. Contattaci se il problema persiste.',
+            });
+          } else {
+            const responseData = await response.json().catch(() => ({}));
+            
+            // Verifica se è stato salvato come dati essenziali
+            if (responseData.savedAsEssential) {
+              setSaveStatus({
+                type: 'warning',
+                message: responseData.message || 'Il test è stato salvato con dati essenziali. Alcuni dettagli potrebbero non essere disponibili.',
+              });
+            } else {
+              setSaveStatus({
+                type: 'success',
+                message: 'Test salvato con successo! Riceverai i risultati via email a breve.',
+              });
+            }
           }
         } catch (error) {
           console.error('Error in report generation process:', error);
+          setSaveStatus({
+            type: 'error',
+            message: 'Errore durante il salvataggio. I tuoi risultati sono stati visualizzati ma potrebbero non essere stati salvati. Contattaci se il problema persiste.',
+          });
         } finally {
           setIsGeneratingReport(false);
           setIsSubmitting(false);
@@ -1339,13 +1379,28 @@ export default function TestMaturitaDigitalePage() {
                 )}
               </div>
               <div>
-                <label className="block text-sm font-semibold mb-2">Azienda (opzionale)</label>
+                <label className="block text-sm font-semibold mb-2">Telefono</label>
+                <input
+                  {...register('telefono')}
+                  type="tel"
+                  className={`w-full px-4 py-3 border rounded-lg ${errors.telefono ? 'border-red-500' : ''}`}
+                  placeholder="+39 347 123 4567"
+                />
+                {errors.telefono && (
+                  <p className="text-red-500 text-sm mt-1">{errors.telefono.message}</p>
+                )}
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-2">Azienda</label>
                 <input
                   {...register('azienda')}
                   type="text"
-                  className="w-full px-4 py-3 border rounded-lg"
+                  className={`w-full px-4 py-3 border rounded-lg ${errors.azienda ? 'border-red-500' : ''}`}
                   placeholder="Nome azienda"
                 />
+                {errors.azienda && (
+                  <p className="text-red-500 text-sm mt-1">{errors.azienda.message}</p>
+                )}
               </div>
 
               <MagneticButton className="w-full">
@@ -1542,8 +1597,50 @@ export default function TestMaturitaDigitalePage() {
   }
 
   if (currentStep === 'results' && results) {
+    // Componente notifica salvataggio
+    const SaveStatusNotification = () => {
+      if (!saveStatus.type) return null;
+
+      const bgColor = saveStatus.type === 'success' 
+        ? 'bg-green-50 border-green-200 text-green-800' 
+        : saveStatus.type === 'warning'
+        ? 'bg-yellow-50 border-yellow-200 text-yellow-800'
+        : 'bg-red-50 border-red-200 text-red-800';
+      
+      const icon = saveStatus.type === 'success' 
+        ? '✅' 
+        : saveStatus.type === 'warning'
+        ? '⚠️'
+        : '❌';
+
+      return (
+        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 max-w-2xl w-full mx-4 ${bgColor} border-2 rounded-lg p-4 shadow-lg`}>
+          <div className="flex items-start gap-3">
+            <span className="text-2xl">{icon}</span>
+            <div className="flex-1">
+              <p className="font-semibold mb-1">
+                {saveStatus.type === 'success' ? 'Salvataggio completato' : 
+                 saveStatus.type === 'warning' ? 'Salvataggio parziale' : 
+                 'Errore nel salvataggio'}
+              </p>
+              <p className="text-sm">{saveStatus.message}</p>
+            </div>
+            <button
+              onClick={() => setSaveStatus({ type: null, message: '' })}
+              className="text-current opacity-70 hover:opacity-100 transition-opacity"
+              aria-label="Chiudi notifica"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      );
+    };
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 py-16 relative">
+        {/* Notifica stato salvataggio */}
+        <SaveStatusNotification />
+        
         {/* Loading Overlay per Generazione Report */}
         {isGeneratingReport && (
           <div className="fixed inset-0 bg-white/90 z-50 flex flex-col items-center justify-center backdrop-blur-sm">
@@ -1583,7 +1680,7 @@ export default function TestMaturitaDigitalePage() {
           {/* RADAR CHART PREMIUM - Analisi 6 Pilastri */}
           <div className="max-w-3xl mx-auto mb-8">
             <div className="bg-white rounded-xl shadow-xl p-8">
-              <h3 className="text-2xl font-bold mb-2 font-heading text-center text-purple-800">📊 Analisi Radar - 7 Pilastri</h3>
+              <h3 className="text-2xl font-bold mb-2 font-heading text-center text-purple-800">📊 Analisi Radar - 6 Pilastri</h3>
               <p className="text-center text-gray-600 mb-6">Confronto tra il tuo score, la media di settore e il top 10%</p>
 
               <div ref={chartRef} className="w-full bg-white p-4 rounded-xl" style={{ height: '500px' }}>
@@ -1696,10 +1793,10 @@ export default function TestMaturitaDigitalePage() {
                   {results.colli_identificati.map((collo: any, idx: number) => (
                     <div
                       key={idx}
-                      className={`rounded-lg p-5 border-l-4 ${collo.severity === 'CRITICO'
+                      className={`rounded-lg p-5 border-l-4 ${collo.severity === 'RISCHIO CRITICO'
                         ? 'bg-red-50 border-red-500'
-                        : collo.severity === 'ALTO'
-                          ? 'bg-orange-50 border-orange-500'
+                        : collo.severity === 'RISCHIO ALTO'
+                          ? 'bg-red-50 border-red-500'
                           : 'bg-yellow-50 border-yellow-500'
                         }`}
                     >
@@ -1707,10 +1804,10 @@ export default function TestMaturitaDigitalePage() {
                         <div className="flex items-center gap-2">
                           <span className="text-xl font-bold text-gray-700">#{idx + 1}</span>
                           <span
-                            className={`px-2 py-0.5 rounded-full text-xs font-bold ${collo.severity === 'CRITICO'
+                            className={`px-2 py-0.5 rounded-full text-xs font-bold ${collo.severity === 'RISCHIO CRITICO'
                               ? 'bg-red-600 text-white'
-                              : collo.severity === 'ALTO'
-                                ? 'bg-orange-600 text-white'
+                              : collo.severity === 'RISCHIO ALTO'
+                                ? 'bg-red-600 text-white'
                                 : 'bg-yellow-600 text-white'
                               }`}
                           >
@@ -1781,14 +1878,14 @@ export default function TestMaturitaDigitalePage() {
               <h3 className="text-2xl font-bold mb-6 font-heading text-gray-900">🎯 Priorità d'Azione (Ordine di Criticità)</h3>
               <div className="space-y-4">
                 {results.priorita_azione.map((priorita: any, idx: number) => (
-                  <div key={idx} className={`p-6 rounded-lg border-l-4 ${priorita.livello === 'CRITICA' ? 'bg-red-50 border-red-500' :
-                    priorita.livello === 'ALTA' ? 'bg-orange-50 border-orange-500' :
+                  <div key={idx} className={`p-6 rounded-lg border-l-4 ${priorita.livello === 'RISCHIO CRITICA' ? 'bg-red-50 border-red-500' :
+                    priorita.livello === 'RISCHIO ALTA' ? 'bg-red-50 border-red-500' :
                       'bg-yellow-50 border-yellow-500'
                     }`}>
                     <div className="flex items-start justify-between mb-3">
                       <div>
-                        <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-2 ${priorita.livello === 'CRITICA' ? 'bg-red-600 text-white' :
-                          priorita.livello === 'ALTA' ? 'bg-orange-600 text-white' :
+                        <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-2 ${priorita.livello === 'RISCHIO CRITICA' ? 'bg-red-600 text-white' :
+                          priorita.livello === 'RISCHIO ALTA' ? 'bg-red-600 text-white' :
                             'bg-yellow-600 text-white'
                           }`}>
                           {priorita.livello}
@@ -1992,9 +2089,9 @@ export default function TestMaturitaDigitalePage() {
               <h3 className="text-2xl font-bold mb-6 font-heading">🎯 Roadmap Priorità per Pilastro</h3>
               <div className="space-y-4">
                 {results.roadmap_pilastri.map((pilastro: any, idx: number) => (
-                  <div key={idx} className={`rounded-lg p-6 border-l-4 ${pilastro.priorita === 'CRITICA' ? 'bg-red-50 border-red-500' :
-                    pilastro.priorita === 'ALTA' ? 'bg-orange-50 border-orange-500' :
-                      pilastro.priorita === 'MEDIA' ? 'bg-yellow-50 border-yellow-500' :
+                  <div key={idx} className={`rounded-lg p-6 border-l-4 ${pilastro.priorita === 'RISCHIO CRITICA' ? 'bg-red-50 border-red-500' :
+                    pilastro.priorita === 'RISCHIO ALTA' ? 'bg-red-50 border-red-500' :
+                      pilastro.priorita === 'RISCHIO MEDIA' ? 'bg-yellow-50 border-yellow-500' :
                         'bg-green-50 border-green-500'
                     }`}>
                     <div className="flex items-start justify-between mb-3">
@@ -2003,9 +2100,9 @@ export default function TestMaturitaDigitalePage() {
                         <div>
                           <h4 className="font-bold text-gray-900">{pilastro.pilastro}</h4>
                           <div className="flex items-center gap-2 mt-1">
-                            <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${pilastro.priorita === 'CRITICA' ? 'bg-red-600 text-white' :
-                              pilastro.priorita === 'ALTA' ? 'bg-orange-600 text-white' :
-                                pilastro.priorita === 'MEDIA' ? 'bg-yellow-600 text-white' :
+                            <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${pilastro.priorita === 'RISCHIO CRITICA' ? 'bg-red-600 text-white' :
+                              pilastro.priorita === 'RISCHIO ALTA' ? 'bg-red-600 text-white' :
+                                pilastro.priorita === 'RISCHIO MEDIA' ? 'bg-yellow-600 text-white' :
                                   'bg-green-600 text-white'
                               }`}>
                               {pilastro.priorita}
@@ -2054,7 +2151,7 @@ export default function TestMaturitaDigitalePage() {
 
               <div className="mt-6 text-center">
                 <button className="bg-green-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-green-700 transition-all">
-                  📥 Scarica Toolkit Completo
+                  Presto disponibile: Scarica Toolkit Completo
                 </button>
               </div>
             </div>

@@ -9,7 +9,7 @@ import JSONLD from '@/components/JSONLD';
 // Nota: Rimossi ssr: false perché non supportato in Server Components di Next.js 16
 const ClientInvestmentCalculator = dynamic(
   () => import('@/components/ClientInvestmentCalculator'),
-  { 
+  {
     loading: () => (
       <div className="flex items-center justify-center py-12">
         <div className="text-center">
@@ -23,7 +23,7 @@ const ClientInvestmentCalculator = dynamic(
 
 const InvestorQuestionnaire = dynamic(
   () => import('@/components/InvestorQuestionnaire'),
-  { 
+  {
     loading: () => (
       <div className="flex items-center justify-center py-8">
         <p className="text-[var(--color-subtext)]">Caricamento questionario...</p>
@@ -44,6 +44,7 @@ export default function CalcolatoreInvestimentoPage() {
       <Hero
         h1="Calcolatore di Investimento"
         subtitle="Simula il tuo patrimonio futuro con interesse semplice e composto. Ottieni un'analisi AI personalizzata per raggiungere l'indipendenza finanziaria."
+        image="/images/investimenti-hero.webp"
         primaryCTA={{
           text: 'Inizia il Calcolo',
           href: '#calcolatore',

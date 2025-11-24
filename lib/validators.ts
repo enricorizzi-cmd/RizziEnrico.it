@@ -52,7 +52,8 @@ export const testMaturitaFormSchema = z.object({
   nome: z.string().min(2, 'Nome deve contenere almeno 2 caratteri'),
   cognome: z.string().min(2, 'Cognome deve contenere almeno 2 caratteri'),
   email: z.string().email('Email non valida'),
-  azienda: z.string().optional(),
+  telefono: z.string().min(10, 'Telefono deve contenere almeno 10 caratteri').max(20, 'Telefono troppo lungo'),
+  azienda: z.string().min(2, 'Nome azienda richiesto (minimo 2 caratteri)').max(100, 'Nome azienda troppo lungo'),
 });
 
 // Schema per test maturità digitale completo (con risposte)
@@ -61,7 +62,8 @@ export const testMaturitaSchema = z.object({
   nome: z.string().min(2).optional(),
   cognome: z.string().min(2).optional(),
   email: z.string().email().optional(),
-  azienda: z.string().optional(),
+  telefono: z.string().min(10).max(20).optional(),
+  azienda: z.string().min(2).optional(),
   risposte: z.record(z.string(), z.any()),
 });
 

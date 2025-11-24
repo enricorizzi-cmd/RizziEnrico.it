@@ -13,16 +13,40 @@ export async function POST(request: NextRequest) {
       nome: body.nome,
       cognome: body.cognome,
       email: body.email,
+      telefono: body.telefono,
       azienda: body.azienda,
     });
 
     const supabase = createServerClient();
+
+    // Funzione helper per ridurre dimensione dati JSONB se troppo grandi
+    const truncateLargeField = (field: any, maxSize: number): any => {
+      if (!field) return null;
+      const fieldStr = JSON.stringify(field);
+      if (fieldStr.length <= maxSize) return field;
+      
+      // Se è un oggetto, prova a ridurlo mantenendo solo campi essenziali
+      if (typeof field === 'object' && !Array.isArray(field)) {
+        const reduced: any = {};
+        for (const [key, value] of Object.entries(field)) {
+          const testStr = JSON.stringify({ ...reduced, [key]: value });
+          if (testStr.length <= maxSize) {
+            reduced[key] = value;
+          } else {
+            break;
+          }
+        }
+        return reduced;
+      }
+      return field;
+    };
 
     // Prepara dati per il salvataggio
     const insertData = {
       nome: validatedData.nome,
       cognome: validatedData.cognome,
       email: validatedData.email,
+      telefono: validatedData.telefono || null,
       azienda: validatedData.azienda,
       risposte: validatedData.risposte,
       punteggio_totale: body.punteggio_totale || 0,
@@ -30,28 +54,30 @@ export async function POST(request: NextRequest) {
       livello_maturita: body.livello_maturita || 'Iniziale',
       livello_description: body.livello_description || null,
       percentage: body.percentage || null,
-      // Campi premium v2.0
-      profilazione: body.profilazione || null,
-      colli_bottiglia: body.colli_identificati || body.colli_bottiglia || null, // Salva array top 3 colli
+      // Campi premium v2.0 - con validazione dimensione
+      profilazione: truncateLargeField(body.profilazione, 100 * 1024), // Max 100KB
+      colli_bottiglia: body.colli_identificati || body.colli_bottiglia || null,
       collo_bottiglia_primario: body.collo_bottiglia_primario || null,
       capacita_crescita: body.capacita_crescita || null,
-      diagnosi: body.diagnosi || null,
+      diagnosi: truncateLargeField(body.diagnosi, 100 * 1024), // Max 100KB
       priorita_azione: body.priorita_azione || null,
-      roadmap_scalabilita: body.roadmap_scalabilita || null,
+      roadmap_scalabilita: truncateLargeField(body.roadmap_scalabilita, 150 * 1024), // Max 150KB
       investimento_suggerito: body.investimento_suggerito || null,
-      benchmark: body.benchmark || null,
-      roadmap_pilastri: body.roadmap_pilastri || null,
+      benchmark: truncateLargeField(body.benchmark, 100 * 1024), // Max 100KB
+      roadmap_pilastri: truncateLargeField(body.roadmap_pilastri, 150 * 1024), // Max 150KB
       risorse_bonus: body.risorse_bonus || null,
-      next_steps: body.next_steps || null,
+      next_steps: truncateLargeField(body.next_steps, 100 * 1024), // Max 100KB
       // Campi legacy (per retrocompatibilità)
       quick_wins: body.quick_wins || null,
-      piano_30_60_90: body.piano_30_60_90 || null,
+      piano_30_60_90: truncateLargeField(body.piano_30_60_90, 100 * 1024), // Max 100KB
       roi_stimato: body.roi_stimato || null,
       raccomandazioni: body.raccomandazioni || [],
     };
 
-    // Log dimensioni dati per debug
+    // Validazione dimensione totale dati (limite Supabase JSONB ~500KB)
     const dataSize = JSON.stringify(insertData).length;
+    const MAX_DATA_SIZE = 450 * 1024; // 450KB per sicurezza (limite Supabase ~500KB)
+    
     console.log('[TEST] 📊 Tentativo salvataggio test:', {
       email: validatedData.email,
       nome: validatedData.nome,
@@ -60,14 +86,64 @@ export async function POST(request: NextRequest) {
       timestamp: new Date().toISOString(),
     });
 
-    const { data, error } = await supabase
-      .from('test_maturita_digitale')
-      .insert(insertData)
-      .select()
-      .single();
+    // Funzione per salvataggio con retry
+    const saveWithRetry = async (dataToSave: any, retries = 3): Promise<{ data: any; error: any }> => {
+      for (let attempt = 1; attempt <= retries; attempt++) {
+        const { data, error } = await supabase
+          .from('test_maturita_digitale')
+          .insert(dataToSave)
+          .select()
+          .single();
 
+        if (!error) {
+          return { data, error: null };
+        }
+
+        // Se non è l'ultimo tentativo, aspetta prima di riprovare
+        if (attempt < retries) {
+          const delay = attempt * 1000; // Backoff esponenziale: 1s, 2s, 3s
+          console.warn(`[TEST] ⚠️ Tentativo ${attempt}/${retries} fallito, retry tra ${delay}ms...`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+        } else {
+          return { data: null, error };
+        }
+      }
+      return { data: null, error: { message: 'Max retries reached' } };
+    };
+
+    // Funzione per salvataggio dati essenziali (fallback)
+    const saveEssentialData = async (): Promise<{ data: any; error: any }> => {
+      const essentialData = {
+        nome: validatedData.nome,
+        cognome: validatedData.cognome,
+        email: validatedData.email,
+        telefono: validatedData.telefono || null,
+        azienda: validatedData.azienda || null,
+        risposte: validatedData.risposte,
+        punteggio_totale: body.punteggio_totale || 0,
+        punteggio_per_categoria: body.punteggio_per_categoria || {},
+        livello_maturita: body.livello_maturita || 'Iniziale',
+        livello_description: body.livello_description || null,
+        percentage: body.percentage || null,
+        // Solo dati essenziali, niente campi JSONB grandi
+        metadata: {
+          saved_as_essential: true,
+          original_data_size: dataSize,
+          save_timestamp: new Date().toISOString(),
+          error_reason: 'Data too large or save failed',
+        },
+      };
+
+      console.log('[TEST] 🔄 Tentativo salvataggio dati essenziali (fallback)...');
+      return await saveWithRetry(essentialData, 2); // Solo 2 retry per fallback
+    };
+
+    // Tentativo salvataggio completo
+    let { data, error } = await saveWithRetry(insertData, 3);
+
+    // Se il salvataggio completo fallisce, prova con dati essenziali
     if (error) {
-      console.error('[TEST] ❌ Errore Supabase durante salvataggio:', {
+      console.error('[TEST] ❌ Errore Supabase durante salvataggio completo:', {
         error: error,
         message: error.message,
         details: error.details,
@@ -90,15 +166,92 @@ export async function POST(request: NextRequest) {
       if (body.roadmap_pilastri) {
         console.error('[TEST] Dimensione roadmap_pilastri:', JSON.stringify(body.roadmap_pilastri).length, 'bytes');
       }
+
+      // Notifica admin immediatamente
+      sendEmail({
+        to: NOTIFICATION_EMAIL,
+        subject: `🚨 ERRORE CRITICO: Test non salvato - ${validatedData.nome} ${validatedData.cognome}`,
+        text: `ERRORE CRITICO: Il test di ${validatedData.nome} ${validatedData.cognome} (${validatedData.email}) non è stato salvato nel database.
+
+Dettagli errore:
+- Messaggio: ${error.message || 'Sconosciuto'}
+- Codice: ${error.code || 'N/A'}
+- Dimensione dati: ${(dataSize / 1024).toFixed(2)} KB
+- Timestamp: ${new Date().toISOString()}
+
+Tentativo salvataggio dati essenziali in corso...`,
+      }).catch((err) => {
+        console.error('[TEST] ❌ Errore invio notifica admin:', err);
+      });
+
+      // Prova salvataggio dati essenziali
+      const fallbackResult = await saveEssentialData();
       
-      return NextResponse.json(
-        { 
-          error: 'Errore nel salvataggio',
-          details: error.message || 'Errore sconosciuto',
-          code: error.code,
-        },
-        { status: 500 }
-      );
+      if (fallbackResult.error) {
+        // Anche il fallback è fallito - errore critico
+        console.error('[TEST] ❌❌ ERRORE CRITICO: Anche salvataggio dati essenziali fallito:', fallbackResult.error);
+        
+        // Notifica admin con urgenza
+        sendEmail({
+          to: NOTIFICATION_EMAIL,
+          subject: `🚨🚨 ERRORE CRITICO: Test completamente perso - ${validatedData.nome} ${validatedData.cognome}`,
+          text: `ERRORE CRITICO: Il test di ${validatedData.nome} ${validatedData.cognome} (${validatedData.email}) NON è stato salvato nemmeno come dati essenziali.
+
+Dati utente:
+- Nome: ${validatedData.nome} ${validatedData.cognome}
+- Email: ${validatedData.email}
+- Azienda: ${validatedData.azienda || 'N/A'}
+- Punteggio: ${body.punteggio_totale || 0}
+- Livello: ${body.livello_maturita || 'N/A'}
+
+Errore salvataggio completo: ${error.message}
+Errore salvataggio essenziale: ${fallbackResult.error.message}
+
+AZIONE RICHIESTA: Contattare l'utente e chiedere di ricompilare il test.`,
+        }).catch((err) => {
+          console.error('[TEST] ❌ Errore invio notifica admin critica:', err);
+        });
+
+        return NextResponse.json(
+          { 
+            error: 'Errore critico nel salvataggio',
+            details: 'Impossibile salvare i dati. Contattare il supporto.',
+            code: 'CRITICAL_SAVE_ERROR',
+            saved: false,
+          },
+          { status: 500 }
+        );
+      } else {
+        // Fallback riuscito - dati essenziali salvati
+        data = fallbackResult.data;
+        console.log('[TEST] ✅ Dati essenziali salvati con successo (fallback):', {
+          id: data.id,
+          email: validatedData.email,
+          timestamp: new Date().toISOString(),
+        });
+
+        // Notifica admin che fallback è riuscito
+        sendEmail({
+          to: NOTIFICATION_EMAIL,
+          subject: `⚠️ Test salvato come dati essenziali - ${validatedData.nome} ${validatedData.cognome}`,
+          text: `Il test di ${validatedData.nome} ${validatedData.cognome} (${validatedData.email}) è stato salvato solo con dati essenziali a causa di un errore.
+
+Dati salvati:
+- Nome, Cognome, Email, Azienda
+- Risposte
+- Punteggio e livello base
+
+Dati NON salvati (troppo grandi o errore):
+- Profilazione completa
+- Roadmap dettagliate
+- Diagnosi completa
+
+ID Test: ${data.id}
+Dimensione originale: ${(dataSize / 1024).toFixed(2)} KB`,
+        }).catch((err) => {
+          console.error('[TEST] Errore invio notifica admin fallback:', err);
+        });
+      }
     }
 
     console.log('[TEST] ✅ Test salvato con successo:', {
@@ -179,11 +332,11 @@ export async function POST(request: NextRequest) {
         </div>
       </div>
 
-      <!-- RADAR CHART - 7 PILASTRI -->
+      <!-- RADAR CHART - 6 PILASTRI -->
       ${radarChartImage ? `
       <div style="text-align: center; margin: 30px 0;">
-        <h3 style="color: #7c3aed; font-size: 18px; margin-bottom: 10px; font-weight: 700;">📊 Analisi Radar - 7 Pilastri</h3>
-        <img src="cid:radar-chart-image" alt="Radar Chart 7 Pilastri" style="width: 100%; max-width: 500px; height: auto; border-radius: 8px; border: 1px solid #e5e7eb;">
+        <h3 style="color: #7c3aed; font-size: 18px; margin-bottom: 10px; font-weight: 700;">📊 Analisi Radar - 6 Pilastri</h3>
+        <img src="cid:radar-chart-image" alt="Radar Chart 6 Pilastri" style="width: 100%; max-width: 500px; height: auto; border-radius: 8px; border: 1px solid #e5e7eb;">
         <p style="font-size: 11px; color: #6b7280; margin-top: 8px;">Tuo Score (Viola) vs Media Settore (Blu) vs Top 10% (Verde)</p>
       </div>
       ` : ''}
@@ -206,10 +359,10 @@ export async function POST(request: NextRequest) {
         <h3 style="color: #1f2937; font-size: 18px; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; margin-bottom: 15px;">⚠️ TOP 3 COLLI DI BOTTIGLIA</h3>
         
         ${colliIdentificati.length > 0 ? colliIdentificati.slice(0, 3).map((collo: any, idx: number) => `
-        <div style="background: ${collo.severity === 'CRITICO' ? '#fef2f2' : collo.severity === 'ALTO' ? '#fff7ed' : '#fefce8'}; border-left: 4px solid ${collo.severity === 'CRITICO' ? '#ef4444' : collo.severity === 'ALTO' ? '#f97316' : '#eab308'}; padding: 15px; margin-bottom: 12px; border-radius: 0 8px 8px 0;">
+        <div style="background: ${collo.severity === 'RISCHIO CRITICO' ? '#fef2f2' : collo.severity === 'RISCHIO ALTO' ? '#fef2f2' : '#fefce8'}; border-left: 4px solid ${collo.severity === 'RISCHIO CRITICO' ? '#ef4444' : collo.severity === 'RISCHIO ALTO' ? '#ef4444' : '#eab308'}; padding: 15px; margin-bottom: 12px; border-radius: 0 8px 8px 0;">
           <div style="margin-bottom: 8px;">
             <span style="color: #6b7280; font-size: 16px; font-weight: 700; margin-right: 8px;">#${idx + 1}</span>
-            <span style="background: ${collo.severity === 'CRITICO' ? '#ef4444' : collo.severity === 'ALTO' ? '#f97316' : '#eab308'}; color: white; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 10px; margin-right: 8px;">${collo.severity}</span>
+            <span style="background: ${collo.severity === 'RISCHIO CRITICO' ? '#ef4444' : collo.severity === 'RISCHIO ALTO' ? '#ef4444' : '#eab308'}; color: white; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 10px; margin-right: 8px;">${collo.severity}</span>
           </div>
           <strong style="color: #1f2937; font-size: 15px;">${collo.specifico}</strong>
           <p style="margin: 8px 0 0 0; color: #4b5563; font-size: 13px;">✓ ${collo.raccomandazioni?.[0] || ''}</p>
@@ -223,9 +376,9 @@ export async function POST(request: NextRequest) {
         <h3 style="color: #1f2937; font-size: 18px; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; margin-bottom: 15px;">🎯 Priorità d'Azione</h3>
         
         ${prioritaAzione.slice(0, 3).map((priorita: any, idx: number) => `
-        <div style="background: ${priorita.livello === 'CRITICA' ? '#fef2f2' : priorita.livello === 'ALTA' ? '#fff7ed' : '#fefce8'}; padding: 15px; margin-bottom: 12px; border-radius: 8px; border: 1px solid ${priorita.livello === 'CRITICA' ? '#fecaca' : priorita.livello === 'ALTA' ? '#fed7aa' : '#fef08a'};">
+        <div style="background: ${priorita.livello === 'RISCHIO CRITICA' ? '#fef2f2' : priorita.livello === 'RISCHIO ALTA' ? '#fef2f2' : '#fefce8'}; padding: 15px; margin-bottom: 12px; border-radius: 8px; border: 1px solid ${priorita.livello === 'RISCHIO CRITICA' ? '#fecaca' : priorita.livello === 'RISCHIO ALTA' ? '#fecaca' : '#fef08a'};">
           <div style="margin-bottom: 8px;">
-            <span style="background: ${priorita.livello === 'CRITICA' ? '#dc2626' : priorita.livello === 'ALTA' ? '#ea580c' : '#ca8a04'}; color: white; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 10px; text-transform: uppercase;">${priorita.livello}</span>
+            <span style="background: ${priorita.livello === 'RISCHIO CRITICA' ? '#dc2626' : priorita.livello === 'RISCHIO ALTA' ? '#dc2626' : '#ca8a04'}; color: white; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 10px; text-transform: uppercase;">${priorita.livello}</span>
             <span style="background: #3b82f6; color: white; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 10px; margin-left: 6px;">⏱️ ${priorita.tempo_implementazione}</span>
           </div>
           <strong style="color: #1f2937; font-size: 14px;">${idx + 1}. ${priorita.azione}</strong>
@@ -321,7 +474,9 @@ Enrico Rizzi`;
         subject: `📊 Il Tuo Report Digitalizzazione Aziendale - ${livelloMaturita}`,
         html: userEmailHtml,
         text: userEmailText,
-        attachments: attachments
+        attachments: attachments,
+        emailId: 'email_risultato_test', // ID per tracking email
+        leadId: data.id, // ID test come leadId per tracking
       }).then(async (success) => {
         if (success) {
           console.log('[TEST] ✅ Email risultato inviata con successo:', {
@@ -431,9 +586,14 @@ Data compilazione: ${new Date().toLocaleString('it-IT')}`;
     });
 
     // Ritorna subito la risposta senza aspettare le email
+    const isEssentialSave = data.metadata && (data.metadata as any).saved_as_essential;
     return NextResponse.json({
       success: true,
       id: data.id,
+      savedAsEssential: isEssentialSave || false,
+      message: isEssentialSave 
+        ? 'Test salvato con dati essenziali. Alcuni dettagli potrebbero non essere disponibili.'
+        : 'Test salvato con successo',
     });
   } catch (error: any) {
     if (error.name === 'ZodError') {

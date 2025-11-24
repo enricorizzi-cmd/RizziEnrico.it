@@ -274,7 +274,7 @@ export default function DettaglioTestPage() {
                     <div className="lg:col-span-2 space-y-8">
                         {/* Radar Chart PREMIUM - Allineato con output utente */}
                         <div className="bg-white rounded-xl shadow-xl p-8">
-                            <h3 className="text-2xl font-bold mb-2 font-heading text-center text-purple-800">📊 Analisi Radar - 7 Pilastri</h3>
+                            <h3 className="text-2xl font-bold mb-2 font-heading text-center text-purple-800">📊 Analisi Radar - 6 Pilastri</h3>
                             <p className="text-center text-gray-600 mb-6">Confronto tra il tuo score, la media di settore e il top 10%</p>
 
                             <div className="w-full bg-white p-4 rounded-xl" style={{ height: '500px' }}>

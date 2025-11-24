@@ -42,6 +42,7 @@ export default function DigitalizzazionePMIPage() {
       <Hero
         h1="Digitalizzazione & Intelligenza Artificiale per PMI"
         subtitle="Da azienda 'tutta in testa alle persone' ad azienda che lavora con processi digitali chiari, dati aggiornati e automazioni semplici."
+        image="/images/digitalizzazione-ai-hero.png"
         primaryCTA={{
           text: 'Prenota Check-up Digitale Gratuito',
           href: '/contatti',
@@ -168,7 +169,7 @@ export default function DigitalizzazionePMIPage() {
               <p className="mb-4">
                 Parlo di:
               </p>
-              
+
               <div className="space-y-6 mb-8">
                 <div className="bg-[var(--color-card)] rounded-lg p-6 border border-[var(--color-line)]">
                   <h3 className="font-heading text-xl font-bold text-[var(--color-text)] mb-3">
