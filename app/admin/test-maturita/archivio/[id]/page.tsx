@@ -198,17 +198,53 @@ export default function DettaglioTestPage() {
                                 <h3 className="text-2xl font-bold mb-4 font-heading text-purple-700">📍 Diagnosi Completa</h3>
                                 <p className="text-lg font-semibold text-gray-800 mb-6">{test.diagnosi.livello}</p>
 
-                                {/* COLLO DI BOTTIGLIA PRIMARIO */}
-                                {test.collo_bottiglia_primario && test.collo_bottiglia_primario !== 'Non identificato' && (
-                                    <div className="bg-red-50 border-2 border-red-300 rounded-lg p-6 mb-6">
-                                        <h4 className="font-bold text-lg mb-2 text-red-800 flex items-center gap-2">
-                                            ⚠️ COLLO DI BOTTIGLIA CRITICO IDENTIFICATO
+                                {/* TOP 3 COLLI DI BOTTIGLIA */}
+                                {test.colli_bottiglia && test.colli_bottiglia.length > 0 && (
+                                    <div className="mb-6 space-y-3">
+                                        <h4 className="font-bold text-lg mb-4 text-gray-900 flex items-center gap-2">
+                                            ⚠️ TOP 3 COLLI DI BOTTIGLIA IDENTIFICATI
                                         </h4>
-                                        <p className="text-red-700 font-semibold text-xl mb-2">{test.collo_bottiglia_primario}</p>
-                                        <p className="text-sm text-red-600">
-                                            Questo è il punto che andrebbe in crisi per primo con una crescita rapida del business.
-                                            <strong> Risolverlo è priorità assoluta.</strong>
-                                        </p>
+                                        {test.colli_bottiglia.map((collo: any, idx: number) => (
+                                            <div
+                                                key={idx}
+                                                className={`rounded-lg p-5 border-l-4 ${collo.severity === 'CRITICO'
+                                                    ? 'bg-red-50 border-red-500'
+                                                    : collo.severity === 'ALTO'
+                                                        ? 'bg-orange-50 border-orange-500'
+                                                        : 'bg-yellow-50 border-yellow-500'
+                                                    }`}
+                                            >
+                                                <div className="flex items-start justify-between mb-2">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-xl font-bold text-gray-700">#{idx + 1}</span>
+                                                        <span
+                                                            className={`px-2 py-0.5 rounded-full text-xs font-bold ${collo.severity === 'CRITICO'
+                                                                ? 'bg-red-600 text-white'
+                                                                : collo.severity === 'ALTO'
+                                                                    ? 'bg-orange-600 text-white'
+                                                                    : 'bg-yellow-600 text-white'
+                                                                }`}
+                                                        >
+                                                            {collo.severity}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <p className="font-semibold text-gray-900 text-lg mb-2">{collo.specifico}</p>
+                                                {collo.raccomandazioni && collo.raccomandazioni.length > 0 && (
+                                                    <div className="mt-3">
+                                                        <p className="text-sm font-semibold text-gray-700 mb-1">Azioni consigliate:</p>
+                                                        <ul className="text-sm text-gray-700 space-y-1">
+                                                            {collo.raccomandazioni.map((rac: string, racIdx: number) => (
+                                                                <li key={racIdx} className="flex items-start">
+                                                                    <span className="mr-2">✓</span>
+                                                                    <span>{rac}</span>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        ))}
                                     </div>
                                 )}
 
