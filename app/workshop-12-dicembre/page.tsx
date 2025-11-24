@@ -176,10 +176,10 @@ export default function WorkshopPage() {
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 font-heading animate-fade-in-up">
-              Più Tempo, Più organizzazione,
+              AI in Azienda:
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-[length:200%_auto] animate-gradient-text">
-                meno stress: AI in Azienda
+                Più Tempo, Più Clienti, Meno Sprechi
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-6 max-w-3xl mx-auto animate-fade-in-up animation-delay-200">
