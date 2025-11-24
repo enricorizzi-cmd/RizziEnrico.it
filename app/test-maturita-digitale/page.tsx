@@ -571,7 +571,7 @@ export default function TestMaturitaDigitalePage() {
       ],
       entro_15_giorni: [
         'Prenota Check-up Operativo Gratuito (1h in azienda)',
-        'Workshop "AI in Azienda" - 12 Dicembre 2025'
+        'Workshop "AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi" - 12 Dicembre 2025'
       ]
     };
 

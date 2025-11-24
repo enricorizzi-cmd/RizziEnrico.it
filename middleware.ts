@@ -25,7 +25,7 @@ export function middleware(request: NextRequest) {
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
-  
+
   // HSTS (solo su HTTPS)
   if (request.nextUrl.protocol === 'https:') {
     response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
@@ -33,7 +33,7 @@ export function middleware(request: NextRequest) {
 
   // COOP (Cross-Origin-Opener-Policy) per isolamento origine
   response.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
-  
+
   // COEP (Cross-Origin-Embedder-Policy) - commentato perché troppo restrittivo per analytics esterni
   // Se necessario, usare 'credentialless' invece di 'require-corp' per permettere risorse cross-origin
   // response.headers.set('Cross-Origin-Embedder-Policy', 'credentialless');
@@ -54,9 +54,32 @@ export function middleware(request: NextRequest) {
   ].join('; ');
 
   response.headers.set('Content-Security-Policy', csp);
-  
+
   // Trusted Types rimosso perché incompatibile con Google Analytics e altri script dinamici
   // La sicurezza è già garantita dal CSP sopra
+
+  // Basic Auth per /admin
+  if (pathname.startsWith('/admin')) {
+    const basicAuth = request.headers.get('authorization');
+    const url = request.nextUrl;
+
+    if (basicAuth) {
+      const authValue = basicAuth.split(' ')[1];
+      const [user, pwd] = atob(authValue).split(':');
+
+      if (pwd === 'osm') {
+        return response;
+      }
+    }
+
+    url.pathname = '/api/auth';
+    return new NextResponse('Auth Required', {
+      status: 401,
+      headers: {
+        'WWW-Authenticate': 'Basic realm="Secure Area"',
+      },
+    });
+  }
 
   return response;
 }

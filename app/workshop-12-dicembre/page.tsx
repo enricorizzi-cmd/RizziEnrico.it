@@ -45,8 +45,8 @@ export default function WorkshopPage() {
     if (submitSuccess && successRef.current) {
       // Piccolo delay per permettere il rendering
       setTimeout(() => {
-        successRef.current?.scrollIntoView({ 
-          behavior: 'smooth', 
+        successRef.current?.scrollIntoView({
+          behavior: 'smooth',
           block: 'start',
           inline: 'nearest'
         });
@@ -172,7 +172,7 @@ export default function WorkshopPage() {
             <div className="inline-block mb-6 animate-fade-in-down">
               <span className="px-6 py-3 bg-white/80 backdrop-blur-sm text-purple-700 rounded-full text-sm font-semibold shadow-lg border border-purple-200/50 hover:scale-105 transition-transform duration-300 inline-flex items-center gap-2">
                 <span className="animate-pulse">🎯</span>
-                Workshop Esclusivo OSM
+                AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 font-heading animate-fade-in-up">

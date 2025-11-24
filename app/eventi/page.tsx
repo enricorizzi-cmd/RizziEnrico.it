@@ -292,7 +292,7 @@ export default function EventiPage() {
                       </Card>
                       {isHighlighted && (
                         <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4 text-center">
-                          <p className="font-bold text-lg mb-2">🎯 Workshop Esclusivo OSM</p>
+                          <p className="font-bold text-lg mb-2">🎯 AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi</p>
                           <a
                             href={event.externalUrl}
                             className="inline-block bg-white text-purple-600 font-bold py-2 px-6 rounded-lg hover:bg-purple-50 transition-colors"
