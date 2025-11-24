@@ -222,3 +222,4 @@ colli_identificati: colliIdentificati, // Array top 3
 **Verificato da:** AI Assistant  
 **Conclusione:** Sistema completo, allineato e pronto per l'uso.
 
+

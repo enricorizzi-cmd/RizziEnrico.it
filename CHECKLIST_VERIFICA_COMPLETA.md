@@ -229,3 +229,4 @@ AND (indexname LIKE '%profilazione%' OR indexname LIKE '%colli%' OR indexname LI
 **Data Creazione:** 2025-11-23  
 **Ultimo Aggiornamento:** 2025-11-23
 
+

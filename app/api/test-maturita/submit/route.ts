@@ -18,48 +18,94 @@ export async function POST(request: NextRequest) {
 
     const supabase = createServerClient();
 
+    // Prepara dati per il salvataggio
+    const insertData = {
+      nome: validatedData.nome,
+      cognome: validatedData.cognome,
+      email: validatedData.email,
+      azienda: validatedData.azienda,
+      risposte: validatedData.risposte,
+      punteggio_totale: body.punteggio_totale || 0,
+      punteggio_per_categoria: body.punteggio_per_categoria || {},
+      livello_maturita: body.livello_maturita || 'Iniziale',
+      livello_description: body.livello_description || null,
+      percentage: body.percentage || null,
+      // Campi premium v2.0
+      profilazione: body.profilazione || null,
+      colli_bottiglia: body.colli_identificati || body.colli_bottiglia || null, // Salva array top 3 colli
+      collo_bottiglia_primario: body.collo_bottiglia_primario || null,
+      capacita_crescita: body.capacita_crescita || null,
+      diagnosi: body.diagnosi || null,
+      priorita_azione: body.priorita_azione || null,
+      roadmap_scalabilita: body.roadmap_scalabilita || null,
+      investimento_suggerito: body.investimento_suggerito || null,
+      benchmark: body.benchmark || null,
+      roadmap_pilastri: body.roadmap_pilastri || null,
+      risorse_bonus: body.risorse_bonus || null,
+      next_steps: body.next_steps || null,
+      // Campi legacy (per retrocompatibilità)
+      quick_wins: body.quick_wins || null,
+      piano_30_60_90: body.piano_30_60_90 || null,
+      roi_stimato: body.roi_stimato || null,
+      raccomandazioni: body.raccomandazioni || [],
+    };
+
+    // Log dimensioni dati per debug
+    const dataSize = JSON.stringify(insertData).length;
+    console.log('[TEST] 📊 Tentativo salvataggio test:', {
+      email: validatedData.email,
+      nome: validatedData.nome,
+      cognome: validatedData.cognome,
+      dataSize: `${(dataSize / 1024).toFixed(2)} KB`,
+      timestamp: new Date().toISOString(),
+    });
+
     const { data, error } = await supabase
       .from('test_maturita_digitale')
-      .insert({
-        nome: validatedData.nome,
-        cognome: validatedData.cognome,
-        email: validatedData.email,
-        azienda: validatedData.azienda,
-        risposte: validatedData.risposte,
-        punteggio_totale: body.punteggio_totale || 0,
-        punteggio_per_categoria: body.punteggio_per_categoria || {},
-        livello_maturita: body.livello_maturita || 'Iniziale',
-        livello_description: body.livello_description || null,
-        percentage: body.percentage || null,
-        // Campi premium v2.0
-        profilazione: body.profilazione || null,
-        colli_bottiglia: body.colli_identificati || body.colli_bottiglia || null, // Salva array top 3 colli
-        collo_bottiglia_primario: body.collo_bottiglia_primario || null,
-        capacita_crescita: body.capacita_crescita || null,
-        diagnosi: body.diagnosi || null,
-        priorita_azione: body.priorita_azione || null,
-        roadmap_scalabilita: body.roadmap_scalabilita || null,
-        investimento_suggerito: body.investimento_suggerito || null,
-        benchmark: body.benchmark || null,
-        roadmap_pilastri: body.roadmap_pilastri || null,
-        risorse_bonus: body.risorse_bonus || null,
-        next_steps: body.next_steps || null,
-        // Campi legacy (per retrocompatibilità)
-        quick_wins: body.quick_wins || null,
-        piano_30_60_90: body.piano_30_60_90 || null,
-        roi_stimato: body.roi_stimato || null,
-        raccomandazioni: body.raccomandazioni || [],
-      })
+      .insert(insertData)
       .select()
       .single();
 
     if (error) {
-      console.error('Supabase error:', error);
+      console.error('[TEST] ❌ Errore Supabase durante salvataggio:', {
+        error: error,
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+        code: error.code,
+        email: validatedData.email,
+        nome: validatedData.nome,
+        cognome: validatedData.cognome,
+        dataSize: `${(dataSize / 1024).toFixed(2)} KB`,
+        timestamp: new Date().toISOString(),
+      });
+      
+      // Log dimensioni campi JSONB per identificare problemi
+      if (body.profilazione) {
+        console.error('[TEST] Dimensione profilazione:', JSON.stringify(body.profilazione).length, 'bytes');
+      }
+      if (body.roadmap_scalabilita) {
+        console.error('[TEST] Dimensione roadmap_scalabilita:', JSON.stringify(body.roadmap_scalabilita).length, 'bytes');
+      }
+      if (body.roadmap_pilastri) {
+        console.error('[TEST] Dimensione roadmap_pilastri:', JSON.stringify(body.roadmap_pilastri).length, 'bytes');
+      }
+      
       return NextResponse.json(
-        { error: 'Errore nel salvataggio' },
+        { 
+          error: 'Errore nel salvataggio',
+          details: error.message || 'Errore sconosciuto',
+          code: error.code,
+        },
         { status: 500 }
       );
     }
+
+    console.log('[TEST] ✅ Test salvato con successo:', {
+      id: data.id,
+      email: validatedData.email,
+      timestamp: new Date().toISOString(),
+    });
 
     // Prepara dati email
     const percentage = body.percentage || 0;
@@ -75,13 +121,29 @@ export async function POST(request: NextRequest) {
     // Preparazione allegati
     const attachments = [];
     if (radarChartImage) {
-      const base64Data = radarChartImage.replace(/^data:\/image\/png;base64,/, "");
-      attachments.push({
-        filename: 'radar-chart.png',
-        content: base64Data,
-        encoding: 'base64',
-        cid: 'radar-chart-image'
-      });
+      // Estrai base64 e rimuovi eventuali spazi/newline che potrebbero corrompere l'immagine
+      let base64Data = radarChartImage.replace(/^data:\/image\/png;base64,/, "");
+      base64Data = base64Data.replace(/\s/g, ""); // Rimuovi tutti gli spazi/newline
+      
+      // Valida che il base64 sia valido
+      if (base64Data && base64Data.length > 0) {
+        attachments.push({
+          filename: 'radar-chart.png',
+          content: base64Data,
+          encoding: 'base64',
+          contentType: 'image/png', // Content-type esplicito
+          cid: 'radar-chart-image' // CID per riferimento inline nell'HTML
+        });
+        
+        console.log('[TEST] 📎 Allegato radar chart preparato:', {
+          filename: 'radar-chart.png',
+          size: `${(base64Data.length * 3 / 4 / 1024).toFixed(2)} KB`, // Dimensione approssimativa
+          hasContent: !!base64Data,
+          timestamp: new Date().toISOString(),
+        });
+      } else {
+        console.warn('[TEST] ⚠️ Base64 radar chart vuoto o non valido, allegato non aggiunto');
+      }
     }
 
     // Email con risultati all'utente - TEMPLATE PREMIUM COMPATTO (70%)
@@ -247,6 +309,12 @@ A presto,
 Enrico Rizzi`;
 
     // Invia email in modo asincrono (non bloccare la risposta)
+    console.log('[TEST] 📧 Preparazione invio email risultato:', {
+      to: validatedData.email,
+      testId: data.id,
+      timestamp: new Date().toISOString(),
+    });
+
     Promise.all([
       validatedData.email ? sendEmail({
         to: validatedData.email,
@@ -254,8 +322,81 @@ Enrico Rizzi`;
         html: userEmailHtml,
         text: userEmailText,
         attachments: attachments
-      }).catch((err) => {
-        console.error('[TEST] Errore invio email utente (non bloccante):', err);
+      }).then(async (success) => {
+        if (success) {
+          console.log('[TEST] ✅ Email risultato inviata con successo:', {
+            to: validatedData.email,
+            testId: data.id,
+            timestamp: new Date().toISOString(),
+          });
+
+          // Aggiorna metadata per tracciare email inviata
+          const { data: currentTest } = await supabase
+            .from('test_maturita_digitale')
+            .select('metadata')
+            .eq('id', data.id)
+            .single();
+
+          if (currentTest) {
+            const metadata = (currentTest.metadata as any) || {};
+            metadata.email_risultato_sent = new Date().toISOString();
+            await supabase
+              .from('test_maturita_digitale')
+              .update({ metadata })
+              .eq('id', data.id);
+          }
+        } else {
+          console.error('[TEST] ❌ Email risultato NON inviata (sendEmail ha ritornato false):', {
+            to: validatedData.email,
+            testId: data.id,
+            timestamp: new Date().toISOString(),
+          });
+
+          // Traccia anche i fallimenti
+          const { data: currentTest } = await supabase
+            .from('test_maturita_digitale')
+            .select('metadata')
+            .eq('id', data.id)
+            .single();
+
+          if (currentTest) {
+            const metadata = (currentTest.metadata as any) || {};
+            metadata.email_risultato_failed = new Date().toISOString();
+            await supabase
+              .from('test_maturita_digitale')
+              .update({ metadata })
+              .eq('id', data.id);
+          }
+        }
+        return success;
+      }).catch(async (err) => {
+        console.error('[TEST] ❌ Errore invio email utente (non bloccante):', {
+          error: err,
+          message: err?.message,
+          to: validatedData.email,
+          testId: data.id,
+          timestamp: new Date().toISOString(),
+        });
+
+        // Traccia errori nel database
+        const { data: currentTest } = await supabase
+          .from('test_maturita_digitale')
+          .select('metadata')
+          .eq('id', data.id)
+          .single();
+
+        if (currentTest) {
+          const metadata = (currentTest.metadata as any) || {};
+          metadata.email_risultato_error = {
+            timestamp: new Date().toISOString(),
+            message: err?.message || 'Unknown error',
+          };
+          await supabase
+            .from('test_maturita_digitale')
+            .update({ metadata })
+            .eq('id', data.id);
+        }
+
         return false;
       }) : Promise.resolve(true),
       new Promise(resolve => setTimeout(resolve, 500)).then(() => {
