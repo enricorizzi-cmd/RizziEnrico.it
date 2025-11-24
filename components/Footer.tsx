@@ -185,6 +185,7 @@ export default function Footer() {
                 href="https://www.rizzienrico.it/admin/workshop" 
                 className="text-xs text-gray-400 hover:text-gray-300 transition-colors"
                 title="Area Riservata"
+                prefetch={false}
               >
                 Area Riservata
               </Link>

@@ -62,8 +62,8 @@ export const testMaturitaSchema = z.object({
   nome: z.string().min(2).optional(),
   cognome: z.string().min(2).optional(),
   email: z.string().email().optional(),
-  telefono: z.string().min(10).max(20).optional(),
-  azienda: z.string().min(2).optional(),
+  telefono: z.string().min(10, 'Telefono deve contenere almeno 10 caratteri').max(20, 'Telefono troppo lungo'),
+  azienda: z.string().min(2, 'Nome azienda richiesto (minimo 2 caratteri)').max(100, 'Nome azienda troppo lungo'),
   risposte: z.record(z.string(), z.any()),
 });
 

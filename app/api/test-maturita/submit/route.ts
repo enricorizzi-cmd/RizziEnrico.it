@@ -89,9 +89,18 @@ export async function POST(request: NextRequest) {
     // Funzione per salvataggio con retry
     const saveWithRetry = async (dataToSave: any, retries = 3): Promise<{ data: any; error: any }> => {
       for (let attempt = 1; attempt <= retries; attempt++) {
+        // Se l'errore precedente era PGRST204 (colonna non trovata), rimuovi telefono e riprova
+        let dataToInsert = { ...dataToSave };
+        if (attempt > 1 && dataToSave.telefono !== undefined) {
+          // Se è il secondo tentativo e c'è stato un errore di colonna, prova senza telefono
+          const { telefono, ...dataWithoutTelefono } = dataToInsert;
+          dataToInsert = dataWithoutTelefono;
+          console.warn('[TEST] ⚠️ Tentativo senza colonna telefono (fallback per retrocompatibilità)');
+        }
+
         const { data, error } = await supabase
           .from('test_maturita_digitale')
-          .insert(dataToSave)
+          .insert(dataToInsert)
           .select()
           .single();
 
@@ -99,10 +108,20 @@ export async function POST(request: NextRequest) {
           return { data, error: null };
         }
 
+        // Se l'errore è PGRST204 (colonna non trovata) e stiamo ancora usando telefono, rimuovilo al prossimo tentativo
+        if (error.code === 'PGRST204' && error.message?.includes('telefono') && attempt < retries) {
+          console.warn('[TEST] ⚠️ Colonna telefono non trovata, rimuovo dal prossimo tentativo');
+          const { telefono, ...dataWithoutTelefono } = dataToSave;
+          dataToSave = dataWithoutTelefono;
+        }
+
         // Se non è l'ultimo tentativo, aspetta prima di riprovare
         if (attempt < retries) {
           const delay = attempt * 1000; // Backoff esponenziale: 1s, 2s, 3s
-          console.warn(`[TEST] ⚠️ Tentativo ${attempt}/${retries} fallito, retry tra ${delay}ms...`);
+          console.warn(`[TEST] ⚠️ Tentativo ${attempt}/${retries} fallito, retry tra ${delay}ms...`, {
+            errorCode: error?.code,
+            errorMessage: error?.message,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
         } else {
           return { data: null, error };
