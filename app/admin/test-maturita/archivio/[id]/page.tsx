@@ -240,18 +240,16 @@ export default function DettaglioTestPage() {
                             <div className="space-y-4">
                                 {test.colli_bottiglia && Array.isArray(test.colli_bottiglia) && test.colli_bottiglia.length > 0 ? (
                                     test.colli_bottiglia.map((collo: any, idx: number) => (
-                                        <div key={idx} className={`p-4 rounded-lg border-l-4 ${
-                                            collo.severity === 'CRITICO' ? 'bg-red-50 border-red-500' :
+                                        <div key={idx} className={`p-4 rounded-lg border-l-4 ${collo.severity === 'CRITICO' ? 'bg-red-50 border-red-500' :
                                             collo.severity === 'ALTO' ? 'bg-orange-50 border-orange-500' :
-                                            'bg-yellow-50 border-yellow-500'
-                                        }`}>
+                                                'bg-yellow-50 border-yellow-500'
+                                            }`}>
                                             <div className="flex items-center gap-2 mb-2">
                                                 <span className="text-lg font-bold text-gray-700">#{idx + 1}</span>
-                                                <span className={`text-xs font-bold px-2 py-1 rounded-full ${
-                                                    collo.severity === 'CRITICO' ? 'bg-red-600 text-white' :
+                                                <span className={`text-xs font-bold px-2 py-1 rounded-full ${collo.severity === 'CRITICO' ? 'bg-red-600 text-white' :
                                                     collo.severity === 'ALTO' ? 'bg-orange-600 text-white' :
-                                                    'bg-yellow-600 text-white'
-                                                }`}>
+                                                        'bg-yellow-600 text-white'
+                                                    }`}>
                                                     {collo.severity}
                                                 </span>
                                             </div>
@@ -274,21 +272,79 @@ export default function DettaglioTestPage() {
 
                     {/* Colonna Destra: Radar e Dettagli */}
                     <div className="lg:col-span-2 space-y-8">
-                        {/* Radar Chart */}
-                        <div className="bg-white rounded-xl shadow-sm p-6">
-                            <h3 className="text-lg font-bold mb-6 text-center">Analisi Radar</h3>
-                            <div className="w-full h-[400px]">
+                        {/* Radar Chart PREMIUM - Allineato con output utente */}
+                        <div className="bg-white rounded-xl shadow-xl p-8">
+                            <h3 className="text-2xl font-bold mb-2 font-heading text-center text-purple-800">📊 Analisi Radar - 7 Pilastri</h3>
+                            <p className="text-center text-gray-600 mb-6">Confronto tra il tuo score, la media di settore e il top 10%</p>
+
+                            <div className="w-full bg-white p-4 rounded-xl" style={{ height: '500px' }}>
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
-                                        <PolarGrid stroke="#e5e7eb" />
-                                        <PolarAngleAxis dataKey="area" tick={{ fill: '#374151', fontSize: 12 }} />
-                                        <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} />
-                                        <Radar name="Tuo Score" dataKey="tuo" stroke="#8b5cf6" fill="#8b5cf6" fillOpacity={0.6} />
-                                        <Radar name="Media Settore" dataKey="media" stroke="#3b82f6" strokeDasharray="4 4" fill="transparent" />
-                                        <Radar name="Top 10%" dataKey="top10" stroke="#10b981" strokeDasharray="4 4" fill="transparent" />
-                                        <Legend />
+                                    <RadarChart data={radarData}>
+                                        <PolarGrid stroke="#e5e7eb" strokeWidth={1} />
+                                        <PolarAngleAxis
+                                            dataKey="area"
+                                            tick={{ fill: '#374151', fontSize: 12, fontWeight: 600 }}
+                                            tickLine={false}
+                                        />
+                                        <PolarRadiusAxis
+                                            angle={90}
+                                            domain={[0, 100]}
+                                            tick={{ fill: '#9ca3af', fontSize: 11 }}
+                                            tickCount={6}
+                                        />
+
+                                        {/* Top 10% - Verde */}
+                                        <Radar
+                                            name="Top 10%"
+                                            dataKey="top10"
+                                            stroke="#10b981"
+                                            fill="transparent"
+                                            strokeWidth={2}
+                                            strokeDasharray="3 3"
+                                        />
+
+                                        {/* Media Settore - Blu */}
+                                        <Radar
+                                            name="Media Settore"
+                                            dataKey="media"
+                                            stroke="#60a5fa"
+                                            fill="transparent"
+                                            strokeWidth={2}
+                                            strokeDasharray="5 5"
+                                        />
+
+                                        {/* Il Tuo Score - Viola */}
+                                        <Radar
+                                            name="Tuo Score"
+                                            dataKey="tuo"
+                                            stroke="#8b5cf6"
+                                            fill="#8b5cf6"
+                                            fillOpacity={0.25}
+                                            strokeWidth={3}
+                                        />
+
+                                        <Legend
+                                            wrapperStyle={{ paddingTop: 10 }}
+                                            iconType="line"
+                                        />
                                     </RadarChart>
                                 </ResponsiveContainer>
+                            </div>
+
+                            {/* Stats cards sotto al radar - come user view */}
+                            <div className="mt-6 grid grid-cols-3 gap-4 text-center">
+                                <div className="bg-purple-50 p-3 rounded-lg">
+                                    <div className="text-sm text-gray-600 mb-1">Il Tuo Score</div>
+                                    <div className="text-2xl font-bold text-purple-600">{test.percentage?.toFixed(0) || 0}%</div>
+                                </div>
+                                <div className="bg-blue-50 p-3 rounded-lg">
+                                    <div className="text-sm text-gray-600 mb-1">Media {test.profilazione?.settore || 'Settore'}</div>
+                                    <div className="text-2xl font-bold text-blue-600">~52%</div>
+                                </div>
+                                <div className="bg-green-50 p-3 rounded-lg">
+                                    <div className="text-sm text-gray-600 mb-1">Top 10%</div>
+                                    <div className="text-2xl font-bold text-green-600">~78%</div>
+                                </div>
                             </div>
                         </div>
 
@@ -441,15 +497,14 @@ export default function DettaglioTestPage() {
 
                         {/* 4. INVESTIMENTO SUGGERITO */}
                         {test.investimento_suggerito && (
-                            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-lg p-8 mb-8 border-2 border-blue-300">
-                                <h3 className="text-2xl font-bold mb-6 font-heading text-blue-800">💰 Investimento Suggerito</h3>
+                            <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl shadow-lg p-8 mb-8 border-2 border-purple-300">
+                                <h3 className="text-2xl font-bold mb-6 font-heading text-purple-800">💰 Investimento e Rientro Stimato</h3>
                                 <div className="bg-white rounded-lg p-6">
                                     <div className="mb-4">
-                                        <span className={`inline-block px-3 py-1 rounded-full text-sm font-bold ${
-                                            test.investimento_suggerito.livello === 'MEDIO-ALTO' ? 'bg-orange-600 text-white' :
+                                        <span className={`inline-block px-3 py-1 rounded-full text-sm font-bold ${test.investimento_suggerito.livello === 'MEDIO-ALTO' ? 'bg-orange-600 text-white' :
                                             test.investimento_suggerito.livello === 'MEDIO' ? 'bg-yellow-600 text-white' :
-                                            'bg-green-600 text-white'
-                                        }`}>
+                                                'bg-green-600 text-white'
+                                            }`}>
                                             {test.investimento_suggerito.livello}
                                         </span>
                                     </div>

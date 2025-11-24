@@ -1583,7 +1583,7 @@ export default function TestMaturitaDigitalePage() {
           {/* RADAR CHART PREMIUM - Analisi 6 Pilastri */}
           <div className="max-w-3xl mx-auto mb-8">
             <div className="bg-white rounded-xl shadow-xl p-8">
-              <h3 className="text-2xl font-bold mb-2 font-heading text-center text-purple-800">📊 Analisi Radar - 6 Pilastri</h3>
+              <h3 className="text-2xl font-bold mb-2 font-heading text-center text-purple-800">📊 Analisi Radar - 7 Pilastri</h3>
               <p className="text-center text-gray-600 mb-6">Confronto tra il tuo score, la media di settore e il top 10%</p>
 
               <div ref={chartRef} className="w-full bg-white p-4 rounded-xl" style={{ height: '500px' }}>
@@ -1697,10 +1697,10 @@ export default function TestMaturitaDigitalePage() {
                     <div
                       key={idx}
                       className={`rounded-lg p-5 border-l-4 ${collo.severity === 'CRITICO'
-                          ? 'bg-red-50 border-red-500'
-                          : collo.severity === 'ALTO'
-                            ? 'bg-orange-50 border-orange-500'
-                            : 'bg-yellow-50 border-yellow-500'
+                        ? 'bg-red-50 border-red-500'
+                        : collo.severity === 'ALTO'
+                          ? 'bg-orange-50 border-orange-500'
+                          : 'bg-yellow-50 border-yellow-500'
                         }`}
                     >
                       <div className="flex items-start justify-between mb-2">
@@ -1708,10 +1708,10 @@ export default function TestMaturitaDigitalePage() {
                           <span className="text-xl font-bold text-gray-700">#{idx + 1}</span>
                           <span
                             className={`px-2 py-0.5 rounded-full text-xs font-bold ${collo.severity === 'CRITICO'
-                                ? 'bg-red-600 text-white'
-                                : collo.severity === 'ALTO'
-                                  ? 'bg-orange-600 text-white'
-                                  : 'bg-yellow-600 text-white'
+                              ? 'bg-red-600 text-white'
+                              : collo.severity === 'ALTO'
+                                ? 'bg-orange-600 text-white'
+                                : 'bg-yellow-600 text-white'
                               }`}
                           >
                             {collo.severity}
