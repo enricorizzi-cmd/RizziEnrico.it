@@ -72,13 +72,21 @@ export default function DigitalizzazionePMIPage() {
                 </div>
               ))}
             </div>
-            <div className="text-center">
+            <div className="text-center space-y-4">
               <CTA href="/contatti" variant="primary" size="large">
                 Prenota un Check-up Digitale Gratuito
               </CTA>
-              <p className="text-sm text-[var(--color-subtext)] mt-3">
+              <p className="text-sm text-[var(--color-subtext)]">
                 60' per capire da dove partire con la digitalizzazione della tua PMI.
               </p>
+              <div className="pt-4 border-t border-[var(--color-line)]">
+                <CTA href="/test-maturita-digitale" variant="secondary" size="base">
+                  📊 Compila il Test di Maturità Digitale
+                </CTA>
+                <p className="text-sm text-[var(--color-subtext)] mt-2">
+                  Scopri il tuo livello di digitalizzazione in 5 minuti
+                </p>
+              </div>
             </div>
           </div>
         </div>

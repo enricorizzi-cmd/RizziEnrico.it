@@ -180,7 +180,16 @@ export default function Footer() {
                 </a>
               </div>
             </div>
-            <div className="mt-6 pt-6 border-t border-gray-600 space-y-2 text-xs text-gray-400">
+            <div className="mt-4 pt-4 border-t border-gray-600">
+              <Link 
+                href="https://www.rizzienrico.it/admin/workshop" 
+                className="text-xs text-gray-400 hover:text-gray-300 transition-colors"
+                title="Area Riservata"
+              >
+                Area Riservata
+              </Link>
+            </div>
+            <div className="pt-4 border-t border-gray-600 space-y-2 text-xs text-gray-400">
               <Link href="/privacy" className="block hover:text-gray-300 transition-colors" title="Privacy Policy del sito">
                 Privacy Policy
               </Link>
