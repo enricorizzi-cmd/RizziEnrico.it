@@ -135,12 +135,95 @@ export default function DettaglioTestPage() {
     return (
         <div className="min-h-screen bg-gray-50 p-8">
             <div className="max-w-7xl mx-auto">
-                <div className="flex justify-between items-center mb-8">
-                    <p><span className="font-semibold">Email:</span> {test.email}</p>
-                    <p><span className="font-semibold">Azienda:</span> {test.azienda}</p>
-                    <p><span className="font-semibold">Data:</span> {new Date(test.created_at).toLocaleString()}</p>
-                    <p><span className="font-semibold">Settore:</span> {test.profilazione?.settore || '-'}</p>
-                    <p><span className="font-semibold">Ruolo:</span> {test.profilazione?.ruolo || '-'}</p>
+                {/* Header con link indietro */}
+                <div className="mb-6">
+                    <Link href="/admin/test-maturita/archivio" className="text-purple-600 hover:text-purple-900 font-medium inline-flex items-center gap-2">
+                        ← Torna all'Archivio
+                    </Link>
+                </div>
+
+                {/* Riquadro Dati Utente Completo */}
+                <div className="bg-gradient-to-br from-white to-purple-50 rounded-xl shadow-lg p-6 mb-8 border-2 border-purple-200">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        <span className="text-3xl">👤</span>
+                        Dati Utente Completi
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {/* Informazioni Base */}
+                        <div className="space-y-3">
+                            <h3 className="font-bold text-gray-700 text-sm uppercase tracking-wide mb-3">Informazioni Base</h3>
+                            <div className="space-y-2">
+                                <div>
+                                    <span className="text-xs text-gray-500 font-semibold">Nome Completo</span>
+                                    <p className="text-gray-900 font-medium">{test.nome} {test.cognome}</p>
+                                </div>
+                                <div>
+                                    <span className="text-xs text-gray-500 font-semibold">Email</span>
+                                    <p className="text-gray-900 font-medium break-all">{test.email}</p>
+                                </div>
+                                <div>
+                                    <span className="text-xs text-gray-500 font-semibold">Azienda</span>
+                                    <p className="text-gray-900 font-medium">{test.azienda || '-'}</p>
+                                </div>
+                                <div>
+                                    <span className="text-xs text-gray-500 font-semibold">Data Test</span>
+                                    <p className="text-gray-900 font-medium">{new Date(test.created_at).toLocaleString('it-IT', {
+                                        day: '2-digit',
+                                        month: 'long',
+                                        year: 'numeric',
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    })}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Profilazione Aziendale */}
+                        <div className="space-y-3">
+                            <h3 className="font-bold text-gray-700 text-sm uppercase tracking-wide mb-3">Profilazione Aziendale</h3>
+                            <div className="space-y-2">
+                                <div>
+                                    <span className="text-xs text-gray-500 font-semibold">Ruolo</span>
+                                    <p className="text-gray-900 font-medium">{test.profilazione?.ruolo || '-'}</p>
+                                </div>
+                                <div>
+                                    <span className="text-xs text-gray-500 font-semibold">Settore</span>
+                                    <p className="text-gray-900 font-medium">{test.profilazione?.settore || '-'}</p>
+                                </div>
+                                <div>
+                                    <span className="text-xs text-gray-500 font-semibold">Collaboratori</span>
+                                    <p className="text-gray-900 font-medium">{test.profilazione?.collaboratori || '-'}</p>
+                                </div>
+                                <div>
+                                    <span className="text-xs text-gray-500 font-semibold">Età Azienda</span>
+                                    <p className="text-gray-900 font-medium">{test.profilazione?.eta_azienda || '-'}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Obiettivi e Tempo */}
+                        <div className="space-y-3">
+                            <h3 className="font-bold text-gray-700 text-sm uppercase tracking-wide mb-3">Obiettivi & Tempo</h3>
+                            <div className="space-y-2">
+                                <div>
+                                    <span className="text-xs text-gray-500 font-semibold">Obiettivo 12 Mesi</span>
+                                    <p className="text-gray-900 font-medium">{test.profilazione?.obiettivo_12_mesi || '-'}</p>
+                                </div>
+                                <div>
+                                    <span className="text-xs text-gray-500 font-semibold">Tempo Ripetitivo/Settimana</span>
+                                    <p className="text-gray-900 font-medium">{test.profilazione?.tempo_ripetitivo || '-'}</p>
+                                </div>
+                                <div>
+                                    <span className="text-xs text-gray-500 font-semibold">Score Totale</span>
+                                    <p className="text-2xl font-bold text-purple-600">{test.percentage ? test.percentage.toFixed(1) : 0}%</p>
+                                </div>
+                                <div>
+                                    <span className="text-xs text-gray-500 font-semibold">Livello Maturità</span>
+                                    <p className="text-lg font-bold text-gray-900">{test.livello_maturita || '-'}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Colonna Sinistra: Info e Score */}
@@ -151,20 +234,37 @@ export default function DettaglioTestPage() {
                             <div className="text-xl font-semibold text-gray-700">{test.livello_maturita}</div>
                         </div>
 
-                        {/* Colli di Bottiglia */}
+                        {/* Colli di Bottiglia - Top 3 */}
                         <div className="bg-white rounded-xl shadow-sm p-6">
-                            <h3 className="text-lg font-bold mb-4 text-red-600">🚫 Colli di Bottiglia</h3>
+                            <h3 className="text-lg font-bold mb-4 text-red-600">🚫 Top 3 Colli di Bottiglia</h3>
                             <div className="space-y-4">
-                                {test.colli_identificati && test.colli_identificati.length > 0 ? (
-                                    test.colli_identificati.map((collo: any, idx: number) => (
-                                        <div key={idx} className="bg-red-50 p-3 rounded-lg border border-red-100">
-                                            <div className="flex items-center gap-2 mb-1">
-                                                <span className="text-xs font-bold bg-red-200 text-red-800 px-2 py-0.5 rounded-full">{collo.severity}</span>
-                                                <span className="font-semibold text-red-900 text-sm">{collo.specifico}</span>
+                                {test.colli_bottiglia && Array.isArray(test.colli_bottiglia) && test.colli_bottiglia.length > 0 ? (
+                                    test.colli_bottiglia.map((collo: any, idx: number) => (
+                                        <div key={idx} className={`p-4 rounded-lg border-l-4 ${
+                                            collo.severity === 'CRITICO' ? 'bg-red-50 border-red-500' :
+                                            collo.severity === 'ALTO' ? 'bg-orange-50 border-orange-500' :
+                                            'bg-yellow-50 border-yellow-500'
+                                        }`}>
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <span className="text-lg font-bold text-gray-700">#{idx + 1}</span>
+                                                <span className={`text-xs font-bold px-2 py-1 rounded-full ${
+                                                    collo.severity === 'CRITICO' ? 'bg-red-600 text-white' :
+                                                    collo.severity === 'ALTO' ? 'bg-orange-600 text-white' :
+                                                    'bg-yellow-600 text-white'
+                                                }`}>
+                                                    {collo.severity}
+                                                </span>
                                             </div>
-                                            <p className="text-xs text-red-700">{collo.raccomandazioni?.[0]}</p>
+                                            <p className="font-semibold text-gray-900 mb-2">{collo.specifico || collo.nome}</p>
+                                            {collo.raccomandazioni && collo.raccomandazioni.length > 0 && (
+                                                <p className="text-xs text-gray-700">{collo.raccomandazioni[0]}</p>
+                                            )}
                                         </div>
                                     ))
+                                ) : test.collo_bottiglia_primario ? (
+                                    <div className="bg-red-50 p-3 rounded-lg border border-red-100">
+                                        <p className="font-semibold text-red-900 text-sm">{test.collo_bottiglia_primario}</p>
+                                    </div>
                                 ) : (
                                     <p className="text-sm text-gray-500">Nessun collo critico rilevato.</p>
                                 )}
@@ -339,18 +439,112 @@ export default function DettaglioTestPage() {
                             </div>
                         )}
 
-                        {/* Roadmap */}
+                        {/* 4. INVESTIMENTO SUGGERITO */}
+                        {test.investimento_suggerito && (
+                            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-lg p-8 mb-8 border-2 border-blue-300">
+                                <h3 className="text-2xl font-bold mb-6 font-heading text-blue-800">💰 Investimento Suggerito</h3>
+                                <div className="bg-white rounded-lg p-6">
+                                    <div className="mb-4">
+                                        <span className={`inline-block px-3 py-1 rounded-full text-sm font-bold ${
+                                            test.investimento_suggerito.livello === 'MEDIO-ALTO' ? 'bg-orange-600 text-white' :
+                                            test.investimento_suggerito.livello === 'MEDIO' ? 'bg-yellow-600 text-white' :
+                                            'bg-green-600 text-white'
+                                        }`}>
+                                            {test.investimento_suggerito.livello}
+                                        </span>
+                                    </div>
+                                    <p className="text-gray-800 mb-4">{test.investimento_suggerito.descrizione}</p>
+                                    <div className="grid md:grid-cols-2 gap-4">
+                                        <div>
+                                            <span className="text-sm font-semibold text-gray-600">Tempi di Rientro:</span>
+                                            <p className="text-gray-900 font-medium">{test.investimento_suggerito.tempi_rientro}</p>
+                                        </div>
+                                        {test.investimento_suggerito.note && (
+                                            <div>
+                                                <span className="text-sm font-semibold text-gray-600">Note:</span>
+                                                <p className="text-gray-900 font-medium">{test.investimento_suggerito.note}</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* 5. BENCHMARK SETTORE */}
+                        {test.benchmark && test.benchmark.settore && (
+                            <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl shadow-lg p-8 mb-8 border-2 border-indigo-300">
+                                <h3 className="text-2xl font-bold mb-6 font-heading text-indigo-800">📊 Benchmark Settore</h3>
+                                <div className="bg-white rounded-lg p-6">
+                                    <p className="text-gray-700 mb-4"><span className="font-semibold">Settore:</span> {test.benchmark.settore}</p>
+                                    {Object.entries(test.benchmark).map(([key, value]: [string, any]) => {
+                                        if (key === 'settore' || key === 'note') return null;
+                                        return (
+                                            <div key={key} className="mb-4 p-4 bg-gray-50 rounded-lg">
+                                                <h4 className="font-bold text-gray-900 mb-3">{key}</h4>
+                                                <div className="grid md:grid-cols-3 gap-4">
+                                                    <div className="bg-purple-50 p-3 rounded">
+                                                        <div className="text-xs text-gray-600 mb-1">Il Tuo</div>
+                                                        <div className="text-xl font-bold text-purple-700">{value.tuo || '-'}%</div>
+                                                    </div>
+                                                    <div className="bg-blue-50 p-3 rounded">
+                                                        <div className="text-xs text-gray-600 mb-1">Media Settore</div>
+                                                        <div className="text-xl font-bold text-blue-700">{value.media_settore || '-'}%</div>
+                                                    </div>
+                                                    <div className="bg-green-50 p-3 rounded">
+                                                        <div className="text-xs text-gray-600 mb-1">Top 10%</div>
+                                                        <div className="text-xl font-bold text-green-700">{value.top_10 || '-'}%</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                    {test.benchmark.note && (
+                                        <p className="text-sm text-gray-600 italic mt-4">{test.benchmark.note}</p>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Roadmap Scalabilità */}
                         {test.roadmap_scalabilita && test.roadmap_scalabilita.fase1 && (
-                            <div className="bg-white rounded-xl shadow-sm p-6">
-                                <h3 className="text-lg font-bold mb-4 text-green-700">🚀 Roadmap Scalabilità</h3>
-                                <div className="bg-green-50 p-4 rounded-lg border border-green-100">
-                                    <h4 className="font-bold text-green-800 mb-2">Fase 1: {test.roadmap_scalabilita.fase1.titolo}</h4>
-                                    <p className="text-sm text-green-700 mb-3">{test.roadmap_scalabilita.fase1.durata}</p>
-                                    <ul className="list-disc list-inside text-sm text-green-800 space-y-1">
-                                        {test.roadmap_scalabilita.fase1.azioni?.map((azione: string, idx: number) => (
-                                            <li key={idx}>{azione}</li>
-                                        ))}
-                                    </ul>
+                            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+                                <h3 className="text-2xl font-bold mb-6 font-heading text-green-700">🚀 Roadmap Scalabilità (3 Fasi)</h3>
+                                <div className="space-y-4">
+                                    {test.roadmap_scalabilita.capacita_attuale && (
+                                        <div className="bg-gray-50 p-4 rounded-lg mb-4">
+                                            <span className="font-semibold text-gray-700">Capacità Attuale:</span>
+                                            <p className="text-gray-900">{test.roadmap_scalabilita.capacita_attuale}</p>
+                                        </div>
+                                    )}
+                                    {['fase1', 'fase2', 'fase3'].map((fase) => {
+                                        const faseData = test.roadmap_scalabilita[fase];
+                                        if (!faseData) return null;
+                                        return (
+                                            <div key={fase} className="bg-green-50 p-6 rounded-lg border border-green-200">
+                                                <h4 className="font-bold text-green-800 mb-2 text-lg">{faseData.titolo}</h4>
+                                                <div className="grid md:grid-cols-2 gap-4 mb-3">
+                                                    <div>
+                                                        <span className="text-sm font-semibold text-gray-600">Durata:</span>
+                                                        <p className="text-gray-900 font-medium">{faseData.durata}</p>
+                                                    </div>
+                                                    <div>
+                                                        <span className="text-sm font-semibold text-gray-600">Target Crescita:</span>
+                                                        <p className="text-gray-900 font-medium">{faseData.target_crescita}</p>
+                                                    </div>
+                                                </div>
+                                                {faseData.azioni && faseData.azioni.length > 0 && (
+                                                    <div>
+                                                        <span className="text-sm font-semibold text-gray-700 mb-2 block">Azioni:</span>
+                                                        <ul className="list-disc list-inside text-sm text-gray-800 space-y-1">
+                                                            {faseData.azioni.map((azione: string, idx: number) => (
+                                                                <li key={idx}>{azione}</li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         )}
