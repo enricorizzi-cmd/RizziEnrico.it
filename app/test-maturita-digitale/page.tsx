@@ -86,7 +86,7 @@ const questions: Question[] = [
     domanda: 'Quanto tempo ci vuole per formare un nuovo collaboratore?',
     tipo: 'select',
     peso: 3,
-    opzioni: ['Meno di 1 settimana', '1-2 settimane', '2-4 settimane', '1-3 mesi', 'Oltre 3 mesi']
+    opzioni: ['Circa 3 mesi', 'Circa 6 mesi', 'Un anno', 'Un anno e mezzo', 'Due anni', 'Più di due anni']
   },
   { id: 'q11', categoria: 'Organizzazione & Processi', domanda: 'Le riunioni di team terminano sempre con un piano d\'azione chiaro?', tipo: 'si_no', peso: 2 },
   { id: 'q12', categoria: 'Organizzazione & Processi', domanda: 'Dedichi meno di 2 ore a settimana a coordinare il lavoro tra collaboratori?', tipo: 'si_no', peso: 3 },
@@ -153,7 +153,14 @@ const questions: Question[] = [
     peso: 4,
     opzioni: ['Nessuno', '1-5 lead', '6-15 lead', 'Oltre 15 lead']
   },
-  { id: 'q24', categoria: 'Acquisizione Clienti', domanda: 'Dedichi meno di 1 ora a settimana a creare contenuti marketing (post, email, materiali)?', tipo: 'si_no', peso: 2 },
+  {
+    id: 'q24',
+    categoria: 'Acquisizione Clienti',
+    domanda: 'Quanto tempo dedichi a settimana alla creazione di contenuti marketing (post, email, materiali)?',
+    tipo: 'select',
+    peso: 2,
+    opzioni: ['Non facciamo marketing', 'Meno di 1 ora (saltuario)', '1-4 ore (costante)', 'Oltre 4 ore (intensivo)']
+  },
   { id: 'q25', categoria: 'Acquisizione Clienti', domanda: 'Hai landing page dedicate per campagne specifiche?', tipo: 'si_no', peso: 2 },
   {
     id: 'q26',
@@ -293,7 +300,114 @@ const questions: Question[] = [
     peso: 2,
     opzioni: ['Tutto il team', 'Solo manager', 'Solo il titolare', 'Non abbiamo dashboard']
   },
+
+  // ===== SEZIONE 7: COMPETENZE & STRUMENTI (5 domande - NUOVA CATEGORIA) =====
+  {
+    id: 'q54',
+    categoria: 'Competenze & Strumenti',
+    domanda: 'Quanto tempo il tuo team dedica al data entry manuale (copiare dati da carta a PC o da un software all\'altro)?',
+    tipo: 'select',
+    peso: 4,
+    opzioni: ['Meno di 2 ore/settimana', '2-5 ore/settimana', '5-10 ore/settimana', 'Oltre 10 ore/settimana']
+  },
+  {
+    id: 'q55',
+    categoria: 'Competenze & Strumenti',
+    domanda: 'Come utilizzi principalmente Excel/Fogli di Calcolo in azienda?',
+    tipo: 'select',
+    peso: 3,
+    opzioni: ['Solo per analisi dati (corretto)', 'Come database clienti/ordini', 'Per gestire il magazzino', 'Per tutto (è il nostro gestionale)']
+  },
+  {
+    id: 'q56',
+    categoria: 'Competenze & Strumenti',
+    domanda: 'Come valuti l\'autonomia digitale dei tuoi collaboratori?',
+    tipo: 'select',
+    peso: 3,
+    opzioni: ['Sono autonomi ed esperti', 'Se la cavano ma chiedono aiuto', 'Hanno spesso difficoltà', 'Bassa competenza digitale']
+  },
+  {
+    id: 'q57',
+    categoria: 'Competenze & Strumenti',
+    domanda: 'Ogni quanto fai formazione su nuovi strumenti digitali o AI?',
+    tipo: 'select',
+    peso: 2,
+    opzioni: ['Mensilmente/Trimestralmente', 'Una volta l\'anno', 'Mai o quasi mai']
+  },
+  {
+    id: 'q58',
+    categoria: 'Competenze & Strumenti',
+    domanda: 'Gli strumenti informatici (PC, connessione, software) rallentano il lavoro quotidiano?',
+    tipo: 'select',
+    peso: 3,
+    opzioni: ['No, sono veloci e aggiornati', 'A volte, qualche rallentamento', 'Sì, spesso perdiamo tempo per problemi tecnici']
+  }
 ];
+
+const analizzaCompetenze = (answers: Record<string, any>) => {
+  let score = 0;
+  let severity = 'MEDIO';
+
+  // Q56: Autonomia digitale
+  const autonomia = answers['q56'];
+  if (autonomia === 'Bassa competenza digitale' || autonomia === 'Hanno spesso difficoltà') score += 4;
+  else if (autonomia === 'Se la cavano ma chiedono aiuto') score += 2;
+
+  // Q57: Formazione
+  const formazione = answers['q57'];
+  if (formazione === 'Mai o quasi mai') score += 3;
+  else if (formazione === 'Una volta l\'anno') score += 1;
+
+  // Q58: Hardware/Software
+  const hardware = answers['q58'];
+  if (hardware === 'Sì, spesso perdiamo tempo per problemi tecnici') score += 3;
+
+  if (score >= 8) severity = 'CRITICO';
+  else if (score >= 5) severity = 'ALTO';
+
+  return {
+    specifico: 'Gap Competenze Digitali',
+    score,
+    severity,
+    raccomandazioni: [
+      'Avviare piano formazione base strumenti digitali',
+      'Aggiornare hardware/software critico',
+      'Creare manuali operativi semplici'
+    ]
+  };
+};
+
+const analizzaEfficienzaStrumenti = (answers: Record<string, any>) => {
+  let score = 0;
+  let severity = 'MEDIO';
+
+  // Q54: Data Entry
+  const dataEntry = answers['q54'];
+  if (dataEntry === 'Oltre 10 ore/settimana') score += 5;
+  else if (dataEntry === '5-10 ore/settimana') score += 3;
+
+  // Q55: Uso Excel
+  const usoExcel = answers['q55'];
+  if (usoExcel === 'Per tutto (è il nostro gestionale)' || usoExcel === 'Come database clienti/ordini') score += 4;
+
+  // Q45: Integrazione (cross-check)
+  const integrazione = answers['q45'];
+  if (integrazione === 'No, nessuna integrazione') score += 2;
+
+  if (score >= 8) severity = 'CRITICO';
+  else if (score >= 5) severity = 'ALTO';
+
+  return {
+    specifico: 'Inefficienza Operativa & Data Entry',
+    score,
+    severity,
+    raccomandazioni: [
+      'Eliminare doppi inserimenti dati manuali',
+      'Adottare CRM/Gestionale vero (stop Excel improprio)',
+      'Integrare i sistemi principali'
+    ]
+  };
+};
 
 const QUESTIONS_PER_PAGE = 5;
 
@@ -397,9 +511,10 @@ export default function TestMaturitaDigitalePage() {
         const positiveAnswers = [
           'Sì, perfettamente',
           'Oltre 15 processi',
+          'Oltre 15 processi',
           '8-15 processi',
-          'Meno di 1 settimana',
-          '1-2 settimane',
+          'Circa 3 mesi',
+          'Circa 6 mesi',
           'Il team in autonomia',
           'Oltre il 60%',
           'Sì, completamente automatico',
@@ -419,13 +534,23 @@ export default function TestMaturitaDigitalePage() {
           'Sistema unico centralizzato',
           'Tutto il team',
           'Oltre 50',
-          '31-50'
+          '31-50',
+          // Nuove risposte positive per Competenze & Strumenti
+          'Meno di 2 ore/settimana',
+          'Solo per analisi dati (corretto)',
+          'Sono autonomi ed esperti',
+          'Mensilmente/Trimestralmente',
+          'Mensilmente/Trimestralmente',
+          'No, sono veloci e aggiornati',
+          // Nuove risposte positive Q24
+          '1-4 ore (costante)',
+          'Oltre 4 ore (intensivo)'
         ];
 
         if (positiveAnswers.some(pa => answer.includes(pa) || pa.includes(answer))) {
           scoresPerCategory[category] += q.peso;
           totalScore += q.peso;
-        } else if (answer.includes('Parzialmente') || answer.includes('qualche difficoltà') || answer.includes('Semi')) {
+        } else if (answer.includes('Parzialmente') || answer.includes('qualche difficoltà') || answer.includes('Semi') || answer.includes('Se la cavano')) {
           scoresPerCategory[category] += q.peso * 0.5;
           totalScore += q.peso * 0.5;
         }
@@ -441,6 +566,9 @@ export default function TestMaturitaDigitalePage() {
     const patternDipendenza = analizzaDipendenzaPersone(answers);
     const patternDati = analizzaOrganizzazioneDati(answers);
     const patternQualita = analizzaControlloQualita(answers);
+    // Nuovi pattern v2.0
+    const patternCompetenze = analizzaCompetenze(answers);
+    const patternEfficienza = analizzaEfficienzaStrumenti(answers);
 
     // Raccogli tutti i pattern con score >= 5
     const allPatterns = [
@@ -449,7 +577,9 @@ export default function TestMaturitaDigitalePage() {
       patternProcessi,
       patternDipendenza,
       patternDati,
-      patternQualita
+      patternQualita,
+      patternCompetenze,
+      patternEfficienza
     ].filter(p => p.score >= 5);
 
     // Ordina per severity e score
@@ -463,12 +593,10 @@ export default function TestMaturitaDigitalePage() {
     // Prendi top 3 colli identificati
     const colliIdentificati = allPatterns.slice(0, 3);
     const colloPrimario = colliIdentificati[0]?.specifico || 'Non identificato';
-
-    // 4. CALCOLA CAPACITÀ DI CRESCITA STIMATA (basata su colli reali)
-    let capacitaCrescita = '+100%+';
     const hasColliCritici = colliIdentificati.some(c => c.severity === 'CRITICO');
     const hasColliAlti = colliIdentificati.some(c => c.severity === 'ALTO');
 
+    let capacitaCrescita = '+100%'; // Default value
     if (hasColliCritici || colliIdentificati.length >= 3) {
       capacitaCrescita = '+30%';
     } else if (hasColliAlti || percentage < 40) {

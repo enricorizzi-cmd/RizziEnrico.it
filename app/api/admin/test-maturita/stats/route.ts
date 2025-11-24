@@ -83,14 +83,13 @@ export async function GET(request: NextRequest) {
       else scoreDistribution[4].count++;
     });
 
-    // Calcola massimo possibile per ogni categoria (basato sulle domande)
-    // Calcola massimo possibile per ogni categoria (basato sulle domande del Test Premium)
     const categoryMaxScores: Record<string, number> = {
-      "Organizzazione & Processi": 31,
-      "Acquisizione Clienti": 29,
-      "Gestione Clienti": 31,
-      "AI & Automazione": 25,
-      "Dati & Misurazione": 19,
+      'Organizzazione & Processi': 31,
+      'Acquisizione Clienti': 29,
+      'Gestione Clienti': 31,
+      'AI & Automazione': 25,
+      'Dati & Misurazione': 19,
+      'Competenze & Strumenti': 15
     };
 
     // Calcola medie per categoria (converti in percentuale)

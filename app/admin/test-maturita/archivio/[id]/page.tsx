@@ -27,7 +27,7 @@ const questions: Question[] = [
     { id: 'q7', categoria: 'Organizzazione & Processi', domanda: 'I tuoi collaboratori sanno sempre dove trovare procedure e documenti aziendali?', tipo: 'si_no', peso: 3 },
     { id: 'q8', categoria: 'Organizzazione & Processi', domanda: 'Hai processi documentati per le attività critiche dell\'azienda?', tipo: 'si_no', peso: 3 },
     { id: 'q9', categoria: 'Organizzazione & Processi', domanda: 'Quanti processi critici hai documentato in modo completo?', tipo: 'select', peso: 3, opzioni: ['Nessuno', '1-3 processi', '4-7 processi', '8-15 processi', 'Oltre 15 processi'] },
-    { id: 'q10', categoria: 'Organizzazione & Processi', domanda: 'Quanto tempo ci vuole per formare un nuovo collaboratore?', tipo: 'select', peso: 3, opzioni: ['Meno di 1 settimana', '1-2 settimane', '2-4 settimane', '1-3 mesi', 'Oltre 3 mesi'] },
+    { id: 'q10', categoria: 'Organizzazione & Processi', domanda: 'Quanto tempo ci vuole per formare un nuovo collaboratore?', tipo: 'select', peso: 3, opzioni: ['Circa 3 mesi', 'Circa 6 mesi', 'Un anno', 'Un anno e mezzo', 'Due anni', 'Più di due anni'] },
     { id: 'q11', categoria: 'Organizzazione & Processi', domanda: 'Le riunioni di team terminano sempre con un piano d\'azione chiaro?', tipo: 'si_no', peso: 2 },
     { id: 'q12', categoria: 'Organizzazione & Processi', domanda: 'Dedichi meno di 2 ore a settimana a coordinare il lavoro tra collaboratori?', tipo: 'si_no', peso: 3 },
     { id: 'q13', categoria: 'Organizzazione & Processi', domanda: 'Perdi meno di 2 ore alla settimana in attività ripetitive (mail standard, report, preventivi ripetitivi)?', tipo: 'si_no', peso: 3 },
@@ -43,7 +43,7 @@ const questions: Question[] = [
     { id: 'q21', categoria: 'Acquisizione Clienti', domanda: 'Che percentuale di lead riceve una risposta entro la prima ora?', tipo: 'select', peso: 4, opzioni: ['Meno del 10%', '10-30%', '30-60%', 'Oltre il 60%'] },
     { id: 'q22', categoria: 'Acquisizione Clienti', domanda: 'Hai un sistema automatico di reminder per follow-up dei lead?', tipo: 'select', peso: 3, opzioni: ['Sì, completamente automatico', 'Sì, semi-automatico', 'No, tutto manuale', 'No, non facciamo follow-up sistematico'] },
     { id: 'q23', categoria: 'Acquisizione Clienti', domanda: 'Nell\'ultimo mese, quanti lead hai perso per incapacità di gestirli o per lentezza?', tipo: 'select', peso: 4, opzioni: ['Nessuno', '1-5 lead', '6-15 lead', 'Oltre 15 lead'] },
-    { id: 'q24', categoria: 'Acquisizione Clienti', domanda: 'Dedichi meno di 1 ora a settimana a creare contenuti marketing (post, email, materiali)?', tipo: 'si_no', peso: 2 },
+    { id: 'q24', categoria: 'Acquisizione Clienti', domanda: 'Quanto tempo dedichi a settimana alla creazione di contenuti marketing (post, email, materiali)?', tipo: 'select', peso: 2, opzioni: ['Non facciamo marketing', 'Meno di 1 ora (saltuario)', '1-4 ore (costante)', 'Oltre 4 ore (intensivo)'] },
     { id: 'q25', categoria: 'Acquisizione Clienti', domanda: 'Hai landing page dedicate per campagne specifiche?', tipo: 'si_no', peso: 2 },
     { id: 'q26', categoria: 'Acquisizione Clienti', domanda: 'Hai un sistema di lead scoring o prioritizzazione dei contatti?', tipo: 'select', peso: 3, opzioni: ['Sì, automatico', 'Sì, manuale', 'No'] },
 
@@ -79,6 +79,13 @@ const questions: Question[] = [
     { id: 'q51', categoria: 'Dati & Misurazione', domanda: 'Quante ore a settimana dedichi a cercare informazioni, documenti o dati?', tipo: 'select', peso: 3, opzioni: ['Meno di 1 ora', '1-3 ore', '3-5 ore', '5-10 ore', 'Oltre 10 ore'] },
     { id: 'q52', categoria: 'Dati & Misurazione', domanda: 'Dove sono archiviate le informazioni aziendali critiche?', tipo: 'select', peso: 3, opzioni: ['Sistema unico centralizzato', '2-3 sistemi diversi', 'Sparse in molti posti'] },
     { id: 'q53', categoria: 'Dati & Misurazione', domanda: 'Chi ha accesso alla dashboard KPI dell\'azienda?', tipo: 'select', peso: 2, opzioni: ['Tutto il team', 'Solo manager', 'Solo il titolare', 'Non abbiamo dashboard'] },
+
+    // ===== SEZIONE 7: COMPETENZE & STRUMENTI =====
+    { id: 'q54', categoria: 'Competenze & Strumenti', domanda: 'Quanto tempo il tuo team dedica al data entry manuale (copiare dati da carta a PC o da un software all\'altro)?', tipo: 'select', peso: 4, opzioni: ['Meno di 2 ore/settimana', '2-5 ore/settimana', '5-10 ore/settimana', 'Oltre 10 ore/settimana'] },
+    { id: 'q55', categoria: 'Competenze & Strumenti', domanda: 'Come utilizzi principalmente Excel/Fogli di Calcolo in azienda?', tipo: 'select', peso: 3, opzioni: ['Solo per analisi dati (corretto)', 'Come database clienti/ordini', 'Per gestire il magazzino', 'Per tutto (è il nostro gestionale)'] },
+    { id: 'q56', categoria: 'Competenze & Strumenti', domanda: 'Come valuti l\'autonomia digitale dei tuoi collaboratori?', tipo: 'select', peso: 3, opzioni: ['Sono autonomi ed esperti', 'Se la cavano ma chiedono aiuto', 'Hanno spesso difficoltà', 'Bassa competenza digitale'] },
+    { id: 'q57', categoria: 'Competenze & Strumenti', domanda: 'Ogni quanto fai formazione su nuovi strumenti digitali o AI?', tipo: 'select', peso: 2, opzioni: ['Mensilmente/Trimestralmente', 'Una volta l\'anno', 'Mai o quasi mai'] },
+    { id: 'q58', categoria: 'Competenze & Strumenti', domanda: 'Gli strumenti informatici (PC, connessione, software) rallentano il lavoro quotidiano?', tipo: 'select', peso: 3, opzioni: ['No, sono veloci e aggiornati', 'A volte, qualche rallentamento', 'Sì, spesso perdiamo tempo per problemi tecnici'] },
 ];
 
 export default function DettaglioTestPage() {
@@ -129,26 +136,15 @@ export default function DettaglioTestPage() {
         <div className="min-h-screen bg-gray-50 p-8">
             <div className="max-w-7xl mx-auto">
                 <div className="flex justify-between items-center mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900">Dettaglio Test: {test.nome} {test.cognome}</h1>
-                    <Link href="/admin/test-maturita/archivio" className="text-gray-600 hover:text-gray-900">
-                        ← Torna all'Archivio
-                    </Link>
+                    <p><span className="font-semibold">Email:</span> {test.email}</p>
+                    <p><span className="font-semibold">Azienda:</span> {test.azienda}</p>
+                    <p><span className="font-semibold">Data:</span> {new Date(test.created_at).toLocaleString()}</p>
+                    <p><span className="font-semibold">Settore:</span> {test.profilazione?.settore || '-'}</p>
+                    <p><span className="font-semibold">Ruolo:</span> {test.profilazione?.ruolo || '-'}</p>
                 </div>
-
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Colonna Sinistra: Info e Score */}
                     <div className="lg:col-span-1 space-y-8">
-                        <div className="bg-white rounded-xl shadow-sm p-6">
-                            <h3 className="text-lg font-bold mb-4">Informazioni Contatto</h3>
-                            <div className="space-y-2 text-sm">
-                                <p><span className="font-semibold">Email:</span> {test.email}</p>
-                                <p><span className="font-semibold">Azienda:</span> {test.azienda}</p>
-                                <p><span className="font-semibold">Data:</span> {new Date(test.created_at).toLocaleString()}</p>
-                                <p><span className="font-semibold">Settore:</span> {test.profilazione?.settore || '-'}</p>
-                                <p><span className="font-semibold">Ruolo:</span> {test.profilazione?.ruolo || '-'}</p>
-                            </div>
-                        </div>
-
                         <div className="bg-white rounded-xl shadow-sm p-6 text-center">
                             <h3 className="text-lg font-bold mb-4">Score Totale</h3>
                             <div className="text-5xl font-bold text-purple-600 mb-2">{test.percentage ? test.percentage.toFixed(0) : 0}%</div>
@@ -319,6 +315,117 @@ export default function DettaglioTestPage() {
                                             <li key={idx}>{azione}</li>
                                         ))}
                                     </ul>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* 6. ROADMAP PILASTRI CON PRIORITÀ */}
+                        {test.roadmap_pilastri && test.roadmap_pilastri.length > 0 && (
+                            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+                                <h3 className="text-2xl font-bold mb-6 font-heading">🎯 Roadmap Priorità per Pilastro</h3>
+                                <div className="space-y-4">
+                                    {test.roadmap_pilastri.map((pilastro: any, idx: number) => (
+                                        <div key={idx} className={`rounded-lg p-6 border-l-4 ${pilastro.priorita === 'CRITICA' ? 'bg-red-50 border-red-500' :
+                                            pilastro.priorita === 'ALTA' ? 'bg-orange-50 border-orange-500' :
+                                                pilastro.priorita === 'MEDIA' ? 'bg-yellow-50 border-yellow-500' :
+                                                    'bg-green-50 border-green-500'
+                                            }`}>
+                                            <div className="flex items-start justify-between mb-3">
+                                                <div className="flex items-center gap-3">
+                                                    <span className="text-2xl">{pilastro.icon}</span>
+                                                    <div>
+                                                        <h4 className="font-bold text-gray-900">{pilastro.pilastro}</h4>
+                                                        <div className="flex items-center gap-2 mt-1">
+                                                            <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${pilastro.priorita === 'CRITICA' ? 'bg-red-600 text-white' :
+                                                                pilastro.priorita === 'ALTA' ? 'bg-orange-600 text-white' :
+                                                                    pilastro.priorita === 'MEDIA' ? 'bg-yellow-600 text-white' :
+                                                                        'bg-green-600 text-white'
+                                                                }`}>
+                                                                {pilastro.priorita}
+                                                            </span>
+                                                            <span className="text-sm text-gray-600">Score: {pilastro.punteggio}%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="mt-4">
+                                                <span className="text-sm font-semibold text-gray-700">Azioni consigliate:</span>
+                                                <ul className="mt-2 space-y-1">
+                                                    {pilastro.azioni_consigliate && pilastro.azioni_consigliate.map((azione: string, azioneIdx: number) => (
+                                                        <li key={azioneIdx} className="text-sm text-gray-700 flex items-start">
+                                                            <span className="mr-2">✓</span>
+                                                            <span>{azione}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* 7. RISORSE BONUS PERSONALIZZATE */}
+                        {test.risorse_bonus && test.risorse_bonus.length > 0 && (
+                            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl shadow-lg p-8 mb-8 border border-green-300">
+                                <h3 className="text-2xl font-bold mb-6 font-heading text-green-800">🎁 Toolkit Gratuito Personalizzato</h3>
+                                <p className="text-gray-700 mb-6">Risorse selezionate per il tuo profilo e settore:</p>
+
+                                <div className="grid md:grid-cols-2 gap-4">
+                                    {test.risorse_bonus.map((risorsa: string, idx: number) => (
+                                        <div key={idx} className="bg-white rounded-lg p-4 border border-green-200 hover:border-green-400 transition-all hover:shadow-md">
+                                            <div className="flex items-start gap-3">
+                                                <span className="text-2xl">📄</span>
+                                                <div>
+                                                    <p className="font-semibold text-gray-900">{risorsa}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* 8. NEXT STEPS STRUTTURATI */}
+                        {test.next_steps && (
+                            <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl shadow-lg p-8 mb-8 border-2 border-purple-300">
+                                <h3 className="text-2xl font-bold mb-6 font-heading text-purple-800">🚀 I Tuoi Prossimi Passi</h3>
+
+                                <div className="space-y-6">
+                                    {test.next_steps.questa_settimana && (
+                                        <div className="bg-white rounded-lg p-6">
+                                            <h4 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+                                                <span className="text-2xl">⚡</span>
+                                                Questa Settimana
+                                            </h4>
+                                            <ul className="space-y-2">
+                                                {test.next_steps.questa_settimana.map((step: string, idx: number) => (
+                                                    <li key={idx} className="flex items-start gap-3">
+                                                        <span className="text-purple-600 font-bold mt-0.5">□</span>
+                                                        <span className="text-gray-700">{step}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+
+                                    {test.next_steps.entro_15_giorni && (
+                                        <div className="bg-white rounded-lg p-6">
+                                            <h4 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+                                                <span className="text-2xl">📅</span>
+                                                Entro 15 Giorni
+                                            </h4>
+                                            <ul className="space-y-3">
+                                                {test.next_steps.entro_15_giorni.map((step: string, idx: number) => (
+                                                    <li key={idx} className="flex items-start gap-3">
+                                                        <span className="text-blue-600 font-bold mt-0.5">→</span>
+                                                        <span className="text-gray-700">{step}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         )}
