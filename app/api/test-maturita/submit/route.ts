@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
         percentage: body.percentage || null,
         // Campi premium v2.0
         profilazione: body.profilazione || null,
-        colli_bottiglia: body.colli_bottiglia || null,
+        colli_bottiglia: body.colli_identificati || body.colli_bottiglia || null, // Salva array top 3 colli
         collo_bottiglia_primario: body.collo_bottiglia_primario || null,
         capacita_crescita: body.capacita_crescita || null,
         diagnosi: body.diagnosi || null,
