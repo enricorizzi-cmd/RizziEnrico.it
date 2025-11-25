@@ -175,12 +175,22 @@ export default function WorkshopPage() {
                 Workshop Gratuito per Imprenditori di PMI
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 font-heading animate-fade-in-up">
-              Scopri come l'AI ti può aiutare ad avere più tempo libero e a costruire un gruppo di lavoro efficiente sui settori marketing, vendite e produzione.
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-heading animate-fade-in-up">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-[length:200%_auto] animate-gradient-text">
+                Scopri come l'AI ti può aiutare ad avere più tempo libero
+              </span>
+              <br />
+              <span className="text-gray-800">
+                e a costruire un gruppo di lavoro efficiente sui settori
+              </span>
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-[length:200%_auto] animate-gradient-text">
+                marketing, vendite e produzione.
+              </span>
             </h1>
             {/* 2 Temi Principali */}
             <div className="mb-8 max-w-4xl mx-auto animate-fade-in-up animation-delay-250">
-              <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-gray-900">
+              <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text">
                 2 Temi Principali
               </h2>
               <div className="grid md:grid-cols-2 gap-6">
@@ -236,192 +246,6 @@ export default function WorkshopPage() {
                   Via Sertorio Orsato 22, Venezia
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Form Registrazione - Duplicato dopo Hero */}
-      <section className="py-20 bg-gradient-to-br from-purple-600 via-blue-600 to-purple-700 relative overflow-hidden z-10">
-        {/* Animated Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
-            backgroundSize: '40px 40px',
-          }}></div>
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12 border-2 border-white/20 hover:shadow-[0_20px_60px_rgba(0,0,0,0.3)] transition-all duration-500 scroll-animate">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 font-heading bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text">
-                  Riserva il Tuo Posto
-                </h2>
-                <p className="text-gray-600 text-lg">
-                  Iscriviti gratuitamente. <span className="font-semibold text-purple-600">Posti limitati.</span>
-                </p>
-              </div>
-
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Nome *
-                    </label>
-                    <input
-                      {...register('nome')}
-                      type="text"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
-                      placeholder="Mario"
-                    />
-                    {errors.nome && (
-                      <p className="text-red-500 text-sm mt-1">{errors.nome.message}</p>
-                    )}
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Cognome *
-                    </label>
-                    <input
-                      {...register('cognome')}
-                      type="text"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
-                      placeholder="Rossi"
-                    />
-                    {errors.cognome && (
-                      <p className="text-red-500 text-sm mt-1">{errors.cognome.message}</p>
-                    )}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Email *
-                  </label>
-                  <input
-                    {...register('email')}
-                    type="email"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
-                    placeholder="mario.rossi@azienda.it"
-                  />
-                  {errors.email && (
-                    <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Telefono *
-                  </label>
-                  <input
-                    {...register('telefono')}
-                    type="tel"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
-                    placeholder="347 123 4567"
-                  />
-                  {errors.telefono && (
-                    <p className="text-red-500 text-sm mt-1">{errors.telefono.message}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Azienda *
-                  </label>
-                  <input
-                    {...register('azienda')}
-                    type="text"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
-                    placeholder="Nome della tua azienda"
-                  />
-                  {errors.azienda && (
-                    <p className="text-red-500 text-sm mt-1">{errors.azienda.message}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Ruolo *
-                  </label>
-                  <input
-                    {...register('ruolo')}
-                    type="text"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
-                    placeholder="Titolare, Direttore, Responsabile..."
-                  />
-                  {errors.ruolo && (
-                    <p className="text-red-500 text-sm mt-1">{errors.ruolo.message}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Provincia *
-                  </label>
-                  <input
-                    {...register('provincia')}
-                    type="text"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
-                    placeholder="Venezia, Padova, Rovigo..."
-                  />
-                  {errors.provincia && (
-                    <p className="text-red-500 text-sm mt-1">{errors.provincia.message}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Come hai saputo del workshop? *
-                  </label>
-                  <select
-                    {...register('fonte')}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 hover:border-purple-300 bg-white/50 backdrop-blur-sm"
-                  >
-                    <option value="BNI">BNI</option>
-                    <option value="OSM">OSM</option>
-                    <option value="Social">Social Media</option>
-                    <option value="Passaparola">Passaparola</option>
-                    <option value="Altro">Altro</option>
-                  </select>
-                  {errors.fonte && (
-                    <p className="text-red-500 text-sm mt-1">{errors.fonte.message}</p>
-                  )}
-                </div>
-
-                <input type="hidden" {...register('evento')} />
-
-                <MagneticButton className="w-full">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="group relative w-full bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-[length:200%_auto] text-white font-bold py-5 px-8 rounded-xl hover:shadow-2xl transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed text-lg overflow-hidden hover:scale-[1.02] animate-gradient-shift"
-                  >
-                    <span className="relative z-10 flex items-center justify-center gap-2">
-                      {isSubmitting ? (
-                        <>
-                          <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                          Registrazione in corso...
-                        </>
-                      ) : (
-                        <>
-                          <span className="text-2xl group-hover:scale-125 transition-transform duration-300">🎯</span>
-                          Iscriviti Gratis
-                          <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
-                        </>
-                      )}
-                    </span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-700 via-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  </button>
-                </MagneticButton>
-
-                <p className="text-center text-sm text-gray-500">
-                  Cliccando su "Iscriviti Gratis" accetti di ricevere comunicazioni relative al workshop.
-                </p>
-              </form>
             </div>
           </div>
         </div>
