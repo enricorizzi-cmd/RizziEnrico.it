@@ -175,19 +175,17 @@ export default function WorkshopPage() {
                 Workshop Gratuito per Imprenditori di PMI
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-heading animate-fade-in-up">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-[length:200%_auto] animate-gradient-text">
-                Scopri come l'AI ti può aiutare ad avere più tempo libero
-              </span>
-              <br />
-              <span className="text-gray-800">
-                e a costruire un gruppo di lavoro efficiente sui settori
-              </span>
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-[length:200%_auto] animate-gradient-text">
-                marketing, vendite e produzione.
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-12 font-heading animate-fade-in-up text-center max-w-5xl mx-auto">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-[length:200%_auto] animate-gradient-text block leading-tight">
+                Scopri come l'AI ti può aiutare ad avere più tempo libero e a costruire un gruppo di lavoro efficiente sui settori marketing, vendite e produzione.
               </span>
             </h1>
+            
+            {/* Separatore visivo */}
+            <div className="flex justify-center mb-12 animate-fade-in-up animation-delay-200">
+              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-purple-400 to-transparent rounded-full"></div>
+            </div>
+
             {/* 2 Temi Principali */}
             <div className="mb-8 max-w-4xl mx-auto animate-fade-in-up animation-delay-250">
               <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text">
