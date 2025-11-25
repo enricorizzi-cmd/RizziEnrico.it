@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
       if (!field) return null;
       const fieldStr = JSON.stringify(field);
       if (fieldStr.length <= maxSize) return field;
-      
+
       // Se è un oggetto, prova a ridurlo mantenendo solo campi essenziali
       if (typeof field === 'object' && !Array.isArray(field)) {
         const reduced: any = {};
@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
     // Validazione dimensione totale dati (limite Supabase JSONB ~500KB)
     const dataSize = JSON.stringify(insertData).length;
     const MAX_DATA_SIZE = 450 * 1024; // 450KB per sicurezza (limite Supabase ~500KB)
-    
+
     console.log('[TEST] 📊 Tentativo salvataggio test:', {
       email: validatedData.email,
       nome: validatedData.nome,
@@ -174,7 +174,7 @@ export async function POST(request: NextRequest) {
         dataSize: `${(dataSize / 1024).toFixed(2)} KB`,
         timestamp: new Date().toISOString(),
       });
-      
+
       // Log dimensioni campi JSONB per identificare problemi
       if (body.profilazione) {
         console.error('[TEST] Dimensione profilazione:', JSON.stringify(body.profilazione).length, 'bytes');
@@ -205,11 +205,11 @@ Tentativo salvataggio dati essenziali in corso...`,
 
       // Prova salvataggio dati essenziali
       const fallbackResult = await saveEssentialData();
-      
+
       if (fallbackResult.error) {
         // Anche il fallback è fallito - errore critico
         console.error('[TEST] ❌❌ ERRORE CRITICO: Anche salvataggio dati essenziali fallito:', fallbackResult.error);
-        
+
         // Notifica admin con urgenza
         sendEmail({
           to: NOTIFICATION_EMAIL,
@@ -232,7 +232,7 @@ AZIONE RICHIESTA: Contattare l'utente e chiedere di ricompilare il test.`,
         });
 
         return NextResponse.json(
-          { 
+          {
             error: 'Errore critico nel salvataggio',
             details: 'Impossibile salvare i dati. Contattare il supporto.',
             code: 'CRITICAL_SAVE_ERROR',
@@ -294,9 +294,10 @@ Dimensione originale: ${(dataSize / 1024).toFixed(2)} KB`,
     const attachments = [];
     if (radarChartImage) {
       // Estrai base64 e rimuovi eventuali spazi/newline che potrebbero corrompere l'immagine
-      let base64Data = radarChartImage.replace(/^data:\/image\/png;base64,/, "");
+      // Regex corretta: data:image/png;base64, (senza slash dopo data:)
+      let base64Data = radarChartImage.replace(/^data:image\/png;base64,/, "");
       base64Data = base64Data.replace(/\s/g, ""); // Rimuovi tutti gli spazi/newline
-      
+
       // Valida che il base64 sia valido
       if (base64Data && base64Data.length > 0) {
         attachments.push({
@@ -306,7 +307,7 @@ Dimensione originale: ${(dataSize / 1024).toFixed(2)} KB`,
           contentType: 'image/png', // Content-type esplicito
           cid: 'radar-chart-image' // CID per riferimento inline nell'HTML
         });
-        
+
         console.log('[TEST] 📎 Allegato radar chart preparato:', {
           filename: 'radar-chart.png',
           size: `${(base64Data.length * 3 / 4 / 1024).toFixed(2)} KB`, // Dimensione approssimativa
@@ -610,7 +611,7 @@ Data compilazione: ${new Date().toLocaleString('it-IT')}`;
       success: true,
       id: data.id,
       savedAsEssential: isEssentialSave || false,
-      message: isEssentialSave 
+      message: isEssentialSave
         ? 'Test salvato con dati essenziali. Alcuni dettagli potrebbero non essere disponibili.'
         : 'Test salvato con successo',
     });

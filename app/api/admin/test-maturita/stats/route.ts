@@ -32,6 +32,8 @@ export async function GET(request: NextRequest) {
         by_category: {},
         score_distribution: [],
         timeline: [],
+        bottlenecks: [],
+        diagnosi_distribution: {},
       });
     }
 
@@ -49,10 +51,43 @@ export async function GET(request: NextRequest) {
     let totalScore = 0;
     const categoryScores: Record<string, number[]> = {};
 
+    // Nuove aggregazioni
+    const bottlenecksFrequency: Record<string, { count: number; severity: string }> = {};
+    const diagnosiDistribution: Record<string, number> = {};
+
     tests?.forEach(test => {
       // Per livello (il campo nel DB è livello_maturita)
       const level = test.livello_maturita || 'Non definito';
       byLevel[level] = (byLevel[level] || 0) + 1;
+
+      // Diagnosi (se presente)
+      if (test.diagnosi) {
+        let diagnosiData = test.diagnosi;
+        if (typeof diagnosiData === 'string') {
+          try {
+            diagnosiData = JSON.parse(diagnosiData);
+          } catch (e) {
+            // Ignora errore parsing
+          }
+        }
+
+        const diagnosiLevel = diagnosiData?.livello || 'Non specificato';
+        diagnosiDistribution[diagnosiLevel] = (diagnosiDistribution[diagnosiLevel] || 0) + 1;
+      }
+
+      // Colli di bottiglia (se presenti)
+      const colli = test.colli_bottiglia || [];
+      if (Array.isArray(colli)) {
+        colli.forEach((collo: any) => {
+          const key = collo.specifico || collo.titolo || 'Sconosciuto';
+          if (!bottlenecksFrequency[key]) {
+            bottlenecksFrequency[key] = { count: 0, severity: collo.severity || 'MEDIA' };
+          }
+          bottlenecksFrequency[key].count++;
+          // Aggiorna severity se troviamo una più alta (semplificazione)
+          if (collo.severity === 'RISCHIO CRITICO') bottlenecksFrequency[key].severity = 'RISCHIO CRITICO';
+        });
+      }
 
       // Per categoria (usa punteggio_per_categoria dal DB)
       if (test.punteggio_per_categoria) {
@@ -130,6 +165,12 @@ export async function GET(request: NextRequest) {
     // Livello più comune
     const mostCommonLevel = levelDistribution.length > 0 ? levelDistribution[0].level : null;
 
+    // Top bottlenecks
+    const topBottlenecks = Object.entries(bottlenecksFrequency)
+      .map(([name, data]) => ({ name, count: data.count, severity: data.severity }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5);
+
     return NextResponse.json({
       summary: {
         total_tests: totalTests,
@@ -141,6 +182,8 @@ export async function GET(request: NextRequest) {
       by_category: byCategory,
       score_distribution: scoreDistribution,
       timeline: timeline,
+      bottlenecks: topBottlenecks,
+      diagnosi_distribution: diagnosiDistribution,
       recent_tests: tests?.slice(0, 10).map(test => ({
         id: test.id,
         nome: test.nome,

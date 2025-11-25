@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Pie, Bar, Line, Doughnut } from 'react-chartjs-2';
+import { Pie, Bar, Line, Doughnut, Radar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,9 +12,11 @@ import {
   ArcElement,
   PointElement,
   LineElement,
+  RadialLinearScale,
   Title,
   Tooltip,
   Legend,
+  Filler,
 } from 'chart.js';
 
 ChartJS.register(
@@ -24,9 +26,11 @@ ChartJS.register(
   ArcElement,
   PointElement,
   LineElement,
+  RadialLinearScale,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 );
 
 interface TestStats {
@@ -44,6 +48,8 @@ interface TestStats {
   by_category: Record<string, { total: number; average: number }>;
   score_distribution: Array<{ range: string; count: number }>;
   timeline: Array<{ date: string; count: number }>;
+  bottlenecks: Array<{ name: string; count: number; severity: string }>;
+  diagnosi_distribution: Record<string, number>;
   recent_tests: Array<{
     id: string;
     nome: string;
@@ -61,6 +67,13 @@ const LEVEL_COLORS: Record<string, string> = {
   'Avanzato': '#10b981',
   'Esperto': '#3b82f6',
   'Non definito': '#6b7280',
+};
+
+const SEVERITY_COLORS: Record<string, string> = {
+  'RISCHIO CRITICO': '#ef4444',
+  'RISCHIO ALTO': '#f97316',
+  'MEDIA': '#eab308',
+  'BASSA': '#22c55e',
 };
 
 export default function TestMaturitaAnalyticsDashboard() {
@@ -103,19 +116,18 @@ export default function TestMaturitaAnalyticsDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center py-12">Caricamento...</div>
-        </div>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
       </div>
     );
   }
 
   if (!stats) {
     return (
-      <div className="min-h-screen bg-gray-50 p-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center py-12 text-red-600">Errore nel caricamento dei dati</div>
+      <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
+        <div className="text-center py-12 text-red-600 bg-white p-8 rounded-xl shadow-lg">
+          <h2 className="text-2xl font-bold mb-2">Errore nel caricamento</h2>
+          <p>Impossibile recuperare i dati statistici.</p>
         </div>
       </div>
     );
@@ -130,6 +142,25 @@ export default function TestMaturitaAnalyticsDashboard() {
         backgroundColor: stats.summary.level_distribution.map(l =>
           LEVEL_COLORS[l.level] || '#6b7280'
         ),
+        borderWidth: 0,
+      },
+    ],
+  };
+
+  // Grafico Radar (Media Categorie)
+  const radarData = {
+    labels: Object.keys(stats.by_category),
+    datasets: [
+      {
+        label: 'Media Settore',
+        data: Object.values(stats.by_category).map(c => c.average),
+        backgroundColor: 'rgba(124, 58, 237, 0.2)',
+        borderColor: 'rgba(124, 58, 237, 1)',
+        borderWidth: 2,
+        pointBackgroundColor: 'rgba(124, 58, 237, 1)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(124, 58, 237, 1)',
       },
     ],
   };
@@ -143,329 +174,353 @@ export default function TestMaturitaAnalyticsDashboard() {
         data: stats.score_distribution.map(s => s.count),
         backgroundColor: [
           'rgba(239, 68, 68, 0.8)',
-          'rgba(245, 158, 11, 0.8)',
-          'rgba(251, 191, 36, 0.8)',
+          'rgba(249, 115, 22, 0.8)',
+          'rgba(234, 179, 8, 0.8)',
           'rgba(34, 197, 94, 0.8)',
           'rgba(59, 130, 246, 0.8)',
         ],
-      },
-    ],
-  };
-
-  // Grafico medie per categoria
-  const categoryData = {
-    labels: Object.keys(stats.by_category),
-    datasets: [
-      {
-        label: 'Punteggio medio',
-        data: Object.values(stats.by_category).map(c => c.average),
-        backgroundColor: 'rgba(102, 126, 234, 0.8)',
+        borderRadius: 6,
       },
     ],
   };
 
   // Timeline test compilati
   const timelineData = {
-    labels: stats.timeline.map(t => new Date(t.date).toLocaleDateString('it-IT')),
+    labels: stats.timeline.map(t => new Date(t.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })),
     datasets: [
       {
         label: 'Test compilati',
         data: stats.timeline.map(t => t.count),
-        borderColor: 'rgba(102, 126, 234, 1)',
-        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+        borderColor: '#8b5cf6',
+        backgroundColor: 'rgba(139, 92, 246, 0.1)',
         tension: 0.4,
         fill: true,
+        pointRadius: 4,
+        pointHoverRadius: 6,
       },
     ],
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gray-50/50 p-6 md:p-10 font-sans text-gray-900">
+      <div className="max-w-7xl mx-auto space-y-10">
+
         {/* Header */}
-        <div className="mb-8 flex justify-between items-center">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">📊 Analisi Test Maturità Digitale</h1>
-            <p className="text-gray-600 mt-2">Dashboard completa con statistiche e insights</p>
+            <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-blue-600">
+              Analytics Maturità Digitale
+            </h1>
+            <p className="text-gray-500 mt-1 text-lg">Panoramica completa delle performance e dei trend.</p>
           </div>
-          <Link
-            href="/admin/test-maturita/archivio"
-            className="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors shadow-sm flex items-center gap-2"
-          >
-            📂 Vai all'Archivio Completo
-          </Link>
+          <div className="flex gap-3">
+            <Link
+              href="/admin/test-maturita/archivio"
+              className="px-5 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm flex items-center gap-2"
+            >
+              📂 Archivio
+            </Link>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-5 py-2.5 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+            >
+              🔄 Aggiorna
+            </button>
+          </div>
         </div>
 
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="text-sm text-gray-600 mb-1">Totale Test</div>
-            <div className="text-3xl font-bold text-gray-900">{stats.summary.total_tests}</div>
-          </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="text-sm text-gray-600 mb-1">Punteggio Medio</div>
-            <div className="text-3xl font-bold text-purple-600">
-              {stats.summary.average_score.toFixed(1)}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-md transition-all">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-purple-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+            <div className="relative z-10">
+              <div className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">Totale Test</div>
+              <div className="text-4xl font-bold text-gray-900">{stats.summary.total_tests}</div>
+              <div className="mt-2 text-xs text-green-600 font-medium flex items-center gap-1">
+                <span>📈 +{stats.recent_tests.length} questa settimana</span>
+              </div>
             </div>
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="text-sm text-gray-600 mb-1">Livello Medio</div>
-            <div className="text-3xl font-bold text-blue-600">
-              {stats.summary.average_level || 'N/A'}
+
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-md transition-all">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+            <div className="relative z-10">
+              <div className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">Score Medio</div>
+              <div className="text-4xl font-bold text-blue-600">{stats.summary.average_score.toFixed(0)}%</div>
+              <div className="mt-2 w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+                <div className="bg-blue-500 h-full rounded-full" style={{ width: `${stats.summary.average_score}%` }}></div>
+              </div>
             </div>
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="text-sm text-gray-600 mb-1">Categorie Analizzate</div>
-            <div className="text-3xl font-bold text-green-600">
-              {Object.keys(stats.by_category).length}
+
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-md transition-all">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-green-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+            <div className="relative z-10">
+              <div className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">Livello Comune</div>
+              <div className="text-3xl font-bold text-green-600 truncate" title={stats.summary.average_level || 'N/A'}>
+                {stats.summary.average_level || 'N/A'}
+              </div>
+              <div className="mt-2 text-xs text-gray-500">
+                Basato sulla maggioranza dei test
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-md transition-all">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-orange-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+            <div className="relative z-10">
+              <div className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">Colli Critici</div>
+              <div className="text-4xl font-bold text-orange-600">
+                {stats.bottlenecks.length > 0 ? stats.bottlenecks[0].count : 0}
+              </div>
+              <div className="mt-2 text-xs text-gray-500 truncate">
+                {stats.bottlenecks.length > 0 ? stats.bottlenecks[0].name : 'Nessun dato'}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* AI Insights Panel */}
-        {(aiInsights || loadingInsights) && (
-          <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg shadow-lg p-6 mb-8 border-2 border-purple-200">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-2xl">🤖</span>
-              <h2 className="text-2xl font-bold text-gray-900">Analisi AI dei Risultati</h2>
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+          {/* Left Column: Charts */}
+          <div className="lg:col-span-2 space-y-8">
+
+            {/* Radar & Timeline Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Radar Chart */}
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
+                  <span className="w-2 h-6 bg-purple-600 rounded-full"></span>
+                  Media Settoriale (Radar)
+                </h3>
+                <div className="aspect-square relative">
+                  <Radar
+                    data={radarData}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      scales: {
+                        r: {
+                          beginAtZero: true,
+                          max: 100,
+                          ticks: { stepSize: 20, display: false },
+                          grid: { color: 'rgba(0,0,0,0.05)' },
+                          pointLabels: {
+                            font: { size: 11, weight: 'bold' },
+                            color: '#4b5563'
+                          }
+                        }
+                      },
+                      plugins: {
+                        legend: { display: false }
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Timeline */}
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col">
+                <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
+                  <span className="w-2 h-6 bg-blue-600 rounded-full"></span>
+                  Trend Temporale
+                </h3>
+                <div className="flex-grow relative min-h-[250px]">
+                  <Line
+                    data={timelineData}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      plugins: { legend: { display: false } },
+                      scales: {
+                        y: { beginAtZero: true, grid: { display: false } },
+                        x: { grid: { display: false } }
+                      }
+                    }}
+                  />
+                </div>
+              </div>
             </div>
-            {loadingInsights ? (
-              <p className="text-gray-600">Caricamento analisi...</p>
-            ) : aiInsights ? (
-              <div className="space-y-4">
-                {aiInsights.analisi_aggregata && (
-                  <div className="bg-white rounded-lg p-4 border border-purple-200">
-                    <h3 className="font-semibold text-purple-700 mb-2">📊 Analisi Aggregata</h3>
-                    <p className="text-gray-700 leading-relaxed">{aiInsights.analisi_aggregata}</p>
-                  </div>
-                )}
-                {aiInsights.tendenze_principali && aiInsights.tendenze_principali.length > 0 && (
-                  <div className="bg-white rounded-lg p-4 border border-blue-200">
-                    <h3 className="font-semibold text-blue-700 mb-2">📈 Tendenze Principali</h3>
-                    <ul className="list-disc list-inside space-y-1 text-gray-700">
-                      {aiInsights.tendenze_principali.map((tendenza: string, idx: number) => (
-                        <li key={idx}>{tendenza}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                {aiInsights.aree_critiche && aiInsights.aree_critiche.length > 0 && (
-                  <div className="bg-white rounded-lg p-4 border border-red-200">
-                    <h3 className="font-semibold text-red-700 mb-2">⚠️ Aree Critiche</h3>
-                    <div className="space-y-3">
-                      {aiInsights.aree_critiche.map((area: any, idx: number) => (
-                        <div key={idx} className="border-l-4 border-red-400 pl-3">
-                          <p className="font-semibold text-gray-800">{area.categoria}</p>
-                          {area.problema && <p className="text-sm text-gray-600">{area.problema}</p>}
-                          {area.impatto && <p className="text-sm text-gray-600 mt-1">💡 {area.impatto}</p>}
-                        </div>
-                      ))}
+
+            {/* AI Insights Panel (Full Width) */}
+            <div className="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 rounded-2xl p-8 border border-purple-100 shadow-sm relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-40 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
+
+              <div className="flex items-center gap-3 mb-6 relative z-10">
+                <div className="bg-white p-2 rounded-lg shadow-sm">
+                  <span className="text-2xl">✨</span>
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900">AI Strategic Insights</h2>
+                {loadingInsights && <span className="text-sm text-purple-600 animate-pulse ml-auto">Generazione analisi in corso...</span>}
+              </div>
+
+              {loadingInsights ? (
+                <div className="space-y-4 animate-pulse">
+                  <div className="h-4 bg-purple-200/50 rounded w-3/4"></div>
+                  <div className="h-4 bg-purple-200/50 rounded w-full"></div>
+                  <div className="h-4 bg-purple-200/50 rounded w-5/6"></div>
+                </div>
+              ) : aiInsights ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+                  <div className="space-y-6">
+                    <div className="bg-white/60 backdrop-blur-sm p-5 rounded-xl border border-purple-100">
+                      <h3 className="font-bold text-purple-800 mb-3 text-sm uppercase tracking-wide">📊 Analisi Aggregata</h3>
+                      <p className="text-gray-700 leading-relaxed text-sm">{aiInsights.analisi_aggregata}</p>
                     </div>
+
+                    {aiInsights.aree_critiche?.length > 0 && (
+                      <div className="bg-white/60 backdrop-blur-sm p-5 rounded-xl border border-red-100">
+                        <h3 className="font-bold text-red-700 mb-3 text-sm uppercase tracking-wide">⚠️ Aree Critiche</h3>
+                        <div className="space-y-3">
+                          {aiInsights.aree_critiche.map((area: any, idx: number) => (
+                            <div key={idx} className="flex gap-3 items-start">
+                              <span className="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded mt-0.5">{idx + 1}</span>
+                              <div>
+                                <p className="font-bold text-gray-800 text-sm">{area.categoria}</p>
+                                <p className="text-xs text-gray-600 mt-0.5">{area.problema}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
-                {aiInsights.raccomandazioni && aiInsights.raccomandazioni.length > 0 && (
-                  <div className="bg-white rounded-lg p-4 border border-green-200">
-                    <h3 className="font-semibold text-green-700 mb-2">✅ Raccomandazioni</h3>
-                    <ul className="list-disc list-inside space-y-1 text-gray-700">
-                      {aiInsights.raccomandazioni.map((rec: string, idx: number) => (
-                        <li key={idx}>{rec}</li>
-                      ))}
-                    </ul>
+
+                  <div className="space-y-6">
+                    {aiInsights.raccomandazioni?.length > 0 && (
+                      <div className="bg-white/80 backdrop-blur-sm p-5 rounded-xl border border-green-100 shadow-sm">
+                        <h3 className="font-bold text-green-800 mb-3 text-sm uppercase tracking-wide">✅ Raccomandazioni Strategiche</h3>
+                        <ul className="space-y-3">
+                          {aiInsights.raccomandazioni.map((rec: string, idx: number) => (
+                            <li key={idx} className="flex gap-3 text-sm text-gray-700">
+                              <span className="text-green-500 flex-shrink-0">✓</span>
+                              <span>{rec}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {aiInsights.focus_workshop?.length > 0 && (
+                      <div className="bg-indigo-600 text-white p-5 rounded-xl shadow-lg">
+                        <h3 className="font-bold text-indigo-100 mb-3 text-sm uppercase tracking-wide">🎯 Focus Workshop Suggeriti</h3>
+                        <ul className="space-y-2">
+                          {aiInsights.focus_workshop.map((focus: string, idx: number) => (
+                            <li key={idx} className="flex gap-2 text-sm font-medium">
+                              <span className="text-indigo-300">•</span>
+                              <span>{focus}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </div>
-                )}
-                {aiInsights.focus_workshop && aiInsights.focus_workshop.length > 0 && (
-                  <div className="bg-white rounded-lg p-4 border border-indigo-200">
-                    <h3 className="font-semibold text-indigo-700 mb-2">🎯 Focus Workshop</h3>
-                    <ul className="list-disc list-inside space-y-1 text-gray-700">
-                      {aiInsights.focus_workshop.map((focus: string, idx: number) => (
-                        <li key={idx}>{focus}</li>
-                      ))}
-                    </ul>
-                  </div>
+                </div>
+              ) : (
+                <div className="text-center py-8 text-gray-500">Nessun insight disponibile.</div>
+              )}
+            </div>
+
+          </div>
+
+          {/* Right Column: Stats & Lists */}
+          <div className="space-y-8">
+
+            {/* Top Bottlenecks */}
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+              <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <span className="w-2 h-6 bg-orange-500 rounded-full"></span>
+                Top Colli di Bottiglia
+              </h3>
+              <div className="space-y-4">
+                {stats.bottlenecks.length > 0 ? (
+                  stats.bottlenecks.map((item, idx) => (
+                    <div key={idx} className="relative">
+                      <div className="flex justify-between items-center mb-1 text-sm">
+                        <span className="font-medium text-gray-700 truncate w-3/4" title={item.name}>{item.name}</span>
+                        <span className="font-bold text-gray-900">{item.count}</span>
+                      </div>
+                      <div className="w-full bg-gray-100 rounded-full h-2">
+                        <div
+                          className="h-2 rounded-full"
+                          style={{
+                            width: `${(item.count / stats.summary.total_tests) * 100}%`,
+                            backgroundColor: SEVERITY_COLORS[item.severity] || '#eab308'
+                          }}
+                        ></div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-gray-500 text-sm">Nessun collo di bottiglia registrato.</p>
                 )}
               </div>
-            ) : (
-              <p className="text-gray-600">Nessun insight disponibile al momento.</p>
-            )}
-          </div>
-        )}
-
-        {/* Grafici principali */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Distribuzione livelli */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-bold mb-4">Distribuzione per Livello</h2>
-            <Doughnut
-              data={levelData}
-              options={{
-                responsive: true,
-                plugins: {
-                  legend: { position: 'right' },
-                  title: { display: false },
-                },
-              }}
-            />
-            <div className="mt-4 space-y-2">
-              {stats.summary.level_distribution.map(level => (
-                <div key={level.level} className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-2">
-                    <div
-                      className="w-4 h-4 rounded"
-                      style={{ backgroundColor: LEVEL_COLORS[level.level] || '#6b7280' }}
-                    ></div>
-                    <span>{level.level}</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <span className="font-semibold">{level.count}</span>
-                    <span className="text-gray-500">({level.percentage.toFixed(1)}%)</span>
-                  </div>
-                </div>
-              ))}
             </div>
-          </div>
 
-          {/* Distribuzione punteggi */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-bold mb-4">Distribuzione Punteggi</h2>
-            <Bar
-              data={scoreDistributionData}
-              options={{
-                responsive: true,
-                plugins: {
-                  legend: { display: false },
-                  title: { display: false },
-                },
-                scales: {
-                  y: { beginAtZero: true },
-                },
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Grafici secondari */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Medie per categoria */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-bold mb-4">Punteggio Medio per Categoria</h2>
-            <Bar
-              data={categoryData}
-              options={{
-                responsive: true,
-                plugins: {
-                  legend: { display: false },
-                  title: { display: false },
-                },
-                scales: {
-                  y: {
-                    beginAtZero: true,
-                    max: 100,
-                    ticks: {
-                      callback: function (value) {
-                        return value + '%';
-                      },
-                    },
-                  },
-                },
-              }}
-            />
-            <div className="mt-4 space-y-2">
-              {Object.entries(stats.by_category).map(([category, data]) => (
-                <div key={category} className="flex items-center justify-between text-sm">
-                  <span>{category}</span>
-                  <div className="flex items-center gap-4">
-                    <span className="font-semibold">{data.average.toFixed(1)}%</span>
-                    <span className="text-gray-500">({data.total} test)</span>
-                  </div>
+            {/* Level Distribution */}
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+              <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <span className="w-2 h-6 bg-green-500 rounded-full"></span>
+                Distribuzione Livelli
+              </h3>
+              <div className="h-48 relative">
+                <Doughnut
+                  data={levelData}
+                  options={{
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    cutout: '70%'
+                  }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center flex-col pointer-events-none">
+                  <span className="text-3xl font-bold text-gray-900">{stats.summary.total_tests}</span>
+                  <span className="text-xs text-gray-500 uppercase">Test Totali</span>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Timeline */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-bold mb-4">Timeline Test Compilati</h2>
-            <Line
-              data={timelineData}
-              options={{
-                responsive: true,
-                plugins: {
-                  legend: { display: false },
-                  title: { display: false },
-                },
-                scales: {
-                  y: { beginAtZero: true },
-                },
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Tabella test recenti */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-bold mb-4">Test Recenti</h2>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    Nome
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    Email
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    Punteggio
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    Livello
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    Data
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {stats.recent_tests.map(test => (
-                  <tr key={test.id}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {test.nome} {test.cognome}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {test.email}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <span
-                        className={`px-2 py-1 rounded font-semibold ${test.punteggio >= 80
-                          ? 'bg-green-100 text-green-800'
-                          : test.punteggio >= 60
-                            ? 'bg-blue-100 text-blue-800'
-                            : test.punteggio >= 40
-                              ? 'bg-yellow-100 text-yellow-800'
-                              : 'bg-red-100 text-red-800'
-                          }`}
-                      >
-                        {test.punteggio}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <span
-                        className="px-2 py-1 rounded font-semibold"
-                        style={{
-                          backgroundColor: `${LEVEL_COLORS[test.livello] || '#6b7280'}20`,
-                          color: LEVEL_COLORS[test.livello] || '#6b7280',
-                        }}
-                      >
-                        {test.livello}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {new Date(test.created_at).toLocaleDateString('it-IT')}
-                    </td>
-                  </tr>
+              </div>
+              <div className="mt-6 space-y-3">
+                {stats.summary.level_distribution.map(level => (
+                  <div key={level.level} className="flex items-center justify-between text-sm">
+                    <div className="flex items-center gap-2">
+                      <span className="w-3 h-3 rounded-full" style={{ backgroundColor: LEVEL_COLORS[level.level] }}></span>
+                      <span className="text-gray-600">{level.level}</span>
+                    </div>
+                    <span className="font-semibold text-gray-900">{level.percentage.toFixed(0)}%</span>
+                  </div>
                 ))}
-              </tbody>
-            </table>
+              </div>
+            </div>
+
+            {/* Recent Tests List */}
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+              <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <span className="w-2 h-6 bg-gray-800 rounded-full"></span>
+                Ultimi Test
+              </h3>
+              <div className="space-y-4">
+                {stats.recent_tests.slice(0, 5).map(test => (
+                  <div key={test.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors border border-transparent hover:border-gray-100">
+                    <div>
+                      <div className="font-bold text-gray-900 text-sm">{test.nome} {test.cognome}</div>
+                      <div className="text-xs text-gray-500">{new Date(test.created_at).toLocaleDateString('it-IT')}</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-bold text-purple-600 text-sm">{test.punteggio}%</div>
+                      <div className="text-[10px] px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full inline-block mt-1">
+                        {test.livello}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 pt-4 border-t border-gray-100 text-center">
+                <Link href="/admin/test-maturita/archivio" className="text-sm font-semibold text-purple-600 hover:text-purple-700">
+                  Vedi tutti i test →
+                </Link>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

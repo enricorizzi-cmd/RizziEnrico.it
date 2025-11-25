@@ -9,14 +9,14 @@ async function getOpenAI() {
   if (!process.env.OPENAI_API_KEY) {
     return null;
   }
-  
+
   if (!OpenAI) {
     OpenAI = (await import('openai')).default;
     openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
   }
-  
+
   return openai;
 }
 
@@ -51,6 +51,8 @@ export async function GET(request: NextRequest) {
     }
 
     // Prepara dati aggregati per l'analisi
+    const bottlenecksFrequency: Record<string, number> = {};
+
     const datiAggregati = {
       totale_test: tests.length,
       distribuzione_livelli: tests.reduce((acc: Record<string, number>, test) => {
@@ -69,6 +71,22 @@ export async function GET(request: NextRequest) {
       }, {}),
     };
 
+    // Aggregazione colli di bottiglia
+    tests.forEach(test => {
+      const colli = test.colli_bottiglia || [];
+      if (Array.isArray(colli)) {
+        colli.forEach((collo: any) => {
+          const key = collo.specifico || collo.titolo || 'Sconosciuto';
+          bottlenecksFrequency[key] = (bottlenecksFrequency[key] || 0) + 1;
+        });
+      }
+    });
+
+    const topBottlenecks = Object.entries(bottlenecksFrequency)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([name, count]) => `${name} (${count} aziende)`);
+
     // Calcola medie per categoria
     const medieCategorie = Object.entries(datiAggregati.categorie_mediocri).map(([cat, scores]) => ({
       categoria: cat,
@@ -85,6 +103,7 @@ export async function GET(request: NextRequest) {
           tendenze_principali: [
             `Livello più comune: ${Object.entries(datiAggregati.distribuzione_livelli).sort((a, b) => b[1] - a[1])[0]?.[0] || 'N/A'}`,
             `Categoria più debole: ${medieCategorie[0]?.categoria || 'N/A'} (media: ${medieCategorie[0]?.media.toFixed(1) || 0})`,
+            `Collo di bottiglia più frequente: ${topBottlenecks[0] || 'N/A'}`,
           ],
           aree_critiche: medieCategorie.slice(0, 3).map(c => ({
             categoria: c.categoria,
@@ -110,32 +129,35 @@ DATI AGGREGATI:
 - Medie per categoria (ordine crescente, le più basse sono le più critiche):
 ${medieCategorie.map(c => `  - ${c.categoria}: ${c.media.toFixed(1)} (${c.test_count} test)`).join('\n')}
 
+TOP 5 COLLI DI BOTTIGLIA PIÙ FREQUENTI:
+${topBottlenecks.join('\n')}
+
 Compito:
-1. Analizza le tendenze principali emerse dai test
-2. Identifica le aree critiche (categorie con punteggi più bassi)
-3. Fornisci raccomandazioni concrete per migliorare la maturità digitale delle PMI
-4. Suggerisci focus specifici per il workshop basati sui dati
+1. Analizza le tendenze principali emerse dai test, correlando i punteggi bassi con i colli di bottiglia specifici.
+2. Identifica le aree critiche non solo come categorie, ma come problemi operativi reali (dedotti dai colli di bottiglia).
+3. Fornisci raccomandazioni concrete per migliorare la maturità digitale delle PMI, suggerendo azioni che risolvano i colli di bottiglia più comuni.
+4. Suggerisci focus specifici per il workshop basati sui dati reali.
 
 Rispondi in formato JSON:
 {
-  "analisi_aggregata": "Sintesi completa (2-3 paragrafi) delle tendenze principali emerse",
+  "analisi_aggregata": "Sintesi completa (2-3 paragrafi) delle tendenze principali emerse, citando esplicitamente i problemi più ricorrenti.",
   "tendenze_principali": [
-    "tendenza 1",
+    "tendenza 1 (es. 'Il 40% delle aziende soffre di X')",
     "tendenza 2",
     "tendenza 3"
   ],
   "aree_critiche": [
     {
       "categoria": "Nome categoria",
-      "problema": "Descrizione del problema",
+      "problema": "Descrizione del problema specifico basato sui colli di bottiglia",
       "impatto": "Impatto sul business",
       "priorita": "alta|media|bassa"
     }
   ],
   "raccomandazioni": [
-    "raccomandazione 1",
-    "raccomandazione 2",
-    "raccomandazione 3"
+    "raccomandazione strategica 1",
+    "raccomandazione strategica 2",
+    "raccomandazione strategica 3"
   ],
   "focus_workshop": [
     "argomento da approfondire 1",
@@ -143,7 +165,7 @@ Rispondi in formato JSON:
   ]
 }
 
-Sii pratico, concreto e orientato all'azione.`;
+Sii pratico, concreto e orientato all'azione. Usa un tono professionale ma diretto.`;
 
     const completion = await openaiInstance.chat.completions.create({
       model: 'gpt-4o',
