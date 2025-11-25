@@ -199,7 +199,7 @@ export default function WorkshopPage() {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-purple-700 mb-2">Marketing e Vendite</h3>
-                      <p className="text-gray-700">Con il marketing e le vendite ti aiutiamo ad avere contatti che diventano contatti</p>
+                      <p className="text-gray-700">Con il marketing e le vendite ti aiutiamo ad avere contatti che diventano contratti</p>
                     </div>
                   </div>
                 </div>
