@@ -177,7 +177,7 @@ export default function WorkshopPage() {
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 font-heading animate-fade-in-up text-center max-w-5xl mx-auto tracking-tight">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 via-fuchsia-600 to-violet-600 bg-[length:200%_auto] animate-gradient-text block leading-tight drop-shadow-sm">
-                Più Clienti, Più Organizzazione
+                AI EXPERIENCE
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-700 mb-10 text-center max-w-3xl mx-auto animate-fade-in-up animation-delay-100 leading-relaxed">

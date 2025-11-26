@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
@@ -712,7 +712,7 @@ export default function TestDigitalizzazioneAziendalePage() {
       ],
       entro_15_giorni: [
         'Prenota Check-up Operativo Gratuito (1h in azienda)',
-        'Workshop "AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi" - 12 Dicembre 2025'
+        'Workshop "AI EXPERIENCE: Più Tempo, Più Clienti, Meno Sprechi" - 12 Dicembre 2025'
       ]
     };
 

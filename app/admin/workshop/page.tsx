@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -443,7 +443,7 @@ export default function WorkshopAdminDashboard() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900 flex items-center gap-2">
                           <a
-                            href={`mailto:${lead.email}?subject=Workshop Ai in Azienda del 12 Dicembre`}
+                            href={`mailto:${lead.email}?subject=Workshop AI EXPERIENCE del 12 Dicembre`}
                             className="w-8 h-8 rounded-full bg-purple-50 text-purple-600 hover:bg-purple-100 hover:text-purple-800 flex items-center justify-center transition-colors"
                             title="Invia email"
                           >

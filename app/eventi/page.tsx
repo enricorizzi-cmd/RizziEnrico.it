@@ -1,4 +1,4 @@
-import { generateMetadata } from '@/lib/seo';
+﻿import { generateMetadata } from '@/lib/seo';
 import SectionTitle from '@/components/SectionTitle';
 import Card from '@/components/Card';
 import CTA from '@/components/CTA';
@@ -102,7 +102,7 @@ const events: Array<{
     // Workshop 12 Dicembre - Evento evidenziato
     {
       slug: 'workshop-12-dicembre',
-      title: 'AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi',
+      title: 'AI EXPERIENCE: Più Tempo, Più Clienti, Meno Sprechi',
       description: 'Metti l\'AI a lavorare per te: elimina il lavoro ripetitivo, acquisisci nuovi clienti con processi e flussi automatici, e migliora l\'organizzazione in azienda.',
       dateStart: new Date('2025-12-12T17:00:00'),
       dateEnd: new Date('2025-12-12T19:00:00'),
@@ -292,7 +292,7 @@ export default function EventiPage() {
                       </Card>
                       {isHighlighted && (
                         <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4 text-center">
-                          <p className="font-bold text-lg mb-2">🎯 AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi</p>
+                          <p className="font-bold text-lg mb-2">🎯 AI EXPERIENCE: Più Tempo, Più Clienti, Meno Sprechi</p>
                           <a
                             href={event.externalUrl}
                             className="inline-block bg-white text-purple-600 font-bold py-2 px-6 rounded-lg hover:bg-purple-50 transition-colors"

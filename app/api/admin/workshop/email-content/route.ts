@@ -1,12 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 
 // Mappatura tipo email -> contenuto (oggetto e testo)
 const EMAIL_CONTENTS: Record<string, { subject: string; text: string }> = {
   'email_conferma_iscrizione_sent': {
-    subject: '🎉 Registrazione Workshop Confermata - Ai in Azienda',
+    subject: '🎉 Registrazione Workshop Confermata - AI EXPERIENCE',
     text: `Ciao [NOME],
 
-Grazie per esserti iscritto al workshop "Ai in Azienda"!
+Grazie per esserti iscritto al workshop "AI EXPERIENCE"!
 
 📅 Data: Venerdì 12 dicembre 2025
 🕐 Orario: dalle ore 17.00 (accettazione dalle ore 16.30)

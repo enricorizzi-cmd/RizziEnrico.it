@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { workshopRegistrationSchema } from '@/lib/validators';
 import { createServerClient } from '@/lib/supabase';
 import { sendEmail } from '@/lib/email';
@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
       <p style="margin: 10px 0;">
         <strong>📅 Data:</strong> 
         <a href="${generateGoogleCalendarUrl({
-      title: 'AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi',
+      title: 'AI EXPERIENCE: Più Tempo, Più Clienti, Meno Sprechi',
       description: 'Workshop esclusivo OSM',
       startDate: new Date('2025-12-12T17:00:00'),
       endDate: new Date('2025-12-12T19:00:00'),
@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
     })}" style="color: #667eea; text-decoration: underline;">${WORKSHOP_DATE}</a>
         <span style="margin-left: 10px; font-size: 12px;">
           (<a href="data:text/calendar;charset=utf-8,${encodeURIComponent(generateICS({
-      title: 'Ai in Azienda',
+      title: 'AI EXPERIENCE',
       description: 'Workshop esclusivo OSM',
       startDate: new Date('2025-12-12T17:00:00'),
       endDate: new Date('2025-12-12T19:00:00'),
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
       <p style="margin: 10px 0;">
         <strong>🕐 Orario:</strong> 
         <a href="${generateGoogleCalendarUrl({
-      title: 'Ai in Azienda',
+      title: 'AI EXPERIENCE',
       description: 'Workshop esclusivo OSM',
       startDate: new Date('2025-12-12T17:00:00'),
       endDate: new Date('2025-12-12T19:00:00'),
@@ -158,7 +158,7 @@ export async function POST(request: NextRequest) {
 
     const confirmEmailText = `Ciao ${validatedData.nome},
 
-Grazie per esserti iscritto al workshop "Ai in Azienda"!
+Grazie per esserti iscritto al workshop "AI EXPERIENCE"!
 
 📅 Data: ${WORKSHOP_DATE}
 🕐 Orario: ${WORKSHOP_TIME}
@@ -197,7 +197,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
     Promise.all([
       sendEmail({
         to: validatedData.email,
-        subject: '🎉 Registrazione Workshop Confermata - Ai in Azienda',
+        subject: '🎉 Registrazione Workshop Confermata - AI EXPERIENCE',
         html: confirmEmailHtml,
         text: confirmEmailText,
         emailId: 'email_conferma_iscrizione',
@@ -246,7 +246,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
       }),
       new Promise(resolve => setTimeout(resolve, 1000)).then(() => {
         const emailSubject = `🎯 Nuova registrazione Workshop - ${validatedData.nome} ${validatedData.cognome}`;
-        const emailText = `Nuova registrazione al Workshop "Ai in Azienda":
+        const emailText = `Nuova registrazione al Workshop "AI EXPERIENCE":
 
 📋 Dati registrazione:
 Nome: ${validatedData.nome} ${validatedData.cognome}
@@ -302,7 +302,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${validatedData.nome}</strong>,</p>
     
-    <p>Siamo felici che tu sia iscritto al workshop <strong>"Ai in Azienda"</strong>!</p>
+    <p>Siamo felici che tu sia iscritto al workshop <strong>"AI EXPERIENCE"</strong>!</p>
     
     <p>Vogliamo aiutarti a prepararti al meglio per trarre il massimo dall'evento.</p>
     
@@ -514,7 +514,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${validatedData.nome}</strong>,</p>
     
-    <p>Manca poco al workshop "Ai in Azienda".</p>
+    <p>Manca poco al workshop "AI EXPERIENCE".</p>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
       <h3 style="margin-top: 0; color: #667eea;">📅 Dettagli Evento:</h3>
@@ -653,7 +653,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${validatedData.nome}</strong>,</p>
     
-    <p>Grazie per essere stato al workshop "Ai in Azienda"!</p>
+    <p>Grazie per essere stato al workshop "AI EXPERIENCE"!</p>
     
     <p>Speriamo che tu abbia trovato utili gli spunti e le demo che abbiamo condiviso.</p>
     

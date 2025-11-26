@@ -1,4 +1,4 @@
--- Schema Supabase per Workshop "Automatizza la tua Azienda: AI & Digitalizzazione"
+﻿-- Schema Supabase per Workshop "Automatizza la tua Azienda: AI & Digitalizzazione"
 -- Data evento: 12 dicembre 2024
 
 -- Tabella workshop_leads (registrazioni al workshop)
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS workshop_leads (
   
   -- Evento (per future estensioni)
   evento TEXT DEFAULT 'Workshop 12.12.2024',
-  campagna TEXT DEFAULT 'Ai in Azienda'
+  campagna TEXT DEFAULT 'AI EXPERIENCE'
 );
 
 -- Tabella test_maturita_digitale (risultati test)

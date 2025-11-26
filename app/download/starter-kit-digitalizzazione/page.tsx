@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect } from 'react';
 
@@ -17,7 +17,7 @@ export default function StarterKitPage() {
             Starter Kit: Checklist Digitalizzazione PMI
           </h1>
           <p className="text-xl text-gray-600">
-            Workshop "AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi"
+            Workshop "AI EXPERIENCE: Più Tempo, Più Clienti, Meno Sprechi"
             <br />
             <span className="text-sm">Venerdì 12 dicembre 2025 - OSM Venezia - Via Sertorio Orsato 22, Venezia</span>
           </p>
@@ -192,7 +192,7 @@ export default function StarterKitPage() {
             per avere un'analisi dettagliata.
           </p>
           <p className="text-sm">
-            Workshop "AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi"
+            Workshop "AI EXPERIENCE: Più Tempo, Più Clienti, Meno Sprechi"
             <br />
             Enrico Rizzi & Francesco Fusano - OSM Partner Venezia
             <br />
