@@ -1,4 +1,4 @@
-﻿-- Schema Supabase per Workshop "Automatizza la tua Azienda: AI & Digitalizzazione"
+-- Schema Supabase per Workshop "Automatizza la tua Azienda: AI & Digitalizzazione"
 -- Data evento: 12 dicembre 2024
 
 -- Tabella workshop_leads (registrazioni al workshop)
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS test_maturita_digitale (
   risposte JSONB NOT NULL DEFAULT '{}'::jsonb,
   
   -- Scoring
-  punteggio_totale INTEGER DEFAULT 0,
+  punteggio_totale NUMERIC(10,2) DEFAULT 0,
   punteggio_per_categoria JSONB DEFAULT '{}'::jsonb,
   
   -- Risultato e raccomandazioni
