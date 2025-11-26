@@ -132,9 +132,9 @@ export default function WorkshopPage() {
       </div>
 
       {/* Hero Section */}
-      <section ref={heroRef} className="relative overflow-hidden pt-12 pb-16 lg:pt-16 lg:pb-24 z-10">
-        {/* Gradient Overlay with Animation */}
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-blue-600/10 to-purple-600/10 animate-gradient-shift"></div>
+      <section ref={heroRef} className="relative overflow-hidden pt-12 pb-16 lg:pt-20 lg:pb-32 z-10">
+        {/* Gradient Overlay with Animation - Enhanced */}
+        <div className="absolute inset-0 bg-gradient-to-r from-violet-100/40 via-white/60 to-fuchsia-100/40 animate-gradient-shift"></div>
 
         {/* Floating Particles */}
         <div className="absolute inset-0 overflow-hidden">
@@ -168,83 +168,93 @@ export default function WorkshopPage() {
             />
           </div>
 
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-5xl mx-auto text-center">
             <div className="inline-block mb-4 animate-fade-in-down">
               <span className="px-6 py-3 bg-white/80 backdrop-blur-sm text-purple-700 rounded-full text-sm font-semibold shadow-lg border border-purple-200/50 hover:scale-105 transition-transform duration-300 inline-flex items-center gap-2">
                 <span className="animate-pulse">🎯</span>
                 Workshop Gratuito per Imprenditori di PMI
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-heading animate-fade-in-up text-center max-w-5xl mx-auto">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-[length:200%_auto] animate-gradient-text block leading-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 font-heading animate-fade-in-up text-center max-w-5xl mx-auto tracking-tight">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 via-fuchsia-600 to-violet-600 bg-[length:200%_auto] animate-gradient-text block leading-tight drop-shadow-sm">
                 Più Clienti, Più Organizzazione
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-700 mb-12 text-center max-w-4xl mx-auto animate-fade-in-up animation-delay-100">
+            <p className="text-xl md:text-2xl text-gray-700 mb-10 text-center max-w-3xl mx-auto animate-fade-in-up animation-delay-100 leading-relaxed">
               Scopri come l'AI ti può aiutare ad avere più tempo libero e a costruire un gruppo di lavoro efficiente sui settori marketing, vendite e produzione.
             </p>
 
-            {/* Separatore visivo */}
-            <div className="flex justify-center mb-12 animate-fade-in-up animation-delay-200">
-              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-purple-400 to-transparent rounded-full"></div>
-            </div>
-
-            {/* 2 Temi Principali */}
-            <div className="mb-8 max-w-4xl mx-auto animate-fade-in-up animation-delay-250">
-              <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text">
-                2 Temi Principali
-              </h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-gradient-to-br from-purple-50 to-blue-50 p-6 rounded-2xl border-2 border-purple-200 shadow-lg hover:shadow-xl transition-all duration-300">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center">
-                      <span className="text-2xl">📈</span>
+            {/* NEW: Details & CTA Glass Card - Moved Up */}
+            <div className="mb-16 animate-fade-in-up animation-delay-200 relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-violet-400 via-fuchsia-400 to-violet-400 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+              <div className="relative bg-white/60 backdrop-blur-xl border border-white/50 rounded-3xl p-8 shadow-2xl ring-1 ring-black/5 max-w-3xl mx-auto">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+                  {/* Details */}
+                  <div className="text-left space-y-3 flex-1">
+                    <div className="flex items-center gap-3 text-violet-800">
+                      <span className="text-2xl">📅</span>
+                      <span className="text-lg font-bold">Venerdì 12 Dicembre 2025</span>
                     </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-purple-700 mb-2">Marketing e Vendite</h3>
-                      <p className="text-gray-700">Con il marketing e le vendite ti aiutiamo ad avere contatti che diventano contratti</p>
+                    <div className="flex items-center gap-3 text-fuchsia-700">
+                      <span className="text-2xl">⏰</span>
+                      <span className="text-lg font-medium">16:30 - 19:00 <span className="text-sm opacity-75 font-normal">(accoglienza 16:30)</span></span>
+                    </div>
+                    <div className="flex items-center gap-3 text-slate-600">
+                      <span className="text-2xl">📍</span>
+                      <span className="text-lg">OSM Venezia, Via Sertorio Orsato 22</span>
                     </div>
                   </div>
-                </div>
-                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-2xl border-2 border-blue-200 shadow-lg hover:shadow-xl transition-all duration-300">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
-                      <span className="text-2xl">⚡</span>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-blue-700 mb-2">Semplificazione Digitale</h3>
-                      <p className="text-gray-700">Con la semplificazione digitale dei processi e AI ti aiutiamo a guadagnare tempo e ad avere una organizzazione efficiente e le tue persone sono produttive</p>
-                    </div>
+
+                  {/* CTA */}
+                  <div className="flex-shrink-0 w-full md:w-auto">
+                    <MagneticButton>
+                      <a
+                        href="#registrazione"
+                        className="inline-flex items-center justify-center w-full md:w-auto bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-bold py-4 px-10 rounded-2xl hover:from-violet-700 hover:to-fuchsia-700 transition-all duration-300 shadow-lg hover:shadow-violet-500/30 transform hover:scale-105 text-lg"
+                      >
+                        Riserva il tuo posto →
+                      </a>
+                    </MagneticButton>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="mb-8 animate-fade-in-up animation-delay-300">
-              <MagneticButton>
-                <a
-                  href="#registrazione"
-                  className="inline-block bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 px-8 rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
-                >
-                  Riserva il tuo posto →
-                </a>
-              </MagneticButton>
+
+            {/* Separator */}
+            <div className="flex justify-center mb-12 animate-fade-in-up animation-delay-300">
+              <div className="w-24 h-1.5 bg-gradient-to-r from-transparent via-violet-300 to-transparent rounded-full opacity-50"></div>
             </div>
-            <div className="flex justify-center items-center animate-fade-in-up animation-delay-400">
-              <div className="group text-center bg-white/80 backdrop-blur-sm px-8 py-6 rounded-3xl shadow-xl border-2 border-purple-200/50 hover:scale-105 hover:shadow-2xl transition-all duration-300 max-w-2xl">
-                <div className="text-2xl md:text-3xl font-bold text-purple-600 group-hover:scale-110 transition-transform mb-2">
-                  Venerdì 12 dicembre 2025
+
+            {/* 2 Temi Principali - Moved Down */}
+            <div className="mb-8 max-w-5xl mx-auto animate-fade-in-up animation-delay-400">
+              <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-slate-800">
+                2 Temi Principali
+              </h2>
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Card 1 */}
+                <div className="group bg-white/70 backdrop-blur-md p-8 rounded-3xl border border-violet-100 shadow-xl hover:shadow-2xl hover:shadow-violet-200/50 transition-all duration-300 hover:-translate-y-1">
+                  <div className="flex flex-col items-center text-center gap-4">
+                    <div className="w-20 h-20 bg-gradient-to-br from-violet-100 to-fuchsia-50 rounded-2xl flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300 shadow-inner">
+                      <span className="text-5xl filter drop-shadow-sm">📈</span>
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-violet-800 mb-3">Marketing e Vendite</h3>
+                      <p className="text-slate-600 leading-relaxed text-lg">Con il marketing e le vendite ti aiutiamo ad avere contatti che diventano contratti</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="text-xl font-semibold text-blue-600 mb-2">
-                  16:30 - 19:00
-                </div>
-                <div className="text-base text-gray-600 mb-2">
-                  accoglienza dalle 16:30 - inizio 17:00
-                </div>
-                <div className="text-lg font-semibold text-gray-700 mt-3">
-                  OSM Venezia
-                </div>
-                <div className="text-base text-gray-600">
-                  Via Sertorio Orsato 22, Venezia
+
+                {/* Card 2 */}
+                <div className="group bg-white/70 backdrop-blur-md p-8 rounded-3xl border border-blue-100 shadow-xl hover:shadow-2xl hover:shadow-blue-200/50 transition-all duration-300 hover:-translate-y-1">
+                  <div className="flex flex-col items-center text-center gap-4">
+                    <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-cyan-50 rounded-2xl flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300 shadow-inner">
+                      <span className="text-5xl filter drop-shadow-sm">⚡</span>
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-blue-800 mb-3">Semplificazione Digitale</h3>
+                      <p className="text-slate-600 leading-relaxed text-lg">Con la semplificazione digitale dei processi e AI ti aiutiamo a guadagnare tempo e ad avere una organizzazione efficiente e le tue persone sono produttive</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
