@@ -415,7 +415,7 @@ import { toPng } from 'html-to-image';
 
 // ... (existing imports)
 
-export default function TestMaturitaDigitalePage() {
+export default function TestDigitalizzazioneAziendalePage() {
   const [currentStep, setCurrentStep] = useState<'form' | 'questions' | 'results'>('form');
   const [currentPage, setCurrentPage] = useState(0);
   const [answers, setAnswers] = useState<Record<string, any>>({});
@@ -1269,7 +1269,7 @@ export default function TestMaturitaDigitalePage() {
           if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
             console.error('Error saving test:', errorData);
-            
+
             // Mostra errore all'utente
             setSaveStatus({
               type: 'error',
@@ -1277,7 +1277,7 @@ export default function TestMaturitaDigitalePage() {
             });
           } else {
             const responseData = await response.json().catch(() => ({}));
-            
+
             // Verifica se è stato salvato come dati essenziali
             if (responseData.savedAsEssential) {
               setSaveStatus({
@@ -1601,17 +1601,17 @@ export default function TestMaturitaDigitalePage() {
     const SaveStatusNotification = () => {
       if (!saveStatus.type) return null;
 
-      const bgColor = saveStatus.type === 'success' 
-        ? 'bg-green-50 border-green-200 text-green-800' 
+      const bgColor = saveStatus.type === 'success'
+        ? 'bg-green-50 border-green-200 text-green-800'
         : saveStatus.type === 'warning'
-        ? 'bg-yellow-50 border-yellow-200 text-yellow-800'
-        : 'bg-red-50 border-red-200 text-red-800';
-      
-      const icon = saveStatus.type === 'success' 
-        ? '✅' 
+          ? 'bg-yellow-50 border-yellow-200 text-yellow-800'
+          : 'bg-red-50 border-red-200 text-red-800';
+
+      const icon = saveStatus.type === 'success'
+        ? '✅'
         : saveStatus.type === 'warning'
-        ? '⚠️'
-        : '❌';
+          ? '⚠️'
+          : '❌';
 
       return (
         <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 max-w-2xl w-full mx-4 ${bgColor} border-2 rounded-lg p-4 shadow-lg`}>
@@ -1619,9 +1619,9 @@ export default function TestMaturitaDigitalePage() {
             <span className="text-2xl">{icon}</span>
             <div className="flex-1">
               <p className="font-semibold mb-1">
-                {saveStatus.type === 'success' ? 'Salvataggio completato' : 
-                 saveStatus.type === 'warning' ? 'Salvataggio parziale' : 
-                 'Errore nel salvataggio'}
+                {saveStatus.type === 'success' ? 'Salvataggio completato' :
+                  saveStatus.type === 'warning' ? 'Salvataggio parziale' :
+                    'Errore nel salvataggio'}
               </p>
               <p className="text-sm">{saveStatus.message}</p>
             </div>
@@ -1640,7 +1640,7 @@ export default function TestMaturitaDigitalePage() {
       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 py-16 relative">
         {/* Notifica stato salvataggio */}
         <SaveStatusNotification />
-        
+
         {/* Loading Overlay per Generazione Report */}
         {isGeneratingReport && (
           <div className="fixed inset-0 bg-white/90 z-50 flex flex-col items-center justify-center backdrop-blur-sm">

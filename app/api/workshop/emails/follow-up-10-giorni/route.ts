@@ -186,7 +186,7 @@ export async function POST(request: NextRequest) {
     </div>
     
     <div style="background: #e7f3ff; border-left: 4px solid #2196F3; padding: 15px; margin: 20px 0; border-radius: 4px;">
-      <p style="margin: 0;"><strong>💡 Non dimenticare:</strong> Se non l'hai ancora fatto, compila il <a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test di Maturità Digitale</a> per personalizzare l'esperienza del workshop.</p>
+      <p style="margin: 0;"><strong>💡 Non dimenticare:</strong> Se non l'hai ancora fatto, compila il <a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test Digitalizzazione Aziendale</a> per personalizzare l'esperienza del workshop.</p>
     </div>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
@@ -194,7 +194,7 @@ export async function POST(request: NextRequest) {
       <p style="margin: 5px 0;">
         <strong>Data:</strong> 
         <a href="${generateGoogleCalendarUrl({
-          title: 'AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi',
+          title: 'Più Clienti, Più Organizzazione Grazie all\'AI',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -202,7 +202,7 @@ export async function POST(request: NextRequest) {
         })}" style="color: #667eea; text-decoration: underline;">${WORKSHOP_DATE}</a>
         <span style="margin-left: 10px; font-size: 12px;">
           (<a href="data:text/calendar;charset=utf-8,${encodeURIComponent(generateICS({
-          title: 'AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi',
+          title: 'Più Clienti, Più Organizzazione Grazie all\'AI',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -213,7 +213,7 @@ export async function POST(request: NextRequest) {
       <p style="margin: 5px 0;">
         <strong>🕐 Orario:</strong> 
         <a href="${generateGoogleCalendarUrl({
-          title: 'AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi',
+          title: 'Più Clienti, Più Organizzazione Grazie all\'AI',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -282,7 +282,7 @@ Problema: Faldoni di carta per ogni cantiere. Preventivi, ordini, fatture sparsi
 - Come automatizzare processi e ridurre il lavoro manuale
 - Dashboard e strumenti che puoi usare subito
 
-💡 Non dimenticare: Se non l'hai ancora fatto, compila il Test di Maturità Digitale:
+💡 Non dimenticare: Se non l'hai ancora fatto, compila il Test Digitalizzazione Aziendale:
 ${BASE_URL}/test-maturita-digitale
 
 📅 Dettagli Evento:

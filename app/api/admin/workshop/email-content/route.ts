@@ -18,7 +18,7 @@ Cosa ti porterai a casa:
 ✅ Starter Kit: checklist pratica per digitalizzare la tua PMI
 ✅ Accesso al test di maturità digitale
 
-💡 Prossimo passo: Compila il Test di Maturità Digitale qui:
+💡 Prossimo passo: Compila il Test Digitalizzazione Aziendale qui:
 https://rizzienrico.it/test-maturita-digitale
 
 Riceverai un promemoria il giorno prima dell'evento.
@@ -126,7 +126,7 @@ Luogo: OSM Venezia - Via Sertorio Orsato 22, Venezia
 - 📝 Qualche dato aziendale se vuoi fare domande specifiche
 - 💡 La voglia di mettere ordine nella tua digitalizzazione!
 
-💡 Non dimenticare: Se non l'hai ancora fatto, compila il Test di Maturità Digitale prima del workshop.
+💡 Non dimenticare: Se non l'hai ancora fatto, compila il Test Digitalizzazione Aziendale prima del workshop.
 
 A presto! 🚀
 
@@ -163,7 +163,7 @@ Speriamo che tu abbia trovato utili gli spunti e le demo che abbiamo condiviso.
 
 📦 Materiali Promessi:
 - Starter Kit: Checklist Digitalizzazione PMI (PDF)
-- Test di Maturità Digitale (se non l'hai ancora compilato)
+- Test Digitalizzazione Aziendale (se non l'hai ancora compilato)
 
 🚀 Prossimo Passo: Vuoi applicare subito quello che hai visto? Prenota un Check-up Digitale Gratuito e scopri come possiamo aiutarti a digitalizzare la tua azienda.
 

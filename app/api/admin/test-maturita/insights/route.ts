@@ -120,7 +120,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Prepara prompt per OpenAI
-    const prompt = `Analizza i risultati aggregati di ${tests.length} test di maturità digitale compilati da PMI.
+    const prompt = `Analizza i risultati aggregati di ${tests.length} test di digitalizzazione aziendale compilati da PMI.
 
 DATI AGGREGATI:
 - Totale test: ${tests.length}
@@ -172,7 +172,7 @@ Sii pratico, concreto e orientato all'azione. Usa un tono professionale ma diret
       messages: [
         {
           role: 'system',
-          content: 'Sei un consulente esperto in digitalizzazione aziendale. Analizza risultati aggregati di test di maturità digitale e fornisci insights pratici e azioni concrete. Sii preciso e orientato ai risultati.',
+          content: 'Sei un consulente esperto in digitalizzazione aziendale. Analizza risultati aggregati di test di digitalizzazione aziendale e fornisci insights pratici e azioni concrete. Sii preciso e orientato ai risultati.',
         },
         { role: 'user', content: prompt },
       ],

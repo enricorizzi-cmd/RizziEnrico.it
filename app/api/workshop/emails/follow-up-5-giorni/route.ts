@@ -112,7 +112,7 @@ export async function POST(request: NextRequest) {
   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
-    <p>Siamo felici che tu sia iscritto al workshop <strong>"AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi"</strong>!</p>
+    <p>Siamo felici che tu sia iscritto al workshop <strong>"Più Clienti, Più Organizzazione Grazie all'AI"</strong>!</p>
     
     <p>Vogliamo aiutarti a prepararti al meglio per trarre il massimo dall'evento.</p>
     
@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
     
     <div style="background: #e7f3ff; border-left: 4px solid #2196F3; padding: 15px; margin: 20px 0; border-radius: 4px;">
       <p style="margin: 0;"><strong>💡 Prossimo passo importante:</strong></p>
-      <p style="margin: 10px 0 0 0;">Per trarre il massimo dal workshop, ti consigliamo di compilare il <a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test di Maturità Digitale</a>.</p>
+      <p style="margin: 10px 0 0 0;">Per trarre il massimo dal workshop, ti consigliamo di compilare il <a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test Digitalizzazione Aziendale</a>.</p>
       <p style="margin: 10px 0 0 0;">Ti aiuterà a capire da dove partire e a personalizzare l'esperienza del workshop in base alle tue esigenze.</p>
     </div>
     
@@ -141,7 +141,7 @@ export async function POST(request: NextRequest) {
       <p style="margin: 5px 0;">
         <strong>Data:</strong> 
         <a href="${generateGoogleCalendarUrl({
-          title: 'AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi',
+          title: 'Più Clienti, Più Organizzazione Grazie all\'AI',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
         })}" style="color: #667eea; text-decoration: underline;">${WORKSHOP_DATE}</a>
         <span style="margin-left: 10px; font-size: 12px;">
           (<a href="data:text/calendar;charset=utf-8,${encodeURIComponent(generateICS({
-          title: 'AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi',
+          title: 'Più Clienti, Più Organizzazione Grazie all\'AI',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -160,7 +160,7 @@ export async function POST(request: NextRequest) {
       <p style="margin: 5px 0;">
         <strong>🕐 Orario:</strong> 
         <a href="${generateGoogleCalendarUrl({
-          title: 'AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi',
+          title: 'Più Clienti, Più Organizzazione Grazie all\'AI',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -188,7 +188,7 @@ export async function POST(request: NextRequest) {
 
         const emailText = `Ciao ${lead.nome},
 
-Siamo felici che tu sia iscritto al workshop "AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi"!
+Siamo felici che tu sia iscritto al workshop "Più Clienti, Più Organizzazione Grazie all'AI"!
 
 Vogliamo aiutarti a prepararti al meglio per trarre il massimo dall'evento.
 
@@ -199,7 +199,7 @@ Cosa vedrai al workshop:
 ✅ AI Copy Sprint: genereremo contenuti insieme in pochi minuti
 
 💡 Prossimo passo importante:
-Per trarre il massimo dal workshop, ti consigliamo di compilare il Test di Maturità Digitale:
+Per trarre il massimo dal workshop, ti consigliamo di compilare il Test Digitalizzazione Aziendale:
 ${BASE_URL}/test-maturita-digitale
 
 Ti aiuterà a capire da dove partire e a personalizzare l'esperienza del workshop.

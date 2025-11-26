@@ -81,7 +81,7 @@ export default function WorkshopBanner() {
                     •
                   </span>
                   <span className="text-xs sm:text-sm md:text-base opacity-90 line-clamp-1 sm:truncate">
-                    AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi
+                    Più Clienti, Più Organizzazione Grazie all'AI
                   </span>
                 </div>
                 <div className="flex flex-wrap items-center gap-1 sm:gap-2 mt-0.5 sm:mt-1 text-[10px] sm:text-xs md:text-sm opacity-80">

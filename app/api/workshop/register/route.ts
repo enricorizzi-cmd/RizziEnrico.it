@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
     <p style="color: #1a1a1a;">Grazie per esserti iscritto al workshop:</p>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
-      <h2 style="margin-top: 0; color: #667eea;  font-size: 32px;">"AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi"</h2>
+      <h2 style="margin-top: 0; color: #667eea;  font-size: 32px;">"Più Clienti, Più Organizzazione Grazie all'AI"</h2>
       <p style="margin: 10px 0;">
         <strong>📅 Data:</strong> 
         <a href="${generateGoogleCalendarUrl({
@@ -124,16 +124,23 @@ export async function POST(request: NextRequest) {
       </p>
     </div>
     
-    <h3 style="color: #667eea; margin-top: 30px;">Cosa ti porterai a casa:</h3>
+    <h3 style="color: #667eea; margin-top: 30px;">I 2 Temi Principali:</h3>
+    <div style="margin-bottom: 20px;">
+      <h4 style="margin: 0; color: #2d3748; font-size: 18px;">📈 Marketing e Vendite</h4>
+      <p style="margin: 5px 0 15px 0; color: #4a5568;">Con il marketing e le vendite ti aiutiamo ad avere contatti che diventano contratti.</p>
+      
+      <h4 style="margin: 0; color: #2d3748; font-size: 18px;">⚡ Semplificazione Digitale</h4>
+      <p style="margin: 5px 0 0 0; color: #4a5568;">Con la semplificazione digitale dei processi e AI ti aiutiamo a guadagnare tempo e ad avere una organizzazione efficiente e le tue persone sono produttive.</p>
+    </div>
+
+    <h3 style="color: #667eea; margin-top: 30px;">Cosa riceverai inoltre:</h3>
     <ul style="line-height: 2; color: #1a1a1a;">
-      <li>✅ Un sistema concreto di digitalizzazione che puoi replicare</li>
-      <li>✅ Demo live di automazioni e AI per PMI</li>
       <li>✅ Starter Kit: checklist pratica per digitalizzare la tua PMI</li>
       <li>✅ Accesso al test di maturità digitale</li>
     </ul>
     
     <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px;">
-      <p style="margin: 0; color: #1a1a1a;"><strong style="color: #000000;">💡 Prossimo passo:</strong> Compila il <a href="${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/test-maturita-digitale" style="color: #4a5568; font-weight: bold; text-decoration: underline;">Test di Maturità Digitale</a> per capire da dove partire.</p>
+      <p style="margin: 0; color: #1a1a1a;"><strong style="color: #000000;">💡 Prossimo passo:</strong> Compila il <a href="${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/test-maturita-digitale" style="color: #4a5568; font-weight: bold; text-decoration: underline;">Test Digitalizzazione Aziendale</a> per capire da dove partire.</p>
     </div>
     
     <p style="margin-top: 30px; color: #1a1a1a;">Riceverai un promemoria il giorno prima dell'evento con tutti i dettagli.</p>
@@ -157,13 +164,18 @@ Grazie per esserti iscritto al workshop "Ai in Azienda"!
 🕐 Orario: ${WORKSHOP_TIME}
 📍 Luogo: ${WORKSHOP_LOCATION}
 
-Cosa ti porterai a casa:
-✅ Un sistema concreto di digitalizzazione che puoi replicare
-✅ Demo live di automazioni e AI per PMI
+I 2 Temi Principali:
+📈 Marketing e Vendite
+Con il marketing e le vendite ti aiutiamo ad avere contatti che diventano contratti
+
+⚡ Semplificazione Digitale
+Con la semplificazione digitale dei processi e AI ti aiutiamo a guadagnare tempo e ad avere una organizzazione efficiente e le tue persone sono produttive
+
+Cosa riceverai inoltre:
 ✅ Starter Kit: checklist pratica per digitalizzare la tua PMI
 ✅ Accesso al test di maturità digitale
 
-💡 Prossimo passo: Compila il Test di Maturità Digitale qui:
+💡 Prossimo passo: Compila il Test Digitalizzazione Aziendale qui:
 ${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/test-maturita-digitale
 
 Riceverai un promemoria il giorno prima dell'evento.
@@ -522,7 +534,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
     </div>
     
     <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px;">
-      <p style="margin: 0;"><strong>💡 Non dimenticare:</strong> Se non l'hai ancora fatto, compila il <a href="${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test di Maturità Digitale</a> prima del workshop.</p>
+      <p style="margin: 0;"><strong>💡 Non dimenticare:</strong> Se non l'hai ancora fatto, compila il <a href="${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test Digitalizzazione Aziendale</a> prima del workshop.</p>
     </div>
     
     <p style="margin-top: 30px;">A presto! 🚀</p>
@@ -648,7 +660,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
     <h3 style="color: #667eea; margin-top: 30px;">📦 Materiali Promessi</h3>
     <ul style="line-height: 2;">
       <li><a href="${BASE_URL}/download/starter-kit-digitalizzazione" style="color: #667eea; font-weight: bold;">Starter Kit: Checklist Digitalizzazione PMI</a> (PDF)</li>
-      <li><a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test di Maturità Digitale</a> (se non l'hai ancora compilato)</li>
+      <li><a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test Digitalizzazione Aziendale</a> (se non l'hai ancora compilato)</li>
     </ul>
     
     <div style="background: #e7f3ff; border-left: 4px solid #2196F3; padding: 15px; margin: 20px 0; border-radius: 4px;">
@@ -710,7 +722,7 @@ Data registrazione: ${new Date().toLocaleString('it-IT')}
     
     <p>Come va con l'applicazione di quello che hai visto al workshop?</p>
     
-    <p>Se non l'hai ancora fatto, ti ricordiamo di scaricare lo <a href="${BASE_URL}/download/starter-kit-digitalizzazione" style="color: #667eea; font-weight: bold;">Starter Kit</a> e compilare il <a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test di Maturità Digitale</a>.</p>
+    <p>Se non l'hai ancora fatto, ti ricordiamo di scaricare lo <a href="${BASE_URL}/download/starter-kit-digitalizzazione" style="color: #667eea; font-weight: bold;">Starter Kit</a> e compilare il <a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test Digitalizzazione Aziendale</a>.</p>
     
     <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px;">
       <p style="margin: 0;"><strong>💡 Ricorda:</strong> Le condizioni speciali workshop scadono tra 7 giorni. Se vuoi approfittarne, prenota il tuo <a href="${CALENDLY_CHECKUP_URL}" style="color: #667eea; font-weight: bold;">Check-up Digitale Gratuito</a>.</p>

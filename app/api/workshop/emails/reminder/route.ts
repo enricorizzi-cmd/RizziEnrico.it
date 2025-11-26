@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
     <p>Ti ricordiamo che <strong>domani</strong> si terrà il workshop:</p>
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
-      <h2 style="margin-top: 0; color: #667eea;">"AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi"</h2>
+      <h2 style="margin-top: 0; color: #667eea;">"Più Clienti, Più Organizzazione Grazie all'AI"</h2>
       <p style="margin: 10px 0;"><strong>📅 Data:</strong> ${WORKSHOP_DATE}</p>
       <p style="margin: 10px 0;"><strong>🕐 Orario:</strong> ${WORKSHOP_TIME}</p>
       <p style="margin: 10px 0;"><strong>📍 Luogo:</strong> ${WORKSHOP_LOCATION}</p>
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
     </ul>
     
     <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px;">
-      <p style="margin: 0;"><strong>💡 Non dimenticare:</strong> Se non l'hai ancora fatto, compila il <a href="${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test di Maturità Digitale</a> prima del workshop.</p>
+      <p style="margin: 0;"><strong>💡 Non dimenticare:</strong> Se non l'hai ancora fatto, compila il <a href="${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test Digitalizzazione Aziendale</a> prima del workshop.</p>
     </div>
     
     <p style="margin-top: 30px;">Ci vediamo domani! 🚀</p>
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
 
         const emailText = `Ciao ${lead.nome},
 
-Ti ricordiamo che DOMANI si terrà il workshop "AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi"!
+Ti ricordiamo che DOMANI si terrà il workshop "Più Clienti, Più Organizzazione Grazie all'AI"!
 
 📅 Data: ${WORKSHOP_DATE}
 🕐 Orario: ${WORKSHOP_TIME}
@@ -122,7 +122,7 @@ Cosa portare:
 📝 Qualche dato aziendale se vuoi fare domande specifiche
 💡 La voglia di mettere ordine nella tua digitalizzazione!
 
-💡 Non dimenticare: Se non l'hai ancora fatto, compila il Test di Maturità Digitale qui:
+💡 Non dimenticare: Se non l'hai ancora fatto, compila il Test Digitalizzazione Aziendale qui:
 ${process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it'}/test-maturita-digitale
 
 Ci vediamo domani! 🚀

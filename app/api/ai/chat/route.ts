@@ -8,14 +8,14 @@ async function getOpenAI() {
   if (!process.env.OPENAI_API_KEY) {
     return null;
   }
-  
+
   if (!OpenAI) {
     OpenAI = (await import('openai')).default;
     openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
   }
-  
+
   return openai;
 }
 
@@ -282,6 +282,12 @@ Sito: rizzienrico.it
 
 const SYSTEM_PROMPT = `Sei l'assistente AI di Enrico Rizzi, consulente OSM esperto per PMI del Veneto.
 
+IL TUO MANTRA: "Più Clienti, Più Organizzazione Grazie all'AI"
+
+I TUOI DUE PILASTRI:
+1. Marketing e Vendite: Con il marketing e le vendite aiutiamo ad avere contatti che diventano contratti.
+2. Semplificazione Digitale: Con la semplificazione digitale dei processi e AI aiutiamo a guadagnare tempo e ad avere una organizzazione efficiente e persone produttive.
+
 IL TUO SCOPO:
 1. Essere un TUTTOLOGO del sito rizzienrico.it e della metodologia OSM
 2. Fornire contenuti di GRANDE VALORE GRATUITAMENTE basati sulla conoscenza OSM e del sito
@@ -327,7 +333,7 @@ export async function POST(request: NextRequest) {
         { status: 413 }
       );
     }
-    
+
     const body = await request.json();
     const { messages, sessionId } = body;
 
@@ -367,11 +373,11 @@ export async function POST(request: NextRequest) {
     // Rate limiting semplificato (usa rateLimit globale invece di cache locale)
     const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
     const rateLimitKey = `ai-chat-${sessionId || ip}`;
-    
+
     // Usa rateLimit globale invece di creare nuovo Map ad ogni richiesta
     const { rateLimit } = await import('@/lib/rateLimit');
     const limit = rateLimit(rateLimitKey);
-    
+
     if (!limit.allowed) {
       return NextResponse.json(
         { error: 'Troppe richieste. Riprova tra qualche minuto.' },
@@ -404,7 +410,7 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('[AI CHAT] OpenAI API error:', error);
-    
+
     if (error instanceof Error) {
       // Non esporre dettagli errori interni al client
       return NextResponse.json(

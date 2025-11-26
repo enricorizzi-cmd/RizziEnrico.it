@@ -340,7 +340,7 @@ Dimensione originale: ${(dataSize / 1024).toFixed(2)} KB`,
     <!-- INTRO -->
     <div style="background: white; padding: 30px; border-radius: 16px; margin-top: -30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
       <p style="font-size: 18px; margin-bottom: 20px; color: #4b5563;">Ciao <strong>${validatedData.nome}</strong>,</p>
-      <p style="color: #4b5563;">Ecco l'analisi completa della maturità digitale della tua azienda. Abbiamo analizzato le tue risposte per identificare i punti di forza e, soprattutto, i colli di bottiglia che stanno frenando la tua crescita.</p>
+      <p style="color: #4b5563;">Ecco l'analisi completa della digitalizzazione aziendale della tua azienda. Abbiamo analizzato le tue risposte per identificare i punti di forza e, soprattutto, i colli di bottiglia che stanno frenando la tua crescita.</p>
       
       <!-- SCORE CARD -->
       <div style="text-align: center; margin: 30px 0; padding: 20px; background: #f3f4f6; border-radius: 12px;">

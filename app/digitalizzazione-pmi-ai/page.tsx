@@ -82,7 +82,7 @@ export default function DigitalizzazionePMIPage() {
               </p>
               <div className="pt-4 border-t border-[var(--color-line)]">
                 <CTA href="/test-maturita-digitale" variant="secondary" size="base">
-                  📊 Compila il Test di Maturità Digitale
+                  📊 Compila il Test Digitalizzazione Aziendale
                 </CTA>
                 <p className="text-sm text-[var(--color-subtext)] mt-2">
                   Scopri il tuo livello di digitalizzazione in 5 minuti

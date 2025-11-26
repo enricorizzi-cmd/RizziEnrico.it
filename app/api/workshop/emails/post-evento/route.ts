@@ -34,14 +34,14 @@ const emailTemplates: EmailTemplate[] = [
   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
-    <p>Grazie per essere stato al workshop "AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi"!</p>
+    <p>Grazie per essere stato al workshop "Più Clienti, Più Organizzazione Grazie all'AI"!</p>
     
     <p>Speriamo che tu abbia trovato utili gli spunti e le demo che abbiamo condiviso.</p>
     
     <h3 style="color: #667eea; margin-top: 30px;">📦 Materiali Promessi</h3>
     <ul style="line-height: 2;">
       <li><a href="${BASE_URL}/download/starter-kit-digitalizzazione" style="color: #667eea; font-weight: bold;">Starter Kit: Checklist Digitalizzazione PMI</a> (PDF)</li>
-      <li><a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test di Maturità Digitale</a> (se non l'hai ancora compilato)</li>
+      <li><a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test Digitalizzazione Aziendale</a> (se non l'hai ancora compilato)</li>
     </ul>
     
     <div style="background: #e7f3ff; border-left: 4px solid #2196F3; padding: 15px; margin: 20px 0; border-radius: 4px;">
@@ -60,13 +60,13 @@ const emailTemplates: EmailTemplate[] = [
 </html>`,
     text: (lead) => `Ciao ${lead.nome},
 
-Grazie per essere stato al workshop "AI in Azienda: Più Tempo, Più Clienti, Meno Sprechi"!
+Grazie per essere stato al workshop "Più Clienti, Più Organizzazione Grazie all'AI"!
 
 Speriamo che tu abbia trovato utili gli spunti e le demo che abbiamo condiviso.
 
 📦 Materiali Promessi:
 - Starter Kit: Checklist Digitalizzazione PMI: ${BASE_URL}/download/starter-kit-digitalizzazione
-- Test di Maturità Digitale: ${BASE_URL}/test-maturita-digitale
+- Test Digitalizzazione Aziendale: ${BASE_URL}/test-maturita-digitale
 
 🚀 Prossimo Passo: Vuoi applicare subito quello che hai visto? Prenota un Check-up Digitale Gratuito:
 ${CALENDLY_CHECKUP_URL}
@@ -89,7 +89,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`,
     
     <p>Come va con l'applicazione di quello che hai visto al workshop?</p>
     
-      <p>Se non l'hai ancora fatto, ti ricordiamo di scaricare lo <a href="${BASE_URL}/download/starter-kit-digitalizzazione" style="color: #667eea; font-weight: bold;">Starter Kit</a> e compilare il <a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test di Maturità Digitale</a>.</p>
+      <p>Se non l'hai ancora fatto, ti ricordiamo di scaricare lo <a href="${BASE_URL}/download/starter-kit-digitalizzazione" style="color: #667eea; font-weight: bold;">Starter Kit</a> e compilare il <a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test Digitalizzazione Aziendale</a>.</p>
     
     <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px;">
       <p style="margin: 0;"><strong>💡 Ricorda:</strong> Le condizioni speciali workshop scadono tra 7 giorni. Se vuoi approfittarne, prenota il tuo <a href="${CALENDLY_CHECKUP_URL}" style="color: #667eea; font-weight: bold;">Check-up Digitale Gratuito</a>.</p>
@@ -109,7 +109,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`,
 
 Come va con l'applicazione di quello che hai visto al workshop?
 
-Se non l'hai ancora fatto, ti ricordiamo di scaricare lo Starter Kit e compilare il Test di Maturità Digitale.
+Se non l'hai ancora fatto, ti ricordiamo di scaricare lo Starter Kit e compilare il Test Digitalizzazione Aziendale.
 
 💡 Ricorda: Le condizioni speciali workshop scadono tra 7 giorni. Se vuoi approfittarne, prenota il tuo Check-up Digitale Gratuito:
 ${CALENDLY_CHECKUP_URL}

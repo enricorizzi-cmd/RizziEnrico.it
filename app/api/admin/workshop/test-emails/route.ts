@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
     const expectedToken = process.env.CRON_SECRET_TOKEN;
-    
+
     if (!expectedToken || authHeader !== `Bearer ${expectedToken}`) {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = createServerClient();
-    
+
     // Crea un lead di test se non esiste
     const { data: existingLead } = await supabase
       .from('workshop_leads')
@@ -104,7 +104,7 @@ export async function POST(request: NextRequest) {
     </ul>
     
     <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px;">
-      <p style="margin: 0;"><strong>💡 Prossimo passo:</strong> Compila il <a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test di Maturità Digitale</a> per capire da dove partire.</p>
+      <p style="margin: 0;"><strong>💡 Prossimo passo:</strong> Compila il <a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test Digitalizzazione Aziendale</a> per capire da dove partire.</p>
     </div>
     
     <p style="margin-top: 30px;">Riceverai un promemoria il giorno prima dell'evento con tutti i dettagli.</p>
@@ -134,7 +134,7 @@ Cosa ti porterai a casa:
 ✅ Starter Kit: checklist pratica per digitalizzare la tua PMI
 ✅ Accesso al test di maturità digitale
 
-💡 Prossimo passo: Compila il Test di Maturità Digitale qui:
+💡 Prossimo passo: Compila il Test Digitalizzazione Aziendale qui:
 ${BASE_URL}/test-maturita-digitale
 
 Riceverai un promemoria il giorno prima dell'evento.
@@ -191,7 +191,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
     
     <div style="background: #e7f3ff; border-left: 4px solid #2196F3; padding: 15px; margin: 20px 0; border-radius: 4px;">
       <p style="margin: 0;"><strong>💡 Prossimo passo importante:</strong></p>
-      <p style="margin: 10px 0 0 0;">Per trarre il massimo dal workshop, ti consigliamo di compilare il <a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test di Maturità Digitale</a>.</p>
+      <p style="margin: 10px 0 0 0;">Per trarre il massimo dal workshop, ti consigliamo di compilare il <a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test Digitalizzazione Aziendale</a>.</p>
     </div>
     
     <p style="margin-top: 30px;">Ci vediamo presto! 🚀</p>
@@ -413,7 +413,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`;
     <h3 style="color: #667eea; margin-top: 30px;">📦 Materiali Promessi</h3>
     <ul style="line-height: 2;">
       <li><a href="${BASE_URL}/download/starter-kit-digitalizzazione" style="color: #667eea; font-weight: bold;">Starter Kit: Checklist Digitalizzazione PMI</a> (PDF)</li>
-      <li><a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test di Maturità Digitale</a> (se non l'hai ancora compilato)</li>
+      <li><a href="${BASE_URL}/test-maturita-digitale" style="color: #667eea; font-weight: bold;">Test Digitalizzazione Aziendale</a> (se non l'hai ancora compilato)</li>
     </ul>
     
     <div style="background: #e7f3ff; border-left: 4px solid #2196F3; padding: 15px; margin: 20px 0; border-radius: 4px;">

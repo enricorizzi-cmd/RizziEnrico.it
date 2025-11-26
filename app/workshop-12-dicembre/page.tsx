@@ -183,7 +183,7 @@ export default function WorkshopPage() {
             <p className="text-xl md:text-2xl text-gray-700 mb-12 text-center max-w-4xl mx-auto animate-fade-in-up animation-delay-100">
               Scopri come l'AI ti può aiutare ad avere più tempo libero e a costruire un gruppo di lavoro efficiente sui settori marketing, vendite e produzione.
             </p>
-            
+
             {/* Separatore visivo */}
             <div className="flex justify-center mb-12 animate-fade-in-up animation-delay-200">
               <div className="w-24 h-1 bg-gradient-to-r from-transparent via-purple-400 to-transparent rounded-full"></div>
@@ -273,7 +273,7 @@ export default function WorkshopPage() {
                     href="/test-maturita-digitale"
                     className="inline-flex items-center gap-2 text-green-700 hover:text-green-800 font-semibold underline hover:gap-3 transition-all duration-300"
                   >
-                    Compila il Test di Maturità Digitale
+                    Compila il Test Digitalizzazione Aziendale
                     <span className="text-xl">→</span>
                   </a>
                   <p className="text-sm text-green-600 mt-2">per capire da dove partire.</p>
