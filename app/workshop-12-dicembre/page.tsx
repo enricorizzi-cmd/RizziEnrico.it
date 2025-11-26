@@ -175,11 +175,14 @@ export default function WorkshopPage() {
                 Workshop Gratuito per Imprenditori di PMI
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-12 font-heading animate-fade-in-up text-center max-w-5xl mx-auto">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-heading animate-fade-in-up text-center max-w-5xl mx-auto">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-[length:200%_auto] animate-gradient-text block leading-tight">
-                Scopri come l'AI ti può aiutare ad avere più tempo libero e a costruire un gruppo di lavoro efficiente sui settori marketing, vendite e produzione.
+                Più Clienti, Più Organizzazione
               </span>
             </h1>
+            <p className="text-xl md:text-2xl text-gray-700 mb-12 text-center max-w-4xl mx-auto animate-fade-in-up animation-delay-100">
+              Scopri come l'AI ti può aiutare ad avere più tempo libero e a costruire un gruppo di lavoro efficiente sui settori marketing, vendite e produzione.
+            </p>
             
             {/* Separatore visivo */}
             <div className="flex justify-center mb-12 animate-fade-in-up animation-delay-200">
