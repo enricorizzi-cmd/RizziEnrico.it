@@ -194,7 +194,7 @@ export async function POST(request: NextRequest) {
       <p style="margin: 5px 0;">
         <strong>Data:</strong> 
         <a href="${generateGoogleCalendarUrl({
-          title: 'Più Clienti, Più Organizzazione Grazie all\'AI',
+          title: 'AI EXPERIENCE',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -202,7 +202,7 @@ export async function POST(request: NextRequest) {
         })}" style="color: #667eea; text-decoration: underline;">${WORKSHOP_DATE}</a>
         <span style="margin-left: 10px; font-size: 12px;">
           (<a href="data:text/calendar;charset=utf-8,${encodeURIComponent(generateICS({
-          title: 'Più Clienti, Più Organizzazione Grazie all\'AI',
+          title: 'AI EXPERIENCE',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),
@@ -213,7 +213,7 @@ export async function POST(request: NextRequest) {
       <p style="margin: 5px 0;">
         <strong>🕐 Orario:</strong> 
         <a href="${generateGoogleCalendarUrl({
-          title: 'Più Clienti, Più Organizzazione Grazie all\'AI',
+          title: 'AI EXPERIENCE',
           description: 'Workshop esclusivo OSM',
           startDate: new Date('2025-12-12T17:00:00'),
           endDate: new Date('2025-12-12T19:00:00'),

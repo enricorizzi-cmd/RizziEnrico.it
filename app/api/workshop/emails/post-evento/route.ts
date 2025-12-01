@@ -34,7 +34,7 @@ const emailTemplates: EmailTemplate[] = [
   <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px;">
     <p style="font-size: 18px; margin-bottom: 20px;">Ciao <strong>${lead.nome}</strong>,</p>
     
-    <p>Grazie per essere stato al workshop "Più Clienti, Più Organizzazione Grazie all'AI"!</p>
+    <p>Grazie per essere stato al workshop "AI EXPERIENCE"!</p>
     
     <p>Speriamo che tu abbia trovato utili gli spunti e le demo che abbiamo condiviso.</p>
     
@@ -60,7 +60,7 @@ const emailTemplates: EmailTemplate[] = [
 </html>`,
     text: (lead) => `Ciao ${lead.nome},
 
-Grazie per essere stato al workshop "Più Clienti, Più Organizzazione Grazie all'AI"!
+Grazie per essere stato al workshop "AI EXPERIENCE"!
 
 Speriamo che tu abbia trovato utili gli spunti e le demo che abbiamo condiviso.
 
