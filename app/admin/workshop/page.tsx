@@ -453,7 +453,14 @@ export default function WorkshopAdminDashboard() {
                         </div>
                         <div className="text-sm text-gray-600 flex items-center gap-2 mt-1">
                           <a
-                            href={`https://wa.me/${lead.telefono.replace(/[^0-9]/g, '')}`}
+                            href={`https://wa.me/${lead.telefono.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Buongiorno ${lead.nome},
+ti contatto riguardo l'iscrizione al workshop AI EXPERIENCE del 12 Dicembre.
+Chiedo di confermarmi la tua presenza così da poterti inserire nel gruppo whatsapp dedicato ad aggionramenti e info importanti.
+Non vediamo l'ora di averti nostro ospite.
+
+Grazie, a presto!
+
+Rizzi Enrico - Osm`)}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="w-8 h-8 rounded-full bg-green-50 text-green-600 hover:bg-green-100 hover:text-green-800 flex items-center justify-center transition-colors"
@@ -529,9 +536,9 @@ export default function WorkshopAdminDashboard() {
                           value={lead.stato}
                           onChange={(e) => updateLead(lead.id, { stato: e.target.value })}
                           className={`text-xs font-semibold border rounded px-2 py-1 focus:ring-2 focus:ring-purple-500 outline-none cursor-pointer ${lead.stato === 'nuovo' ? 'bg-blue-50 text-blue-700 border-blue-200' :
-                              lead.stato === 'contattato' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
-                                lead.stato === 'confermato' ? 'bg-green-50 text-green-700 border-green-200' :
-                                  'bg-gray-50 text-gray-700 border-gray-200'
+                            lead.stato === 'contattato' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
+                              lead.stato === 'confermato' ? 'bg-green-50 text-green-700 border-green-200' :
+                                'bg-gray-50 text-gray-700 border-gray-200'
                             }`}
                         >
                           <option value="nuovo">Nuovo</option>
@@ -641,10 +648,10 @@ export default function WorkshopAdminDashboard() {
                         <div
                           key={index}
                           className={`p-4 rounded-lg border-l-4 transition-all hover:shadow-md ${problema.priorita === 'alta'
-                              ? 'bg-red-50/80 border-red-500'
-                              : problema.priorita === 'media'
-                                ? 'bg-yellow-50/80 border-yellow-500'
-                                : 'bg-blue-50/80 border-blue-500'
+                            ? 'bg-red-50/80 border-red-500'
+                            : problema.priorita === 'media'
+                              ? 'bg-yellow-50/80 border-yellow-500'
+                              : 'bg-blue-50/80 border-blue-500'
                             }`}
                         >
                           <div className="flex items-start justify-between">
@@ -654,10 +661,10 @@ export default function WorkshopAdminDashboard() {
                                   {problema.categoria}
                                 </span>
                                 <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded shadow-sm ${problema.priorita === 'alta'
-                                    ? 'bg-red-100 text-red-700'
-                                    : problema.priorita === 'media'
-                                      ? 'bg-yellow-100 text-yellow-700'
-                                      : 'bg-blue-100 text-blue-700'
+                                  ? 'bg-red-100 text-red-700'
+                                  : problema.priorita === 'media'
+                                    ? 'bg-yellow-100 text-yellow-700'
+                                    : 'bg-blue-100 text-blue-700'
                                   }`}>
                                   {problema.priorita}
                                 </span>
