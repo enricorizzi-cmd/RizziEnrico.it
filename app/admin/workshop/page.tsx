@@ -455,7 +455,7 @@ export default function WorkshopAdminDashboard() {
                           <a
                             href={`https://wa.me/${lead.telefono.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Buongiorno ${lead.nome},
 ti contatto riguardo l'iscrizione al workshop AI EXPERIENCE del 12 Dicembre.
-Chiedo di confermarmi la tua presenza così da poterti inserire nel gruppo whatsapp dedicato ad aggionramenti e info importanti.
+Chiedo di confermarmi la tua presenza rispondendo a questo messaggio così da poterti aggiungere nel gruppo whatsapp dedicato ad aggiornamenti e info importanti.
 Non vediamo l'ora di averti nostro ospite.
 
 Grazie, a presto!
