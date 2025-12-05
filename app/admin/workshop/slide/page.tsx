@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Script from 'next/script';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 export default function WorkshopSlidesPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -292,10 +293,6 @@ export default function WorkshopSlidesPage() {
       <link
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Audiowide&family=Share+Tech+Mono&display=swap"
         rel="stylesheet"
-      />
-      <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
       />
       <style jsx global>{`
         :root {
