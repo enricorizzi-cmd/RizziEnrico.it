@@ -750,24 +750,41 @@ export default function WorkshopSlidesPage() {
                   <line x1="670" y1="450" x2="670" y2="350" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
                   <rect x="240" y="50" width="60" height="400" fill="var(--neon-red)" opacity="0.15" />
                   <text x="270" y="280" fill="var(--neon-red)" textAnchor="middle" fontSize="26" fontWeight="bold" transform="rotate(-90 270,280)">L&apos;ABISSO</text>
-                  <rect x="25" y="400" width="70" height="30" fill="var(--neon-purple)" opacity="0.8" rx="3" />
-                  <text x="60" y="420" fill="#fff" textAnchor="middle" fontSize="13" fontWeight="bold" dominantBaseline="middle">INNOVATORI</text>
-                  <text x="60" y="385" fill="var(--neon-purple)" textAnchor="middle" fontSize="16" fontWeight="bold">2.5%</text>
-                  <rect x="120" y="370" width="120" height="50" fill="var(--neon-green)" opacity="0.8" rx="3" />
-                  <text x="180" y="393" fill="#fff" textAnchor="middle" fontSize="13" fontWeight="bold" dominantBaseline="middle">ADOTTATORI</text>
-                  <text x="180" y="410" fill="#fff" textAnchor="middle" fontSize="13" fontWeight="bold" dominantBaseline="middle">PRECOCI</text>
-                  <text x="180" y="355" fill="var(--neon-green)" textAnchor="middle" fontSize="16" fontWeight="bold">13.5%</text>
-                  <rect x="300" y="250" width="200" height="105" fill="var(--neon-blue)" opacity="0.8" rx="3" />
-                  <text x="400" y="278" fill="#fff" textAnchor="middle" fontSize="14" fontWeight="bold" dominantBaseline="middle">MAGGIORANZA</text>
-                  <text x="400" y="295" fill="#fff" textAnchor="middle" fontSize="14" fontWeight="bold" dominantBaseline="middle">PRECOCE</text>
-                  <text x="400" y="235" fill="var(--neon-blue)" textAnchor="middle" fontSize="18" fontWeight="bold">34%</text>
-                  <rect x="500" y="250" width="170" height="105" fill="rgba(0, 243, 255, 0.6)" opacity="0.8" rx="3" />
-                  <text x="585" y="278" fill="#fff" textAnchor="middle" fontSize="14" fontWeight="bold" dominantBaseline="middle">MAGGIORANZA</text>
-                  <text x="585" y="295" fill="#fff" textAnchor="middle" fontSize="14" fontWeight="bold" dominantBaseline="middle">TARDIVA</text>
-                  <text x="585" y="235" fill="var(--neon-blue)" textAnchor="middle" fontSize="18" fontWeight="bold">34%</text>
-                  <rect x="760" y="370" width="100" height="50" fill="rgba(255, 255, 255, 0.6)" opacity="0.8" rx="3" />
-                  <text x="810" y="393" fill="#000" textAnchor="middle" fontSize="13" fontWeight="bold" dominantBaseline="middle">RITARDATARI</text>
-                  <text x="810" y="355" fill="#fff" textAnchor="middle" fontSize="16" fontWeight="bold">16%</text>
+                  
+                  {/* INNOVATORI (2.5%) - Curva: x=50 y=420, x=60 y≈385, x=120 y=350 */}
+                  <rect x="25" y="370" width="70" height="30" fill="var(--neon-purple)" opacity="0.8" rx="3" />
+                  <text x="60" y="390" fill="#fff" textAnchor="middle" fontSize="13" fontWeight="bold" dominantBaseline="middle">INNOVATORI</text>
+                  <text x="60" y="355" fill="var(--neon-purple)" textAnchor="middle" fontSize="16" fontWeight="bold">2.5%</text>
+                  
+                  {/* ADOTTATORI PRECOCI (13.5%) - Curva: x=120 y=350, x=180 y=240, x=240 y=120 */}
+                  <rect x="120" y="215" width="120" height="50" fill="var(--neon-green)" opacity="0.8" rx="3" />
+                  <text x="180" y="238" fill="#fff" textAnchor="middle" fontSize="13" fontWeight="bold" dominantBaseline="middle">ADOTTATORI</text>
+                  <text x="180" y="255" fill="#fff" textAnchor="middle" fontSize="13" fontWeight="bold" dominantBaseline="middle">PRECOCI</text>
+                  <text x="180" y="200" fill="var(--neon-green)" textAnchor="middle" fontSize="16" fontWeight="bold">13.5%</text>
+                  
+                  {/* MAGGIORANZA PRECOCE (34%) - Curva: x=300 y=35, x=400 y=25 (vicino picco y=18), x=500 y=160 */}
+                  <rect x="300" y="40" width="200" height="105" fill="var(--neon-blue)" opacity="0.8" rx="3" />
+                  <text x="400" y="68" fill="#fff" textAnchor="middle" fontSize="14" fontWeight="bold" dominantBaseline="middle">MAGGIORANZA</text>
+                  <text x="400" y="85" fill="#fff" textAnchor="middle" fontSize="14" fontWeight="bold" dominantBaseline="middle">PRECOCE</text>
+                  <text x="400" y="103" fill="#fff" textAnchor="middle" fontSize="11" dominantBaseline="middle">(Pragmatici)</text>
+                  <text x="400" y="120" fill="#fff" textAnchor="middle" fontSize="11" dominantBaseline="middle">Aspettano soluzioni</text>
+                  <text x="400" y="133" fill="#fff" textAnchor="middle" fontSize="11" dominantBaseline="middle">già provate</text>
+                  <text x="400" y="25" fill="var(--neon-blue)" textAnchor="middle" fontSize="18" fontWeight="bold">34%</text>
+                  
+                  {/* MAGGIORANZA TARDIVA (34%) - Curva: x=500 y=160, x=585 y≈255, x=670 y=350 */}
+                  <rect x="500" y="220" width="170" height="105" fill="rgba(0, 243, 255, 0.6)" opacity="0.8" rx="3" />
+                  <text x="585" y="248" fill="#fff" textAnchor="middle" fontSize="14" fontWeight="bold" dominantBaseline="middle">MAGGIORANZA</text>
+                  <text x="585" y="265" fill="#fff" textAnchor="middle" fontSize="14" fontWeight="bold" dominantBaseline="middle">TARDIVA</text>
+                  <text x="585" y="283" fill="#fff" textAnchor="middle" fontSize="11" dominantBaseline="middle">(Conservatori)</text>
+                  <text x="585" y="300" fill="#fff" textAnchor="middle" fontSize="11" dominantBaseline="middle">Adottano quando</text>
+                  <text x="585" y="313" fill="#fff" textAnchor="middle" fontSize="11" dominantBaseline="middle">diventa standard</text>
+                  <text x="585" y="205" fill="var(--neon-blue)" textAnchor="middle" fontSize="18" fontWeight="bold">34%</text>
+                  
+                  {/* RITARDATARI (16%) - Curva: x=670 y=350, x=810 y≈385, x=950 y=420 */}
+                  <rect x="760" y="360" width="100" height="50" fill="rgba(255, 255, 255, 0.6)" opacity="0.8" rx="3" />
+                  <text x="810" y="383" fill="#000" textAnchor="middle" fontSize="13" fontWeight="bold" dominantBaseline="middle">RITARDATARI</text>
+                  <text x="810" y="400" fill="#000" textAnchor="middle" fontSize="12" dominantBaseline="middle">(Scettici)</text>
+                  <text x="810" y="345" fill="#fff" textAnchor="middle" fontSize="16" fontWeight="bold">16%</text>
                   <text x="500" y="445" fill="rgba(255,255,255,0.7)" textAnchor="middle" fontSize="14" fontWeight="bold">TEMPO →</text>
                   <circle cx="500" cy="18" r="6" fill="var(--neon-blue)" filter="url(#glow)" />
                   <text x="500" y="10" fill="var(--neon-blue)" textAnchor="middle" fontSize="11" fontWeight="bold">PICCO</text>
