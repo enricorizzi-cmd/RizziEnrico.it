@@ -83,6 +83,7 @@ export default function WorkshopAdminDashboard() {
   const [filters, setFilters] = useState({
     stato: 'tutti',
     fonte: 'tutti',
+    ricerca: '',
   });
   const [editingLead, setEditingLead] = useState<WorkshopLead | null>(null);
   const [insights, setInsights] = useState<Insights | null>(null);
@@ -100,6 +101,7 @@ export default function WorkshopAdminDashboard() {
       const params = new URLSearchParams();
       if (filters.stato !== 'tutti') params.append('stato', filters.stato);
       if (filters.fonte !== 'tutti') params.append('fonte', filters.fonte);
+      if (filters.ricerca) params.append('ricerca', filters.ricerca);
 
       const response = await fetch(`/api/admin/workshop/leads?${params.toString()}`);
       if (!response.ok) throw new Error('Errore nel caricamento');
@@ -360,7 +362,17 @@ export default function WorkshopAdminDashboard() {
 
         {/* Filtri */}
         <div className="glass p-6 rounded-[var(--radius-card)] border border-[var(--color-line)] mb-8">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
+            <div>
+              <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Cerca Nome/Azienda</label>
+              <input
+                type="text"
+                value={filters.ricerca}
+                onChange={(e) => setFilters({ ...filters, ricerca: e.target.value })}
+                placeholder="Cerca per nome, cognome o azienda..."
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white/80"
+              />
+            </div>
             <div>
               <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Filtra per Stato</label>
               <select
@@ -431,20 +443,46 @@ export default function WorkshopAdminDashboard() {
                     <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
                       Chiamate
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-                      Azioni
-                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white/40 divide-y divide-gray-200">
                   {leads.map((lead) => (
                     <tr key={lead.id} className="hover:bg-purple-50/50 transition-colors">
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="font-bold text-gray-900">
-                          {lead.nome} {lead.cognome}
+                        <div className="flex items-start gap-3">
+                          {/* Bottoni Azioni - Verticali */}
+                          <div className="flex flex-col gap-2 pt-1">
+                            <button
+                              onClick={() => incrementCalls(lead)}
+                              className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 hover:text-blue-800 flex items-center justify-center transition-colors"
+                              title="Chiama"
+                            >
+                              📞
+                            </button>
+                            <button
+                              onClick={() => confirmParticipation(lead)}
+                              className="w-8 h-8 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 hover:text-indigo-800 flex items-center justify-center transition-colors"
+                              title="Conferma partecipazione"
+                            >
+                              ✓
+                            </button>
+                            <button
+                              onClick={() => markPresent(lead)}
+                              className="w-8 h-8 rounded-full bg-green-50 text-green-600 hover:bg-green-100 hover:text-green-800 flex items-center justify-center transition-colors"
+                              title="Registra presenza"
+                            >
+                              ✅
+                            </button>
+                          </div>
+                          {/* Nome e Azienda */}
+                          <div className="flex-1">
+                            <div className="font-bold text-gray-900">
+                              {lead.nome} {lead.cognome}
+                            </div>
+                            <div className="text-sm text-gray-600 font-medium">{lead.azienda}</div>
+                            <div className="text-xs text-gray-400 uppercase tracking-wide mt-1">{lead.ruolo}</div>
+                          </div>
                         </div>
-                        <div className="text-sm text-gray-600 font-medium">{lead.azienda}</div>
-                        <div className="text-xs text-gray-400 uppercase tracking-wide mt-1">{lead.ruolo}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900 flex items-center gap-2">
@@ -567,40 +605,6 @@ Rizzi Enrico - Osm`)}`}
                             {new Date(lead.ultima_chiamata).toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit' })}
                           </div>
                         )}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <div className="flex gap-2 justify-center items-center">
-                          <div className="flex flex-col items-center gap-1">
-                            <button
-                              onClick={() => incrementCalls(lead)}
-                              className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 hover:text-blue-800 flex items-center justify-center transition-colors"
-                              title="Chiama"
-                            >
-                              📞
-                            </button>
-                            <span className="text-[10px] text-gray-500">Chiama</span>
-                          </div>
-                          <div className="flex flex-col items-center gap-1">
-                            <button
-                              onClick={() => confirmParticipation(lead)}
-                              className="w-8 h-8 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 hover:text-indigo-800 flex items-center justify-center transition-colors"
-                              title="Conferma partecipazione"
-                            >
-                              ✓
-                            </button>
-                            <span className="text-[10px] text-gray-500">Conferma</span>
-                          </div>
-                          <div className="flex flex-col items-center gap-1">
-                            <button
-                              onClick={() => markPresent(lead)}
-                              className="w-8 h-8 rounded-full bg-green-50 text-green-600 hover:bg-green-100 hover:text-green-800 flex items-center justify-center transition-colors"
-                              title="Registra presenza"
-                            >
-                              ✅
-                            </button>
-                            <span className="text-[10px] text-gray-500">Presenza</span>
-                          </div>
-                        </div>
                       </td>
                     </tr>
                   ))}

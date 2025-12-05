@@ -8,6 +8,7 @@ export async function GET(request: NextRequest) {
     
     const stato = searchParams.get('stato');
     const fonte = searchParams.get('fonte');
+    const ricerca = searchParams.get('ricerca');
 
     let query = supabase
       .from('workshop_leads')
@@ -20,6 +21,11 @@ export async function GET(request: NextRequest) {
 
     if (fonte && fonte !== 'tutti') {
       query = query.eq('fonte', fonte);
+    }
+
+    if (ricerca && ricerca.trim() !== '') {
+      const ricercaLower = ricerca.toLowerCase().trim();
+      query = query.or(`nome.ilike.%${ricercaLower}%,cognome.ilike.%${ricercaLower}%,azienda.ilike.%${ricercaLower}%`);
     }
 
     const { data, error } = await query;
