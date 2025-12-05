@@ -17,11 +17,24 @@ export default function WorkshopSlidesPage() {
 
   useEffect(() => {
     setMounted(true);
-    initParticles();
-    animateParticles();
-    updateSlide(0);
+    
+    // Aspetta che il DOM sia pronto prima di inizializzare
+    const timer = setTimeout(() => {
+      if (bgCanvasRef.current && matrixCanvasRef.current) {
+        // Inizializza dimensioni canvas
+        bgCanvasRef.current.width = window.innerWidth;
+        bgCanvasRef.current.height = window.innerHeight;
+        matrixCanvasRef.current.width = window.innerWidth;
+        matrixCanvasRef.current.height = window.innerHeight;
+        
+        // Inizializza particelle e animazione
+        initParticles();
+      }
+      updateSlide(0);
+    }, 200);
 
     return () => {
+      clearTimeout(timer);
       if (matrixIntervalRef.current) {
         clearInterval(matrixIntervalRef.current);
       }
@@ -629,9 +642,9 @@ export default function WorkshopSlidesPage() {
         }
       `}</style>
 
-      <div className="fixed inset-0 bg-black text-white overflow-hidden" style={{ width: '100vw', height: '100vh', margin: 0, padding: 0 }}>
-        <canvas ref={matrixCanvasRef} id="matrix-canvas" />
-        <canvas ref={bgCanvasRef} id="bg-canvas" />
+      <div id="slide-root" className="fixed inset-0 bg-black text-white overflow-hidden" style={{ width: '100vw', height: '100vh', margin: 0, padding: 0, zIndex: 1 }}>
+        <canvas ref={matrixCanvasRef} id="matrix-canvas" style={{ display: 'none', position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }} />
+        <canvas ref={bgCanvasRef} id="bg-canvas" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, opacity: 0.3 }} />
         <div className="scanline" />
         <div className="vignette" />
 

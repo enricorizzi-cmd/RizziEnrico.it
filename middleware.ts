@@ -58,25 +58,31 @@ export function middleware(request: NextRequest) {
   // Trusted Types rimosso perché incompatibile con Google Analytics e altri script dinamici
   // La sicurezza è già garantita dal CSP sopra
 
-  // Basic Auth per /admin
-  if (pathname.startsWith('/admin')) {
+  // Basic Auth per /admin (escludi /api/auth stesso)
+  if (pathname.startsWith('/admin') && !pathname.startsWith('/api/auth')) {
     const basicAuth = request.headers.get('authorization');
     const url = request.nextUrl;
 
     if (basicAuth) {
-      const authValue = basicAuth.split(' ')[1];
-      const [user, pwd] = atob(authValue).split(':');
+      try {
+        const authValue = basicAuth.split(' ')[1];
+        const [user, pwd] = atob(authValue).split(':');
 
-      if (pwd === 'osm') {
-        return response;
+        // Verifica password (qualsiasi username va bene, password deve essere 'osm')
+        if (pwd === 'osm') {
+          return response;
+        }
+      } catch (e) {
+        // Invalid auth format
       }
     }
 
-    url.pathname = '/api/auth';
-    return new NextResponse('Auth Required', {
+    // Richiedi autenticazione
+    return new NextResponse('Authentication Required', {
       status: 401,
       headers: {
         'WWW-Authenticate': 'Basic realm="Secure Area"',
+        'Cache-Control': 'no-store',
       },
     });
   }
