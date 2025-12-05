@@ -27,8 +27,11 @@ export default function WorkshopSlidesPage() {
         matrixCanvasRef.current.width = window.innerWidth;
         matrixCanvasRef.current.height = window.innerHeight;
         
-        // Inizializza particelle e animazione
+        // Inizializza particelle
         initParticles();
+        
+        // AVVIA L'ANIMAZIONE - questo era mancante!
+        animateParticles();
       }
       updateSlide(0);
     }, 200);
@@ -74,10 +77,22 @@ export default function WorkshopSlidesPage() {
   };
 
   const animateParticles = () => {
-    if (!bgCanvasRef.current) return;
+    if (!bgCanvasRef.current) {
+      // Se il canvas non è ancora pronto, riprova al prossimo frame
+      animationFrameRef.current = requestAnimationFrame(animateParticles);
+      return;
+    }
     const canvas = bgCanvasRef.current;
     const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    if (!ctx) {
+      animationFrameRef.current = requestAnimationFrame(animateParticles);
+      return;
+    }
+    
+    // Se non ci sono particelle, inizializza
+    if (particlesRef.current.length === 0) {
+      initParticles();
+    }
 
     const width = canvas.width;
     const height = canvas.height;
@@ -334,13 +349,16 @@ export default function WorkshopSlidesPage() {
         }
 
         #bg-canvas {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: 0;
-          opacity: 0.3;
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          z-index: 0 !important;
+          opacity: 0.3 !important;
+          display: block !important;
+          visibility: visible !important;
+          pointer-events: none !important;
         }
 
         #matrix-canvas {
@@ -643,8 +661,8 @@ export default function WorkshopSlidesPage() {
       `}</style>
 
       <div id="slide-root" className="fixed inset-0 bg-black text-white overflow-hidden" style={{ width: '100vw', height: '100vh', margin: 0, padding: 0, zIndex: 1 }}>
-        <canvas ref={matrixCanvasRef} id="matrix-canvas" style={{ display: 'none', position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }} />
-        <canvas ref={bgCanvasRef} id="bg-canvas" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, opacity: 0.3 }} />
+        <canvas ref={matrixCanvasRef} id="matrix-canvas" style={{ display: 'none', position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, pointerEvents: 'none' }} />
+        <canvas ref={bgCanvasRef} id="bg-canvas" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, opacity: 0.3, display: 'block', visibility: 'visible', pointerEvents: 'none' }} />
         <div className="scanline" />
         <div className="vignette" />
 
