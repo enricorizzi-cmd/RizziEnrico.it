@@ -195,8 +195,8 @@ export default function WorkshopSlidesPage() {
     if (progressBar) progressBar.style.width = `${progress}%`;
     if (slideNumber) slideNumber.textContent = `${String(index + 1).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
 
-    // Matrix Rain Toggle
-    if (index === 7) { // slide-8 (0-indexed)
+    // Matrix Rain Toggle - Solo per "MATRIX DI COMPETENZE" (slide-8, index 9)
+    if (index === 9) { // slide-8 "MATRIX DI COMPETENZE" (0-indexed: slide-1=0, slide-2=1, ..., slide-8=9)
       if (matrixCanvasRef.current) matrixCanvasRef.current.style.display = 'block';
       if (bgCanvasRef.current) bgCanvasRef.current.style.display = 'none';
       startMatrix();
