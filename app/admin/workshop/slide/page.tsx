@@ -631,7 +631,7 @@ export default function WorkshopSlidesPage() {
         }
       `}</style>
 
-      <div className="fixed inset-0 bg-black text-white overflow-hidden">
+      <div className="fixed inset-0 bg-black text-white overflow-hidden" style={{ width: '100vw', height: '100vh', margin: 0, padding: 0 }}>
         <canvas ref={matrixCanvasRef} id="matrix-canvas" />
         <canvas ref={bgCanvasRef} id="bg-canvas" />
         <div className="scanline" />
