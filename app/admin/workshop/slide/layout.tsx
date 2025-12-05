@@ -8,16 +8,21 @@ export default function SlideLayout({
   children: React.ReactNode;
 }) {
   useEffect(() => {
-    // Nascondi tutti gli elementi del layout principale, mostrando solo #slide-root
+    // Nascondi solo elementi di layout (header/footer/banner/widget), non il main contenuto
     const style = document.createElement('style');
     style.textContent = `
-      /* Nascondi tutto tranne il container delle slide e il main che lo contiene */
-      body > *:not(#slide-root):not(main) {
-        display: none !important;
-        visibility: hidden !important;
-      }
-      /* Dentro il main lascia solo #slide-root */
-      main > *:not(#slide-root) {
+      header,
+      footer,
+      nav,
+      .skip-to-content,
+      .cookie-banner,
+      .workshop-banner,
+      .client-widgets,
+      .whatsapp,
+      [id*="cookie"],
+      [id*="banner"],
+      [class*="cookie"],
+      [class*="banner"] {
         display: none !important;
         visibility: hidden !important;
       }
@@ -37,11 +42,6 @@ export default function SlideLayout({
         padding: 0 !important;
         margin: 0 !important;
         padding-top: 0 !important;
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
         background: #000 !important;
       }
     `;
