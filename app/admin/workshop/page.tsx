@@ -199,6 +199,12 @@ export default function WorkshopAdminDashboard() {
             </div>
             <div className="flex gap-4">
               <a
+                href="/admin/workshop/slide"
+                className="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors font-semibold shadow-lg hover:shadow-cyan-500/30"
+              >
+                🎯 Slide Workshop
+              </a>
+              <a
                 href="/admin/workshop/analisi-email"
                 className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold shadow-lg hover:shadow-purple-500/30"
               >
