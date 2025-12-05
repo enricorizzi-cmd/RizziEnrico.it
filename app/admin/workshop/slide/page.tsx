@@ -289,7 +289,8 @@ export default function WorkshopSlidesPage() {
   }
 
   return (
-    <>
+    <div id="slide-root" style={{ width: '100vw', height: '100vh' }}>
+      <>
       <link
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Audiowide&family=Share+Tech+Mono&display=swap"
         rel="stylesheet"
@@ -1256,7 +1257,8 @@ export default function WorkshopSlidesPage() {
           </div>
         </div>
       </div>
-    </>
+      </>
+    </div>
   );
 }
 

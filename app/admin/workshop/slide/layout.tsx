@@ -8,34 +8,30 @@ export default function SlideLayout({
   children: React.ReactNode;
 }) {
   useEffect(() => {
-    // Nascondi tutti gli elementi del layout principale
+    // Nascondi tutti gli elementi del layout principale, mostrando solo #slide-root
     const style = document.createElement('style');
     style.textContent = `
-      /* Nascondi tutti gli elementi del layout principale */
-      header,
-      footer,
-      nav,
-      .skip-to-content,
-      [id="main-content"],
-      [class*="workshop"],
-      [class*="cookie"],
-      [class*="widget"],
-      [id*="widget"],
-      [id*="banner"] {
+      /* Nascondi tutto tranne il container delle slide e il main che lo contiene */
+      body > *:not(#slide-root):not(main) {
         display: none !important;
         visibility: hidden !important;
       }
-      
-      /* Rimuovi padding e margin dal body */
-      body {
+      /* Dentro il main lascia solo #slide-root */
+      main > *:not(#slide-root) {
+        display: none !important;
+        visibility: hidden !important;
+      }
+
+      /* Rimuovi padding e margin dal body e imposta fullscreen */
+      html, body {
         margin: 0 !important;
         padding: 0 !important;
         overflow: hidden !important;
-        position: fixed !important;
         width: 100vw !important;
         height: 100vh !important;
+        background: #000 !important;
       }
-      
+
       /* Assicura che il main non abbia padding */
       main {
         padding: 0 !important;
@@ -46,14 +42,7 @@ export default function SlideLayout({
         left: 0 !important;
         width: 100vw !important;
         height: 100vh !important;
-      }
-      
-      /* Nascondi eventuali elementi aggiuntivi */
-      aside,
-      [role="banner"],
-      [role="contentinfo"],
-      [role="complementary"] {
-        display: none !important;
+        background: #000 !important;
       }
     `;
     document.head.appendChild(style);
