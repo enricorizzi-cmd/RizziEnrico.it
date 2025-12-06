@@ -19,7 +19,7 @@ export default function StarterKitPage() {
           <p className="text-xl text-gray-600">
             Workshop "AI EXPERIENCE: Più Tempo, Più Clienti, Meno Sprechi"
             <br />
-            <span className="text-sm">Venerdì 12 dicembre 2025 - OSM Venezia - Via Sertorio Orsato 22, Venezia</span>
+            <span className="text-sm">Venerdì 12 dicembre 2025 - Hotel Belstay Mestre, Rotonda Romea, 1 - Venezia</span>
           </p>
         </div>
 

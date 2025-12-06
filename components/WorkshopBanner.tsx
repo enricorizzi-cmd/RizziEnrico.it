@@ -89,7 +89,7 @@ export default function WorkshopBanner() {
                   <span className="hidden sm:inline">•</span>
                   <span className="whitespace-nowrap">🕐 16:30 - 19:00</span>
                   <span className="hidden md:inline">•</span>
-                  <span className="hidden md:inline whitespace-nowrap">📍 OSM Venezia</span>
+                  <span className="hidden md:inline whitespace-nowrap">📍 Hotel Belstay Mestre</span>
                 </div>
               </div>
 

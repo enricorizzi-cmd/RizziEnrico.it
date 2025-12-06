@@ -201,7 +201,7 @@ export default function WorkshopPage() {
                     </div>
                     <div className="flex items-center gap-3 text-slate-600">
                       <span className="text-2xl">📍</span>
-                      <span className="text-lg">OSM Venezia, Via Sertorio Orsato 22</span>
+                      <span className="text-lg">Hotel Belstay Mestre, Rotonda Romea, 1 - Venezia</span>
                     </div>
                   </div>
 

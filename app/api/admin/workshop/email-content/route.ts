@@ -10,7 +10,7 @@ Grazie per esserti iscritto al workshop "AI EXPERIENCE"!
 
 📅 Data: Venerdì 12 dicembre 2025
 🕐 Orario: dalle ore 17.00 (accettazione dalle ore 16.30)
-📍 Luogo: OSM Venezia - Via Sertorio Orsato 22, Venezia
+📍 Luogo: Hotel Belstay Mestre, Rotonda Romea, 1 - Venezia
 
 I 2 Temi Principali:
 📈 Marketing e Vendite
@@ -59,7 +59,7 @@ Ti aiuterà a capire da dove partire e a personalizzare l'esperienza del worksho
 📅 Dettagli Evento:
 Data: Venerdì 12 dicembre 2025
 Orario: dalle ore 17.00 (accettazione dalle ore 16.30)
-Luogo: OSM Venezia - Via Sertorio Orsato 22, Venezia
+Luogo: Hotel Belstay Mestre, Rotonda Romea, 1 - Venezia
 
 Ci vediamo presto! 🚀
 
@@ -120,7 +120,7 @@ https://rizzienrico.it/test-maturita-digitale
 📅 Dettagli Evento:
 Data: Venerdì 12 dicembre 2025
 Orario: dalle ore 17.00 (accettazione dalle ore 16.30)
-Luogo: OSM Venezia - Via Sertorio Orsato 22, Venezia
+Luogo: Hotel Belstay Mestre, Rotonda Romea, 1 - Venezia
 
 Non vediamo l'ora di vederti! 🚀
 
@@ -159,8 +159,8 @@ Il workshop "Più Clienti, Più Organizzazione Grazie all'AI" si avvicina!
 https://rizzienrico.it/test-maturita-digitale
 
 📍 Informazioni Logistiche:
-Luogo: OSM Venezia - Via Sertorio Orsato 22, Venezia
-Indirizzo: Via Sertorio Orsato 22, Venezia
+Luogo: Hotel Belstay Mestre, Rotonda Romea, 1 - Venezia
+Indirizzo: Rotonda Romea, 1 - Venezia
 Parcheggio: Disponibile
 Mezzi pubblici: [Da aggiornare]
 📞 Contatto emergenze: Rispondi a questa email o chiama [telefono]
@@ -184,7 +184,7 @@ Vai alla pagina del Workshop: https://www.rizzienrico.it/workshop-12-dicembre`,
 Ti aspettiamo al workshop "Più Clienti, Più Organizzazione Grazie all'AI" dalle ore 17.00 (accettazione dalle ore 16.30).
 
 📅 Venerdì 12 dicembre 2025 - 🕐 dalle ore 17.00 (accettazione dalle ore 16.30)
-📍 OSM Venezia - Via Sertorio Orsato 22, Venezia
+📍 Hotel Belstay Mestre, Rotonda Romea, 1 - Venezia
 
 💡 Siamo entusiasti di condividere con te:
 - Un sistema che funziona davvero (non solo teoria!)
@@ -193,8 +193,8 @@ Ti aspettiamo al workshop "Più Clienti, Più Organizzazione Grazie all'AI" dall
 - Dashboard real-time con lead che arrivano
 
 📍 Info Pratiche:
-Luogo: OSM Venezia - Via Sertorio Orsato 22, Venezia
-Indirizzo: Via Sertorio Orsato 22, Venezia
+Luogo: Hotel Belstay Mestre, Rotonda Romea, 1 - Venezia
+Indirizzo: Rotonda Romea, 1 - Venezia
 🕐 Inizio: dalle ore 17.00 (accettazione dalle ore 16.30)
 ☕ Caffè e networking incluso
 📞 Contatto emergenze: Rispondi a questa email o chiama [telefono]

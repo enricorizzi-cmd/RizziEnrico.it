@@ -6,7 +6,7 @@ import { generateICS, generateGoogleCalendarUrl, generateMapsUrl } from '@/lib/c
 const NOTIFICATION_EMAIL = 'enricorizzi1991@gmail.com';
 const WORKSHOP_DATE = 'Venerdì 12 dicembre 2025';
 const WORKSHOP_TIME = 'dalle ore 17.00 (accettazione dalle ore 16.30)';
-const WORKSHOP_LOCATION = 'OSM Venezia - Via Sertorio Orsato 22, Venezia';
+const WORKSHOP_LOCATION = 'Hotel Belstay Mestre, Rotonda Romea, 1 - Venezia';
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://rizzienrico.it';
 
 export async function POST(request: NextRequest) {
